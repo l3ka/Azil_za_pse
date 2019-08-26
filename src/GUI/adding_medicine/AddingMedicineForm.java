@@ -1,0 +1,20 @@
+package GUI.adding_medicine;
+
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+public class AddingMedicineForm {
+
+    public void display() throws Exception {
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        Parent root = FXMLLoader.load(getClass().getResource("addingMedicine.fxml"));
+        stage.setTitle("Azil za pse - dodavanje lijeka");
+        Scene scene = new Scene(root, 850, 700);
+        stage.setScene(scene);
+        stage.show();
+    }
+}

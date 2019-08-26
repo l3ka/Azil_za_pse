@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="850.0" style="-fx-background-color: #b71c1c;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.adding_medicine.AddingMedicineController">
+   <top>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/dog-icon.png" />
+               </image>
+            </ImageView>
+            <Label text="Azil za pse" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+            <Line endX="200.0" startX="-200.0" stroke="WHITE" />
+         </children>
+      </VBox>
+   </top>
+   <padding>
+      <Insets bottom="50.0" top="50.0" />
+   </padding>
+   <center>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="100.0">
+               <children>
+                  <Label text="Naziv" textFill="WHITE" />
+                  <TextField fx:id="nameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="187.0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+               <children>
+                  <Label text="Datum proizvodnje" textFill="WHITE" />
+                  <DatePicker fx:id="dateOfManufacturePicker" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="187.0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" layoutX="10.0" layoutY="110.0" prefHeight="100.0" prefWidth="200.0" spacing="70.0">
+               <children>
+                  <Label text="Rok trajanja" textFill="WHITE" />
+                  <DatePicker fx:id="expirationDatePicker" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="187.0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" layoutX="10.0" layoutY="160.0" prefHeight="100.0" prefWidth="200.0" spacing="95.0">
+               <children>
+                  <Label text="Količina" textFill="WHITE" />
+                  <TextField fx:id="amountTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="187.0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" layoutX="10.0" layoutY="170.0" prefHeight="100.0" prefWidth="200.0" spacing="110.0">
+               <children>
+                  <Label text="Opis" textFill="WHITE" />
+                  <TextField fx:id="descriptionTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="187.0" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </center>
+   <bottom>
+      <VBox alignment="CENTER" prefHeight="150.0" prefWidth="850.0" spacing="15.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#addDrug" text="Sačuvaj" />
+            <Button fx:id="quitButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#quit" text="Odustani" />
+         </children>
+         <BorderPane.margin>
+            <Insets top="20.0" />
+         </BorderPane.margin>
+      </VBox>
+   </bottom>
+</BorderPane>

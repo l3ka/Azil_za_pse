@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1000.0" style="-fx-background-color: #b71c1c;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.vet.taking_medicine.TakingMedicineController">
+   <padding>
+      <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+   </padding>
+   <top>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/dog-icon.png" />
+               </image>
+            </ImageView>
+            <Label text="Azil za pse" textFill="WHITE">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Line endX="200.0" startX="-200.0" stroke="WHITE" />
+         </children>
+      </VBox>
+   </top>
+   <bottom>
+      <VBox alignment="CENTER" prefHeight="150.0" prefWidth="900.0" spacing="15.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="takeMedicineButton" mnemonicParsing="false" onAction="#takeMedicine" text="Uzmi lijek" />
+            <Button fx:id="quitButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#quit" text="Odustani" />
+         </children>
+         <BorderPane.margin>
+            <Insets top="20.0" />
+         </BorderPane.margin>
+      </VBox>
+   </bottom>
+   <left>
+      <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets top="20.0" />
+         </BorderPane.margin>
+         <children>
+            <Label text="Izaberi lijek" textFill="WHITE" />
+            <TableView fx:id="drugsTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="370.0" prefWidth="500.0">
+              <columns>
+                <TableColumn prefWidth="75.0" text="C1" />
+                <TableColumn prefWidth="75.0" text="C2" />
+              </columns>
+            </TableView>
+         </children>
+      </VBox>
+   </left>
+   <right>
+      <HBox alignment="CENTER" prefHeight="330.0" prefWidth="234.0" spacing="15.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Količina" textFill="WHITE" />
+            <ComboBox fx:id="amountComboBox" onAction="#amountChoosed" prefHeight="31.0" prefWidth="155.0" promptText="Izaberi količinu" />
+         </children>
+         <BorderPane.margin>
+            <Insets top="20.0" />
+         </BorderPane.margin>
+      </HBox>
+   </right>
+</BorderPane>
