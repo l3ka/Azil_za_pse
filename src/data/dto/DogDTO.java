@@ -16,7 +16,7 @@ public class DogDTO {
     public DogDTO() {
     }
 
-    public DogDTO(Integer dogId, String gender, String name, String breed, int height, double weigth, Date dateOfBirth, File image) {
+    public DogDTO(Integer dogId, String gender, String name, String breed, int height, double weigth, Date dateOfBirth, String image) {
         this.dogId = dogId;
         this.gender = gender;
         this.name = name;
