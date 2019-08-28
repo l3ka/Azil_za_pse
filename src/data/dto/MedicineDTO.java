@@ -1,8 +1,9 @@
 package data.dto;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class MedicineDTO {
+    private Integer medicineId;
     private String name;
     private Date productionDate;
     private int expirationDate;
@@ -12,12 +13,21 @@ public class MedicineDTO {
     public MedicineDTO() {
     }
 
-    public MedicineDTO(String name, Date productionDate, int expirationDate, String description, int quantity) {
+    public MedicineDTO(Integer medicineId, String name, Date productionDate, int expirationDate, String description, int quantity) {
+        this.medicineId = medicineId;
         this.name = name;
         this.productionDate = productionDate;
         this.expirationDate = expirationDate;
         this.description = description;
         this.quantity = quantity;
+    }
+
+    public Integer getMedicineId() {
+        return medicineId;
+    }
+
+    public void setMedicineId(int medicineId) {
+        this.medicineId = medicineId;
     }
 
     public String getName() {

@@ -4,7 +4,7 @@ import java.io.File;
 import java.sql.Date;
 
 public class DogDTO {
-    private Integer Id;
+    private Integer dogId;
     private String gender;
     private String name;
     private String breed;
@@ -16,8 +16,8 @@ public class DogDTO {
     public DogDTO() {
     }
 
-    public DogDTO(Integer Id, String gender, String name, String breed, int height, double weigth, Date dateOfBirth, String image) {
-        this.Id = Id;
+    public DogDTO(Integer dogId, String gender, String name, String breed, int height, double weigth, Date dateOfBirth, String image) {
+        this.dogId = dogId;
         this.gender = gender;
         this.name = name;
         this.breed = breed;
@@ -27,9 +27,13 @@ public class DogDTO {
         this.image = image;
     }
 
-    public Integer getId() { return  Id; }
+    public Integer getDogId() {
+        return dogId;
+    }
 
-    public void setId(int Id) { this.Id = Id; }
+    public void setDogId(int dogId) {
+        this.dogId = dogId;
+    }
 
     public String getGender() {
         return gender;

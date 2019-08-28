@@ -1,8 +1,9 @@
 package data.dto;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class EmploymentContractDTO {
+    private Integer employmentContractId;
     private String position;
     private Date signingDate;
     private int validationDate;
@@ -11,11 +12,20 @@ public class EmploymentContractDTO {
     public EmploymentContractDTO() {
     }
 
-    public EmploymentContractDTO(String position, Date signingDate, int validationDate, int salary) {
+    public EmploymentContractDTO(Integer employmentContractId, String position, Date signingDate, int validationDate, int salary) {
+        this.employmentContractId = employmentContractId;
         this.position = position;
         this.signingDate = signingDate;
         this.validationDate = validationDate;
         this.salary = salary;
+    }
+
+    public Integer getEmploymentContractId() {
+        return employmentContractId;
+    }
+
+    public void setEmploymentContractId(int employmentContractId) {
+        this.employmentContractId = employmentContractId;
     }
 
     public String getPosition() {

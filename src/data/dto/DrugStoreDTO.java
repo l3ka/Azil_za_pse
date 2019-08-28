@@ -2,13 +2,15 @@ package data.dto;
 
 //Skladiste lijekova
 public class DrugStoreDTO {
+    private Integer drugStoreId;
     private EmployeeDTO employee;
     private int capacity;
 
     public DrugStoreDTO() {
     }
 
-    public DrugStoreDTO(EmployeeDTO employee, int capacity) {
+    public DrugStoreDTO(Integer drugStoreId,EmployeeDTO employee, int capacity) {
+        this.drugStoreId=drugStoreId;
         this.employee = employee;
         this.capacity = capacity;
     }
@@ -27,5 +29,13 @@ public class DrugStoreDTO {
 
     public void setCapacity(int capacity) {
         this.capacity = capacity;
+    }
+
+    public Integer getDrugStoreId() {
+        return drugStoreId;
+    }
+
+    public void setDrugStoreId(int drugStoreId) {
+        this.drugStoreId = drugStoreId;
     }
 }

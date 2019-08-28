@@ -1,23 +1,23 @@
 package data.dto;
 
 public class CageDTO {
-    private int ID;
+    private Integer cageId;
     private int capacity;
 
     public CageDTO(){
     }
 
-    public CageDTO(int ID, int capacity) {
-        this.ID = ID;
+    public CageDTO(Integer cageId, int capacity) {
+        this.cageId = cageId;
         this.capacity = capacity;
     }
 
     public int getId() {
-        return ID;
+        return cageId;
     }
 
-    public void setId(int ID) {
-        this.ID = ID;
+    public void setId(int cageId) {
+        this.cageId = cageId;
     }
 
     public int getCapacity() {
