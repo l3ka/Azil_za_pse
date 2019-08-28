@@ -11,7 +11,7 @@ public class DogDTO {
     private int height;
     private double weigth;
     private Date dateOfBirth;
-    private File image;
+    private String image;
 
     public DogDTO() {
     }
@@ -87,7 +87,7 @@ public class DogDTO {
         return image;
     }
 
-    public void setImage(File image) {
+    public void setImage(String image) {
         this.image = image;
     }
 }
