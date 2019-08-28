@@ -59,7 +59,7 @@ public class DogDTO {
         this.breed = breed;
     }
 
-    public double getHeight() {
+    public int getHeight() {
         return height;
     }
 
@@ -83,7 +83,7 @@ public class DogDTO {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public File getImage() {
+    public String getImage() {
         return image;
     }
 
