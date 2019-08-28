@@ -1,26 +1,26 @@
 package data.dto;
 
-import java.util.Date;
+import java.sql.Date;
 
 //Karton
 public class MedicalRecordDTO {
-    private int ID;
+    private Integer medicalRecordId;
     private Date creationDate;
 
     public MedicalRecordDTO() {
     }
 
-    public MedicalRecordDTO(int ID, Date creationDate) {
-        this.ID = ID;
+    public MedicalRecordDTO(Integer medicalRecordId, Date creationDate) {
+        this.medicalRecordId = medicalRecordId;
         this.creationDate = creationDate;
     }
 
     public int getID() {
-        return ID;
+        return medicalRecordId;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setID(int medicalRecordId) {
+        this.medicalRecordId = medicalRecordId;
     }
 
     public Date getCreationDate() {

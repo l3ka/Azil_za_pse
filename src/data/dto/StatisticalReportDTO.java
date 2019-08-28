@@ -1,7 +1,7 @@
 package data.dto;
 
 import java.io.File;
-import java.util.Date;
+import java.sql.Date;
 
 public class StatisticalReportDTO {
     private Date creationDate;

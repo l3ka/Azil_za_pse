@@ -1,13 +1,14 @@
 package data.dto;
 
 import java.io.File;
-import java.util.Date;
+import java.sql.Date;
 
 public class DogDTO {
+    private Integer dogId;
     private String gender;
     private String name;
     private String breed;
-    private double height;
+    private int height;
     private double weigth;
     private Date dateOfBirth;
     private File image;
@@ -15,7 +16,8 @@ public class DogDTO {
     public DogDTO() {
     }
 
-    public DogDTO(String gender, String name, String breed, double height, double weigth, Date dateOfBirth, File image) {
+    public DogDTO(Integer dogId, String gender, String name, String breed, int height, double weigth, Date dateOfBirth, File image) {
+        this.dogId = dogId;
         this.gender = gender;
         this.name = name;
         this.breed = breed;
@@ -23,6 +25,14 @@ public class DogDTO {
         this.weigth = weigth;
         this.dateOfBirth = dateOfBirth;
         this.image = image;
+    }
+
+    public Integer getDogId() {
+        return dogId;
+    }
+
+    public void setDogId(int dogId) {
+        this.dogId = dogId;
     }
 
     public String getGender() {
@@ -53,7 +63,7 @@ public class DogDTO {
         return height;
     }
 
-    public void setHeight(double height) {
+    public void setHeight(int height) {
         this.height = height;
     }
 
