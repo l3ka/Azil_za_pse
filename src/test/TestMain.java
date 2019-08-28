@@ -2,6 +2,7 @@ package test;
 
 import data.dao.mysql.ConnectionPool;
 import data.dto.DogDTO;
+import util.AzilUtilities;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,7 +12,48 @@ import java.util.List;
 
 public class TestMain {
     public static void main(String[] args){
-        testConnection();
+        testDelete();
+    }
+
+    static void testDelete(){
+        List<DogDTO> dogs = AzilUtilities.getDAOFactory().getDogDAO().dogs();
+
+        DogDTO dog = dogs.get(0);
+
+        boolean res = AzilUtilities.getDAOFactory().getDogDAO().delete(dog.getId());
+
+        if(res){
+            System.out.println("Succes...");
+        }else {
+            System.out.println("Faild...");
+        }
+    }
+    static void testUpdate(){
+        List<DogDTO> dogs = AzilUtilities.getDAOFactory().getDogDAO().dogs();
+
+        DogDTO dog = dogs.get(0);
+        dog.setName("Dzeki");
+
+        AzilUtilities.getDAOFactory().getDogDAO().update(dog);
+    }
+    static void testInsert(){
+        DogDTO dog = new DogDTO(null, "M", "Bobi", "Mjesanac", 50, 12.0, null,
+                "resources/images.bobi.jpg");
+        boolean res = AzilUtilities.getDAOFactory().getDogDAO().insert(dog);
+
+        if(res){
+            System.out.println("Success...");
+        } else {
+            System.out.println("Faild...");
+        }
+    }
+
+    static  void testRead(){
+        List<DogDTO> dogs = AzilUtilities.getDAOFactory().getDogDAO().dogs();
+
+        for(DogDTO dog : dogs){
+            System.out.println(dog.getName());
+        }
     }
 
     private  static void  testConnection(){
