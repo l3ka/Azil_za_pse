@@ -24,6 +24,9 @@ CREATE TABLE IF NOT EXISTS `azil`.`Zaposleni` (
   `JMBG` CHAR(13) NOT NULL,
   `Ime` VARCHAR(45) NULL,
   `Prezime` VARCHAR(45) NULL,
+  `Username` VARCHAR(255) NOT NULL,
+  `Password` VARCHAR(255) NOT NULL,
+  `StrucnaSprema` VARCHAR(255),
   `MjestoPrebivalista` VARCHAR(45) NULL,
   `BrojTelefona` VARCHAR(45) NULL,
   PRIMARY KEY (`JMBG`))
@@ -38,6 +41,7 @@ DROP TABLE IF EXISTS `azil`.`UgovorORadu` ;
 CREATE TABLE IF NOT EXISTS `azil`.`UgovorORadu` (
   `IdUgovora` INT NOT NULL AUTO_INCREMENT,
   `Pozicija` VARCHAR(45) NULL,
+  `aktivan` TINYINT(1),
   `Plata` DECIMAL NULL,
   PRIMARY KEY (`IdUgovora`))
 ENGINE = InnoDB;
@@ -51,18 +55,18 @@ DROP TABLE IF EXISTS `azil`.`Zaposleni_Ugovor` ;
 CREATE TABLE IF NOT EXISTS `azil`.`Zaposleni_Ugovor` (
   `Od` DATE NOT NULL,
   `Zaposlenik_JMBG` CHAR(13) NOT NULL,
-  `UgovorORadu_IdUgocora` INT NOT NULL,
+  `UgovorORadu_IdUgovora` INT NOT NULL,
   `Do` DATE NULL,
-  PRIMARY KEY (`Od`, `Zaposlenik_JMBG`, `UgovorORadu_IdUgocora`),
+  PRIMARY KEY (`Od`, `Zaposlenik_JMBG`, `UgovorORadu_IdUgovora`),
   INDEX `fk_Zaposlenik_Ugovor_Zaposlenik_idx` (`Zaposlenik_JMBG` ASC),
-  INDEX `fk_Zaposlenik_Ugovor_UgovorORadu1_idx` (`UgovorORadu_IdUgocora` ASC),
+  INDEX `fk_Zaposlenik_Ugovor_UgovorORadu1_idx` (`UgovorORadu_IdUgovora` ASC),
   CONSTRAINT `fk_Zaposlenik_Ugovor_Zaposlenik`
     FOREIGN KEY (`Zaposlenik_JMBG`)
     REFERENCES `azil`.`Zaposleni` (`JMBG`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Zaposlenik_Ugovor_UgovorORadu1`
-    FOREIGN KEY (`UgovorORadu_IdUgocora`)
+    FOREIGN KEY (`UgovorORadu_IdUgovora`)
     REFERENCES `azil`.`UgovorORadu` (`IdUgovora`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -130,7 +134,7 @@ CREATE TABLE IF NOT EXISTS `azil`.`Pas` (
   `DatumRodjenja` DATE NULL,
   `Visina` INT NULL,
   `Tezina` DOUBLE NULL,
-  `Fotografija` BLOB NULL,
+  `Fotografija` VARCHAR(255) NULL,
   PRIMARY KEY (`IdPsa`))
 ENGINE = InnoDB;
 
