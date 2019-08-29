@@ -105,7 +105,7 @@ public class MySQLDogDAO implements DogDAO {
             ps.setDate(6, dogDTO.getDateOfBirth());
             ps.setString(7, dogDTO.getImage());
 
-            ps.setInt(8, dogDTO.getId());
+            ps.setInt(8, dogDTO.getDogId());
 
             retVal = ps.executeUpdate() == 1;
         } catch (SQLException e) {
