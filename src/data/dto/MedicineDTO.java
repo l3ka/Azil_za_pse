@@ -1,8 +1,8 @@
 package data.dto;
-
+import java.io.Serializable;
 import java.sql.Date;
 
-public class MedicineDTO {
+public class MedicineDTO implements Serializable {
     private Integer medicineId;
     private String name;
     private Date productionDate;

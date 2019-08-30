@@ -1,7 +1,8 @@
 package data.dto;
+import java.io.Serializable;
 
 //Skladiste lijekova
-public class DrugStoreDTO {
+public class DrugStoreDTO implements Serializable{
     private Integer drugStoreId;
     private EmployeeDTO employee;
     private int capacity;

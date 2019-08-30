@@ -1,9 +1,9 @@
 package data.dto;
-
+import java.io.Serializable;
 import java.sql.Date;
 
 //Karton
-public class MedicalRecordDTO {
+public class MedicalRecordDTO implements Serializable {
     private Integer medicalRecordId;
     private Date creationDate;
 

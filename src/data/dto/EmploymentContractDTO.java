@@ -1,8 +1,8 @@
 package data.dto;
-
+import java.io.Serializable;
 import java.sql.Date;
 
-public class EmploymentContractDTO {
+public class EmploymentContractDTO implements Serializable{
     private Integer employmentContractId;
     private String position;
     private Date signingDate;

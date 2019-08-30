@@ -1,6 +1,7 @@
 package data.dto;
+import java.io.Serializable;
 
-public class EmployeeDTO {
+public class EmployeeDTO implements Serializable {
     private String name;
     private String surname;
     private String qualifications;

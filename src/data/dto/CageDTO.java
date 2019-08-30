@@ -1,6 +1,7 @@
 package data.dto;
+import java.io.Serializable;
 
-public class CageDTO {
+public class CageDTO implements Serializable {
     private Integer cageId;
     private int capacity;
 

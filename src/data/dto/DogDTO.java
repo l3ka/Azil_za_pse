@@ -1,9 +1,9 @@
 package data.dto;
-
+import java.io.Serializable;
 import java.io.File;
 import java.sql.Date;
 
-public class DogDTO {
+public class DogDTO implements Serializable{
     private Integer dogId;
     private String gender;
     private String name;

@@ -1,9 +1,9 @@
 package data.dto;
-
+import java.io.Serializable;
 import java.io.File;
 import java.sql.Date;
 
-public class StatisticalReportDTO {
+public class StatisticalReportDTO implements Serializable {
     private Date creationDate;
     private int serialNumber;
     private File report;

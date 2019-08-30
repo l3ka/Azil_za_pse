@@ -1,7 +1,8 @@
 package data.dto;
+import java.io.Serializable;
 
 //Nalaz
-public class MedicalResultDTO {
+public class MedicalResultDTO implements Serializable {
     private Integer medicalResultId;
     private String resultsAndOpinion;
     private String therapy;

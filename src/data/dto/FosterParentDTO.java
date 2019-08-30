@@ -1,6 +1,7 @@
 package data.dto;
+import java.io.Serializable;
 
-public class FosterParentDTO {
+public class FosterParentDTO implements Serializable {
     private String name;
     private String surname;
     private String residenceAddress;
