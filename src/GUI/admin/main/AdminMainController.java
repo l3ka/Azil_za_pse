@@ -7,10 +7,13 @@ import GUI.admin.generating_statistic.GeneratingStatisticForm;
 import GUI.login.LoginForm;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
 public class AdminMainController {
     @FXML private Button addDogButton;
+    //samo trenutno String radi probe
+    @FXML private TableView<String> dogsTableView;
 
     @FXML
     private void initialize() {
