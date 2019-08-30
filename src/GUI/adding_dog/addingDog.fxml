@@ -62,10 +62,10 @@
                   <TextField fx:id="heightTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="187.0" />
                </children>
             </HBox>
-            <HBox alignment="CENTER" layoutX="10.0" layoutY="298.0" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+            <HBox alignment="CENTER" layoutX="10.0" layoutY="298.0" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                <children>
-                  <Label text="Starost" textFill="WHITE" />
-                  <TextField fx:id="ageTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="187.0" />
+                  <Label text="Rođenje" textFill="WHITE" />
+                  <DatePicker fx:id="dateofBirthDatePicker" prefHeight="31.0" prefWidth="187.0" />
                </children>
             </HBox>
             <HBox alignment="CENTER" layoutX="10.0" layoutY="310.0" prefHeight="100.0" prefWidth="200.0" spacing="75.0">
