@@ -16,6 +16,6 @@ public class AddingDogForm {
         stage.setResizable(false);
         Scene scene = new Scene(root, 950, 780);
         stage.setScene(scene);
-        stage.show();
+        stage.showAndWait();
     }
 }

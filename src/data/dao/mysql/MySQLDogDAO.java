@@ -53,8 +53,8 @@ public class MySQLDogDAO implements DogDAO {
         Connection conn = null;
         PreparedStatement ps = null;
 
-        String query = "INSERT INTO pas VALUES(Ime, Pol, Rasa, DatumRodjenja, Visina, Tezina, Fotografija) "
-                + "(?, ?, ?, ?, ?, ?, ?) ";
+        String query = "INSERT INTO pas (Ime, Pol, Rasa, DatumRodjenja, Visina, Tezina, Fotografija) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?) ";
         try{
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
@@ -63,7 +63,7 @@ public class MySQLDogDAO implements DogDAO {
             ps.setString(3, dogDTO.getBreed());
             ps.setDate(4, dogDTO.getDateOfBirth());
             ps.setInt(5, dogDTO.getHeight());
-            ps.setDouble(6, dogDTO.getWeigth());
+            ps.setDouble(6, dogDTO.getWeight());
             ps.setString(7, dogDTO.getImage());
 
             retVal = ps.executeUpdate() == 1;
@@ -101,7 +101,7 @@ public class MySQLDogDAO implements DogDAO {
             ps.setString(2, dogDTO.getName());
             ps.setString(3, dogDTO.getBreed());
             ps.setInt(4, dogDTO.getHeight());
-            ps.setDouble(5, dogDTO.getWeigth());
+            ps.setDouble(5, dogDTO.getWeight());
             ps.setDate(6, dogDTO.getDateOfBirth());
             ps.setString(7, dogDTO.getImage());
 
