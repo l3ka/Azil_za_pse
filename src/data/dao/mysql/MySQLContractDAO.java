@@ -6,6 +6,7 @@ import data.dto.EmploymentContractDTO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class MySQLContractDAO implements ContractDAO {
@@ -15,8 +16,8 @@ public class MySQLContractDAO implements ContractDAO {
         Connection conn = null;
         PreparedStatement ps = null;
 
-        String query = "INSERT INTO ugovororadu VALUES "
-                + "(default, ?, ?, ?) ";
+        String query = "INSERT INTO ugovororadu(Pozicija, aktivan, Plata) VALUES "
+                + "(?, ?, ?) ";
         try{
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -24,7 +25,13 @@ public class MySQLContractDAO implements ContractDAO {
             ps.setInt(2, contract.getActive());
             ps.setDouble(3, contract.getSalary());
 
-            contract.setEmploymentContractId(ps.executeUpdate());
+            ps.executeUpdate();
+            ResultSet generatedKeys = ps.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                contract.setEmploymentContractId(generatedKeys.getInt(1));
+            } else {
+                return false;
+            }
 
             retVal = joinContractToEmployee(contract, employee);
         }catch (Exception e){

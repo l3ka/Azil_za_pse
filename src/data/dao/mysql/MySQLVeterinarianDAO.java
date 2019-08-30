@@ -1,31 +1,31 @@
 package data.dao.mysql;
 
-import data.dao.AdministratorDAO;
-import data.dto.AdministratorDTO;
+import data.dao.VeterinarianDAO;
 import data.dto.EmploymentContractDTO;
+import data.dto.VeterinarianDTO;
 import util.AzilUtilities;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MySQLAdministratorDAO implements AdministratorDAO {
+public class MySQLVeterinarianDAO implements VeterinarianDAO {
 
     @Override
-    public boolean insert(AdministratorDTO administrator, EmploymentContractDTO contract){
+    public boolean insert(VeterinarianDTO veterinarian, EmploymentContractDTO contract){
         boolean retVal = true;
-        boolean insertSuccess = AzilUtilities.getDAOFactory().getEmployeeDAO().insert(administrator, contract);
+        boolean insertSuccess = AzilUtilities.getDAOFactory().getEmployeeDAO().insert(veterinarian, contract);
 
         if(insertSuccess){
             Connection conn = null;
             PreparedStatement ps = null;
 
-            String query = "INSERT INTO administrator VALUES "
+            String query = "INSERT INTO veterinar VALUES "
                     + "(?) ";
             try{
                 conn = ConnectionPool.getInstance().checkOut();
                 ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-                ps.setString(1, administrator.getJMB());
+                ps.setString(1, veterinarian.getJMB());
 
                 retVal = ps.executeUpdate() == 1;
             }catch (Exception e){
@@ -40,14 +40,14 @@ public class MySQLAdministratorDAO implements AdministratorDAO {
     }
 
     @Override
-    public List<AdministratorDTO> adminstartors(){
-        List<AdministratorDTO> retVal = new ArrayList<>();
+    public List<VeterinarianDTO> veterinarians(){
+        List<VeterinarianDTO> retVal =  new ArrayList<>();
 
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         String query = "SELECT z.JMBG, z.Ime, z.Prezime, z.Username, z.Password, z.StrucnaSprema, z.MjestoPrebivalista, z.BrojTelefona " +
-                "FROM zaposleni z INNER JOIN administrator a ON z.JMBG = a.Zaposleni_JMBG";
+                "FROM zaposleni z INNER JOIN veterinar v ON z.JMBG = v.Zaposleni_JMBG";
 
         try {
             conn = ConnectionPool.getInstance().checkOut();
@@ -55,7 +55,7 @@ public class MySQLAdministratorDAO implements AdministratorDAO {
             rs = ps.executeQuery();
 
             while (rs.next())
-                retVal.add(new AdministratorDTO(
+                retVal.add(new VeterinarianDTO(
                         rs.getString("Username"),
                         rs.getString("Password"),
                         rs.getString("Ime"),
@@ -75,16 +75,15 @@ public class MySQLAdministratorDAO implements AdministratorDAO {
         return retVal;
     }
 
-    @Override
-    public AdministratorDTO getByUsername(String username){
-        AdministratorDTO retVal = null;
+    public VeterinarianDTO getByUsername(String username){
+        VeterinarianDTO retVal = null;
 
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
 
         String query = "SELECT z.JMBG, z.Ime, z.Prezime, z.Username, z.Password, z.StrucnaSprema, z.MjestoPrebivalista, " +
-                "z.BrojTelefona  FROM zaposleni z INNER JOIN administrator a ON z.JMBG = a.Zaposleni_JMBG " +
+                "z.BrojTelefona  FROM zaposleni z INNER JOIN veterinar v ON z.JMBG = v.Zaposleni_JMBG " +
                 "WHERE z.Username = ?";
 
         try {
@@ -94,7 +93,7 @@ public class MySQLAdministratorDAO implements AdministratorDAO {
             rs = ps.executeQuery();
 
             if (rs.next())
-                retVal = new AdministratorDTO(
+                retVal = new VeterinarianDTO(
                         rs.getString("Username"),
                         rs.getString("Password"),
                         rs.getString("Ime"),
@@ -115,12 +114,12 @@ public class MySQLAdministratorDAO implements AdministratorDAO {
     }
 
     @Override
-    public boolean update(AdministratorDTO administrator){
-        return  AzilUtilities.getDAOFactory().getEmployeeDAO().update(administrator);
+    public boolean update(VeterinarianDTO veterinarian){
+        return  AzilUtilities.getDAOFactory().getEmployeeDAO().update(veterinarian);
     }
 
     @Override
-    public boolean updateWithJMB(AdministratorDTO administrator, String oldJMB){
-        return AzilUtilities.getDAOFactory().getEmployeeDAO().updateWithJMB(administrator, oldJMB);
+    public  boolean updateWithJMB(VeterinarianDTO veterinarian, String oldJMB){
+        return AzilUtilities.getDAOFactory().getEmployeeDAO().updateWithJMB(veterinarian, oldJMB);
     }
 }

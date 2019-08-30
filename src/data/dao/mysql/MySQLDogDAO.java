@@ -53,8 +53,8 @@ public class MySQLDogDAO implements DogDAO {
         Connection conn = null;
         PreparedStatement ps = null;
 
-        String query = "INSERT INTO pas VALUES "
-                + "(default, ?, ?, ?, ?, ?, ?, ?) ";
+        String query = "INSERT INTO pas VALUES(Ime, Pol, Rasa, DatumRodjenja, Visina, Tezina, Fotografija) "
+                + "(?, ?, ?, ?, ?, ?, ?) ";
         try{
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);

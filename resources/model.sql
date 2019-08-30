@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `azil`.`Zaposleni` (
   `JMBG` CHAR(13) NOT NULL,
   `Ime` VARCHAR(45) NULL,
   `Prezime` VARCHAR(45) NULL,
-  `Username` VARCHAR(255) NOT NULL,
+  `Username` VARCHAR(255) NOT NULL UNIQUE,
   `Password` VARCHAR(255) NOT NULL,
   `StrucnaSprema` VARCHAR(255),
   `MjestoPrebivalista` VARCHAR(45) NULL,
@@ -63,13 +63,13 @@ CREATE TABLE IF NOT EXISTS `azil`.`Zaposleni_Ugovor` (
   CONSTRAINT `fk_Zaposlenik_Ugovor_Zaposlenik`
     FOREIGN KEY (`Zaposlenik_JMBG`)
     REFERENCES `azil`.`Zaposleni` (`JMBG`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_Zaposlenik_Ugovor_UgovorORadu1`
     FOREIGN KEY (`UgovorORadu_IdUgovora`)
     REFERENCES `azil`.`UgovorORadu` (`IdUgovora`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -84,8 +84,8 @@ CREATE TABLE IF NOT EXISTS `azil`.`Sluzbenik` (
   CONSTRAINT `fk_Sluzbenik_Zaposlenik1`
     FOREIGN KEY (`Zaposleni_JMBG`)
     REFERENCES `azil`.`Zaposleni` (`JMBG`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -100,8 +100,8 @@ CREATE TABLE IF NOT EXISTS `azil`.`Veterinar` (
   CONSTRAINT `fk_Veterinar_Zaposlenik1`
     FOREIGN KEY (`Zaposleni_JMBG`)
     REFERENCES `azil`.`Zaposleni` (`JMBG`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -116,8 +116,8 @@ CREATE TABLE IF NOT EXISTS `azil`.`Administrator` (
   CONSTRAINT `fk_Administrator_Zaposlenik1`
     FOREIGN KEY (`Zaposleni_JMBG`)
     REFERENCES `azil`.`Zaposleni` (`JMBG`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -156,13 +156,13 @@ CREATE TABLE IF NOT EXISTS `azil`.`Nalaz` (
   CONSTRAINT `fk_Nalaz_Veterinar1`
     FOREIGN KEY (`Veterinar_Zaposleni_JMBG`)
     REFERENCES `azil`.`Veterinar` (`Zaposleni_JMBG`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_Nalaz_Pas1`
     FOREIGN KEY (`Pas_IdPsa`)
     REFERENCES `azil`.`Pas` (`IdPsa`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -196,13 +196,13 @@ CREATE TABLE IF NOT EXISTS `azil`.`DodavanjeLijeka` (
   CONSTRAINT `fk_DodavanjeLijeka_Sluzbenik1`
     FOREIGN KEY (`Sluzbenik_Zaposleni_JMBG`)
     REFERENCES `azil`.`Sluzbenik` (`Zaposleni_JMBG`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_DodavanjeLijeka_Lijek1`
     FOREIGN KEY (`Lijek_IdLijeka`)
     REFERENCES `azil`.`Lijek` (`IdLijeka`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -224,18 +224,18 @@ CREATE TABLE IF NOT EXISTS `azil`.`UzimanjeLijeka` (
   CONSTRAINT `fk_UzimanjeLijeka_Sluzbenik1`
     FOREIGN KEY (`Sluzbenik_Zaposleni_JMBG`)
     REFERENCES `azil`.`Sluzbenik` (`Zaposleni_JMBG`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_UzimanjeLijeka_Lijek1`
     FOREIGN KEY (`Lijek_IdLijeka`)
     REFERENCES `azil`.`Lijek` (`IdLijeka`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_UzimanjeLijeka_Nalaz1`
     FOREIGN KEY (`Nalaz_IdNalaza`)
     REFERENCES `azil`.`Nalaz` (`IdNalaza`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -267,13 +267,13 @@ CREATE TABLE IF NOT EXISTS `azil`.`Kavez_Pas` (
   CONSTRAINT `fk_Kavez_Pas_Kavez1`
     FOREIGN KEY (`Kavez_IdKaveza`)
     REFERENCES `azil`.`Kavez` (`IdKaveza`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_Kavez_Pas_Pas1`
     FOREIGN KEY (`Pas_IdPsa`)
     REFERENCES `azil`.`Pas` (`IdPsa`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -307,13 +307,13 @@ CREATE TABLE IF NOT EXISTS `azil`.`UdomljavanjePsa` (
   CONSTRAINT `fk_UdomljavanjePsa_Pas1`
     FOREIGN KEY (`Pas_IdPsa`)
     REFERENCES `azil`.`Pas` (`IdPsa`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_UdomljavanjePsa_Udomitelj1`
     FOREIGN KEY (`Udomitelj_JMBG`)
     REFERENCES `azil`.`Udomitelj` (`JMBG`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
