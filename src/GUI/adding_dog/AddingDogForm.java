@@ -15,6 +15,6 @@ public class AddingDogForm {
         stage.setTitle("Azil za pse - dodavanje psa");
         Scene scene = new Scene(root, 950, 780);
         stage.setScene(scene);
-        stage.show();
+        stage.showAndWait();
     }
 }

@@ -16,7 +16,7 @@ public class MySQLContractDAO implements ContractDAO {
         Connection conn = null;
         PreparedStatement ps = null;
 
-        String query = "INSERT INTO ugovororadu(Pozicija, aktivan, Plata) VALUES "
+        String query = "INSERT INTO ugovororadu (Pozicija, aktivan, Plata) VALUES "
                 + "(?, ?, ?) ";
         try{
             conn = ConnectionPool.getInstance().checkOut();

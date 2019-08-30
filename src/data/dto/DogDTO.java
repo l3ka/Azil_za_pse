@@ -9,20 +9,20 @@ public class DogDTO {
     private String name;
     private String breed;
     private int height;
-    private double weigth;
+    private double weight;
     private Date dateOfBirth;
     private String image;
 
     public DogDTO() {
     }
 
-    public DogDTO(Integer dogId, String gender, String name, String breed, int height, double weigth, Date dateOfBirth, String image) {
+    public DogDTO(Integer dogId, String gender, String name, String breed, int height, double weight, Date dateOfBirth, String image) {
         this.dogId = dogId;
         this.gender = gender;
         this.name = name;
         this.breed = breed;
         this.height = height;
-        this.weigth = weigth;
+        this.weight = weight;
         this.dateOfBirth = dateOfBirth;
         this.image = image;
     }
@@ -67,12 +67,12 @@ public class DogDTO {
         this.height = height;
     }
 
-    public double getWeigth() {
-        return weigth;
+    public double getWeight() {
+        return weight;
     }
 
-    public void setWeigth(double weigth) {
-        this.weigth = weigth;
+    public void setWeight(double weight) {
+        this.weight = weight;
     }
 
     public Date getDateOfBirth() {

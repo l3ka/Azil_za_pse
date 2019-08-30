@@ -1,13 +1,18 @@
 package GUI.adding_dog;
 
 import GUI.alert_box.AlertBoxForm;
+import data.dto.DogDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import util.AzilUtilities;
+
 import java.io.File;
+import java.sql.Date;
 
 public class AddingDogController {
 
@@ -16,13 +21,13 @@ public class AddingDogController {
     @FXML private ComboBox<String> genderComboBox;
     @FXML private TextField weightTextField;
     @FXML private TextField heightTextField;
-    @FXML private TextField ageTextField;
+    @FXML private DatePicker dateofBirthDatePicker;
     @FXML private Button choosePhotoButton;
     private File photo;
 
     @FXML
     private void initialize() {
-        genderComboBox.getItems().addAll("Muški", "Ženski");
+        genderComboBox.getItems().addAll("M", "Ž");
     }
 
     public void choosePhoto() {
@@ -31,19 +36,22 @@ public class AddingDogController {
     }
 
     public void addDog() {
-        if(checkName() && checkRace() && checkGender() && checkWeight() && checkHeight() && checkAge() && checkPhoto()) {
-            try {
-                new AlertBoxForm("Pas je uspješno dodat!").display();
-            } catch(Exception exception) {
+        String image;
+        if (!checkPhoto()) {
+            image = null;
+        } else {
+            image = photo.getAbsolutePath();
+        }
+        if (checkName() && checkRace() && checkGender() && checkWeight() && checkHeight() && checkAge()) {
+            if (AzilUtilities.getDAOFactory().getDogDAO().insert(new DogDTO(0, genderComboBox.getSelectionModel().getSelectedItem(), nameTextField.getText(),
+                    raceTextField.getText(), Integer.parseInt(heightTextField.getText()), Double.parseDouble(weightTextField.getText()), Date.valueOf(dateofBirthDatePicker.getValue()), image))) {
+                try {
+                    new AlertBoxForm("Pas je uspješno dodat!").display();
+                    ((Stage) nameTextField.getScene().getWindow()).close();
+                } catch (Exception exception) {
 
+                }
             }
-            nameTextField.clear();
-            raceTextField.clear();
-            genderComboBox.getSelectionModel().clearSelection();
-            weightTextField.clear();
-            heightTextField.clear();
-            ageTextField.clear();
-            photo = null;
         }
     }
 
@@ -113,9 +121,9 @@ public class AddingDogController {
     }
 
     private boolean checkAge() {
-        if("".equals(ageTextField.getText()) || !checkNumber(ageTextField.getText())) {
+        if(dateofBirthDatePicker.getValue() == null) {
             try {
-                new AlertBoxForm("Unos za polje starost nije odgovarajući!").display();
+                new AlertBoxForm("Unos za polje rođenje nije odgovarajući!").display();
             } catch(Exception exception) {
 
             }
@@ -126,11 +134,6 @@ public class AddingDogController {
 
     private boolean checkPhoto() {
         if(photo == null) {
-            try {
-                new AlertBoxForm("Fotografija psa nije izabrana!").display();
-            } catch(Exception exception) {
-
-            }
             return false;
         }
         return true;
