@@ -1,20 +1,39 @@
 package GUI.adopting_dog;
 
 import GUI.alert_box.AlertBoxForm;
+import data.dto.DogDTO;
+import data.dto.FosterParentDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import util.AzilUtilities;
+
+import java.util.List;
 
 public class AdoptingDogController {
 
     @FXML private Button adoptDogButton;
-    @FXML private TableView<String> dogsTableView;
-    @FXML private TableView<String> fosterParentsTableView;
+    @FXML private TableView<DogDTO> dogsTableView;
+    @FXML private TableView<FosterParentDTO> fosterParentsTableView;
+    private List<DogDTO> listOfDogs;
+    private Stage stage;
 
     @FXML
-    private void initialize() {
+    public void initialize(Stage stage) {
+        this.stage = stage;
+        dogsTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("name"));
+        dogsTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("breed"));
+        dogsTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("gender"));
+        dogsTableView.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("height"));
+        dogsTableView.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("weight"));
+        dogsTableView.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
 
+        listOfDogs = AzilUtilities.getDAOFactory().getDogDAO().dogs();
+        for (DogDTO dog : listOfDogs) {
+            dogsTableView.getItems().add(dog);
+        }
     }
 
     public void adoptDog() {
@@ -42,7 +61,6 @@ public class AdoptingDogController {
     }
 
     public void quit() {
-        Stage stage = (Stage) adoptDogButton.getScene().getWindow();
         stage.close();
     }
 }

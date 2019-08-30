@@ -13,11 +13,13 @@ public class LoginForm extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
         stage.setTitle("Azil za pse - prijava");
         stage.setResizable(false);
-        Scene scene = new Scene(root, 600, 600);
+        Scene scene = new Scene(loader.load(), 600, 600);
         stage.setScene(scene);
+        LoginController controller = loader.getController();
+        controller.initialize(stage);
         stage.show();
     }
 

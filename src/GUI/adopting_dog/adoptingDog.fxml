@@ -40,12 +40,19 @@
    <left>
       <VBox alignment="CENTER_LEFT" prefHeight="400.0" prefWidth="500.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Izaberi psa" textFill="WHITE" />
+            <Label text="Izaberite psa" textFill="WHITE" />
             <TableView fx:id="dogsTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="500.0">
-              <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
-              </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+               <columns>
+                  <TableColumn prefWidth="88.0" text="Ime" />
+                  <TableColumn prefWidth="78.0" text="Rasa" />
+                  <TableColumn prefWidth="73.0" text="Pol" />
+                  <TableColumn prefWidth="93.0" text="Visina" />
+                  <TableColumn prefWidth="65.0" text="Težina" />
+                  <TableColumn prefWidth="101.0" text="Datum rođenja" />
+               </columns>
             </TableView>
          </children>
          <padding>
@@ -56,12 +63,17 @@
    <right>
       <VBox alignment="CENTER_LEFT" prefHeight="400.0" prefWidth="500.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Izaberi udomitelja" textFill="WHITE" />
+            <Label text="Izaberite udomitelja" textFill="WHITE" />
             <TableView fx:id="fosterParentsTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="500.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
+                <TableColumn prefWidth="75.0" text="Ime" />
+                <TableColumn prefWidth="75.0" text="Prezime" />
+                  <TableColumn prefWidth="75.0" text="Mjesto stanovanja" />
+                  <TableColumn prefWidth="75.0" text="Broj telefona" />
               </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
             </TableView>
          </children>
          <padding>

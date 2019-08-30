@@ -24,15 +24,16 @@ public class AddingDogController {
     @FXML private DatePicker dateofBirthDatePicker;
     @FXML private Button choosePhotoButton;
     private File photo;
+    private Stage stage;
 
-    @FXML
-    private void initialize() {
+    public void initialize(Stage stage) {
         genderComboBox.getItems().addAll("M", "Ž");
+        this.stage = stage;
     }
 
     public void choosePhoto() {
         FileChooser fileChooser = new FileChooser();
-        photo = fileChooser.showOpenDialog(choosePhotoButton.getScene().getWindow());
+        photo = fileChooser.showOpenDialog(stage);
     }
 
     public void addDog() {
@@ -47,7 +48,7 @@ public class AddingDogController {
                     raceTextField.getText(), Integer.parseInt(heightTextField.getText()), Double.parseDouble(weightTextField.getText()), Date.valueOf(dateofBirthDatePicker.getValue()), image))) {
                 try {
                     new AlertBoxForm("Pas je uspješno dodat!").display();
-                    ((Stage) nameTextField.getScene().getWindow()).close();
+                    stage.close();
                 } catch (Exception exception) {
 
                 }
@@ -56,7 +57,6 @@ public class AddingDogController {
     }
 
     public void quit() {
-        Stage stage = (Stage) choosePhotoButton.getScene().getWindow();
         stage.close();
     }
 

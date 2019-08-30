@@ -1,20 +1,21 @@
-package GUI.adding_medicine;
+package GUI.admin.select_account;
 
+import GUI.adding_medicine.AddingMedicineController;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class AddingMedicineForm {
+public class SelectAccount {
 
     public void display() throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("addingMedicine.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("SelectAccount.fxml"));
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Azil za pse - dodavanje lijeka");
+        stage.setTitle("Azil za pse - izbor naloga");
+        stage.setResizable(false);
         Scene scene = new Scene(loader.load(), 850, 700);
-        AddingMedicineController controller = loader.getController();
+        SelectAccountController controller = loader.getController();
         controller.initialize(stage);
         stage.setScene(scene);
         stage.show();

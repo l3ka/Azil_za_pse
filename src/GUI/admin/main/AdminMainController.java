@@ -20,9 +20,10 @@ public class AdminMainController {
     @FXML private Button addDogButton;
     @FXML private TableView<DogDTO> dogsTableView;
     private List<DogDTO> listOfDogs;
+    private Stage stage;
 
-    @FXML
-    private void initialize() {
+    public void initialize(Stage stage) {
+        this.stage = stage;
         dogsTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("name"));
         dogsTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("breed"));
         dogsTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("gender"));
@@ -86,7 +87,6 @@ public class AdminMainController {
     }
 
     public void logOut() {
-        Stage stage = (Stage) addDogButton.getScene().getWindow();
         stage.close();
 
         try {

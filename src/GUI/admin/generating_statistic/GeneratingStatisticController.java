@@ -11,9 +11,10 @@ public class GeneratingStatisticController {
     @FXML private ComboBox<String> statisticComboBox;
     @FXML private DatePicker startDatePicker;
     @FXML private DatePicker endDatePicker;
+    private Stage stage;
 
-    @FXML
-    private void initialize() {
+    public void initialize(Stage stage) {
+        this.stage = stage;
         statisticComboBox.getItems().addAll("Pol", "Rasa", "Visina", "Težina", "Starost");
     }
 
@@ -28,7 +29,6 @@ public class GeneratingStatisticController {
     }
 
     public void quit() {
-        Stage stage = (Stage) startDatePicker.getScene().getWindow();
         stage.close();
     }
 
