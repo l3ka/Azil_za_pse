@@ -6,10 +6,12 @@ import GUI.vet.taking_medicine.TakingMedicineForm;
 import GUI.vet.generating_finding.GeneratingFindingForm;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
 public class VetMainController {
     @FXML private Button logOutButton;
+    @FXML private TableView<String> dogsTableView;
 
     @FXML
     private void initialize() {

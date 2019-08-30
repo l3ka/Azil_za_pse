@@ -14,6 +14,7 @@ public class MainScreenController {
     @FXML
     private Button addMedicineButton;
     @FXML
+    //samo trenutno String radi probe
     private TableView<String> dogsTableView;
 
 
