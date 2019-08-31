@@ -19,4 +19,6 @@ public interface ServantDAO {
     public boolean delete(ServantDTO servant);
 
     public boolean exists(ServantDTO servant);
+
+    public ServantDTO login(String username, String password);
 }

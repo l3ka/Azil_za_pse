@@ -180,4 +180,44 @@ public class MySQLServantDAO implements ServantDAO {
 
         return  retVal;
     }
+
+    @Override
+    public ServantDTO login(String username, String password){
+        ServantDTO retVal = null;
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String query = "SELECT z.JMBG, z.Ime, z.Prezime, z.Username, z.Password, z.StrucnaSprema, z.MjestoPrebivalista, " +
+                "z.BrojTelefona  FROM zaposleni z INNER JOIN sluzbenik a ON z.JMBG = a.Zaposleni_JMBG " +
+                "WHERE z.Username = ? AND Password = ?";
+
+        try {
+            conn = ConnectionPool.getInstance().checkOut();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, username);
+            ps.setString(2, AzilUtilities.getSHA256(password));
+            rs = ps.executeQuery();
+
+            if (rs.next())
+                retVal = new ServantDTO(
+                        rs.getString("Username"),
+                        rs.getString("Password"),
+                        rs.getString("Ime"),
+                        rs.getString("Prezime"),
+                        rs.getString("StrucnaSprema"),
+                        rs.getString("MjestoPrebivalista"),
+                        rs.getString("BrojTelefona"),
+                        rs.getString("JMBG")
+                );
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionPool.getInstance().checkIn(conn);
+            DBUtilities.getInstance().close(ps, rs);
+        }
+
+        return retVal;
+    }
 }

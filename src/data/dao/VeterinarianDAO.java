@@ -19,4 +19,6 @@ public interface VeterinarianDAO {
     public boolean delete(VeterinarianDTO veterinarian);
 
     public boolean exists(VeterinarianDTO veterinarian);
+
+    public VeterinarianDTO login(String username, String password);
 }

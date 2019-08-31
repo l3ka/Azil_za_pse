@@ -21,4 +21,6 @@ public interface AdministratorDAO {
     public boolean delete(AdministratorDTO administrator);
 
     public boolean exists(AdministratorDTO administrator);
+
+    public AdministratorDTO login(String username, String password);
 }

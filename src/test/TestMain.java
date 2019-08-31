@@ -14,7 +14,14 @@ import java.util.List;
 
 public class TestMain {
     public static void main(String[] args){
-        testContractUpdate("Admin2");
+        testAdminLogin("Admin2", "Password");
+    }
+
+    public static void testAdminLogin(String usernam, String password){
+        AdministratorDTO admin = AzilUtilities.getDAOFactory().getAdministratorDAO().login(usernam, password);
+
+        System.out.println(admin.getName());
+
     }
 
     public static  void testContractUpdate(String username){
