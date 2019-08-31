@@ -13,7 +13,7 @@ public class VetMainForm {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Azil za pse - veterinarski dio");
-        Scene scene = new Scene(loader.load(), 1000, 780);
+        Scene scene = new Scene(loader.load(), 1000, 700);
         stage.setScene(scene);
         VetMainController controller = loader.getController();
         controller.initialize(stage);

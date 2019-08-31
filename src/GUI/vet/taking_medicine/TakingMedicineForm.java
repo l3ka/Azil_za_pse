@@ -14,7 +14,7 @@ public class TakingMedicineForm {
         stage.initModality(Modality.APPLICATION_MODAL);
         Parent root = FXMLLoader.load(getClass().getResource("takingMedicine.fxml"));
         stage.setTitle("Azil za pse - uzimanje lijeka");
-        Scene scene = new Scene(loader.load(), 1000, 780);
+        Scene scene = new Scene(loader.load(), 1000, 700);
         stage.setScene(scene);
         TakingMedicineController controller = loader.getController();
         controller.initialize(stage);
