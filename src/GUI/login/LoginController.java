@@ -65,6 +65,7 @@ public class LoginController {
                     }
                     // changeStage(event, ".." + File.separatorChar + "employee" + File.separatorChar + "main_screen" + File.separatorChar + "MainScreen.fxml");
                 }
+                stage.close();
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
