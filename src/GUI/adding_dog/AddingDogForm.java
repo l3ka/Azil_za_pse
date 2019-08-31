@@ -14,7 +14,7 @@ public class AddingDogForm {
         stage.setTitle("Azil za pse - dodavanje psa");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setResizable(false);
-        Scene scene = new Scene(loader.load(), 950, 780);
+        Scene scene = new Scene(loader.load(), 800, 700);
         stage.setScene(scene);
         AddingDogController controller = loader.getController();
         controller.initialize(stage);

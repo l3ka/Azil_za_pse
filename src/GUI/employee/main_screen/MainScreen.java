@@ -12,7 +12,7 @@ public class MainScreen {
     public void display() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScreen.fxml"));
         Stage stage = new Stage();
-        Scene scene = new Scene(loader.load(), 800, 600);
+        Scene scene = new Scene(loader.load(), 1000, 700);
         stage.setTitle("Azil za pse - glavni meni");
         stage.setResizable(false);
         stage.setScene(scene);

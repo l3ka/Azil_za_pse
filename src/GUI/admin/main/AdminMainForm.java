@@ -14,7 +14,7 @@ public class AdminMainForm {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Azil za pse - administratorski dio");
         stage.setResizable(false);
-        Scene scene = new Scene(loader.load(), 1000, 800);
+        Scene scene = new Scene(loader.load(), 1000, 700);
         stage.setScene(scene);
         AdminMainController controller = loader.getController();
         controller.initialize(stage);

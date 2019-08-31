@@ -8,9 +8,9 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="950.0" style="-fx-background-color: #b71c1c;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.adding_dog.AddingDogController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="800.0" style="-fx-background-color: #b71c1c;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.adding_dog.AddingDogController">
    <padding>
-      <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+      <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
    </padding>
    <top>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
@@ -78,13 +78,13 @@
       </VBox>
    </center>
    <bottom>
-      <VBox alignment="CENTER" prefHeight="150.0" prefWidth="900.0" spacing="15.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="120.0" prefWidth="900.0" spacing="15.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="saveButton" mnemonicParsing="false" onAction="#addDog" text="Sačuvaj" />
             <Button fx:id="quitButton" layoutX="353.0" layoutY="95.0" mnemonicParsing="false" onAction="#quit" text="Odustani" />
          </children>
          <BorderPane.margin>
-            <Insets top="20.0" />
+            <Insets top="15.0" />
          </BorderPane.margin>
       </VBox>
    </bottom>

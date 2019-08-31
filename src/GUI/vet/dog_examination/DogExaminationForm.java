@@ -13,7 +13,7 @@ public class DogExaminationForm {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Azil za pse - pregled psa");
-        Scene scene = new Scene(loader.load(), 1000, 800);
+        Scene scene = new Scene(loader.load(), 1000, 700);
         stage.setScene(scene);
         DogExaminationController controller = loader.getController();
         controller.initialize(stage);

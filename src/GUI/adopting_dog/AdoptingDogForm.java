@@ -13,7 +13,7 @@ public class AdoptingDogForm {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Azil za pse - udomljavanje psa");
-        Scene scene = new Scene(loader.load(), 1300, 780);
+        Scene scene = new Scene(loader.load(), 1200, 700);
         stage.setScene(scene);
         AdoptingDogController controller = loader.getController();
         controller.initialize(stage);
