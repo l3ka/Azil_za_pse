@@ -16,7 +16,7 @@ public class MySQLServantDAO implements ServantDAO {
         boolean retVal = true;
         boolean insertSuccess = AzilUtilities.getDAOFactory().getEmployeeDAO().insert(servant, contract);
 
-        if(insertSuccess){
+        if(insertSuccess && AzilUtilities.getDAOFactory().getServantDAO().exists(servant)){
             Connection conn = null;
             PreparedStatement ps = null;
 
@@ -121,5 +121,63 @@ public class MySQLServantDAO implements ServantDAO {
     @Override
     public boolean updateWithJMB(ServantDTO servant, String oldJMB){
         return AzilUtilities.getDAOFactory().getEmployeeDAO().updateWithJMB(servant, oldJMB);
+    }
+
+    @Override
+    public boolean delete(ServantDTO servant){
+        boolean retVal = true;
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        String query = "DELETE FROM sluzbenik "
+                + "WHERE Zaposleni_JMBG=? ";
+        try {
+            conn = ConnectionPool.getInstance().checkOut();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, servant.getJMB());
+
+            retVal = ps.executeUpdate() == 1;
+            if(!retVal){
+                return retVal;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            ConnectionPool.getInstance().checkIn(conn);
+            DBUtilities.getInstance().close(ps);
+        }
+
+        retVal = AzilUtilities.getDAOFactory().getEmployeeDAO().delete(servant);
+
+        return retVal;
+    }
+
+    @Override
+    public boolean exists(ServantDTO servant){
+        boolean retVal = true;
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String query = "SELECT * FROM sluzbenik WHERE Zaposleni_JMBG=?";
+
+        try {
+            conn = ConnectionPool.getInstance().checkOut();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, servant.getJMB());
+            rs = ps.executeQuery();
+
+            retVal = rs.next();
+        } catch (SQLException e) {
+            retVal = false;
+            e.printStackTrace();
+        } finally {
+            ConnectionPool.getInstance().checkIn(conn);
+            DBUtilities.getInstance().close(ps, rs);
+        }
+
+        return  retVal;
     }
 }

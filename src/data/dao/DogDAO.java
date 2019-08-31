@@ -11,5 +11,5 @@ public interface DogDAO {
 
     public boolean update(DogDTO dogDTO);
 
-    public boolean delete(int Id);
+    public boolean delete(DogDTO dog);
 }

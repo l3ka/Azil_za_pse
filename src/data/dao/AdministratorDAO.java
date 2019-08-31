@@ -17,4 +17,8 @@ public interface AdministratorDAO {
     public boolean update(AdministratorDTO administrator);
 
     public boolean updateWithJMB(AdministratorDTO administrator, String oldJMB);
+
+    public boolean delete(AdministratorDTO administrator);
+
+    public boolean exists(AdministratorDTO administrator);
 }

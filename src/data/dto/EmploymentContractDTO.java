@@ -13,8 +13,9 @@ public class EmploymentContractDTO {
     public EmploymentContractDTO() {
     }
 
-    public EmploymentContractDTO(Integer employmentContractId, String position, Date signingDate, Date validationDate, double salary) {
+    public EmploymentContractDTO(Integer employmentContractId, int active, String position, Date signingDate, Date validationDate, double salary) {
         this.employmentContractId = employmentContractId;
+        this.active = active;
         this.position = position;
         this.signingDate = signingDate;
         this.validationDate = validationDate;
