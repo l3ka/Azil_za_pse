@@ -3,6 +3,7 @@ package data.dao.mysql;
 import data.dao.EmployeeDAO;
 import data.dto.EmployeeDTO;
 import data.dto.EmploymentContractDTO;
+import org.jetbrains.annotations.NotNull;
 import util.AzilUtilities;
 
 import java.sql.*;
@@ -49,7 +50,7 @@ public class MySQLEmployeeDAO implements EmployeeDAO {
         return  retVal;
     }
 
-    public boolean update(EmployeeDTO employee){
+    public boolean update(@NotNull EmployeeDTO employee){
         boolean retVal = true;
 
         Connection conn = null;
@@ -88,7 +89,7 @@ public class MySQLEmployeeDAO implements EmployeeDAO {
         return retVal;
     }
 
-    public boolean updateWithJMB(EmployeeDTO employee, String oldJMB){
+    public boolean updateWithJMB(@NotNull EmployeeDTO employee, String oldJMB){
         boolean retVal = true;
 
         Connection conn = null;
@@ -160,7 +161,7 @@ public class MySQLEmployeeDAO implements EmployeeDAO {
     }
 
     @Override
-    public boolean exists(EmployeeDTO employee){
+    public boolean exists(@NotNull EmployeeDTO employee){
         boolean retVal = true;
 
         Connection conn = null;
@@ -185,4 +186,32 @@ public class MySQLEmployeeDAO implements EmployeeDAO {
 
         return  retVal;
     }
+
+    @Override
+    public boolean exists(String username, String JMB) {
+        boolean retVal = true;
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String query = "SELECT * FROM zaposleni WHERE username = ? OR JMBG = ?";
+
+        try {
+            conn = ConnectionPool.getInstance().checkOut();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, username);
+            ps.setString(2, JMB);
+            rs = ps.executeQuery();
+
+            retVal = rs.next();
+        } catch (SQLException e) {
+            retVal = false;
+            e.printStackTrace();
+        } finally {
+            ConnectionPool.getInstance().checkIn(conn);
+            DBUtilities.getInstance().close(ps, rs);
+        }
+        return  retVal;
+    }
+
 }

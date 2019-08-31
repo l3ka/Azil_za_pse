@@ -9,8 +9,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class AddAndChangeAccount {
+
     public void display() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("AddAndChangeAccount.fxml"));
         Stage stage = new Stage();
         Scene scene = new Scene(loader.load(), 700, 700);
         stage.setTitle("Azil za pse - korisnički nalozi");
@@ -23,4 +24,5 @@ public class AddAndChangeAccount {
         controller.initialize(stage);
         stage.show();
     }
+
 }

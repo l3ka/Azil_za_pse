@@ -1,10 +1,19 @@
 package GUI.admin.add_change_account;
 
 import GUI.alert_box.AlertBoxForm;
+import data.dto.AdministratorDTO;
+import data.dto.EmploymentContractDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import util.AzilUtilities;
+
+import java.sql.Date;
+import java.util.Calendar;
+import java.util.Random;
 
 public class AddAndChangeAccountController {
 
@@ -32,83 +41,70 @@ public class AddAndChangeAccountController {
     }
 
     public void saveAccount() {
-        if (checkName() && checkQualifications() && checkPlaceOfResidence() &&
-                checkIdentificationNumber() && checkPhoneNumber()) {
-            try {
-                new AlertBoxForm("Nalog je uspješno sačuvan!").display();
-            } catch(Exception exception) {
+        if (checkName() && checkQualifications() && checkPlaceOfResidence() && checkIdentificationNumber() && checkPhoneNumber()) {
 
+            String username = "administrator";      // SAMO PRIVREMENO DOK NESTO NE RIJESIMO ZA OVO DA SE MOZE DODATI I USERNAME I PASSWORD
+            String password = "password";
+
+            if (AzilUtilities.getDAOFactory().getEmployeeDAO().exists(username, identificationNumberTextField.getText().trim())) {
+                displayAlertBox("User with this username or JMB already exists in database!");
+            }
+            else {
+                // TODO: NAPRAVITI EDIT/DODAVANJE NALOGA KADA ERCEG SREDI FORMU
             }
         }
     }
 
     private boolean checkName() {
-        if ("".equals(nameTextField.getText()) || "".equals(surnameTextField.getText())) {
-            try {
-                new AlertBoxForm("Unos za polja ime i prezime nije odgovarajući!").display();
-            } catch (Exception exception) {
-
-            }
+        if ("".equals(nameTextField.getText().trim()) || "".equals(surnameTextField.getText().trim())) {
+            displayAlertBox("Unos za polja ime i prezime nije odgovarajući!");
             return false;
         }
         return true;
     }
 
     private boolean checkQualifications() {
-        if ("".equals(qualificationsTextField.getText())) {
-            try {
-                new AlertBoxForm("Unos za polje stručna sprema nije odgovarajući!").display();
-            } catch (Exception exception) {
-
-            }
+        if ("".equals(qualificationsTextField.getText().trim())) {
+            displayAlertBox("Unos za polje stručna sprema nije odgovarajući!");
             return false;
         }
         return true;
     }
 
     private boolean checkIdentificationNumber() {
-        String identificationNumber = identificationNumberTextField.getText();
-        if ("".equals(identificationNumber) || !checkNumber(identificationNumber)) {
-            try {
-                new AlertBoxForm("Unos za polje JMB nije odgovarajući!").display();
-            } catch (Exception exception) {
-
-            }
+        if ("".equals(identificationNumberTextField.getText().trim()) || !checkIsNumber(identificationNumberTextField.getText().trim())) {
+            displayAlertBox("Unos za polje JMB nije odgovarajući!");
             return false;
         }
         return true;
     }
 
     private boolean checkPlaceOfResidence() {
-        if ("".equals(placeOfResidenceTextField.getText())) {
-            try {
-                new AlertBoxForm("Unos za polje mjesto stanovanja nije odgovarajući!").display();
-            } catch (Exception exception) {
-
-            }
+        if ("".equals(placeOfResidenceTextField.getText().trim())) {
+            displayAlertBox("Unos za polje mjesto stanovanja nije odgovarajući!");
             return false;
         }
         return true;
     }
 
     private boolean checkPhoneNumber() {
-        if ("".equals(phoneNumberTextField.getText())) {
-            try {
-                new AlertBoxForm("Unos za polje broj telefona nije odgovarajući!").display();
-            } catch (Exception exception) {
-
-            }
+        if ("".equals(phoneNumberTextField.getText().trim())) {
+            displayAlertBox("Unos za polje broj telefona nije odgovarajući!");
             return false;
         }
         return true;
     }
 
-    private boolean checkNumber(String s) {
+    @Contract(pure = true)
+    private boolean checkIsNumber(@NotNull String number) {
+        return number.matches("^[0-9]*$");
+    }
+
+    private void displayAlertBox(String content) {
         try {
-            Integer.parseInt(s);
-            return true;
-        } catch(NumberFormatException e) {
-            return false;
+            new AlertBoxForm(content).display();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 

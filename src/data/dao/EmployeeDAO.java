@@ -14,4 +14,6 @@ public interface EmployeeDAO {
 
     public boolean exists(EmployeeDTO employee);
 
+    public boolean exists(String username, String JMB);
+
 }
