@@ -29,7 +29,7 @@ public class VetMainForm {
         Scene scene = new Scene(loader.load(), 1000, 780);
         stage.setScene(scene);
         VetMainController controller = loader.getController();
-        controller.setVeterinarian(employee);
+        controller.setEmployee(employee);
         controller.initialize(stage);
         stage.show();
     }
