@@ -9,11 +9,13 @@ import javafx.stage.Stage;
 public class GeneratingFindingForm {
 
     public void display() throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("generatingFinding.fxml"));
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
-        Parent root = FXMLLoader.load(getClass().getResource("generatingFinding.fxml"));
         stage.setTitle("Azil za pse - generisanje nalaza");
-        Scene scene = new Scene(root, 850, 700);
+        Scene scene = new Scene(loader.load(), 850, 700);
+        GeneratingFindingController controller = loader.getController();
+        controller.initialize(stage);
         stage.setScene(scene);
         stage.show();
     }

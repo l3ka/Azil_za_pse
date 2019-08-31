@@ -12,10 +12,10 @@ public class AddingMedicineController {
     @FXML private DatePicker expirationDatePicker;
     @FXML private TextField amountTextField;
     @FXML private TextField descriptionTextField;
+    private Stage stage;
 
-    @FXML
-    private void initialize() {
-
+    public void initialize(Stage stage) {
+        this.stage = stage;
     }
 
     public void addDrug() {
@@ -35,7 +35,6 @@ public class AddingMedicineController {
     }
 
     public void quit() {
-        Stage stage = (Stage) nameTextField.getScene().getWindow();
         stage.close();
     }
 

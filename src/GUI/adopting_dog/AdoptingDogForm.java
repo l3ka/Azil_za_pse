@@ -9,12 +9,14 @@ import javafx.stage.Stage;
 public class AdoptingDogForm {
 
     public void display() throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("adoptingDog.fxml"));
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
-        Parent root = FXMLLoader.load(getClass().getResource("adoptingDog.fxml"));
         stage.setTitle("Azil za pse - udomljavanje psa");
-        Scene scene = new Scene(root, 1300, 780);
+        Scene scene = new Scene(loader.load(), 1300, 780);
         stage.setScene(scene);
+        AdoptingDogController controller = loader.getController();
+        controller.initialize(stage);
         stage.show();
     }
 }

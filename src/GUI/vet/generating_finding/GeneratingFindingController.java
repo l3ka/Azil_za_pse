@@ -9,9 +9,10 @@ public class GeneratingFindingController {
 
     @FXML private TextArea descriptionTextArea;
 
-    @FXML
-    private void initialize() {
+    private Stage stage;
 
+    public void initialize(Stage stage) {
+        this.stage = stage;
     }
 
     public void save() {
@@ -26,7 +27,6 @@ public class GeneratingFindingController {
     }
 
     public void quit() {
-        Stage stage = (Stage) descriptionTextArea.getScene().getWindow();
         stage.close();
     }
 

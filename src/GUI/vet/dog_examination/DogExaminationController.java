@@ -10,15 +10,15 @@ import java.io.File;
 public class DogExaminationController {
     @FXML TableView<String> dogsTableView;
     private File finding;
+    private Stage stage;
 
-    @FXML
-    private void initialize() {
-
+    public void initialize(Stage stage) {
+        this.stage = stage;
     }
 
     public void chooseFinding() {
         FileChooser fileChooser = new FileChooser();
-        finding = fileChooser.showOpenDialog(dogsTableView.getScene().getWindow());
+        finding = fileChooser.showOpenDialog(stage);
     }
 
     public void save() {
@@ -35,7 +35,6 @@ public class DogExaminationController {
     }
 
     public void quit() {
-        Stage stage = (Stage) dogsTableView.getScene().getWindow();
         stage.close();
     }
 

@@ -10,9 +10,10 @@ public class TakingMedicineController {
 
     @FXML private TableView<String> drugsTableView;
     @FXML private ComboBox<Integer> amountComboBox;
+    private Stage stage;
 
-    @FXML
-    private void initialize() {
+    public void initialize(Stage stage) {
+        this.stage = stage;
         amountComboBox.getItems().addAll(1, 2, 3, 4, 5); // NA OSNOVU BAZE SE MORA POPUNITI!!!
     }
 
@@ -31,7 +32,6 @@ public class TakingMedicineController {
     }
 
     public void quit() {
-        Stage stage =  (Stage) drugsTableView.getScene().getWindow();
         stage.close();
     }
 

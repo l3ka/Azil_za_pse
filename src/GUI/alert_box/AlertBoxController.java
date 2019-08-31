@@ -8,15 +8,17 @@ import javafx.stage.Stage;
 public class AlertBoxController {
     @FXML
     private Label label;
-    @FXML private Button okButton;
-
     @FXML
-    public void initialize() {
+    private Button okButton;
+
+    private Stage stage;
+
+    public void initialize(Stage stage) {
+        this.stage = stage;
         label.setText(AlertBoxForm.text);
     }
 
     public void ok() {
-        Stage prozor = (Stage) okButton.getScene().getWindow();
-        prozor.close();
+        stage.close();
     }
 }
