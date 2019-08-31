@@ -20,5 +20,7 @@ public interface ServantDAO {
 
     public boolean exists(ServantDTO servant);
 
+    public boolean exists(String username, String password);
+
     public ServantDTO login(String username, String password);
 }

@@ -2,6 +2,8 @@ package GUI.employee.main_screen;
 
 import GUI.adding_dog.AddingDogForm;
 import data.dto.DogDTO;
+import data.dto.EmployeeDTO;
+import data.dto.ServantDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
@@ -23,6 +25,16 @@ public class MainScreenController {
     private TableView<DogDTO> dogsTableView;
     private List<DogDTO> listOfDogs;
     private Stage stage;
+    private EmployeeDTO employee;
+
+    public EmployeeDTO getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(EmployeeDTO employee) {
+        this.employee = employee;
+    }
+
 
     public void initialize(Stage stage) {
         this.stage = stage;

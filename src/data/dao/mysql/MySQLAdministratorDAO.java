@@ -183,6 +183,35 @@ public class MySQLAdministratorDAO implements AdministratorDAO {
     }
 
     @Override
+    public boolean exists(String username, String password) {
+        boolean retVal = true;
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String query = "SELECT * FROM zaposleni z " +
+                       "JOIN administrator a " +
+                       "ON z.JMBG = a.Zaposleni_JMBG " +
+                       "WHERE z.username = ? AND z.password = ?";
+        try {
+            conn = ConnectionPool.getInstance().checkOut();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, username);
+            ps.setString(2, AzilUtilities.getSHA256(password));
+            rs = ps.executeQuery();
+
+            retVal = rs.next();
+        } catch (SQLException e) {
+            retVal = false;
+            e.printStackTrace();
+        } finally {
+            ConnectionPool.getInstance().checkIn(conn);
+            DBUtilities.getInstance().close(ps, rs);
+        }
+        return  retVal;
+    }
+
+    @Override
     public AdministratorDTO login(String username, String password){
         AdministratorDTO retVal = null;
 
@@ -191,8 +220,8 @@ public class MySQLAdministratorDAO implements AdministratorDAO {
         ResultSet rs = null;
 
         String query = "SELECT z.JMBG, z.Ime, z.Prezime, z.Username, z.Password, z.StrucnaSprema, z.MjestoPrebivalista, " +
-                "z.BrojTelefona  FROM zaposleni z INNER JOIN administrator a ON z.JMBG = a.Zaposleni_JMBG " +
-                "WHERE z.Username = ? AND Password = ?";
+                       "z.BrojTelefona  FROM zaposleni z INNER JOIN administrator a ON z.JMBG = a.Zaposleni_JMBG " +
+                       "WHERE z.Username = ? AND Password = ?";
 
         try {
             conn = ConnectionPool.getInstance().checkOut();
@@ -201,7 +230,7 @@ public class MySQLAdministratorDAO implements AdministratorDAO {
             ps.setString(2, AzilUtilities.getSHA256(password));
             rs = ps.executeQuery();
 
-            if (rs.next())
+            if (rs.next()) {
                 retVal = new AdministratorDTO(
                         rs.getString("Username"),
                         rs.getString("Password"),
@@ -212,6 +241,7 @@ public class MySQLAdministratorDAO implements AdministratorDAO {
                         rs.getString("BrojTelefona"),
                         rs.getString("JMBG")
                 );
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

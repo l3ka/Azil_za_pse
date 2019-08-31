@@ -182,6 +182,35 @@ public class MySQLVeterinarianDAO implements VeterinarianDAO {
     }
 
     @Override
+    public boolean exists(String username, String password) {
+        boolean retVal = true;
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String query = "SELECT * FROM zaposleni z " +
+                       "JOIN veterinar v " +
+                       "ON z.JMBG = v.Zaposleni_JMBG " +
+                       "WHERE z.username = ? AND z.password = ?";
+        try {
+            conn = ConnectionPool.getInstance().checkOut();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, username);
+            ps.setString(2, password);
+            rs = ps.executeQuery();
+
+            retVal = rs.next();
+        } catch (SQLException e) {
+            retVal = false;
+            e.printStackTrace();
+        } finally {
+            ConnectionPool.getInstance().checkIn(conn);
+            DBUtilities.getInstance().close(ps, rs);
+        }
+        return  retVal;
+    }
+
+    @Override
     public VeterinarianDTO login(String username, String password){
         VeterinarianDTO retVal = null;
 
