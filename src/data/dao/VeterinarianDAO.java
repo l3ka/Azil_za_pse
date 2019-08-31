@@ -15,4 +15,10 @@ public interface VeterinarianDAO {
     public boolean update(VeterinarianDTO veterinarian);
 
     public boolean updateWithJMB(VeterinarianDTO veterinarian, String oldJMB);
+
+    public boolean delete(VeterinarianDTO veterinarian);
+
+    public boolean exists(VeterinarianDTO veterinarian);
+
+    public VeterinarianDTO login(String username, String password);
 }

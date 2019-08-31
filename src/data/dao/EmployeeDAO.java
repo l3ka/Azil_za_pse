@@ -11,4 +11,7 @@ public interface EmployeeDAO {
     public boolean updateWithJMB(EmployeeDTO employee, String oldJMB);
 
     public boolean delete(EmployeeDTO employee);
+
+    public boolean exists(EmployeeDTO employee);
+
 }

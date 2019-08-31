@@ -14,7 +14,33 @@ import java.util.List;
 
 public class TestMain {
     public static void main(String[] args){
+        testAdminLogin("Admin2", "Password");
+    }
 
+    public static void testAdminLogin(String usernam, String password){
+        AdministratorDTO admin = AzilUtilities.getDAOFactory().getAdministratorDAO().login(usernam, password);
+
+        System.out.println(admin.getName());
+
+    }
+
+    public static  void testContractUpdate(String username){
+        EmploymentContractDTO contract = AzilUtilities.getDAOFactory().getContractDAO().contractsForEmployee(
+                AzilUtilities.getDAOFactory().getAdministratorDAO().getByUsername(username)).get(0);
+
+        contract.setSalary(2000);
+
+        AzilUtilities.getDAOFactory().getContractDAO().update(contract);
+    }
+    public static void testDeleteAdmin(String username){
+        AdministratorDTO admin = AzilUtilities.getDAOFactory().getAdministratorDAO().getByUsername(username);
+        boolean res = AzilUtilities.getDAOFactory().getAdministratorDAO().delete(admin);
+
+        if(res){
+            System.out.println("Success");
+        } else {
+            System.out.println("Faild");
+        }
     }
 
     public static void testAdministrators(){
@@ -67,7 +93,7 @@ public class TestMain {
         Date Do = new Date(Calendar.getInstance().getTime().getTime());
         ServantDTO servant = new ServantDTO("Sluzbenik", "Password", "Rade", "Culum", "kvalifikacija",
                 "adres", "broj", "0203995001121");
-        EmploymentContractDTO contract = new EmploymentContractDTO(null, "Sluzbenik", Od, Do, 1000);
+        EmploymentContractDTO contract = new EmploymentContractDTO(null,1, "Sluzbenik", Od, Do, 1000);
 
 
         boolean res = AzilUtilities.getDAOFactory().getServantDAO().insert(servant, contract);
@@ -84,7 +110,7 @@ public class TestMain {
         Date Do = new Date(Calendar.getInstance().getTime().getTime());
         VeterinarianDTO vet = new VeterinarianDTO("Veterinar", "Password", "Rade", "Culum", "kvalifikacija",
                 "adres", "broj", "0203995011111");
-        EmploymentContractDTO contract = new EmploymentContractDTO(null, "Admin", Od, Do, 1000);
+        EmploymentContractDTO contract = new EmploymentContractDTO(null, 1, "Admin", Od, Do, 1000);
 
 
         boolean res = AzilUtilities.getDAOFactory().getVeterinarinaDAO().insert(vet, contract);
@@ -100,8 +126,8 @@ public class TestMain {
         Date Od = new Date(Calendar.getInstance().getTime().getTime());
         Date Do = new Date(Calendar.getInstance().getTime().getTime());
         AdministratorDTO admin = new AdministratorDTO("Admin2", "Password", "Rade", "Culum", "kvalifikacija",
-                "adres", "broj", "0203995111110");
-        EmploymentContractDTO contract = new EmploymentContractDTO(null, "Admin", Od, Do, 1000);
+                "adres", "broj", "0203995111112");
+        EmploymentContractDTO contract = new EmploymentContractDTO(null, 1,"Admin", Od, Do, 1000);
 
 
         boolean res = AzilUtilities.getDAOFactory().getAdministratorDAO().insert(admin, contract);
@@ -118,7 +144,7 @@ public class TestMain {
 
         DogDTO dog = dogs.get(0);
 
-        boolean res = AzilUtilities.getDAOFactory().getDogDAO().delete(dog.getDogId());
+        boolean res = AzilUtilities.getDAOFactory().getDogDAO().delete(dog);
 
         if(res){
             System.out.println("Succes...");

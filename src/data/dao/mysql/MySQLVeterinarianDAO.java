@@ -16,7 +16,7 @@ public class MySQLVeterinarianDAO implements VeterinarianDAO {
         boolean retVal = true;
         boolean insertSuccess = AzilUtilities.getDAOFactory().getEmployeeDAO().insert(veterinarian, contract);
 
-        if(insertSuccess){
+        if(!AzilUtilities.getDAOFactory().getVeterinarinaDAO().exists(veterinarian) && insertSuccess){
             Connection conn = null;
             PreparedStatement ps = null;
 
@@ -24,7 +24,7 @@ public class MySQLVeterinarianDAO implements VeterinarianDAO {
                     + "(?) ";
             try{
                 conn = ConnectionPool.getInstance().checkOut();
-                ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+                ps = conn.prepareStatement(query);
                 ps.setString(1, veterinarian.getJMB());
 
                 retVal = ps.executeUpdate() == 1;
@@ -121,5 +121,103 @@ public class MySQLVeterinarianDAO implements VeterinarianDAO {
     @Override
     public  boolean updateWithJMB(VeterinarianDTO veterinarian, String oldJMB){
         return AzilUtilities.getDAOFactory().getEmployeeDAO().updateWithJMB(veterinarian, oldJMB);
+    }
+
+    @Override
+    public boolean delete(VeterinarianDTO veterinarian){
+        boolean retVal = true;
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        String query = "DELETE FROM veterinar "
+                + "WHERE Zaposleni_JMBG=? ";
+        try {
+            conn = ConnectionPool.getInstance().checkOut();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, veterinarian.getJMB());
+
+            retVal = ps.executeUpdate() == 1;
+            if(!retVal){
+                return retVal;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            ConnectionPool.getInstance().checkIn(conn);
+            DBUtilities.getInstance().close(ps);
+        }
+
+        retVal = AzilUtilities.getDAOFactory().getEmployeeDAO().delete(veterinarian);
+
+        return retVal;
+    }
+
+    @Override
+    public boolean exists(VeterinarianDTO veterinarian){
+        boolean retVal = true;
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String query = "SELECT * FROM veterinar WHERE Zaposleni_JMBG=?";
+
+        try {
+            conn = ConnectionPool.getInstance().checkOut();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, veterinarian.getJMB());
+            rs = ps.executeQuery();
+
+            retVal = rs.next();
+        } catch (SQLException e) {
+            retVal = false;
+            e.printStackTrace();
+        } finally {
+            ConnectionPool.getInstance().checkIn(conn);
+            DBUtilities.getInstance().close(ps, rs);
+        }
+
+        return  retVal;
+    }
+
+    @Override
+    public VeterinarianDTO login(String username, String password){
+        VeterinarianDTO retVal = null;
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String query = "SELECT z.JMBG, z.Ime, z.Prezime, z.Username, z.Password, z.StrucnaSprema, z.MjestoPrebivalista, " +
+                "z.BrojTelefona  FROM zaposleni z INNER JOIN veterinar a ON z.JMBG = a.Zaposleni_JMBG " +
+                "WHERE z.Username = ? AND Password = ?";
+
+        try {
+            conn = ConnectionPool.getInstance().checkOut();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, username);
+            ps.setString(2, AzilUtilities.getSHA256(password));
+            rs = ps.executeQuery();
+
+            if (rs.next())
+                retVal = new VeterinarianDTO(
+                        rs.getString("Username"),
+                        rs.getString("Password"),
+                        rs.getString("Ime"),
+                        rs.getString("Prezime"),
+                        rs.getString("StrucnaSprema"),
+                        rs.getString("MjestoPrebivalista"),
+                        rs.getString("BrojTelefona"),
+                        rs.getString("JMBG")
+                );
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionPool.getInstance().checkIn(conn);
+            DBUtilities.getInstance().close(ps, rs);
+        }
+
+        return retVal;
     }
 }

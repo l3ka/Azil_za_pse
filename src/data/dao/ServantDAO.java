@@ -15,4 +15,10 @@ public interface ServantDAO {
     public boolean update(ServantDTO servant);
 
     public boolean updateWithJMB(ServantDTO servant, String oldJMB);
+
+    public boolean delete(ServantDTO servant);
+
+    public boolean exists(ServantDTO servant);
+
+    public ServantDTO login(String username, String password);
 }

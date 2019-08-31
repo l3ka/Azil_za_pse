@@ -118,7 +118,7 @@ public class MySQLDogDAO implements DogDAO {
     }
 
     @Override
-    public boolean delete(int Id){
+    public boolean delete(DogDTO dog){
         boolean retVal = true;
 
         Connection conn = null;
@@ -129,7 +129,7 @@ public class MySQLDogDAO implements DogDAO {
         try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
-            ps.setInt(1, Id);
+            ps.setInt(1, dog.getDogId());
 
             retVal = ps.executeUpdate() == 1;
         } catch (SQLException e) {
