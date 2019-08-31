@@ -65,7 +65,6 @@ public class LoginController {
                     }
                     // changeStage(event, ".." + File.separatorChar + "employee" + File.separatorChar + "main_screen" + File.separatorChar + "MainScreen.fxml");
                 }
-                new AlertBoxForm("An error occurred!").display();
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
