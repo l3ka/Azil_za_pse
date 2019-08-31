@@ -3,7 +3,6 @@ package data.dao.mysql;
 import data.dao.EmployeeDAO;
 import data.dto.EmployeeDTO;
 import data.dto.EmploymentContractDTO;
-import org.jetbrains.annotations.NotNull;
 import util.AzilUtilities;
 
 import java.sql.*;
@@ -50,7 +49,7 @@ public class MySQLEmployeeDAO implements EmployeeDAO {
         return  retVal;
     }
 
-    public boolean update(@NotNull EmployeeDTO employee){
+    public boolean update(EmployeeDTO employee){
         boolean retVal = true;
 
         Connection conn = null;
@@ -89,7 +88,7 @@ public class MySQLEmployeeDAO implements EmployeeDAO {
         return retVal;
     }
 
-    public boolean updateWithJMB(@NotNull EmployeeDTO employee, String oldJMB){
+    public boolean updateWithJMB(EmployeeDTO employee, String oldJMB){
         boolean retVal = true;
 
         Connection conn = null;
@@ -161,7 +160,7 @@ public class MySQLEmployeeDAO implements EmployeeDAO {
     }
 
     @Override
-    public boolean exists(@NotNull EmployeeDTO employee){
+    public boolean exists(EmployeeDTO employee){
         boolean retVal = true;
 
         Connection conn = null;

@@ -7,8 +7,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 import util.AzilUtilities;
 
 import java.sql.Date;
@@ -95,8 +93,7 @@ public class AddAndChangeAccountController {
         return true;
     }
 
-    @Contract(pure = true)
-    private boolean checkIsNumber(@NotNull String number) {
+    private boolean checkIsNumber(String number) {
         return number.matches("^[0-9]*$");
     }
 
