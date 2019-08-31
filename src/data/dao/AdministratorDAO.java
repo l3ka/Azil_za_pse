@@ -22,5 +22,7 @@ public interface AdministratorDAO {
 
     public boolean exists(AdministratorDTO administrator);
 
+    public boolean exists(String username, String password);
+
     public AdministratorDTO login(String username, String password);
 }

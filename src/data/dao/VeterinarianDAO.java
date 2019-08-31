@@ -20,5 +20,7 @@ public interface VeterinarianDAO {
 
     public boolean exists(VeterinarianDTO veterinarian);
 
+    public boolean exists(String username, String password);
+
     public VeterinarianDTO login(String username, String password);
 }

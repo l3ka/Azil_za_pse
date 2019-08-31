@@ -5,6 +5,8 @@ import GUI.vet.dog_examination.DogExaminationForm;
 import GUI.vet.taking_medicine.TakingMedicineForm;
 import GUI.vet.generating_finding.GeneratingFindingForm;
 import data.dto.DogDTO;
+import data.dto.EmployeeDTO;
+import data.dto.VeterinarianDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
@@ -19,6 +21,16 @@ public class VetMainController {
     @FXML private TableView<DogDTO> dogsTableView;
     private List<DogDTO> listOfDogs;
     private Stage stage;
+    private EmployeeDTO employee;
+
+    public EmployeeDTO getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(EmployeeDTO employee) {
+        this.employee = employee;
+    }
+
 
     public void initialize(Stage stage) {
         this.stage = stage;

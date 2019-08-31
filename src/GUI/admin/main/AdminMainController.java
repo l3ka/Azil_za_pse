@@ -6,7 +6,9 @@ import GUI.admin.add_change_account.AddAndChangeAccount;
 import GUI.adopting_dog.AdoptingDogForm;
 import GUI.admin.generating_statistic.GeneratingStatisticForm;
 import GUI.login.LoginForm;
+import data.dto.AdministratorDTO;
 import data.dto.DogDTO;
+import data.dto.EmployeeDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
@@ -21,6 +23,16 @@ public class AdminMainController {
     @FXML private TableView<DogDTO> dogsTableView;
     private List<DogDTO> listOfDogs;
     private Stage stage;
+
+    private EmployeeDTO employee;
+
+    public EmployeeDTO getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(EmployeeDTO employee) {
+        this.employee = employee;
+    }
 
     public void initialize(Stage stage) {
         this.stage = stage;
