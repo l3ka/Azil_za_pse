@@ -23,11 +23,8 @@ public class TakingMedicineController {
 
     public void takeMedicine() {
         if(checkSelectedDrug() && checkSelectedAmount()) {
-            try {
-                new AlertBoxForm("Lijek je uspješno izabran!").display();
-            } catch(Exception exception) {
-
-            }
+            displayAlertBox("Lijek je uspješno izabran!");
+            stage.close();
         }
     }
 
@@ -37,11 +34,7 @@ public class TakingMedicineController {
 
     private boolean checkSelectedDrug() {
         if(drugsTableView.getSelectionModel().getSelectedCells().isEmpty()) {
-            try {
-                new AlertBoxForm("Nije izabran lijek!").display();
-            } catch(Exception exception) {
-
-            }
+            displayAlertBox("Nije izabran lijek!");
             return false;
         }
         return true;
@@ -49,13 +42,17 @@ public class TakingMedicineController {
 
     private boolean checkSelectedAmount() {
         if(amountComboBox.getSelectionModel().getSelectedItem() == null) {
-            try {
-                new AlertBoxForm("Nije izabrana količina lijeka!").display();
-            } catch(Exception exception) {
-
-            }
+            displayAlertBox("Nije izabrana količina lijeka!");
             return false;
         }
         return true;
+    }
+
+    private void displayAlertBox(String content) {
+        try {
+            new AlertBoxForm(content).display();
+        } catch (Exception exception) {
+
+        }
     }
 }

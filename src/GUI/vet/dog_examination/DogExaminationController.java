@@ -23,14 +23,8 @@ public class DogExaminationController {
 
     public void save() {
         if(checkSelectedDog() && checkFinding()) {
-            try {
-                new AlertBoxForm("Pas je uspješno pregledan!").display();
-            } catch (Exception exception) {
-
-            }
-
-            finding = null;
-            dogsTableView.getSelectionModel().clearSelection();
+            displayAlertBox("Pas je uspješno pregledan!");
+            stage.close();
         }
     }
 
@@ -40,11 +34,7 @@ public class DogExaminationController {
 
     private boolean checkFinding() {
         if(finding == null) {
-            try {
-                new AlertBoxForm("Nije izabran nalaz!").display();
-            } catch(Exception exception) {
-
-            }
+            displayAlertBox("Nije izabran nalaz!");
             return false;
         }
         return true;
@@ -52,13 +42,17 @@ public class DogExaminationController {
 
     private boolean checkSelectedDog() {
         if(dogsTableView.getSelectionModel().getSelectedCells().isEmpty()) {
-            try {
-                new AlertBoxForm("Nije izabran pas za pregled!").display();
-            } catch(Exception exception) {
-
-            }
+            displayAlertBox("Nije izabran pas za pregled!");
             return false;
         }
         return true;
+    }
+
+    private void displayAlertBox(String content) {
+        try {
+            new AlertBoxForm(content).display();
+        } catch (Exception exception) {
+
+        }
     }
 }

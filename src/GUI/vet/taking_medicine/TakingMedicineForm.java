@@ -18,6 +18,6 @@ public class TakingMedicineForm {
         stage.setScene(scene);
         TakingMedicineController controller = loader.getController();
         controller.initialize(stage);
-        stage.show();
+        stage.showAndWait();
     }
 }

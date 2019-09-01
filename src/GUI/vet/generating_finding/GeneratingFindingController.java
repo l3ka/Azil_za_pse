@@ -17,12 +17,8 @@ public class GeneratingFindingController {
 
     public void save() {
         if(checkDescription()) {
-            try {
-                new AlertBoxForm("Nalaz je uspješno generisan!").display();
-            } catch(Exception exception) {
-
-            }
-            descriptionTextArea.setText("");
+            displayAlertBox("Nalaz je uspješno generisan!");
+            stage.close();
         }
     }
 
@@ -32,13 +28,17 @@ public class GeneratingFindingController {
 
     private boolean checkDescription() {
         if("".equals(descriptionTextArea.getText())) {
-            try {
-                new AlertBoxForm("Nije unesen opis!").display();
-            } catch(Exception exception) {
-
-            }
+            displayAlertBox("Nije unesen opis!");
             return false;
         }
         return true;
+    }
+
+    private void displayAlertBox(String content) {
+        try {
+            new AlertBoxForm(content).display();
+        } catch (Exception exception) {
+
+        }
     }
 }

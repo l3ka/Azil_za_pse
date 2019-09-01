@@ -17,6 +17,6 @@ public class DogExaminationForm {
         stage.setScene(scene);
         DogExaminationController controller = loader.getController();
         controller.initialize(stage);
-        stage.show();
+        stage.showAndWait();
     }
 }

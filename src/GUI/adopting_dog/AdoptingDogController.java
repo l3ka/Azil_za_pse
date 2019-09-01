@@ -37,30 +37,37 @@ public class AdoptingDogController {
     }
 
     public void adoptDog() {
-        if(dogsTableView.getSelectionModel().getSelectedCells().isEmpty()) {
-            try {
-                new AlertBoxForm("Nije izabran pas!").display();
-            } catch(Exception exception) {
-
-            }
-        } else if(fosterParentsTableView.getSelectionModel().getSelectedCells().isEmpty()) {
-            try {
-                new AlertBoxForm("Nije izabran udomitelj!").display();
-            } catch(Exception exception) {
-
-            }
-        } else {
-            try {
-                new AlertBoxForm("Pas je uspješno udomljen!").display();
-            } catch(Exception exception) {
-
-            }
-            dogsTableView.getSelectionModel().clearSelection();
-            fosterParentsTableView.getSelectionModel().clearSelection();
+        if(checkDog() && checkFosterParent()) {
+            displayAlertBox("Pas je uspješno udomljen!");
+            stage.close();
         }
     }
 
     public void quit() {
         stage.close();
+    }
+
+    private boolean checkDog() {
+        if(dogsTableView.getSelectionModel().getSelectedItem() == null) {
+            displayAlertBox("Nije izabran pas!");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkFosterParent() {
+        if(fosterParentsTableView.getSelectionModel().getSelectedItem() == null) {
+            displayAlertBox("Nije izabran udomitelj!");
+            return false;
+        }
+        return true;
+    }
+
+    private void displayAlertBox(String content) {
+        try {
+            new AlertBoxForm(content).display();
+        } catch (Exception exception) {
+
+        }
     }
 }

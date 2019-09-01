@@ -5,6 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import util.AzilUtilities;
+
+import java.lang.reflect.UndeclaredThrowableException;
 
 public class AddingMedicineController {
     @FXML private TextField nameTextField;
@@ -20,17 +23,8 @@ public class AddingMedicineController {
 
     public void addDrug() {
         if(checkName() && checkDateOfMaunfacturer() && checkExpirationDate() && checkAmount() && checkDescription()) {
-            try {
-                new AlertBoxForm("Lijek je uspješno dodat!").display();
-            } catch(Exception exception) {
-
-            }
-
-            nameTextField.clear();
-            dateOfManufacturePicker.setValue(null);
-            expirationDatePicker.setValue(null);
-            amountTextField.clear();
-            descriptionTextField.clear();
+            displayAlertBox("Lijek je uspješno dodat!");
+            stage.close();
         }
     }
 
@@ -40,11 +34,7 @@ public class AddingMedicineController {
 
     private boolean checkName() {
         if("".equals(nameTextField.getText())) {
-            try {
-                new AlertBoxForm("Unos za polje naziv nije odgovarajući!").display();
-            } catch(Exception exception) {
-
-            }
+            displayAlertBox("Unos za polje naziv nije odgovarajući!");
             return false;
         }
         return true;
@@ -52,11 +42,7 @@ public class AddingMedicineController {
 
     private boolean checkDateOfMaunfacturer() {
         if (dateOfManufacturePicker.getValue() == null) {
-            try {
-                new AlertBoxForm("Datum proizvodnje nije izabran!").display();
-            } catch(Exception exception) {
-
-            }
+            displayAlertBox("Datum proizvodnje nije izabran!");
             return false;
         }
         return true;
@@ -64,11 +50,7 @@ public class AddingMedicineController {
 
     private boolean checkExpirationDate() {
         if(expirationDatePicker.getValue() == null) {
-            try {
-                new AlertBoxForm("Rok trajanja nije izabran!").display();
-            } catch(Exception exception) {
-
-            }
+            displayAlertBox("Rok trajanja nije izabran!");
             return false;
         }
         return true;
@@ -76,11 +58,7 @@ public class AddingMedicineController {
 
     private boolean checkAmount() {
         if("".equals(amountTextField.getText()) || !checkNumber(amountTextField.getText())) {
-            try {
-                new AlertBoxForm("Unos za polje količina nije odgovarajući!").display();
-            } catch(Exception exception) {
-
-            }
+            displayAlertBox("Unos za polje količina nije odgovarajući!");
             return false;
         }
         return true;
@@ -88,11 +66,7 @@ public class AddingMedicineController {
 
     private boolean checkDescription() {
         if("".equals(descriptionTextField.getText())) {
-            try {
-                new AlertBoxForm("Unos za polje opis nije odgovarajući!").display();
-            } catch(Exception exception) {
-
-            }
+            displayAlertBox("Unos za polje opis nije odgovarajući!");
             return false;
         }
         return true;
@@ -104,6 +78,14 @@ public class AddingMedicineController {
             return true;
         } catch(NumberFormatException exception) {
             return false;
+        }
+    }
+
+    private void displayAlertBox(String content) {
+        try {
+            new AlertBoxForm(content).display();
+        } catch(Exception exception) {
+
         }
     }
 }

@@ -17,6 +17,6 @@ public class AdoptingDogForm {
         stage.setScene(scene);
         AdoptingDogController controller = loader.getController();
         controller.initialize(stage);
-        stage.show();
+        stage.showAndWait();
     }
 }
