@@ -17,6 +17,6 @@ public class AddingMedicineForm {
         AddingMedicineController controller = loader.getController();
         controller.initialize(stage);
         stage.setScene(scene);
-        stage.show();
+        stage.showAndWait();
     }
 }

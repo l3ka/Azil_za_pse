@@ -20,11 +20,8 @@ public class GeneratingStatisticController {
 
     public void generateStatistic() {
         if(checkParameter() && checkStartDate() && checkEndDate()) {
-            try {
-                new AlertBoxForm("Uspješno generisana statistika!").display(); // ovo nece bas ovako
-            } catch(Exception exception) {
-
-            }
+            displayAlertBox("Uspješno generisana statistika!");
+            stage.close();
         }
     }
 
@@ -34,11 +31,7 @@ public class GeneratingStatisticController {
 
     private boolean checkStartDate() {
         if(startDatePicker.getValue() == null) {
-            try {
-                new AlertBoxForm("Nije izabran početni datum!").display();
-            } catch(Exception exception) {
-
-            }
+            displayAlertBox("Nije izabran početni datum!");
             return false;
         }
         return true;
@@ -46,11 +39,7 @@ public class GeneratingStatisticController {
 
     private boolean checkEndDate() {
         if(endDatePicker.getValue() == null) {
-            try {
-                new AlertBoxForm("Nije izabran krajnji datum!").display();
-            } catch(Exception exception) {
-
-            }
+            displayAlertBox("Nije izabran krajnji datum!");
             return false;
         }
         return true;
@@ -58,13 +47,17 @@ public class GeneratingStatisticController {
 
     private boolean checkParameter() {
         if(statisticComboBox.getSelectionModel().getSelectedItem() == null) {
-            try {
-                new AlertBoxForm("Nije izabran parametar!").display();
-            } catch(Exception exception) {
-
-            }
+            displayAlertBox("Nije izabran parametar!");
             return false;
         }
         return true;
+    }
+
+    private void displayAlertBox(String content) {
+        try {
+            new AlertBoxForm(content).display();
+        } catch (Exception exception) {
+
+        }
     }
 }

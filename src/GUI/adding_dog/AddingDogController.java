@@ -22,7 +22,6 @@ public class AddingDogController {
     @FXML private TextField weightTextField;
     @FXML private TextField heightTextField;
     @FXML private DatePicker dateofBirthDatePicker;
-    @FXML private Button choosePhotoButton;
     private File photo;
     private Stage stage;
 
@@ -46,12 +45,8 @@ public class AddingDogController {
         if (checkName() && checkRace() && checkGender() && checkWeight() && checkHeight() && checkAge()) {
             if (AzilUtilities.getDAOFactory().getDogDAO().insert(new DogDTO(0, genderComboBox.getSelectionModel().getSelectedItem(), nameTextField.getText(),
                     raceTextField.getText(), Integer.parseInt(heightTextField.getText()), Double.parseDouble(weightTextField.getText()), Date.valueOf(dateofBirthDatePicker.getValue()), image))) {
-                try {
-                    new AlertBoxForm("Pas je uspješno dodat!").display();
-                    stage.close();
-                } catch (Exception exception) {
-
-                }
+                displayAlertBox("Pas je uspješno dodat!");
+                stage.close();
             }
         }
     }
@@ -62,11 +57,7 @@ public class AddingDogController {
 
     private boolean checkName() {
         if("".equals(nameTextField.getText())) {
-            try {
-                new AlertBoxForm("Unos za polje ime nije odgovarajući!").display();
-            } catch(Exception exception) {
-
-            }
+            displayAlertBox("Unos za polje ime nije odgovarajući!");
             return false;
         }
         return true;
@@ -74,11 +65,7 @@ public class AddingDogController {
 
     private boolean checkRace() {
         if("".equals(raceTextField.getText())) {
-            try {
-                new AlertBoxForm("Unos za polje rasa nije odgovarajući!").display();
-            } catch(Exception exception) {
-
-            }
+            displayAlertBox("Unos za polje rasa nije odgovarajući!");
             return false;
         }
         return true;
@@ -86,11 +73,7 @@ public class AddingDogController {
 
     private boolean checkGender() {
         if(genderComboBox.getSelectionModel().getSelectedItem() == null) {
-            try {
-                new AlertBoxForm("Pol psa nije izabran!").display();
-            } catch(Exception exception) {
-
-            }
+            displayAlertBox("Pol psa nije izabran!");
             return false;
         }
         return true;
@@ -98,11 +81,7 @@ public class AddingDogController {
 
     private boolean checkWeight() {
         if("".equals(weightTextField.getText()) || !checkNumber(weightTextField.getText())) {
-            try {
-                new AlertBoxForm("Unos za polje težina nije odgovarajući!").display();
-            } catch(Exception exception) {
-
-            }
+            displayAlertBox("Unos za polje težina nije odgovarajući!");
             return false;
         }
         return true;
@@ -110,11 +89,7 @@ public class AddingDogController {
 
     private boolean checkHeight() {
         if("".equals(heightTextField.getText()) || !checkNumber(heightTextField.getText())) {
-            try {
-                new AlertBoxForm("Unos za polje visina nije odgovarajući!").display();
-            } catch(Exception exception) {
-
-            }
+            displayAlertBox("Unos za polje visina nije odgovarajući!");
             return false;
         }
         return true;
@@ -122,11 +97,7 @@ public class AddingDogController {
 
     private boolean checkAge() {
         if(dateofBirthDatePicker.getValue() == null) {
-            try {
-                new AlertBoxForm("Unos za polje rođenje nije odgovarajući!").display();
-            } catch(Exception exception) {
-
-            }
+            displayAlertBox("Unos za polje rođenje nije odgovarajući!");
             return false;
         }
         return true;
@@ -145,6 +116,14 @@ public class AddingDogController {
             return true;
         } catch(NumberFormatException exception) {
             return false;
+        }
+    }
+
+    private void displayAlertBox(String content) {
+        try {
+            new AlertBoxForm(content).display();
+        } catch(Exception exception) {
+
         }
     }
 }

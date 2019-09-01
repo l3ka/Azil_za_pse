@@ -17,6 +17,6 @@ public class GeneratingStatisticForm {
         stage.setScene(scene);
         GeneratingStatisticController controller = loader.getController();
         controller.initialize(stage);
-        stage.show();
+        stage.showAndWait();
     }
 }
