@@ -47,6 +47,41 @@ public class MySQLDogDAO implements DogDAO {
     }
 
     @Override
+    public DogDTO getByID(int ID){
+        DogDTO retVal = null;
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String query = "SELECT * FROM pas WHERE IdPsa=?";
+        try {
+            conn = ConnectionPool.getInstance().checkOut();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, ID);
+            rs = ps.executeQuery();
+
+            while (rs.next())
+                retVal = new DogDTO(
+                        rs.getInt("IdPsa"),
+                        rs.getString("Pol"),
+                        rs.getString("Ime"),
+                        rs.getString("Rasa"),
+                        rs.getInt("Visina"),
+                        rs.getDouble("Tezina"),
+                        rs.getDate("DatumRodjenja"),
+                        rs.getString("Fotografija")
+                );
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionPool.getInstance().checkIn(conn);
+            DBUtilities.getInstance().close(ps, rs);
+        }
+        return retVal;
+    }
+
+    @Override
     public boolean insert(DogDTO dogDTO){
         boolean retVal = true;
 
