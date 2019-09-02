@@ -2,6 +2,7 @@ package data.dto;
 
 import java.io.File;
 import java.sql.Date;
+import java.util.Objects;
 
 public class DogDTO {
     private Integer dogId;
@@ -10,6 +11,7 @@ public class DogDTO {
     private String breed;
     private int height;
     private double weight;
+
     private Date dateOfBirth;
     private String image;
 
@@ -89,5 +91,18 @@ public class DogDTO {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DogDTO dogDTO = (DogDTO) o;
+        return Objects.equals(dogId, dogDTO.dogId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(dogId);
     }
 }

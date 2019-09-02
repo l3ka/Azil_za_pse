@@ -77,7 +77,7 @@ public class MySQLEmployeeDAO implements EmployeeDAO {
 
             ps.setString(8, employee.getJMB());
 
-            retVal = ps.executeUpdate() == 1;
+            ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

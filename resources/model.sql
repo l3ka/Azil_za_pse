@@ -298,9 +298,10 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `azil`.`UdomljavanjePsa` ;
 
 CREATE TABLE IF NOT EXISTS `azil`.`UdomljavanjePsa` (
-  `Datum` DATE NOT NULL,
+  `DatumOd` DATE NOT NULL,
   `Pas_IdPsa` INT NOT NULL,
   `Udomitelj_JMBG` CHAR(13) NOT NULL,
+  `DatumDo` DATE,
   PRIMARY KEY (`Datum`, `Pas_IdPsa`, `Udomitelj_JMBG`),
   INDEX `fk_UdomljavanjePsa_Pas1_idx` (`Pas_IdPsa` ASC) ,
   INDEX `fk_UdomljavanjePsa_Udomitelj1_idx` (`Udomitelj_JMBG` ASC) ,

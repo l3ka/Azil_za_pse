@@ -1,21 +1,35 @@
 package data.dto;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
 public class FosterParentDTO {
     private String name;
     private String surname;
     private String residenceAddress;
     private String telephoneNumber;
     private String JMB;
+    private HashSet<AdoptingDTO> dogs;
 
     public FosterParentDTO(){
     }
 
-    public FosterParentDTO(String name, String surname, String residenceAddress, String telephoneNumber, String JMB) {
+    public FosterParentDTO(String JMB, String name, String surname, String residenceAddress, String telephoneNumber) {
         this.name = name;
         this.surname = surname;
         this.residenceAddress = residenceAddress;
         this.telephoneNumber = telephoneNumber;
         this.JMB = JMB;
+        this.dogs = new HashSet<>();
+    }
+
+    public List<AdoptingDTO> getAddoAdopting(){
+        return new ArrayList<>(dogs);
+    }
+
+    public void addDog(AdoptingDTO adopting){
+        dogs.add(adopting);
     }
 
     public String getName() {

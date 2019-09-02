@@ -7,6 +7,8 @@ import java.util.List;
 public interface DogDAO {
     public List<DogDTO> dogs();
 
+    public DogDTO getByID(int ID);
+
     public boolean insert(DogDTO dogDTO);
 
     public boolean update(DogDTO dogDTO);

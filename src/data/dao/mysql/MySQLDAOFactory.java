@@ -23,4 +23,10 @@ public class MySQLDAOFactory extends DAOFactory {
 
     @Override
     public ContractDAO getContractDAO(){ return new MySQLContractDAO(); }
+
+    @Override
+    public FosterParentDAO getFosterParentDAO(){ return  new MySQLFosterParentDAO(); }
+
+    @Override
+    public AdoptingDAO getAdoptingDAO() { return new MySQLAdoptingDAO(); }
 }

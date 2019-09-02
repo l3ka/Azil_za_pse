@@ -1,5 +1,6 @@
 package test;
 
+import data.dao.FosterParentDAO;
 import data.dao.mysql.ConnectionPool;
 import data.dto.*;
 import util.AzilUtilities;
@@ -14,7 +15,65 @@ import java.util.List;
 
 public class TestMain {
     public static void main(String[] args){
-        testAdminLogin("Admin2", "Password");
+        testDeleteFosterParent("0202993199942");
+    }
+
+    public static void testDeleteFosterParent(String JMB){
+        AzilUtilities.getDAOFactory().getFosterParentDAO().delete(JMB);
+    }
+
+    public static void testUpdateAdopting(){
+        FosterParentDTO fosterParent1 = AzilUtilities.getDAOFactory().getFosterParentDAO().fosterParents().get(0);
+        FosterParentDTO fosterParent2 = AzilUtilities.getDAOFactory().getFosterParentDAO().fosterParents().get(1);
+        AdoptingDTO adopting = AzilUtilities.getDAOFactory().getAdoptingDAO().getAdoptingForFosterParent(fosterParent1).get(0);
+
+        AzilUtilities.getDAOFactory().getAdoptingDAO().update(fosterParent2, adopting, adopting.getDateFrom(),
+                adopting.getDog().getDogId(), fosterParent1.getJMB());
+    }
+
+    public static void testGetAdpopting(){
+        FosterParentDTO fosterParent = AzilUtilities.getDAOFactory().getFosterParentDAO().fosterParents().get(0);
+        List<AdoptingDTO> adoptings = AzilUtilities.getDAOFactory().getAdoptingDAO().getAdoptingForFosterParent(fosterParent);
+
+        for(AdoptingDTO adopting : adoptings){
+            System.out.println(adopting.getDog().getDogId() +  " " + adopting.getDog().getName());
+        }
+    }
+
+    public static void testAdopting(){
+        FosterParentDTO fosterParent = AzilUtilities.getDAOFactory().getFosterParentDAO().fosterParents().get(0);
+        DogDTO dog = AzilUtilities.getDAOFactory().getDogDAO().dogs().get(1);
+        AdoptingDTO adopting = new AdoptingDTO(
+                dog,
+                new Date(Calendar.getInstance().getTime().getTime()),
+                new Date(Calendar.getInstance().getTime().getTime())
+        );
+
+        AzilUtilities.getDAOFactory().getAdoptingDAO().insert(fosterParent, adopting);
+    }
+
+    public static  void testFosterParentUpdate(){
+        FosterParentDTO fosterParent = AzilUtilities.getDAOFactory().getFosterParentDAO().fosterParents().get(0);
+        fosterParent.setName("NovoIme");
+        AzilUtilities.getDAOFactory().getFosterParentDAO().update(fosterParent);
+    }
+
+
+    public static void testFosterParents(){
+        for(FosterParentDTO fosterParent : AzilUtilities.getDAOFactory().getFosterParentDAO().fosterParents()){
+            System.out.println(fosterParent.getName());
+        }
+    }
+
+    public static void testFosterParentInsert(){
+        FosterParentDTO fosterParent = new FosterParentDTO(
+                "0202993199942",
+                "Ime2",
+                "Prezime2",
+                "Adres",
+                "Broj");
+
+        AzilUtilities.getDAOFactory().getFosterParentDAO().insert(fosterParent);
     }
 
     public static void testAdminLogin(String usernam, String password){
@@ -125,7 +184,7 @@ public class TestMain {
     static void testAdmin(){
         Date Od = new Date(Calendar.getInstance().getTime().getTime());
         Date Do = new Date(Calendar.getInstance().getTime().getTime());
-        AdministratorDTO admin = new AdministratorDTO("Admin2", "Password", "Rade", "Culum", "kvalifikacija",
+        AdministratorDTO admin = new AdministratorDTO("Admin1", "Password", "Rade", "Culum", "kvalifikacija",
                 "adres", "broj", "0203995111112");
         EmploymentContractDTO contract = new EmploymentContractDTO(null, 1,"Admin", Od, Do, 1000);
 

@@ -15,6 +15,10 @@ public abstract class DAOFactory {
 
     public abstract  ContractDAO getContractDAO();
 
+    public abstract  FosterParentDAO getFosterParentDAO();
+
+    public abstract AdoptingDAO getAdoptingDAO();
+
     public static DAOFactory getDAOFactory() {
         return new MySQLDAOFactory();
     }
