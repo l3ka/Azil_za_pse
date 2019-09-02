@@ -1,32 +1,32 @@
 package data.dao.mysql;
 
-import data.dao.AdoptingDAO;
-import data.dto.AdoptingDTO;
-import data.dto.FosterParentDTO;
+import data.dao.DogInCageDAO;
+import data.dto.CageDTO;
+import data.dto.DogInCageDTO;
 import util.AzilUtilities;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MySQLAdoptingDAO implements AdoptingDAO {
+public class MySQLDogInCage implements DogInCageDAO {
 
     @Override
-    public boolean insert(FosterParentDTO fosterParent, AdoptingDTO adopting){
+    public boolean insert(CageDTO cage, DogInCageDTO dogInCage){
         boolean retVal = true;
 
         Connection conn = null;
         PreparedStatement ps = null;
 
-        String query = "INSERT INTO udomljavanjepsa "
+        String query = "INSERT INTO kavez_pas  "
                 + "VALUES (?, ?, ?, ?) ";
         try{
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
-            ps.setDate(1, adopting.getDateFrom());
-            ps.setInt(2, adopting.getDog().getDogId());
-            ps.setString(3, fosterParent.getJMB());
-            ps.setDate(4, adopting.getDateTo());
+            ps.setDate(1, dogInCage.getDateForm());
+            ps.setInt(2, cage.getId());
+            ps.setInt(3, dogInCage.getDog().getDogId());
+            ps.setDate(4, dogInCage.getDateTo());
 
             retVal = ps.executeUpdate() == 1;
         }catch (Exception e){
@@ -40,22 +40,23 @@ public class MySQLAdoptingDAO implements AdoptingDAO {
         return retVal;
     }
 
-    public List<AdoptingDTO> getAdoptingForFosterParent(FosterParentDTO fosterParent){
-        List<AdoptingDTO> retVal = new ArrayList<>();
+    @Override
+    public List<DogInCageDTO> dogInCages(CageDTO cage){
+        List<DogInCageDTO> retVal = new ArrayList<>();
 
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String query = "SELECT * FROM udomljavanjepsa WHERE Udomitelj_JMBG=?";
+        String query = "SELECT * FROM kavez_pas WHERE KavezIdKaveza=?";
 
         try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
-            ps.setString(1, fosterParent.getJMB());
+            ps.setInt(1, cage.getId());
             rs = ps.executeQuery();
 
             while (rs.next())
-                retVal.add(new AdoptingDTO(
+                retVal.add(new DogInCageDTO(
                         AzilUtilities.getDAOFactory().getDogDAO().getByID(rs.getInt("Pas_IdPsa")),
                         rs.getDate("datumOd"),
                         rs.getDate("DatumDo")
@@ -70,30 +71,29 @@ public class MySQLAdoptingDAO implements AdoptingDAO {
         return retVal;
     }
 
-    @Override
-    public boolean update(FosterParentDTO fosterParentDTO, AdoptingDTO adopting, Date dateFrom, int dogId, String JMB){
+    public boolean update(CageDTO cage, DogInCageDTO dogInCage, Date dateFrom, int cageId, int dogId){
         boolean retVal = true;
 
         Connection conn = null;
         PreparedStatement ps = null;
-        String query = "UPDATE udomljavanjepsa SET " +
-                "DatumOd=?, " +
-                "Pas_IdPsa=?, " +
-                "Udomitelj_JMBG=?, " +
-                "DatumDo=? " +
-                "WHERE DatumOd=? AND Pas_IdPsa=? AND Udomitelj_JMBG=?";
 
+        String query = "UPDATE kavez_pas SET " +
+                "Od=?, " +
+                "Kavez_IdKavez=?," +
+                "Pas_IdPsa=?," +
+                "Do=? " +
+                "WHERE Od=?  AND Kavez_IdKaveza=? AND Pas_IdPsa=?";
         try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
-            ps.setDate(1, adopting.getDateFrom());
-            ps.setInt(2, adopting.getDog().getDogId());
-            ps.setString(3, fosterParentDTO.getJMB());
-            ps.setDate(4, adopting.getDateTo());
+            ps.setDate(1, dogInCage.getDateForm());
+            ps.setInt(2, cage.getId());
+            ps.setInt(3, dogInCage.getDog().getDogId());
+            ps.setDate(4, dogInCage.getDateTo());
 
             ps.setDate(5, dateFrom);
-            ps.setInt(6, dogId);
-            ps.setString(7, JMB);
+            ps.setInt(6, cageId);
+            ps.setInt(7, dogId);
 
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -102,24 +102,24 @@ public class MySQLAdoptingDAO implements AdoptingDAO {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
         }
-
         return retVal;
     }
 
-    public boolean delete(Date dateFrom, int dogId, String JMB){
+    public boolean delete(Date dateFrom, int cageId, int dogId){
         boolean retVal = true;
 
         Connection conn = null;
         PreparedStatement ps = null;
-        String query = "DELETE FROM udomljavanjepsa " +
-                "WHERE DatumOd=? AND Pas_IdPsa=? AND Udomitelj_JMBG=?";
 
+        String query = "DELETE FROM kavez_pas " +
+                "WHERE Od=?  AND Kavez_IdKaveza=? AND Pas_IdPsa=?";
         try {
             conn = ConnectionPool.getInstance().checkOut();
+            ps = conn.prepareStatement(query);
 
             ps.setDate(1, dateFrom);
-            ps.setInt(2, dogId);
-            ps.setString(3, JMB);
+            ps.setInt(2, cageId);
+            ps.setInt(3, dogId);
 
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -128,7 +128,6 @@ public class MySQLAdoptingDAO implements AdoptingDAO {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
         }
-
         return retVal;
     }
 }

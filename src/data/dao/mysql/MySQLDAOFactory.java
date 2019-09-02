@@ -29,4 +29,10 @@ public class MySQLDAOFactory extends DAOFactory {
 
     @Override
     public AdoptingDAO getAdoptingDAO() { return new MySQLAdoptingDAO(); }
+
+    @Override
+    public CageDAO getCageDAO() { return new MySQLCageDAO(); }
+
+    @Override
+    public DogInCageDAO getDogInCageDAO() { return new MySQLDogInCage(); }
 }

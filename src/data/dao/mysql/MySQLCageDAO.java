@@ -1,7 +1,7 @@
 package data.dao.mysql;
 
-import data.dao.DogDAO;
-import data.dto.DogDTO;
+import data.dao.CageDAO;
+import data.dto.CageDTO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,32 +10,26 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MySQLDogDAO implements DogDAO {
+public class MySQLCageDAO implements CageDAO {
 
     @Override
-    public List<DogDTO> dogs(){
-        List<DogDTO> retVal = new ArrayList<>();
+    public List<CageDTO> cages(){
+        List<CageDTO> retVal = new ArrayList<>();
 
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        String query = "SELECT * FROM pas";
+        String query = "SELECT * FROM kavez";
         try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
             rs = ps.executeQuery();
 
             while (rs.next())
-                retVal.add(new DogDTO(
-                        rs.getInt("IdPsa"),
-                        rs.getString("Pol"),
-                        rs.getString("Ime"),
-                        rs.getString("Rasa"),
-                        rs.getInt("Visina"),
-                        rs.getDouble("Tezina"),
-                        rs.getDate("DatumRodjenja"),
-                        rs.getString("Fotografija")
+                retVal.add(new CageDTO(
+                        rs.getInt("Idkaveza"),
+                        rs.getInt("Kapacitet")
                 ));
         } catch (SQLException e) {
             e.printStackTrace();
@@ -47,31 +41,26 @@ public class MySQLDogDAO implements DogDAO {
     }
 
     @Override
-    public DogDTO getByID(int ID){
-        DogDTO retVal = null;
+    public CageDTO getById(int Id){
+        CageDTO retVal = null;
 
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        String query = "SELECT * FROM pas WHERE IdPsa=?";
+        String query = "SELECT * FROM kavez WHERE IdKaveza=?";
         try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
-            ps.setInt(1, ID);
+            ps.setInt(1, Id);
             rs = ps.executeQuery();
 
-            while (rs.next())
-                retVal = new DogDTO(
-                        rs.getInt("IdPsa"),
-                        rs.getString("Pol"),
-                        rs.getString("Ime"),
-                        rs.getString("Rasa"),
-                        rs.getInt("Visina"),
-                        rs.getDouble("Tezina"),
-                        rs.getDate("DatumRodjenja"),
-                        rs.getString("Fotografija")
+            if (rs.next()) {
+                retVal = new CageDTO(
+                        rs.getInt("Idkaveza"),
+                        rs.getInt("Kapacitet")
                 );
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -82,24 +71,18 @@ public class MySQLDogDAO implements DogDAO {
     }
 
     @Override
-    public boolean insert(DogDTO dogDTO){
+    public boolean insert(CageDTO cage){
         boolean retVal = true;
 
         Connection conn = null;
         PreparedStatement ps = null;
 
-        String query = "INSERT INTO pas (Ime, Pol, Rasa, DatumRodjenja, Visina, Tezina, Fotografija) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?) ";
+        String query = "INSERT INTO kavez (Kapacitet) "
+                + "VALUES (?) ";
         try{
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
-            ps.setString(1, dogDTO.getName());
-            ps.setString(2, dogDTO.getGender());
-            ps.setString(3, dogDTO.getBreed());
-            ps.setDate(4, dogDTO.getDateOfBirth());
-            ps.setInt(5, dogDTO.getHeight());
-            ps.setDouble(6, dogDTO.getWeight());
-            ps.setString(7, dogDTO.getImage());
+            ps.setInt(1, cage.getCapacity());
 
             retVal = ps.executeUpdate() == 1;
         }catch (Exception e){
@@ -113,34 +96,21 @@ public class MySQLDogDAO implements DogDAO {
         return retVal;
     }
 
-    @Override
-    public boolean update(DogDTO dogDTO){
+    public boolean update(CageDTO cage){
         boolean retVal = true;
 
         Connection conn = null;
         PreparedStatement ps = null;
 
-        String query = "UPDATE pas SET " +
-                "Pol=?," +
-                "Ime=?, " +
-                "Rasa=?, " +
-                "Visina=?, " +
-                "Tezina=?, " +
-                "DatumRodjenja=?, " +
-                "Fotografija=? "
-                + "WHERE IdPsa=? ";
+        String query = "UPDATE kavez SET " +
+                "Kapacitet=? " +
+                "WHERE IdKaveza=? ";
         try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
-            ps.setString(1, dogDTO.getGender());
-            ps.setString(2, dogDTO.getName());
-            ps.setString(3, dogDTO.getBreed());
-            ps.setInt(4, dogDTO.getHeight());
-            ps.setDouble(5, dogDTO.getWeight());
-            ps.setDate(6, dogDTO.getDateOfBirth());
-            ps.setString(7, dogDTO.getImage());
+            ps.setInt(1, cage.getCapacity());
 
-            ps.setInt(8, dogDTO.getDogId());
+            ps.setInt(2, cage.getId());
 
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -152,19 +122,18 @@ public class MySQLDogDAO implements DogDAO {
         return retVal;
     }
 
-    @Override
-    public boolean delete(DogDTO dog){
+    public boolean delete(int cageID){
         boolean retVal = true;
 
         Connection conn = null;
         PreparedStatement ps = null;
 
-        String query = "DELETE FROM pas "
-                + "WHERE IdPsa=? ";
+        String query = "DELETE FROM kavez "
+                + "WHERE IdKaveza=? ";
         try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
-            ps.setInt(1, dog.getDogId());
+            ps.setInt(1, cageID);
 
             retVal = ps.executeUpdate() == 1;
         } catch (SQLException e) {

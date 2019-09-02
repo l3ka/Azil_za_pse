@@ -10,7 +10,7 @@ public class FosterParentDTO {
     private String residenceAddress;
     private String telephoneNumber;
     private String JMB;
-    private HashSet<AdoptingDTO> dogs;
+    private HashSet<AdoptingDTO> adoptings;
 
     public FosterParentDTO(){
     }
@@ -21,15 +21,15 @@ public class FosterParentDTO {
         this.residenceAddress = residenceAddress;
         this.telephoneNumber = telephoneNumber;
         this.JMB = JMB;
-        this.dogs = new HashSet<>();
+        this.adoptings = new HashSet<>();
     }
 
     public List<AdoptingDTO> getAddoAdopting(){
-        return new ArrayList<>(dogs);
+        return new ArrayList<>(adoptings);
     }
 
     public void addDog(AdoptingDTO adopting){
-        dogs.add(adopting);
+        adoptings.add(adopting);
     }
 
     public String getName() {

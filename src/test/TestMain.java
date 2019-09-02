@@ -15,7 +15,28 @@ import java.util.List;
 
 public class TestMain {
     public static void main(String[] args){
-        testDeleteFosterParent("0202993199942");
+        testDogInCage();
+    }
+
+    public static  void testDogInCage(){
+        DogDTO dog = AzilUtilities.getDAOFactory().getDogDAO().getByID(1);
+        DogInCageDTO dogInCage = new DogInCageDTO(
+                dog,
+                new Date(Calendar.getInstance().getTime().getTime()),
+                new Date(Calendar.getInstance().getTime().getTime())
+        );
+        CageDTO cage = AzilUtilities.getDAOFactory().getCageDAO().getById(1);
+
+        AzilUtilities.getDAOFactory().getDogInCageDAO().insert(cage, dogInCage);
+    }
+    public static  void testCages(){
+        for(CageDTO cage : AzilUtilities.getDAOFactory().getCageDAO().cages()){
+            System.out.println(cage.getCapacity());
+        }
+    }
+
+    public static void testCageInsert(){
+        AzilUtilities.getDAOFactory().getCageDAO().insert(new CageDTO(null, 40));
     }
 
     public static void testDeleteFosterParent(String JMB){

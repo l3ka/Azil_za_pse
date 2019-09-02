@@ -12,5 +12,7 @@ public interface AdoptingDAO {
 
     public List<AdoptingDTO> getAdoptingForFosterParent(FosterParentDTO fosterParent);
 
-    public boolean update(FosterParentDTO fosterParentDTO, AdoptingDTO adopting, Date Od, int IdPsa, String JMB);
+    public boolean update(FosterParentDTO fosterParentDTO, AdoptingDTO adopting, Date dateFrom, int dogId, String JMB);
+
+    public boolean delete(Date dateFrom, int dogId, String JMB);
 }
