@@ -8,6 +8,11 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class AdminMainForm {
+    private EmployeeDTO employee;
+
+    public AdminMainForm(EmployeeDTO employee) {
+        this.employee = employee;
+    }
 
     public void display() throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("mainFormAdmin.fxml"));
@@ -15,21 +20,7 @@ public class AdminMainForm {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Azil za pse - administratorski dio");
         stage.setResizable(false);
-        Scene scene = new Scene(loader.load(), 1000, 700);
-        stage.setScene(scene);
-        AdminMainController controller = loader.getController();
-
-        controller.initialize(stage);
-        stage.show();
-    }
-
-    public void display(EmployeeDTO employee) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("mainFormAdmin.fxml"));
-        Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Azil za pse - administratorski dio");
-        stage.setResizable(false);
-        Scene scene = new Scene(loader.load(), 1000, 800);
+        Scene scene = new Scene(loader.load());
         stage.setScene(scene);
         AdminMainController controller = loader.getController();
         controller.setEmployee(employee);

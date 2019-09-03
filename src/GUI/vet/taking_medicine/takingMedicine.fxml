@@ -10,7 +10,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #b71c1c;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.vet.taking_medicine.TakingMedicineController">
    <padding>
-      <Insets bottom="25.0" left="40.0" right="40.0" top="40.0" />
+      <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
    </padding>
    <top>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
@@ -40,31 +40,32 @@
          </BorderPane.margin>
       </VBox>
    </bottom>
-   <left>
-      <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+   <center>
+      <VBox alignment="CENTER_LEFT" spacing="10.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets top="20.0" />
          </BorderPane.margin>
          <children>
             <Label text="Izaberi lijek" textFill="WHITE" />
-            <TableView fx:id="drugsTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0">
+            <TableView fx:id="drugsTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="280.0" prefWidth="780.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
+                <TableColumn prefWidth="61.0" text="ID" />
+                <TableColumn prefWidth="180.0" text="Naziv" />
+                  <TableColumn prefWidth="139.0" text="Datum proizvodnje" />
+                  <TableColumn prefWidth="108.0" text="Rok upotrebe do" />
+                  <TableColumn prefWidth="91.0" text="Količina" />
+                  <TableColumn prefWidth="220.0" text="Opis" />
               </columns>
             </TableView>
          </children>
       </VBox>
-   </left>
+   </center>
    <right>
-      <HBox alignment="CENTER" prefHeight="330.0" prefWidth="234.0" spacing="15.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="150.0">
          <children>
             <Label text="Količina" textFill="WHITE" />
             <ComboBox fx:id="amountComboBox" onAction="#amountChoosed" prefHeight="31.0" prefWidth="155.0" promptText="Izaberi količinu" />
          </children>
-         <BorderPane.margin>
-            <Insets top="20.0" />
-         </BorderPane.margin>
-      </HBox>
+      </VBox>
    </right>
 </BorderPane>

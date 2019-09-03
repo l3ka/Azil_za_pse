@@ -1,6 +1,9 @@
 package GUI.login;
 
+import GUI.admin.add_account.AddAccount;
+import GUI.admin.change_account.ChangeAccount;
 import GUI.admin.main.AdminMainForm;
+import GUI.admin.select_account.SelectAccount;
 import GUI.alert_box.AlertBoxForm;
 import GUI.employee.main_screen.MainScreen;
 import GUI.vet.main.VetMainForm;
@@ -35,7 +38,7 @@ public class LoginController {
     public void logIn() {
         if (checkCredentials()) {
             try {
-                new AlertBoxForm("Credentials are not in valid form!").display();
+                new AlertBoxForm("Korisničko ime ili lozinka nisu ispravno uneseni!").display();
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -45,25 +48,28 @@ public class LoginController {
                 EmployeeDTO employee = null;
                 String username = usernameTextField.getText().trim();
                 String password = passwordField.getText().trim();
-
                 if (AzilUtilities.getDAOFactory().getAdministratorDAO().exists(username, password)) {
                     employee = AzilUtilities.getDAOFactory().getAdministratorDAO().login(username, password);
                     if (employee != null) {
-                        new AdminMainForm().display(employee);
+                        new AdminMainForm(employee).display();
                     }
                     // changeStage(event, ".." + File.separatorChar + "admin" + File.separatorChar + "main" + File.separatorChar + "mainFormAdmin.fxml");
                 } else if (AzilUtilities.getDAOFactory().getVeterinarinaDAO().exists(username, password)) {
                     employee = AzilUtilities.getDAOFactory().getVeterinarinaDAO().login(username, password);
                     if (employee != null) {
-                        new VetMainForm().display(employee);
+                        new VetMainForm(employee).display();
                     }
                     // changeStage(event, ".." + File.separatorChar + "vet" + File.separatorChar + "main" + File.separatorChar + "mainFormVet.fxml");
                 } else if (AzilUtilities.getDAOFactory().getServantDAO().exists(username, password)) {
                     employee = AzilUtilities.getDAOFactory().getServantDAO().login(username, password);
                     if (employee != null) {
-                        new MainScreen().display(employee);
+                        new MainScreen(employee).display();
                     }
                     // changeStage(event, ".." + File.separatorChar + "employee" + File.separatorChar + "main_screen" + File.separatorChar + "MainScreen.fxml");
+                }
+                else {
+                    new AlertBoxForm("Neispravno korisničko ime ili lozinka!").display();
+                    return;
                 }
                 stage.close();
             } catch (Exception ex) {

@@ -6,6 +6,7 @@ import data.dto.EmployeeDTO;
 import data.dto.ServantDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
@@ -23,6 +24,9 @@ public class MainScreenController {
     private Button addMedicineButton;
     @FXML
     private TableView<DogDTO> dogsTableView;
+    @FXML
+    private Label loggedUserLabel;
+
     private List<DogDTO> listOfDogs;
     private Stage stage;
     private EmployeeDTO employee;
@@ -33,6 +37,7 @@ public class MainScreenController {
 
     public void setEmployee(EmployeeDTO employee) {
         this.employee = employee;
+        loggedUserLabel.setText("Prijavljeni korisnik: " + employee.getUsername());
     }
 
 
