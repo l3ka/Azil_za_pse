@@ -1,18 +1,24 @@
 package data.dto;
 
+import java.sql.Date;
+
 //Nalaz
 public class MedicalResultDTO {
     private Integer medicalResultId;
     private String resultsAndOpinion;
-    private String therapy;
+    private Date date;
+    private Integer dogId;
+    private String veterinarianJMB;
 
     public MedicalResultDTO() {
     }
 
-    public MedicalResultDTO(Integer medicalResultId, String resultsAndOpinion, String therapy) {
+    public MedicalResultDTO(Integer medicalResultId, String resultsAndOpinion, Date date, Integer dogId, String veterinarianJMB) {
         this.medicalResultId = medicalResultId;
         this.resultsAndOpinion = resultsAndOpinion;
-        this.therapy = therapy;
+        this.date = date;
+        this.dogId = dogId;
+        this.veterinarianJMB = veterinarianJMB;
     }
 
     public Integer getMedicalResultId() {
@@ -31,11 +37,19 @@ public class MedicalResultDTO {
         this.resultsAndOpinion = resultsAndOpinion;
     }
 
-    public String getTherapy() {
-        return therapy;
+    public Date getDate() {
+        return date;
     }
 
-    public void setTherapy(String therapy) {
-        this.therapy = therapy;
+    public void setDate(Date date) {
+        this.date = date;
     }
+
+    public Integer getDogId() { return dogId;}
+
+    public void setDogId(Integer dogId) { this.dogId = dogId; }
+
+    public String getVeterinarianJMB() { return  this.veterinarianJMB; }
+
+    public void setVeterinarianJMB(String veterinarianJMB) { this.veterinarianJMB = veterinarianJMB; }
 }

@@ -35,4 +35,10 @@ public class MySQLDAOFactory extends DAOFactory {
 
     @Override
     public DogInCageDAO getDogInCageDAO() { return new MySQLDogInCage(); }
+
+    @Override
+    public MedicalResultDAO getMedicalResultDAO() { return new MySQLMedicalResultDAO(); }
+
+    @Override
+    public MedicineDAO getMedicineDAO() { return  new MySQLMedicineDAO(); }
 }

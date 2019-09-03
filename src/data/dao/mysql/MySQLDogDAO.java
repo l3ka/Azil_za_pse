@@ -61,7 +61,7 @@ public class MySQLDogDAO implements DogDAO {
             ps.setInt(1, ID);
             rs = ps.executeQuery();
 
-            while (rs.next())
+            if(rs.next()) {
                 retVal = new DogDTO(
                         rs.getInt("IdPsa"),
                         rs.getString("Pol"),
@@ -72,6 +72,7 @@ public class MySQLDogDAO implements DogDAO {
                         rs.getDate("DatumRodjenja"),
                         rs.getString("Fotografija")
                 );
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

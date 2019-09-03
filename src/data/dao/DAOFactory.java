@@ -23,6 +23,10 @@ public abstract class DAOFactory {
 
     public abstract DogInCageDAO getDogInCageDAO();
 
+    public abstract  MedicalResultDAO getMedicalResultDAO();
+
+    public abstract  MedicineDAO getMedicineDAO();
+
     public static DAOFactory getDAOFactory() {
         return new MySQLDAOFactory();
     }
