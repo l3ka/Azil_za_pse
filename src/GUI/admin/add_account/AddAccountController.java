@@ -1,19 +1,13 @@
-package GUI.admin.add_change_account;
+package GUI.admin.add_account;
 
 import GUI.alert_box.AlertBoxForm;
-import data.dto.AdministratorDTO;
-import data.dto.EmploymentContractDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import util.AzilUtilities;
 
-import java.sql.Date;
-import java.util.Calendar;
-import java.util.Random;
-
-public class AddAndChangeAccountController {
+public class AddAccountController {
 
     private Stage stage;
 
@@ -21,6 +15,10 @@ public class AddAndChangeAccountController {
     private TextField nameTextField;
     @FXML
     private TextField surnameTextField;
+    @FXML
+    private TextField usernameTextField;
+    @FXML
+    private PasswordField passwordField;
     @FXML
     private TextField qualificationsTextField;
     @FXML
@@ -30,27 +28,18 @@ public class AddAndChangeAccountController {
     @FXML
     private TextField phoneNumberTextField;
     @FXML
+    private TextField positionTextField;
+    @FXML
+    private TextField salaryTextField;
+    @FXML
+    private TextField contractValidUntilTextField;
+    @FXML
     private Button saveButton;
     @FXML
     private Button quitButton;
 
     public void initialize(Stage stage) {
         this.stage = stage;
-    }
-
-    public void saveAccount() {
-        if (checkName() && checkQualifications() && checkPlaceOfResidence() && checkIdentificationNumber() && checkPhoneNumber()) {
-
-            String username = "administrator";      // SAMO PRIVREMENO DOK NESTO NE RIJESIMO ZA OVO DA SE MOZE DODATI I USERNAME I PASSWORD
-            String password = "password";
-
-            if (AzilUtilities.getDAOFactory().getEmployeeDAO().exists(username, identificationNumberTextField.getText().trim())) {
-                displayAlertBox("User with this username or JMB already exists in database!");
-            }
-            else {
-                // TODO: NAPRAVITI EDIT/DODAVANJE NALOGA KADA ERCEG SREDI FORMU
-            }
-        }
     }
 
     private boolean checkName() {
@@ -93,6 +82,30 @@ public class AddAndChangeAccountController {
         return true;
     }
 
+    private boolean checkPosition() {
+        if ("".equals(positionTextField.getText().trim())) {
+            displayAlertBox("Unos za polje pozicija nije odgovarajući!");
+            return false;
+        }
+        return true;
+    }
+
+
+    private boolean checkSalary() {
+        if ("".equals(salaryTextField.getText().trim())) {
+            displayAlertBox("Unos za polje plata nije odgovarajući!");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkValidUntil() {
+        if ("".equals(contractValidUntilTextField.getText().trim())) {
+            displayAlertBox("Unos za polje ugovor važi do nije odgovarajući!");
+            return false;
+        }
+        return true;
+    }
     private boolean checkIsNumber(String number) {
         return number.matches("^[0-9]*$");
     }
@@ -103,6 +116,6 @@ public class AddAndChangeAccountController {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-    }
 
+    }
 }

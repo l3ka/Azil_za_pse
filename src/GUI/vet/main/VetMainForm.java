@@ -9,6 +9,12 @@ import javafx.stage.Stage;
 
 public class VetMainForm {
 
+    private EmployeeDTO employee;
+
+    public VetMainForm(EmployeeDTO employee) {
+        this.employee = employee;
+    }
+
     public void display() throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("mainFormVet.fxml"));
         Stage stage = new Stage();
@@ -18,19 +24,7 @@ public class VetMainForm {
         stage.setScene(scene);
         VetMainController controller = loader.getController();
         controller.initialize(stage);
-        stage.show();
-    }
-
-    public void display(EmployeeDTO employee) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("mainFormVet.fxml"));
-        Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Azil za pse - veterinarski dio");
-        Scene scene = new Scene(loader.load(), 1000, 780);
-        stage.setScene(scene);
-        VetMainController controller = loader.getController();
         controller.setEmployee(employee);
-        controller.initialize(stage);
         stage.show();
     }
 

@@ -30,7 +30,7 @@
       </VBox>
    </top>
    <center>
-      <TableView fx:id="dogsTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="750.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="dogsTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="750.0" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn prefWidth="75.0" text="Ime" />
           <TableColumn prefWidth="75.0" text="Rasa" />
@@ -60,10 +60,18 @@
       </VBox>
    </left>
    <bottom>
-      <Button fx:id="logOutButton" mnemonicParsing="false" onAction="#logOut" text="Odjavi se" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" spacing="10.0">
+         <children>
+            <Label fx:id="loggedUserLabel" text="Prijavljeni korisnik: " textFill="WHITE" />
+            <Button fx:id="logOutButton" mnemonicParsing="false" onAction="#logOut" text="Odjavi se" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets top="20.0" />
+               </BorderPane.margin>
+            </Button>
+         </children>
          <BorderPane.margin>
-            <Insets top="20.0" />
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </BorderPane.margin>
-      </Button>
+      </VBox>
    </bottom>
 </BorderPane>
