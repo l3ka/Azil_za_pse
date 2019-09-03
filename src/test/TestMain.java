@@ -14,8 +14,61 @@ import java.util.Calendar;
 import java.util.List;
 
 public class TestMain {
-    public static void main(String[] args){
-        testDogInCage();
+    public static void main(String[] args) {
+        testMedicineDelete(1);
+    }
+
+    public  static void testMedicineDelete(int id){
+        if(AzilUtilities.getDAOFactory().getMedicineDAO().delete(id)){
+            System.out.println("Success...");
+        } else  {
+            System.out.println("Faild...");
+        }
+
+    }
+
+    public static  void testMedicineUpdate(){
+        MedicineDTO medicine = AzilUtilities.getDAOFactory().getMedicineDAO().getById(1);
+        medicine.setName("Tajlol Kold");
+        AzilUtilities.getDAOFactory().getMedicineDAO().update(medicine);
+    }
+
+    public static void testMedicineInsert(){
+        MedicineDTO medicine = new MedicineDTO(
+                null,
+                "Tajlo Hot",
+                "Prije upotrebe posvjetujte se sa svojim lijecnikom"
+                );
+        AzilUtilities.getDAOFactory().getMedicineDAO().insert(medicine);
+    }
+
+    public static  void testMedicalResultDelete(int id){
+        AzilUtilities.getDAOFactory().getMedicalResultDAO().delete(id);
+    }
+
+    public static void testMedicalResultUpdate(){
+        MedicalResultDTO medicalResult = AzilUtilities.getDAOFactory().getMedicalResultDAO().getById(1);
+        medicalResult.setResultsAndOpinion("Nije tebi nista");
+        AzilUtilities.getDAOFactory().getMedicalResultDAO().update(medicalResult);
+    }
+
+    public static void testGetMedicalresultById(int id){
+        MedicalResultDTO medicalResult = AzilUtilities.getDAOFactory().getMedicalResultDAO().getById(id);
+        System.out.println(medicalResult.getResultsAndOpinion());
+    }
+
+    public static void testMedicalResultInsert(){
+        DogDTO dog = AzilUtilities.getDAOFactory().getDogDAO().dogs().get(0);
+        VeterinarianDTO veterinarian = AzilUtilities.getDAOFactory().getVeterinarinaDAO().veterinarians().get(0);
+        MedicalResultDTO medicalResult = new MedicalResultDTO(
+                null,
+                "Bice sve uredu",
+                new Date(Calendar.getInstance().getTime().getTime()),
+                dog.getDogId(),
+                veterinarian.getJMB()
+        );
+
+        AzilUtilities.getDAOFactory().getMedicalResultDAO().insert(medicalResult);
     }
 
     public static  void testDogInCage(){
@@ -29,6 +82,7 @@ public class TestMain {
 
         AzilUtilities.getDAOFactory().getDogInCageDAO().insert(cage, dogInCage);
     }
+
     public static  void testCages(){
         for(CageDTO cage : AzilUtilities.getDAOFactory().getCageDAO().cages()){
             System.out.println(cage.getCapacity());
@@ -240,7 +294,7 @@ public class TestMain {
 
         AzilUtilities.getDAOFactory().getDogDAO().update(dog);
     }
-    static void testInsert(){
+    static void testDogInsert(){
         DogDTO dog = new DogDTO(null, "M", "Bobi", "Mjesanac", 50, 12.0, null,
                 "resources/images.bobi.jpg");
         boolean res = AzilUtilities.getDAOFactory().getDogDAO().insert(dog);

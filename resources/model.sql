@@ -145,7 +145,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `azil`.`Nalaz` ;
 
 CREATE TABLE IF NOT EXISTS `azil`.`Nalaz` (
-  `IdNalaza` VARCHAR(45) NOT NULL,
+  `IdNalaza` INT  NOT NULL AUTO_INCREMENT,
   `DatumPregleda` DATE NULL,
   `Dijagnoza` LONGTEXT NULL,
   `Veterinar_Zaposleni_JMBG` CHAR(13) NOT NULL,
@@ -174,7 +174,6 @@ DROP TABLE IF EXISTS `azil`.`Lijek` ;
 CREATE TABLE IF NOT EXISTS `azil`.`Lijek` (
   `IdLijeka` INT NOT NULL AUTO_INCREMENT,
   `NazivLijeka` VARCHAR(45) NULL,
-  `UpotrebljivDo` DATE NULL,
   `Opis` VARCHAR(255) NULL,
   PRIMARY KEY (`IdLijeka`))
 ENGINE = InnoDB;
@@ -190,6 +189,7 @@ CREATE TABLE IF NOT EXISTS `azil`.`DodavanjeLijeka` (
   `Sluzbenik_Zaposleni_JMBG` CHAR(13) NOT NULL,
   `Lijek_IdLijeka` INT NOT NULL,
   `Kolicina` INT NULL,
+  `UpotrebljivDo` DATE NULL,
   PRIMARY KEY (`VrijemeDodavanja`, `Sluzbenik_Zaposleni_JMBG`, `Lijek_IdLijeka`),
   INDEX `fk_DodavanjeLijeka_Sluzbenik1_idx` (`Sluzbenik_Zaposleni_JMBG` ASC),
   INDEX `fk_DodavanjeLijeka_Lijek1_idx` (`Lijek_IdLijeka` ASC),
@@ -215,7 +215,7 @@ CREATE TABLE IF NOT EXISTS `azil`.`UzimanjeLijeka` (
   `DatumUzimanja` DATETIME NOT NULL,
   `Sluzbenik_Zaposleni_JMBG` CHAR(13) NOT NULL,
   `Lijek_IdLijeka` INT NOT NULL,
-  `Nalaz_IdNalaza` VARCHAR(45) NOT NULL,
+  `Nalaz_IdNalaza` INT NOT NULL,
   `Kolicina` VARCHAR(45) NULL,
   PRIMARY KEY (`DatumUzimanja`, `Sluzbenik_Zaposleni_JMBG`, `Lijek_IdLijeka`, `Nalaz_IdNalaza`),
   INDEX `fk_UzimanjeLijeka_Sluzbenik1_idx` (`Sluzbenik_Zaposleni_JMBG` ASC),
@@ -302,7 +302,7 @@ CREATE TABLE IF NOT EXISTS `azil`.`UdomljavanjePsa` (
   `Pas_IdPsa` INT NOT NULL,
   `Udomitelj_JMBG` CHAR(13) NOT NULL,
   `DatumDo` DATE,
-  PRIMARY KEY (`Datum`, `Pas_IdPsa`, `Udomitelj_JMBG`),
+  PRIMARY KEY (`DatumOd`, `Pas_IdPsa`, `Udomitelj_JMBG`),
   INDEX `fk_UdomljavanjePsa_Pas1_idx` (`Pas_IdPsa` ASC) ,
   INDEX `fk_UdomljavanjePsa_Udomitelj1_idx` (`Udomitelj_JMBG` ASC) ,
   CONSTRAINT `fk_UdomljavanjePsa_Pas1`
