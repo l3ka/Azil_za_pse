@@ -196,7 +196,7 @@ public class MySQLVeterinarianDAO implements VeterinarianDAO {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
             ps.setString(1, username);
-            ps.setString(2, password);
+            ps.setString(2, AzilUtilities.getSHA256(password));
             rs = ps.executeQuery();
 
             retVal = rs.next();
