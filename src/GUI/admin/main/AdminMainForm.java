@@ -1,6 +1,5 @@
 package GUI.admin.main;
 
-import data.dto.AdministratorDTO;
 import data.dto.EmployeeDTO;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

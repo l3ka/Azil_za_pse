@@ -1,8 +1,10 @@
 package GUI.admin.change_account;
 
 import GUI.alert_box.AlertBoxForm;
+import data.dto.EmployeeDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import util.AzilUtilities;
@@ -24,27 +26,88 @@ public class ChangeAccountController {
     @FXML
     private TextField phoneNumberTextField;
     @FXML
+    private TextField usernameTextField;
+    @FXML
+    private TextField passwordTextField;
+    @FXML
     private Button saveButton;
     @FXML
     private Button quitButton;
 
+    private EmployeeDTO employeeForEdit = ChangeAccount.employee;
+
     public void initialize(Stage stage) {
         this.stage = stage;
+
+        nameTextField.setText(employeeForEdit.getName());
+        surnameTextField.setText(employeeForEdit.getSurname());
+        qualificationsTextField.setText(employeeForEdit.getQualifications());
+        identificationNumberTextField.setText(employeeForEdit.getJMB());
+        placeOfResidenceTextField.setText(employeeForEdit.getResidenceAddress());
+        phoneNumberTextField.setText(employeeForEdit.getTelephoneNumber());
     }
 
     public void saveAccount() {
-        if (checkName() && checkQualifications() && checkPlaceOfResidence() && checkIdentificationNumber() && checkPhoneNumber()) {
+        if (checkUsername() && checkPassword() && checkName() && checkQualifications() && checkPlaceOfResidence() && checkIdentificationNumber() && checkPhoneNumber()) {
 
-            String username = "administrator";      // SAMO PRIVREMENO DOK NESTO NE RIJESIMO ZA OVO DA SE MOZE DODATI I USERNAME I PASSWORD
-            String password = "password";
+            if (!employeeForEdit.getUsername().equals(usernameTextField.getText().trim())) {
+                if (AzilUtilities.getDAOFactory().getEmployeeDAO().exists(usernameTextField.getText(), identificationNumberTextField.getText().trim())) {
+                    displayAlertBox("User with this username or JMB already exists in database!");
+                } else {
+                    employeeForEdit.setUsername(usernameTextField.getText());
+                    employeeForEdit.setPassword(passwordTextField.getText());
+                    AzilUtilities.getDAOFactory().getEmployeeDAO().update(employeeForEdit);
+                }
+            }
 
-            if (AzilUtilities.getDAOFactory().getEmployeeDAO().exists(username, identificationNumberTextField.getText().trim())) {
-                displayAlertBox("User with this username or JMB already exists in database!");
+            if (!employeeForEdit.getJMB().equals(identificationNumberTextField)) {
+                employeeForEdit.setJMB(identificationNumberTextField.getText());
+                AzilUtilities.getDAOFactory().getEmployeeDAO().update(employeeForEdit);
             }
-            else {
-                // TODO: NAPRAVITI EDIT/DODAVANJE NALOGA KADA ERCEG SREDI FORMU
+            if (!employeeForEdit.getName().equals(nameTextField.getText())) {
+                employeeForEdit.setName(nameTextField.getText());
+                AzilUtilities.getDAOFactory().getEmployeeDAO().update(employeeForEdit);
             }
+            if (!employeeForEdit.getSurname().equals(surnameTextField.getText())) {
+                employeeForEdit.setSurname(surnameTextField.getText());
+                AzilUtilities.getDAOFactory().getEmployeeDAO().update(employeeForEdit);
+            }
+            if (!employeeForEdit.getQualifications().equals(qualificationsTextField.getText())) {
+                employeeForEdit.setQualifications(qualificationsTextField.getText());
+                AzilUtilities.getDAOFactory().getEmployeeDAO().update(employeeForEdit);
+            }
+            if (!employeeForEdit.getResidenceAddress().equals(placeOfResidenceTextField.getText())) {
+                employeeForEdit.setResidenceAddress(placeOfResidenceTextField.getText());
+                AzilUtilities.getDAOFactory().getEmployeeDAO().update(employeeForEdit);
+            }
+            if (!employeeForEdit.getTelephoneNumber().equals(phoneNumberTextField.getText())) {
+                employeeForEdit.setTelephoneNumber(phoneNumberTextField.getText());
+                AzilUtilities.getDAOFactory().getEmployeeDAO().update(employeeForEdit);
+            }
+            displayAlertBox("Uspješno izmijenjen nalog!");
         }
+    }
+
+
+    public void quit() {
+        stage.close();
+    }
+
+
+    private boolean checkUsername() {
+        if("".equals(usernameTextField.getText().trim())) {
+            displayAlertBox("Nije uneseno korisničko ime!");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkPassword() {
+        if("".equals(passwordTextField.getText().trim())) {
+            displayAlertBox("Nije unesena lozinka!");
+            return false;
+        }
+        return true;
     }
 
     private boolean checkName() {

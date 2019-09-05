@@ -42,6 +42,16 @@ public class AddAccountController {
         this.stage = stage;
     }
 
+    public void save() {
+        if(checkName() && checkQualifications() && checkIdentificationNumber() && checkIdentificationNumber() && checkPlaceOfResidence() && checkPhoneNumber() && checkPosition() && checkSalary() && checkValidUntil()) {
+            // DODATI NALOG
+        }
+    }
+
+    public void quit() {
+        stage.close();
+    }
+
     private boolean checkName() {
         if ("".equals(nameTextField.getText().trim()) || "".equals(surnameTextField.getText().trim())) {
             displayAlertBox("Unos za polja ime i prezime nije odgovarajući!");

@@ -2,7 +2,9 @@ package GUI.admin.main;
 
 import GUI.adding_dog.AddingDogForm;
 import GUI.adding_medicine.AddingMedicineForm;
+import GUI.admin.add_account.AddAccount;
 import GUI.admin.change_account.ChangeAccount;
+import GUI.admin.select_account.SelectAccount;
 import GUI.adopting_dog.AdoptingDogForm;
 import GUI.admin.generating_statistic.GeneratingStatisticForm;
 import GUI.login.LoginForm;
@@ -78,7 +80,7 @@ public class AdminMainController {
 
     public void addAccount() {
         try {
-            new ChangeAccount().display();
+            new AddAccount().display();
         } catch (Exception exception) {
 
         }
@@ -86,7 +88,7 @@ public class AdminMainController {
 
     public void editAccount() {
         try {
-            new ChangeAccount().display();
+            new SelectAccount().display();
         } catch (Exception exception) {
 
         }

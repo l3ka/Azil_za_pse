@@ -1,6 +1,5 @@
 package GUI.admin.select_account;
 
-import GUI.adding_medicine.AddingMedicineController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
@@ -18,6 +17,6 @@ public class SelectAccount {
         SelectAccountController controller = loader.getController();
         controller.initialize(stage);
         stage.setScene(scene);
-        stage.show();
+        stage.showAndWait();
     }
 }

@@ -1,6 +1,7 @@
 package GUI.adopting_dog;
 
 import GUI.alert_box.AlertBoxForm;
+import data.dto.AdoptingDTO;
 import data.dto.DogDTO;
 import data.dto.FosterParentDTO;
 import javafx.fxml.FXML;
@@ -10,14 +11,19 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import util.AzilUtilities;
 
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 public class AdoptingDogController {
 
-    @FXML private Button adoptDogButton;
     @FXML private TableView<DogDTO> dogsTableView;
     @FXML private TableView<FosterParentDTO> fosterParentsTableView;
     private List<DogDTO> listOfDogs;
+    private List<FosterParentDTO> listOfFosterParents;
+    private DogDTO selectedDog;
+    private FosterParentDTO selectedFosterParent;
+    private AdoptingDTO adoptingDTO;
     private Stage stage;
 
     @FXML
@@ -30,14 +36,23 @@ public class AdoptingDogController {
         dogsTableView.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("weight"));
         dogsTableView.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
 
-        listOfDogs = AzilUtilities.getDAOFactory().getDogDAO().dogs();
-        for (DogDTO dog : listOfDogs) {
-            dogsTableView.getItems().add(dog);
-        }
+        displayDogs();
+        displayFosterParents();
     }
 
     public void adoptDog() {
         if(checkDog() && checkFosterParent()) {
+            selectedDog = dogsTableView.getSelectionModel().getSelectedItem();
+            selectedFosterParent = fosterParentsTableView.getSelectionModel().getSelectedItem();
+
+            selectedDog.setAdopted(true);
+            adoptingDTO = new AdoptingDTO(selectedDog, new Date(Calendar.getInstance().getTime().getTime()), null);
+            selectedFosterParent.addDog(adoptingDTO);
+
+            AzilUtilities.getDAOFactory().getDogDAO().update(selectedDog);
+            AzilUtilities.getDAOFactory().getFosterParentDAO().update(selectedFosterParent);
+            AzilUtilities.getDAOFactory().getAdoptingDAO().update(selectedFosterParent, adoptingDTO, adoptingDTO.getDateFrom(), selectedDog.getDogId(), selectedFosterParent.getJMB());
+
             displayAlertBox("Pas je uspješno udomljen!");
             stage.close();
         }
@@ -68,6 +83,22 @@ public class AdoptingDogController {
             new AlertBoxForm(content).display();
         } catch (Exception exception) {
 
+        }
+    }
+
+    private void displayDogs() {
+        listOfDogs = AzilUtilities.getDAOFactory().getDogDAO().dogs();
+        for (DogDTO dog : listOfDogs) {
+            if(!dog.isAdopted()) {
+                dogsTableView.getItems().add(dog);
+            }
+        }
+    }
+
+    private void displayFosterParents() {
+        listOfFosterParents = AzilUtilities.getDAOFactory().getFosterParentDAO().fosterParents();
+        for(FosterParentDTO fosterParent : listOfFosterParents) {
+            fosterParentsTableView.getItems().add(fosterParent);
         }
     }
 }

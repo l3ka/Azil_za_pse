@@ -14,7 +14,7 @@
    <bottom>
       <VBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="saveButton" mnemonicParsing="false" text="Sačuvaj" BorderPane.alignment="CENTER">
+            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#save" text="Sačuvaj" BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets top="20.0" />
                </BorderPane.margin>

@@ -24,7 +24,7 @@ public class FosterParentDTO {
         this.adoptings = new HashSet<>();
     }
 
-    public List<AdoptingDTO> getAddoAdopting(){
+    public List<AdoptingDTO> getAdoptings(){
         return new ArrayList<>(adoptings);
     }
 
