@@ -14,6 +14,7 @@ public class DogDTO {
 
     private Date dateOfBirth;
     private String image;
+    private boolean adopted = false;
 
     public DogDTO() {
     }
@@ -91,6 +92,14 @@ public class DogDTO {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public boolean isAdopted() {
+        return adopted;
+    }
+
+    public void setAdopted(boolean adopted) {
+        this.adopted = adopted;
     }
 
     @Override

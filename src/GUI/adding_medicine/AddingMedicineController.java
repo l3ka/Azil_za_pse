@@ -1,13 +1,12 @@
 package GUI.adding_medicine;
 
 import GUI.alert_box.AlertBoxForm;
+import data.dto.MedicineDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import util.AzilUtilities;
-
-import java.lang.reflect.UndeclaredThrowableException;
 
 public class AddingMedicineController {
     @FXML private TextField nameTextField;
@@ -23,6 +22,7 @@ public class AddingMedicineController {
 
     public void addDrug() {
         if(checkName() && checkDateOfMaunfacturer() && checkExpirationDate() && checkAmount() && checkDescription()) {
+            AzilUtilities.getDAOFactory().getMedicineDAO().insert(new MedicineDTO(0, nameTextField.getText(), descriptionTextField.getText()));
             displayAlertBox("Lijek je uspješno dodat!");
             stage.close();
         }
