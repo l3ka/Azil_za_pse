@@ -12,7 +12,6 @@ public class AddingDogForm {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("addingDog.fxml"));
         Stage stage = new Stage();
         stage.setTitle("Azil za pse - dodavanje psa");
-        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setResizable(false);
         Scene scene = new Scene(loader.load(), 800, 700);
         stage.setScene(scene);

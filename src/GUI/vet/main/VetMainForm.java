@@ -18,7 +18,6 @@ public class VetMainForm {
     public void display() throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("mainFormVet.fxml"));
         Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Azil za pse - veterinarski dio");
         Scene scene = new Scene(loader.load(), 1000, 700);
         stage.setScene(scene);

@@ -13,10 +13,7 @@ public class AddAccount {
         Stage stage = new Stage();
         Scene scene = new Scene(loader.load());
         stage.setTitle("Azil za pse - dodavanje korisničkog naloga");
-        stage.setResizable(false);
         stage.setScene(scene);
-        stage.initModality(Modality.APPLICATION_MODAL);
-        //stage.setResizable(false);
         AddAccountController controller = loader.getController();
         controller.initialize(stage);
         stage.show();

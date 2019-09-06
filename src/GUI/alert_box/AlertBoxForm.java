@@ -17,7 +17,6 @@ public class AlertBoxForm {
     public void display() throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("alertBox.fxml"));
         Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Upozorenje");
         Scene scena = new Scene(loader.load(), 500, 380);
         stage.setScene(scena);

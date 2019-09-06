@@ -11,7 +11,6 @@ public class DogExaminationForm {
     public void display() throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("dogExamination.fxml"));
         Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Azil za pse - pregled psa");
         Scene scene = new Scene(loader.load(), 1000, 700);
         stage.setScene(scene);

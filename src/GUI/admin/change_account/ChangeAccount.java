@@ -22,7 +22,6 @@ public class ChangeAccount {
         Scene scene = new Scene(loader.load());
         stage.setTitle("Azil za pse - izmjena korisničkog naloga");
         stage.setScene(scene);
-        stage.setResizable(false);
         ChangeAccountController controller = loader.getController();
         controller.initialize(stage);
         stage.showAndWait();
