@@ -31,6 +31,7 @@ public class MedicineQuantityController {
         if(checkSelectedQuantity()) {
             medicine.setQuantity(medicine.getQuantity() - quantityComboBox.getSelectionModel().getSelectedItem());
             AzilUtilities.getDAOFactory().getMedicineDAO().update(medicine);
+            stage.close();
         }
     }
 

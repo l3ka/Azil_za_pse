@@ -100,7 +100,7 @@ public class VetMainController {
 
     private void displayAlertBox(String content) {
         try {
-            new AlertBoxForm(content);
+            new AlertBoxForm(content).display();
         } catch(Exception ex) {
 
         }

@@ -32,6 +32,7 @@ public class TakingMedicineController {
         if(checkSelectedDrug()) {
             try {
                 new MedicineQuantityForm(drugsTableView.getSelectionModel().getSelectedItem()).display();
+                drugsTableView.getItems().clear();
                 displayMedicines();
             } catch(Exception ex) {
                 ex.printStackTrace();

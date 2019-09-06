@@ -77,15 +77,16 @@ public class MySQLMedicineDAO implements MedicineDAO{
 
         String query = "UPDATE lijek SET " +
                 "NazivLijeka=?, " +
-                "Opis=? " +
+                "Opis=?, " +
+                "Kolicina=? " +
                 "WHERE  IdLijeka=?";
         try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
             ps.setString(1, medicine.getName());
             ps.setString(2, medicine.getDescription());
-
-            ps.setInt(3, medicine.getMedicineId());
+            ps.setInt(3, medicine.getQuantity());
+            ps.setInt(4, medicine.getMedicineId());
 
             ps.executeUpdate();
         } catch (SQLException e) {
