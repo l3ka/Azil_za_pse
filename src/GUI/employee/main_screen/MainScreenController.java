@@ -25,6 +25,8 @@ public class MainScreenController {
     @FXML
     private Button addMedicineButton;
     @FXML
+    private Button logOutButton;
+    @FXML
     private TableView<DogDTO> dogsTableView;
     @FXML
     private Label loggedUserLabel;
@@ -83,7 +85,6 @@ public class MainScreenController {
 
     public void logOut() {
         stage.close();
-
         try {
             new LoginForm().start(new Stage());
         } catch(Exception exception) {
