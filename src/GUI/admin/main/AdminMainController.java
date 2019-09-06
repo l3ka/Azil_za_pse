@@ -1,5 +1,6 @@
 package GUI.admin.main;
 
+import GUI.add_foster_parent.AddFosterParent;
 import GUI.adding_dog.AddingDogForm;
 import GUI.adding_medicine.AddingMedicineForm;
 import GUI.admin.add_account.AddAccount;
@@ -21,7 +22,6 @@ import util.AzilUtilities;
 import java.util.List;
 
 public class AdminMainController {
-    @FXML private Button addDogButton;
     @FXML private TableView<DogDTO> dogsTableView;
     @FXML private Label loggedUserLabel;
     private List<DogDTO> listOfDogs;
@@ -67,6 +67,14 @@ public class AdminMainController {
             new AdoptingDogForm().display();
         } catch(Exception exception) {
 
+        }
+    }
+
+    public void addFosterParent() {
+        try {
+            new AddFosterParent().display();
+        } catch (Exception exception) {
+            exception.printStackTrace();
         }
     }
 

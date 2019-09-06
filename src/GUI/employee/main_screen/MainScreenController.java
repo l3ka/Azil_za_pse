@@ -1,5 +1,6 @@
 package GUI.employee.main_screen;
 
+import GUI.add_foster_parent.AddFosterParent;
 import GUI.adding_dog.AddingDogForm;
 import GUI.adding_medicine.AddingMedicineForm;
 import GUI.adopting_dog.AdoptingDogForm;
@@ -67,6 +68,14 @@ public class MainScreenController {
         }
     }
 
+
+    public void addFosterParent() {
+        try {
+            new AddFosterParent().display();
+        } catch (Exception exception) {
+            
+        }
+    }
     public void adoptDog() {
         try {
             new AdoptingDogForm().display();
