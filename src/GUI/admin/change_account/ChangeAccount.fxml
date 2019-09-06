@@ -108,7 +108,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="passwordTextField" prefWidth="180.0" />
+                  <PasswordField fx:id="passwordField" prefWidth="180.0" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" />

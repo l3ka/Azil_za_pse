@@ -4,6 +4,7 @@ import GUI.alert_box.AlertBoxForm;
 import data.dto.EmployeeDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -28,7 +29,7 @@ public class ChangeAccountController {
     @FXML
     private TextField usernameTextField;
     @FXML
-    private TextField passwordTextField;
+    private PasswordField passwordField;
     @FXML
     private Button saveButton;
     @FXML
@@ -45,17 +46,20 @@ public class ChangeAccountController {
         identificationNumberTextField.setText(employeeForEdit.getJMB());
         placeOfResidenceTextField.setText(employeeForEdit.getResidenceAddress());
         phoneNumberTextField.setText(employeeForEdit.getTelephoneNumber());
+        usernameTextField.setText(employeeForEdit.getUsername());
     }
 
     public void saveAccount() {
-        if (checkUsername() && checkPassword() && checkName() && checkQualifications() && checkPlaceOfResidence() && checkIdentificationNumber() && checkPhoneNumber()) {
+        if (checkUsername() && checkName() && checkQualifications() && checkPlaceOfResidence() && checkIdentificationNumber() && checkPhoneNumber()) {
 
             if (!employeeForEdit.getUsername().equals(usernameTextField.getText().trim())) {
                 if (AzilUtilities.getDAOFactory().getEmployeeDAO().exists(usernameTextField.getText(), identificationNumberTextField.getText().trim())) {
-                    displayAlertBox("User with this username or JMB already exists in database!");
+                    displayAlertBox("Korisnik sa ovim korisničkim imenom ili JMBG već postoji!");
                 } else {
                     employeeForEdit.setUsername(usernameTextField.getText());
-                    employeeForEdit.setPassword(passwordTextField.getText());
+                    if(!"".equals(passwordField.getText())) {
+                        employeeForEdit.setPassword(AzilUtilities.getSHA256(passwordField.getText()));
+                    }
                     AzilUtilities.getDAOFactory().getEmployeeDAO().update(employeeForEdit);
                 }
             }
@@ -97,14 +101,6 @@ public class ChangeAccountController {
     private boolean checkUsername() {
         if("".equals(usernameTextField.getText().trim())) {
             displayAlertBox("Nije uneseno korisničko ime!");
-            return false;
-        }
-        return true;
-    }
-
-    private boolean checkPassword() {
-        if("".equals(passwordTextField.getText().trim())) {
-            displayAlertBox("Nije unesena lozinka!");
             return false;
         }
         return true;

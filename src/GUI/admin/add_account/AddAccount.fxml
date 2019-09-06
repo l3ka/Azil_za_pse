@@ -116,7 +116,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="positionTextField" prefWidth="180.0" />
+                  <ComboBox fx:id="positionComboBox" prefWidth="180.0" promptText="Izaberite poziciju" />
                </children>
             </HBox>
             <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="500.0" spacing="100.0">

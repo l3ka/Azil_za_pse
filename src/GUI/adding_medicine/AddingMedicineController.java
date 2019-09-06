@@ -10,8 +10,6 @@ import util.AzilUtilities;
 
 public class AddingMedicineController {
     @FXML private TextField nameTextField;
-    @FXML private DatePicker dateOfManufacturePicker;
-    @FXML private DatePicker expirationDatePicker;
     @FXML private TextField amountTextField;
     @FXML private TextField descriptionTextField;
     private Stage stage;
@@ -21,7 +19,7 @@ public class AddingMedicineController {
     }
 
     public void addDrug() {
-        if(checkName() && checkDateOfMaunfacturer() && checkExpirationDate() && checkAmount() && checkDescription()) {
+        if(checkName() && checkAmount() && checkDescription()) {
             AzilUtilities.getDAOFactory().getMedicineDAO().insert(new MedicineDTO(0, nameTextField.getText(), descriptionTextField.getText(), Integer.valueOf(amountTextField.getText())));
             displayAlertBox("Lijek je uspješno dodat!");
             stage.close();
@@ -35,22 +33,6 @@ public class AddingMedicineController {
     private boolean checkName() {
         if("".equals(nameTextField.getText())) {
             displayAlertBox("Unos za polje naziv nije odgovarajući!");
-            return false;
-        }
-        return true;
-    }
-
-    private boolean checkDateOfMaunfacturer() {
-        if (dateOfManufacturePicker.getValue() == null) {
-            displayAlertBox("Datum proizvodnje nije izabran!");
-            return false;
-        }
-        return true;
-    }
-
-    private boolean checkExpirationDate() {
-        if(expirationDatePicker.getValue() == null) {
-            displayAlertBox("Rok trajanja nije izabran!");
             return false;
         }
         return true;
