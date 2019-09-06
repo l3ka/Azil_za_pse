@@ -12,7 +12,7 @@ public class AdoptingDogForm {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("adoptingDog.fxml"));
         Stage stage = new Stage();
         stage.setTitle("Azil za pse - udomljavanje psa");
-        Scene scene = new Scene(loader.load(), 1200, 700);
+        Scene scene = new Scene(loader.load());
         stage.setScene(scene);
         AdoptingDogController controller = loader.getController();
         controller.initialize(stage);

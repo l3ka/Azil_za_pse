@@ -12,7 +12,7 @@ public class TakingMedicineForm {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("takingMedicine.fxml"));
         Stage stage = new Stage();
         stage.setTitle("Azil za pse - uzimanje lijeka");
-        Scene scene = new Scene(loader.load(), 1000, 700);
+        Scene scene = new Scene(loader.load());
         stage.setScene(scene);
         TakingMedicineController controller = loader.getController();
         controller.initialize(stage);
