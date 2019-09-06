@@ -8,7 +8,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #b71c1c;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.vet.dog_examination.DogExaminationController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" style="-fx-background-color: #b71c1c;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.vet.dog_examination.DogExaminationController">
    <padding>
       <Insets bottom="25.0" left="25.0" right="40.0" top="25.0" />
    </padding>
@@ -43,35 +43,36 @@
    <left>
       <VBox alignment="CENTER_LEFT" prefHeight="500.0" prefWidth="500.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Izaberi psa" textFill="WHITE" />
-            <TableView fx:id="dogsTableView1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="600.0">
-               <columnResizePolicy>
-                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-               </columnResizePolicy>
+            <Label text="Izaberite psa" textFill="WHITE" />
+            <TableView fx:id="dogsTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="525.0">
                <columns>
-                  <TableColumn prefWidth="75.0" text="Ime" />
-                  <TableColumn prefWidth="75.0" text="Rasa" />
-                  <TableColumn prefWidth="75.0" text="Pol" />
-                  <TableColumn prefWidth="75.0" text="Visina" />
-                  <TableColumn prefWidth="75.0" text="Težina" />
-                  <TableColumn prefWidth="75.0" text="Datum rođenja" />
+                  <TableColumn prefWidth="115.0" text="Ime" />
+                  <TableColumn prefWidth="115.0" text="Rasa" />
+                  <TableColumn prefWidth="50.0" text="Pol" />
+                  <TableColumn prefWidth="70.0" text="Visina" />
+                  <TableColumn prefWidth="70.0" text="Težina" />
+                  <TableColumn prefWidth="105.0" text="Datum rođenja" />
                </columns>
             </TableView>
          </children>
          <BorderPane.margin>
-            <Insets top="20.0" />
+            <Insets />
          </BorderPane.margin>
       </VBox>
    </left>
    <right>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER_LEFT" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Nalaz" textFill="WHITE" />
-            <Button fx:id="chooseFindingButton" mnemonicParsing="false" onAction="#chooseFinding" text="Izaberi nalaz" />
+            <Label text="Izaberite nalaz" textFill="WHITE" />
+            <TableView minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="450.0">
+              <columns>
+                <TableColumn prefWidth="105.0" text="Datum pregleda" />
+                <TableColumn prefWidth="61.0" text="Veterinar" />
+                  <TableColumn prefWidth="85.0" text="Pas" />
+                  <TableColumn prefWidth="198.0" text="Dijagnoza" />
+              </columns>
+            </TableView>
          </children>
-         <BorderPane.margin>
-            <Insets top="20.0" />
-         </BorderPane.margin>
-      </HBox>
+      </VBox>
    </right>
 </BorderPane>

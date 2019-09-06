@@ -19,7 +19,7 @@ public class VetMainForm {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("mainFormVet.fxml"));
         Stage stage = new Stage();
         stage.setTitle("Azil za pse - veterinarski dio");
-        Scene scene = new Scene(loader.load(), 1000, 700);
+        Scene scene = new Scene(loader.load());
         stage.setScene(scene);
         VetMainController controller = loader.getController();
         controller.initialize(stage);

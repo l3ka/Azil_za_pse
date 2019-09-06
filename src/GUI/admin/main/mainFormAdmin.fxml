@@ -49,6 +49,7 @@
          <children>
             <Button fx:id="addDogButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#addDog" prefHeight="30.0" prefWidth="140.0" text="Dodaj psa" />
             <Button fx:id="adoptDogButton" layoutX="58.0" layoutY="195.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#adoptDog" prefHeight="30.0" prefWidth="140.0" text="Udomi psa" />
+            <Button fx:id="addFosterParentButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#addFosterParent" prefHeight="30.0" prefWidth="140.0" text="Dodaj udomitelja" />
             <Button fx:id="addMedicineButton" layoutX="58.0" layoutY="215.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#addMedicine" prefHeight="30.0" prefWidth="140.0" text="Dodaj lijek" />
             <Button fx:id="addAcountButton" layoutX="58.0" layoutY="236.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#addAccount" prefHeight="30.0" prefWidth="140.0" text="Dodaj nalog" />
             <Button fx:id="editAccountButton" layoutX="58.0" layoutY="256.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#editAccount" prefHeight="30.0" prefWidth="140.0" text="Izmijeni nalog" />
