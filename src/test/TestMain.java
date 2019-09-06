@@ -37,7 +37,7 @@ public class TestMain {
         MedicineDTO medicine = new MedicineDTO(
                 null,
                 "Tajlo Hot",
-                "Prije upotrebe posvjetujte se sa svojim lijecnikom"
+                "Prije upotrebe posvjetujte se sa svojim lijecnikom", 5
                 );
         AzilUtilities.getDAOFactory().getMedicineDAO().insert(medicine);
     }

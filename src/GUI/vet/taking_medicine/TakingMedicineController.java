@@ -1,30 +1,41 @@
 package GUI.vet.taking_medicine;
 
 import GUI.alert_box.AlertBoxForm;
+import GUI.vet.medicine_quantity.MedicineQuantityForm;
+import data.dto.MedicineDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import util.AzilUtilities;
+
+import java.util.List;
 
 public class TakingMedicineController {
 
-    @FXML private TableView<String> drugsTableView;
-    @FXML private ComboBox<Integer> amountComboBox;
+    @FXML private TableView<MedicineDTO> drugsTableView;
     private Stage stage;
+    private List<MedicineDTO> listOfMedicines;
 
     public void initialize(Stage stage) {
         this.stage = stage;
-        amountComboBox.getItems().addAll(1, 2, 3, 4, 5); // NA OSNOVU BAZE SE MORA POPUNITI!!!
-    }
 
-    public void amountChoosed() {
+        drugsTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("medicineId"));
+        drugsTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("name"));
+        drugsTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("description"));
 
+        displayMedicines();
     }
 
     public void takeMedicine() {
-        if(checkSelectedDrug() && checkSelectedAmount()) {
-            displayAlertBox("Lijek je uspješno izabran!");
-            stage.close();
+        if(checkSelectedDrug()) {
+            try {
+                new MedicineQuantityForm(drugsTableView.getSelectionModel().getSelectedItem()).display();
+                displayMedicines();
+            } catch(Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -40,19 +51,18 @@ public class TakingMedicineController {
         return true;
     }
 
-    private boolean checkSelectedAmount() {
-        if(amountComboBox.getSelectionModel().getSelectedItem() == null) {
-            displayAlertBox("Nije izabrana količina lijeka!");
-            return false;
-        }
-        return true;
-    }
-
     private void displayAlertBox(String content) {
         try {
             new AlertBoxForm(content).display();
         } catch (Exception exception) {
 
+        }
+    }
+
+    private void displayMedicines() {
+        listOfMedicines = AzilUtilities.getDAOFactory().getMedicineDAO().medicines();
+        for(MedicineDTO medicine : listOfMedicines) {
+            drugsTableView.getItems().add(medicine);
         }
     }
 }

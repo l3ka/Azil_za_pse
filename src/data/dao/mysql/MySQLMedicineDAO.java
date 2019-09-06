@@ -1,5 +1,6 @@
 package data.dao.mysql;
 
+import com.mysql.cj.xdevapi.SqlDataResult;
 import data.dao.MedicineDAO;
 import data.dto.MedicineDTO;
 
@@ -7,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MySQLMedicineDAO implements MedicineDAO{
 
@@ -16,13 +19,14 @@ public class MySQLMedicineDAO implements MedicineDAO{
         Connection conn = null;
         PreparedStatement ps = null;
 
-        String query = "INSERT INTO lijek (NazivLijeka, Opis) "
-                + "VALUES (?, ?) ";
+        String query = "INSERT INTO lijek (NazivLijeka, Opis, Kolicina) "
+                + "VALUES (?, ?, ?) ";
         try{
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
             ps.setString(1, medicine.getName());
             ps.setString(2, medicine.getDescription());
+            ps.setInt(3, medicine.getQuantity());
 
             retVal = ps.executeUpdate() == 1;
         }catch (Exception e){
@@ -54,8 +58,7 @@ public class MySQLMedicineDAO implements MedicineDAO{
                 retVal = new MedicineDTO(
                         rs.getInt("IdLijeka"),
                         rs.getString("NazivLijeka"),
-                        rs.getString("Opis")
-                );
+                        rs.getString("Opis"), rs.getInt("Kolicina"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -115,5 +118,31 @@ public class MySQLMedicineDAO implements MedicineDAO{
             DBUtilities.getInstance().close(ps);
         }
         return  retVal;
+    }
+
+    public List<MedicineDTO> medicines() {
+        List<MedicineDTO> retVal = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String query = "SELECT * FROM lijek";
+
+        try {
+            conn = ConnectionPool.getInstance().checkOut();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+
+            while(rs.next()) {
+                retVal.add(new MedicineDTO(rs.getInt("IdLijeka"), rs.getString("NazivLijeka"), rs.getString("Opis"), rs.getInt("Kolicina")));
+            }
+
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            ConnectionPool.getInstance().checkIn(conn);
+            DBUtilities.getInstance().close(ps, rs);
+        }
+        return retVal;
     }
 }

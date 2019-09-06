@@ -3,7 +3,6 @@ package GUI.adding_dog;
 import GUI.alert_box.AlertBoxForm;
 import data.dto.DogDTO;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;

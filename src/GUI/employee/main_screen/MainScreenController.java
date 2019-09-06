@@ -1,9 +1,11 @@
 package GUI.employee.main_screen;
 
 import GUI.adding_dog.AddingDogForm;
+import GUI.adding_medicine.AddingMedicineForm;
+import GUI.adopting_dog.AdoptingDogForm;
+import GUI.login.LoginForm;
 import data.dto.DogDTO;
 import data.dto.EmployeeDTO;
-import data.dto.ServantDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -43,6 +45,7 @@ public class MainScreenController {
 
     public void initialize(Stage stage) {
         this.stage = stage;
+
         dogsTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("name"));
         dogsTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("breed"));
         dogsTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("gender"));
@@ -50,10 +53,8 @@ public class MainScreenController {
         dogsTableView.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("weight"));
         dogsTableView.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
 
-        listOfDogs = AzilUtilities.getDAOFactory().getDogDAO().dogs();
-        for(DogDTO dog : listOfDogs) {
-            dogsTableView.getItems().add(dog);
-        }
+        displayDogs();
+
     }
 
     public void addDog() {
@@ -64,4 +65,36 @@ public class MainScreenController {
         }
     }
 
+    public void adoptDog() {
+        try {
+            new AdoptingDogForm().display();
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void addMedicine() {
+        try {
+            new AddingMedicineForm().display();
+        } catch(Exception ex) {
+
+        }
+    }
+
+    public void logOut() {
+        stage.close();
+
+        try {
+            new LoginForm().start(new Stage());
+        } catch(Exception exception) {
+
+        }
+    }
+
+    private void displayDogs() {
+        listOfDogs = AzilUtilities.getDAOFactory().getDogDAO().dogs();
+        for(DogDTO dog : listOfDogs) {
+            dogsTableView.getItems().add(dog);
+        }
+    }
 }

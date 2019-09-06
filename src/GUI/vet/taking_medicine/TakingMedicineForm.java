@@ -11,8 +11,6 @@ public class TakingMedicineForm {
     public void display() throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("takingMedicine.fxml"));
         Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        Parent root = FXMLLoader.load(getClass().getResource("takingMedicine.fxml"));
         stage.setTitle("Azil za pse - uzimanje lijeka");
         Scene scene = new Scene(loader.load(), 1000, 700);
         stage.setScene(scene);
