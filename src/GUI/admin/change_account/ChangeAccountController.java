@@ -41,7 +41,6 @@ public class ChangeAccountController {
 
     public void initialize(Stage stage) {
         this.stage = stage;
-
         nameTextField.setText(employeeForEdit.getName());
         surnameTextField.setText(employeeForEdit.getSurname());
         qualificationsTextField.setText(employeeForEdit.getQualifications());
