@@ -1,11 +1,16 @@
 package GUI.admin.add_account;
 
 import GUI.alert_box.AlertBoxForm;
+import data.dto.AdministratorDTO;
+import data.dto.ServantDTO;
+import data.dto.VeterinarianDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import util.AzilUtilities;
 
 public class AddAccountController {
 
@@ -28,7 +33,7 @@ public class AddAccountController {
     @FXML
     private TextField phoneNumberTextField;
     @FXML
-    private TextField positionTextField;
+    private ComboBox<String> positionComboBox;
     @FXML
     private TextField salaryTextField;
     @FXML
@@ -40,16 +45,63 @@ public class AddAccountController {
 
     public void initialize(Stage stage) {
         this.stage = stage;
+
+        positionComboBox.getItems().add("Administrator");
+        positionComboBox.getItems().add("Veterinar");
+        positionComboBox.getItems().add("Službenik");
     }
 
     public void save() {
-        if(checkName() && checkQualifications() && checkIdentificationNumber() && checkIdentificationNumber() && checkPlaceOfResidence() && checkPhoneNumber() && checkPosition() && checkSalary() && checkValidUntil()) {
-            // DODATI NALOG
+        if(checkUsername() && checkPassword() && checkName() && checkQualifications() && checkIdentificationNumber() && checkIdentificationNumber() && checkPlaceOfResidence() && checkPhoneNumber() && checkPosition() && checkSalary() && checkValidUntil()) {
+            switch(positionComboBox.getSelectionModel().getSelectedItem()) {
+                case "Administrator":
+                    AzilUtilities.getDAOFactory().getAdministratorDAO().insert(new AdministratorDTO(usernameTextField.getText(), passwordField.getText(),
+                            nameTextField.getText(), surnameTextField.getText(), qualificationsTextField.getText(), placeOfResidenceTextField.getText(),
+                            phoneNumberTextField.getText(), identificationNumberTextField.getText()),null);
+                    break;
+
+                case "Veterinar":
+                    AzilUtilities.getDAOFactory().getVeterinarinaDAO().insert(new VeterinarianDTO(usernameTextField.getText(), passwordField.getText(),
+                            nameTextField.getText(), surnameTextField.getText(), qualificationsTextField.getText(), placeOfResidenceTextField.getText(),
+                            phoneNumberTextField.getText(), identificationNumberTextField.getText()), null);
+                    break;
+
+                case "Službenik":
+                    AzilUtilities.getDAOFactory().getServantDAO().insert(new ServantDTO(usernameTextField.getText(), passwordField.getText(),
+                            nameTextField.getText(), surnameTextField.getText(), qualificationsTextField.getText(), placeOfResidenceTextField.getText(),
+                            phoneNumberTextField.getText(), identificationNumberTextField.getText()),null);
+                    break;
+
+                default:
+                    break;
+            }
+
+            stage.close();
         }
     }
 
     public void quit() {
         stage.close();
+    }
+
+    private boolean checkUsername() {
+        if("".equals(usernameTextField.getText())) {
+            displayAlertBox("Unos za korisničko ime nije odgovarajući!");
+            return false;
+        }
+        else if(AzilUtilities.getDAOFactory().getEmployeeDAO().exists(usernameTextField.getText(), identificationNumberTextField.getText())) {
+            displayAlertBox("Korisničko ime ili JMBG postoji u bazi!");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkPassword() {
+        if("".equals(passwordField.getText())) {
+            displayAlertBox("Unos za lozinku nije odgovarajući!");
+            return false;
+        }
+        return true;
     }
 
     private boolean checkName() {
@@ -93,8 +145,8 @@ public class AddAccountController {
     }
 
     private boolean checkPosition() {
-        if ("".equals(positionTextField.getText().trim())) {
-            displayAlertBox("Unos za polje pozicija nije odgovarajući!");
+        if (positionComboBox.getSelectionModel().getSelectedItem() == null) {
+            displayAlertBox("Nije izabrana pozicija!");
             return false;
         }
         return true;
