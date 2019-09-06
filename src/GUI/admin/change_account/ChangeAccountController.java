@@ -31,6 +31,8 @@ public class ChangeAccountController {
     @FXML
     private PasswordField passwordField;
     @FXML
+    private PasswordField repeatPasswordField;
+    @FXML
     private Button saveButton;
     @FXML
     private Button quitButton;
@@ -50,53 +52,40 @@ public class ChangeAccountController {
     }
 
     public void saveAccount() {
-        if (checkUsername() && checkName() && checkQualifications() && checkPlaceOfResidence() && checkIdentificationNumber() && checkPhoneNumber()) {
-
-            if (!employeeForEdit.getUsername().equals(usernameTextField.getText().trim())) {
-                if (AzilUtilities.getDAOFactory().getEmployeeDAO().exists(usernameTextField.getText(), identificationNumberTextField.getText().trim())) {
-                    displayAlertBox("Korisnik sa ovim korisničkim imenom ili JMBG već postoji!");
-                } else {
-                    employeeForEdit.setUsername(usernameTextField.getText());
-                    if(!"".equals(passwordField.getText())) {
-                        employeeForEdit.setPassword(AzilUtilities.getSHA256(passwordField.getText()));
-                    }
-                    AzilUtilities.getDAOFactory().getEmployeeDAO().update(employeeForEdit);
+        if (checkUsername() && checkName() && checkQualifications() && checkPlaceOfResidence() && checkPhoneNumber()) {
+            boolean flag = true;
+            if (!employeeForEdit.getName().equals(nameTextField.getText().trim()) || !employeeForEdit.getSurname().equals(surnameTextField.getText().trim()) ||
+                    !employeeForEdit.getQualifications().equals(qualificationsTextField.getText().trim()) || !employeeForEdit.getResidenceAddress().equals(placeOfResidenceTextField.getText()) ||
+                    !employeeForEdit.getTelephoneNumber().equals(phoneNumberTextField.getText().trim()) || !employeeForEdit.getUsername().equals(usernameTextField.getText().trim())) {
+                employeeForEdit.setName(nameTextField.getText().trim());
+                employeeForEdit.setSurname(surnameTextField.getText().trim());
+                employeeForEdit.setQualifications(qualificationsTextField.getText().trim());
+                employeeForEdit.setResidenceAddress(placeOfResidenceTextField.getText().trim());
+                employeeForEdit.setTelephoneNumber(phoneNumberTextField.getText().trim());
+                employeeForEdit.setUsername(usernameTextField.getText().trim());
+                if (checkEqualityPassword()) {
+                    employeeForEdit.setPassword(AzilUtilities.getSHA256(passwordField.getText().trim()));
+                    flag = false;
                 }
-            }
-
-            if (!employeeForEdit.getJMB().equals(identificationNumberTextField)) {
-                employeeForEdit.setJMB(identificationNumberTextField.getText());
                 AzilUtilities.getDAOFactory().getEmployeeDAO().update(employeeForEdit);
+                displayAlertBox("Uspješno izmijenjen nalog!");
+                quit();
             }
-            if (!employeeForEdit.getName().equals(nameTextField.getText())) {
-                employeeForEdit.setName(nameTextField.getText());
+            else if (checkEqualityPassword() && flag) {
+                employeeForEdit.setPassword(AzilUtilities.getSHA256(passwordField.getText().trim()));
                 AzilUtilities.getDAOFactory().getEmployeeDAO().update(employeeForEdit);
+                displayAlertBox("Uspješno izmijenjen nalog!");
+                quit();
             }
-            if (!employeeForEdit.getSurname().equals(surnameTextField.getText())) {
-                employeeForEdit.setSurname(surnameTextField.getText());
-                AzilUtilities.getDAOFactory().getEmployeeDAO().update(employeeForEdit);
+            else {
+                displayAlertBox("Molimo unesite parametre kako biste izmijenili nalog!");
             }
-            if (!employeeForEdit.getQualifications().equals(qualificationsTextField.getText())) {
-                employeeForEdit.setQualifications(qualificationsTextField.getText());
-                AzilUtilities.getDAOFactory().getEmployeeDAO().update(employeeForEdit);
-            }
-            if (!employeeForEdit.getResidenceAddress().equals(placeOfResidenceTextField.getText())) {
-                employeeForEdit.setResidenceAddress(placeOfResidenceTextField.getText());
-                AzilUtilities.getDAOFactory().getEmployeeDAO().update(employeeForEdit);
-            }
-            if (!employeeForEdit.getTelephoneNumber().equals(phoneNumberTextField.getText())) {
-                employeeForEdit.setTelephoneNumber(phoneNumberTextField.getText());
-                AzilUtilities.getDAOFactory().getEmployeeDAO().update(employeeForEdit);
-            }
-            displayAlertBox("Uspješno izmijenjen nalog!");
         }
     }
-
 
     public void quit() {
         stage.close();
     }
-
 
     private boolean checkUsername() {
         if("".equals(usernameTextField.getText().trim())) {
@@ -122,14 +111,6 @@ public class ChangeAccountController {
         return true;
     }
 
-    private boolean checkIdentificationNumber() {
-        if ("".equals(identificationNumberTextField.getText().trim()) || !checkIsNumber(identificationNumberTextField.getText().trim())) {
-            displayAlertBox("Unos za polje JMB nije odgovarajući!");
-            return false;
-        }
-        return true;
-    }
-
     private boolean checkPlaceOfResidence() {
         if ("".equals(placeOfResidenceTextField.getText().trim())) {
             displayAlertBox("Unos za polje mjesto stanovanja nije odgovarajući!");
@@ -146,8 +127,11 @@ public class ChangeAccountController {
         return true;
     }
 
-    private boolean checkIsNumber(String number) {
-        return number.matches("^[0-9]*$");
+    private boolean checkEqualityPassword() {
+        if (!"".equals(passwordField.getText().trim()) && !"".equals(repeatPasswordField.getText().trim()) && passwordField.getText().trim().equals(repeatPasswordField.getText().trim())) {
+            return true;
+        }
+        return false;
     }
 
     private void displayAlertBox(String content) {

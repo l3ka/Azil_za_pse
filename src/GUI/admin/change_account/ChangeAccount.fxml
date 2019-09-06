@@ -12,7 +12,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="700.0" style="-fx-background-color: #b71c1c;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.admin.change_account.ChangeAccountController">
    <top>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="176.0" prefWidth="700.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -38,7 +38,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="identificationNumberTextField" editable="false" prefWidth="180.0" />
+                  <TextField fx:id="identificationNumberTextField" disable="true" editable="false" prefWidth="180.0" />
                </children>
             </HBox>
             <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="500.0" spacing="103.0">
@@ -111,7 +111,15 @@
                   <PasswordField fx:id="passwordField" prefWidth="180.0" />
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" />
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label prefHeight="20.0" prefWidth="136.0" text="Ponovi Lozinku" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <PasswordField fx:id="repeatPasswordField" prefHeight="25.0" prefWidth="177.0" />
+               </children></HBox>
          </children>
       </VBox>
    </center>
