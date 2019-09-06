@@ -12,7 +12,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="700.0" style="-fx-background-color: #b71c1c;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.admin.add_account.AddAccountController">
    <bottom>
-      <VBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="0.0" prefWidth="629.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="saveButton" mnemonicParsing="false" onAction="#save" text="Sačuvaj" BorderPane.alignment="CENTER">
                <BorderPane.margin>
@@ -27,7 +27,7 @@
       </VBox>
    </bottom>
    <center>
-      <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="539.0" prefWidth="650.0" BorderPane.alignment="CENTER">
          <children>
             <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="500.0" spacing="103.0">
                <children>
@@ -67,6 +67,16 @@
                      </font>
                   </Label>
                   <PasswordField fx:id="passwordField" prefWidth="180.0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="38.0" prefWidth="650.0">
+               <children>
+                  <Label prefHeight="20.0" prefWidth="138.0" text="Ponovi Lozinku" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <PasswordField fx:id="repeatPasswordField" prefHeight="25.0" prefWidth="173.0" />
                </children>
             </HBox>
             <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="500.0" spacing="103.0">
@@ -131,12 +141,22 @@
             </HBox>
             <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="500.0" spacing="64.0">
                <children>
-                  <Label text="Ugovor do" textFill="WHITE">
+                  <Label text="Ugovor od" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="contractValidUntilTextField" prefWidth="180.0" />
+                  <DatePicker fx:id="contractFromDatePicker" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label prefHeight="20.0" prefWidth="138.0" text="Ugovor do" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <DatePicker fx:id="contractToDatePicker" />
                </children>
             </HBox>
          </children>
@@ -149,7 +169,7 @@
       <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
    </padding>
    <top>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="47.0" prefWidth="650.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                <image>

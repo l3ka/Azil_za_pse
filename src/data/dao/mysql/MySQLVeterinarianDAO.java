@@ -13,30 +13,7 @@ public class MySQLVeterinarianDAO implements VeterinarianDAO {
 
     @Override
     public boolean insert(VeterinarianDTO veterinarian, EmploymentContractDTO contract){
-        boolean retVal = true;
-        boolean insertSuccess = AzilUtilities.getDAOFactory().getEmployeeDAO().insert(veterinarian, contract);
-
-        if(!AzilUtilities.getDAOFactory().getVeterinarinaDAO().exists(veterinarian) && insertSuccess){
-            Connection conn = null;
-            PreparedStatement ps = null;
-
-            String query = "INSERT INTO veterinar VALUES "
-                    + "(?) ";
-            try{
-                conn = ConnectionPool.getInstance().checkOut();
-                ps = conn.prepareStatement(query);
-                ps.setString(1, veterinarian.getJMB());
-
-                retVal = ps.executeUpdate() == 1;
-            }catch (Exception e){
-                retVal = false;
-                e.printStackTrace();
-            }finally {
-                ConnectionPool.getInstance().checkIn(conn);
-                DBUtilities.getInstance().close(ps);
-            }
-        }
-        return retVal;
+        return AzilUtilities.getDAOFactory().getEmployeeDAO().insert(veterinarian, contract);
     }
 
     @Override

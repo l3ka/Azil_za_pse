@@ -13,30 +13,7 @@ public class MySQLAdministratorDAO implements AdministratorDAO {
 
     @Override
     public boolean insert(AdministratorDTO administrator, EmploymentContractDTO contract){
-        boolean retVal = true;
-        boolean insertSuccess = AzilUtilities.getDAOFactory().getEmployeeDAO().insert(administrator, contract);
-
-        if(!AzilUtilities.getDAOFactory().getAdministratorDAO().exists(administrator) && insertSuccess){
-            Connection conn = null;
-            PreparedStatement ps = null;
-
-            String query = "INSERT INTO administrator VALUES "
-                    + "(?) ";
-            try{
-                conn = ConnectionPool.getInstance().checkOut();
-                ps = conn.prepareStatement(query);
-                ps.setString(1, administrator.getJMB());
-
-                retVal = ps.executeUpdate() == 1;
-            }catch (Exception e){
-                retVal = false;
-                e.printStackTrace();
-            }finally {
-                ConnectionPool.getInstance().checkIn(conn);
-                DBUtilities.getInstance().close(ps);
-            }
-        }
-        return retVal;
+        return AzilUtilities.getDAOFactory().getEmployeeDAO().insert(administrator, contract);
     }
 
     @Override
@@ -251,4 +228,5 @@ public class MySQLAdministratorDAO implements AdministratorDAO {
 
         return retVal;
     }
+
 }
