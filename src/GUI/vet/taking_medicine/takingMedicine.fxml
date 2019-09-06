@@ -41,31 +41,20 @@
       </VBox>
    </bottom>
    <center>
-      <VBox alignment="CENTER_LEFT" spacing="10.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets top="20.0" />
          </BorderPane.margin>
          <children>
             <Label text="Izaberi lijek" textFill="WHITE" />
-            <TableView fx:id="drugsTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="280.0" prefWidth="780.0">
+            <TableView fx:id="drugsTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="280.0" prefWidth="599.0">
               <columns>
-                <TableColumn prefWidth="61.0" text="ID" />
-                <TableColumn prefWidth="180.0" text="Naziv" />
-                  <TableColumn prefWidth="139.0" text="Datum proizvodnje" />
-                  <TableColumn prefWidth="108.0" text="Rok upotrebe do" />
-                  <TableColumn prefWidth="91.0" text="Količina" />
-                  <TableColumn prefWidth="220.0" text="Opis" />
+                <TableColumn prefWidth="78.0" text="ID" />
+                <TableColumn prefWidth="179.0" text="Naziv" />
+                  <TableColumn prefWidth="342.0" text="Opis" />
               </columns>
             </TableView>
          </children>
       </VBox>
    </center>
-   <right>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="150.0">
-         <children>
-            <Label text="Količina" textFill="WHITE" />
-            <ComboBox fx:id="amountComboBox" onAction="#amountChoosed" prefHeight="31.0" prefWidth="155.0" promptText="Izaberi količinu" />
-         </children>
-      </VBox>
-   </right>
 </BorderPane>

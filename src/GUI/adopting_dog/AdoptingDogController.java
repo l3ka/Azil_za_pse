@@ -29,12 +29,18 @@ public class AdoptingDogController {
     @FXML
     public void initialize(Stage stage) {
         this.stage = stage;
+
         dogsTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("name"));
         dogsTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("breed"));
         dogsTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("gender"));
         dogsTableView.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("height"));
         dogsTableView.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("weight"));
         dogsTableView.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
+
+        fosterParentsTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("name"));
+        fosterParentsTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("surname"));
+        fosterParentsTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("residenceAddress"));
+        fosterParentsTableView.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("telephoneNumber"));
 
         displayDogs();
         displayFosterParents();
@@ -46,13 +52,11 @@ public class AdoptingDogController {
             selectedFosterParent = fosterParentsTableView.getSelectionModel().getSelectedItem();
 
             selectedDog.setAdopted(true);
+            AzilUtilities.getDAOFactory().getDogDAO().update(selectedDog);
             adoptingDTO = new AdoptingDTO(selectedDog, new Date(Calendar.getInstance().getTime().getTime()), null);
             selectedFosterParent.addDog(adoptingDTO);
 
-            AzilUtilities.getDAOFactory().getDogDAO().update(selectedDog);
-            AzilUtilities.getDAOFactory().getFosterParentDAO().update(selectedFosterParent);
-            AzilUtilities.getDAOFactory().getAdoptingDAO().update(selectedFosterParent, adoptingDTO, adoptingDTO.getDateFrom(), selectedDog.getDogId(), selectedFosterParent.getJMB());
-
+            AzilUtilities.getDAOFactory().getAdoptingDAO().insert(selectedFosterParent, adoptingDTO);
             displayAlertBox("Pas je uspješno udomljen!");
             stage.close();
         }
@@ -89,9 +93,7 @@ public class AdoptingDogController {
     private void displayDogs() {
         listOfDogs = AzilUtilities.getDAOFactory().getDogDAO().dogs();
         for (DogDTO dog : listOfDogs) {
-            if(!dog.isAdopted()) {
-                dogsTableView.getItems().add(dog);
-            }
+            dogsTableView.getItems().add(dog);
         }
     }
 

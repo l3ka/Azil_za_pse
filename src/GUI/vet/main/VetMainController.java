@@ -1,5 +1,6 @@
 package GUI.vet.main;
 
+import GUI.alert_box.AlertBoxForm;
 import GUI.login.LoginForm;
 import GUI.vet.dog_examination.DogExaminationForm;
 import GUI.vet.taking_medicine.TakingMedicineForm;
@@ -65,13 +66,15 @@ public class VetMainController {
         try {
             new TakingMedicineForm().display();
         } catch(Exception exception) {
-
+            exception.printStackTrace();
         }
     }
 
     public void generateFinding() {
         try {
-            new GeneratingFindingForm().display();
+            if(checkSelectedDog()) {
+                new GeneratingFindingForm(dogsTableView.getSelectionModel().getSelectedItem(), employee).display();
+            }
         } catch(Exception exception) {
 
         }
@@ -83,6 +86,22 @@ public class VetMainController {
         try {
             new LoginForm().start(new Stage());
         } catch(Exception exception) {
+
+        }
+    }
+
+    private boolean checkSelectedDog() {
+        if(dogsTableView.getSelectionModel().getSelectedItem() == null) {
+            displayAlertBox("Niste izabrali psa za pregled!");
+            return false;
+        }
+        return true;
+    }
+
+    private void displayAlertBox(String content) {
+        try {
+            new AlertBoxForm(content);
+        } catch(Exception ex) {
 
         }
     }

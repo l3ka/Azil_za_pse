@@ -22,7 +22,7 @@ public class AddingMedicineController {
 
     public void addDrug() {
         if(checkName() && checkDateOfMaunfacturer() && checkExpirationDate() && checkAmount() && checkDescription()) {
-            AzilUtilities.getDAOFactory().getMedicineDAO().insert(new MedicineDTO(0, nameTextField.getText(), descriptionTextField.getText()));
+            AzilUtilities.getDAOFactory().getMedicineDAO().insert(new MedicineDTO(0, nameTextField.getText(), descriptionTextField.getText(), Integer.valueOf(amountTextField.getText())));
             displayAlertBox("Lijek je uspješno dodat!");
             stage.close();
         }
