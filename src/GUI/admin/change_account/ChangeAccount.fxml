@@ -111,14 +111,14 @@
                   <PasswordField fx:id="passwordField" prefWidth="180.0" />
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="45.0">
                <children>
-                  <Label prefHeight="20.0" prefWidth="136.0" text="Ponovi Lozinku" textFill="WHITE">
+                  <Label text="Ponovi lozinku" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <PasswordField fx:id="repeatPasswordField" prefHeight="25.0" prefWidth="177.0" />
+                  <PasswordField fx:id="repeatPasswordField" prefWidth="180.0" />
                </children></HBox>
          </children>
       </VBox>
