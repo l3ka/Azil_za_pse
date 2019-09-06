@@ -19,10 +19,9 @@ public class ChangeAccount {
     public void display() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ChangeAccount.fxml"));
         Stage stage = new Stage();
-        Scene scene = new Scene(loader.load(), 700, 700);
+        Scene scene = new Scene(loader.load());
         stage.setTitle("Azil za pse - izmjena korisničkog naloga");
         stage.setScene(scene);
-        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setResizable(false);
         ChangeAccountController controller = loader.getController();
         controller.initialize(stage);
