@@ -30,4 +30,6 @@ public abstract class DAOFactory {
     public static DAOFactory getDAOFactory() {
         return new MySQLDAOFactory();
     }
+
+    public abstract TakingMedicineDAO getTakingMedicineDAO();
 }

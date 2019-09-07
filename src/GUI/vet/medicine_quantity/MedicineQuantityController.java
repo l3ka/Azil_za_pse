@@ -1,12 +1,15 @@
 package GUI.vet.medicine_quantity;
 
 import GUI.alert_box.AlertBoxForm;
-import data.dto.MedicineDTO;
+import data.dto.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import util.AzilUtilities;
+
+import java.sql.Date;
+import java.util.Calendar;
 
 public class MedicineQuantityController {
 
@@ -17,6 +20,7 @@ public class MedicineQuantityController {
 
     private Stage stage;
     private MedicineDTO medicine = MedicineQuantityForm.medicine;
+    private EmployeeDTO employee = MedicineQuantityForm.employee;
 
     public void initialize(Stage stage) {
         this.stage = stage;
@@ -31,6 +35,7 @@ public class MedicineQuantityController {
         if(checkSelectedQuantity()) {
             medicine.setQuantity(medicine.getQuantity() - quantityComboBox.getSelectionModel().getSelectedItem());
             AzilUtilities.getDAOFactory().getMedicineDAO().update(medicine);
+            AzilUtilities.getDAOFactory().getTakingMedicineDAO().insert(new TakingMedicineDTO(new Date(Calendar.getInstance().getTime().getTime()), (VeterinarianDTO) employee, medicine, null, quantityComboBox.getSelectionModel().getSelectedItem()));
             stage.close();
         }
     }

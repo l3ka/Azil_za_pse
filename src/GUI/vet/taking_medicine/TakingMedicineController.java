@@ -2,6 +2,7 @@ package GUI.vet.taking_medicine;
 
 import GUI.alert_box.AlertBoxForm;
 import GUI.vet.medicine_quantity.MedicineQuantityForm;
+import data.dto.EmployeeDTO;
 import data.dto.MedicineDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -17,6 +18,7 @@ public class TakingMedicineController {
     @FXML private TableView<MedicineDTO> drugsTableView;
     private Stage stage;
     private List<MedicineDTO> listOfMedicines;
+    private EmployeeDTO employee = TakingMedicineForm.employee;
 
     public void initialize(Stage stage) {
         this.stage = stage;
@@ -31,7 +33,7 @@ public class TakingMedicineController {
     public void takeMedicine() {
         if(checkSelectedDrug()) {
             try {
-                new MedicineQuantityForm(drugsTableView.getSelectionModel().getSelectedItem()).display();
+                new MedicineQuantityForm(drugsTableView.getSelectionModel().getSelectedItem(), employee).display();
                 drugsTableView.getItems().clear();
                 displayMedicines();
             } catch(Exception ex) {

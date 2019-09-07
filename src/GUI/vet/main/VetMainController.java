@@ -4,7 +4,6 @@ import GUI.alert_box.AlertBoxForm;
 import GUI.login.LoginForm;
 import GUI.vet.dog_examination.DogExaminationForm;
 import GUI.vet.taking_medicine.TakingMedicineForm;
-import GUI.vet.generating_finding.GeneratingFindingForm;
 import data.dto.DogDTO;
 import data.dto.EmployeeDTO;
 import data.dto.VeterinarianDTO;
@@ -66,13 +65,11 @@ public class VetMainController {
 
     public void takeDrug() {
         try {
-            new TakingMedicineForm().display();
+            new TakingMedicineForm(employee).display();
         } catch(Exception exception) {
             exception.printStackTrace();
         }
     }
-
-
 
     public void logOut() {
         stage.close();
