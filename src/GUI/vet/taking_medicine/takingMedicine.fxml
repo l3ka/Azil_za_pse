@@ -49,8 +49,8 @@
             <Label text="Izaberi lijek" textFill="WHITE" />
             <TableView fx:id="drugsTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="280.0" prefWidth="599.0">
               <columns>
-                <TableColumn prefWidth="78.0" text="ID" />
                 <TableColumn prefWidth="179.0" text="Naziv" />
+                  <TableColumn minWidth="40.0" prefWidth="100.0" text="Količina" />
                   <TableColumn prefWidth="342.0" text="Opis" />
               </columns>
             </TableView>

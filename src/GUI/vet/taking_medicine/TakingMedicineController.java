@@ -21,8 +21,8 @@ public class TakingMedicineController {
     public void initialize(Stage stage) {
         this.stage = stage;
 
-        drugsTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("medicineId"));
-        drugsTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("name"));
+        drugsTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("name"));
+        drugsTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("quantity"));
         drugsTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("description"));
 
         displayMedicines();
