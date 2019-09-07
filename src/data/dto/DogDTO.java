@@ -114,4 +114,9 @@ public class DogDTO {
     public int hashCode() {
         return Objects.hash(dogId);
     }
+
+    @Override
+    public String toString() {
+        return name + " " + breed;
+    }
 }

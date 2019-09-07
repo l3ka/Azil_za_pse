@@ -55,10 +55,12 @@ public class VetMainController {
     }
 
     public void examineDog() {
-        try {
-            new DogExaminationForm().display();
-        } catch(Exception exception) {
-
+        if (checkSelectedDog()) {
+            try {
+                new DogExaminationForm(dogsTableView.getSelectionModel().getSelectedItem(),employee).display();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
         }
     }
 
@@ -70,15 +72,7 @@ public class VetMainController {
         }
     }
 
-    public void generateFinding() {
-        try {
-            if(checkSelectedDog()) {
-                new GeneratingFindingForm(dogsTableView.getSelectionModel().getSelectedItem(), employee).display();
-            }
-        } catch(Exception exception) {
 
-        }
-    }
 
     public void logOut() {
         stage.close();

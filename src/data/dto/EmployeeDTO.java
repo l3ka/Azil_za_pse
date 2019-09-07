@@ -82,4 +82,9 @@ public abstract class EmployeeDTO {
     public void setJMB(String JMB) {
         this.JMB = JMB;
     }
+
+    @Override
+    public String toString() {
+        return name + " " + surname;
+    }
 }

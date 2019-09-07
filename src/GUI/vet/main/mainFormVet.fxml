@@ -49,7 +49,6 @@
          <children>
             <Button fx:id="examineDogButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#examineDog" prefHeight="31.0" prefWidth="112.0" text="Pregledaj psa" />
             <Button fx:id="takeDrugButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#takeDrug" prefHeight="31.0" prefWidth="112.0" text="Uzmi lijek" />
-            <Button fx:id="generateFindingButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#generateFinding" prefHeight="31.0" prefWidth="112.0" text="Generiši nalaz" />
          </children>
       </VBox>
    </left>
