@@ -69,14 +69,14 @@
                   <PasswordField fx:id="passwordField" prefWidth="180.0" />
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="38.0" prefWidth="650.0">
+            <HBox alignment="CENTER" prefHeight="35.0" prefWidth="500.0" spacing="40.0">
                <children>
-                  <Label prefHeight="20.0" prefWidth="138.0" text="Ponovi Lozinku" textFill="WHITE">
+                  <Label text="Ponovi lozinku" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <PasswordField fx:id="repeatPasswordField" prefHeight="25.0" prefWidth="173.0" />
+                  <PasswordField fx:id="repeatPasswordField" prefWidth="180.0" />
                </children>
             </HBox>
             <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="500.0" spacing="103.0">
@@ -146,17 +146,17 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <DatePicker fx:id="contractFromDatePicker" />
+                  <DatePicker fx:id="contractFromDatePicker" prefWidth="180.0" />
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="CENTER" prefHeight="35.0" prefWidth="500.0" spacing="65.0">
                <children>
-                  <Label prefHeight="20.0" prefWidth="138.0" text="Ugovor do" textFill="WHITE">
+                  <Label text="Ugovor do" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <DatePicker fx:id="contractToDatePicker" />
+                  <DatePicker fx:id="contractToDatePicker" prefWidth="180.0" />
                </children>
             </HBox>
          </children>
@@ -166,7 +166,7 @@
       </VBox>
    </center>
    <padding>
-      <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+      <Insets bottom="15.0" left="25.0" right="25.0" />
    </padding>
    <top>
       <VBox alignment="CENTER" prefHeight="47.0" prefWidth="650.0" spacing="10.0" BorderPane.alignment="CENTER">

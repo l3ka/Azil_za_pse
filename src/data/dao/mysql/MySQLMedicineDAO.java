@@ -1,6 +1,5 @@
 package data.dao.mysql;
 
-import com.mysql.cj.xdevapi.SqlDataResult;
 import data.dao.MedicineDAO;
 import data.dto.MedicineDTO;
 
