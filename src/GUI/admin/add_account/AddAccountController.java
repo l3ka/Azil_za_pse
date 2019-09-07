@@ -1,14 +1,13 @@
 package GUI.admin.add_account;
 
 import GUI.alert_box.AlertBoxForm;
+import com.sun.javafx.scene.control.behavior.DatePickerBehavior;
 import data.dto.AdministratorDTO;
+import data.dto.EmploymentContractDTO;
 import data.dto.ServantDTO;
 import data.dto.VeterinarianDTO;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import util.AzilUtilities;
 
@@ -25,6 +24,8 @@ public class AddAccountController {
     @FXML
     private PasswordField passwordField;
     @FXML
+    private PasswordField repeatPasswordField;
+    @FXML
     private TextField qualificationsTextField;
     @FXML
     private TextField identificationNumberTextField;
@@ -37,7 +38,9 @@ public class AddAccountController {
     @FXML
     private TextField salaryTextField;
     @FXML
-    private TextField contractValidUntilTextField;
+    private DatePicker contractFromDatePicker;
+    @FXML
+    private DatePicker contractToDatePicker;
     @FXML
     private Button saveButton;
     @FXML
@@ -48,35 +51,44 @@ public class AddAccountController {
 
         positionComboBox.getItems().add("Administrator");
         positionComboBox.getItems().add("Veterinar");
-        positionComboBox.getItems().add("Službenik");
+        positionComboBox.getItems().add("Sluzbenik");
     }
 
     public void save() {
         if(checkUsername() && checkPassword() && checkName() && checkQualifications() && checkIdentificationNumber() && checkIdentificationNumber() && checkPlaceOfResidence() && checkPhoneNumber() && checkPosition() && checkSalary() && checkValidUntil()) {
+
+            EmploymentContractDTO employmentContract = new EmploymentContractDTO(0, 1,positionComboBox.getSelectionModel().getSelectedItem(),
+                            java.sql.Date.valueOf(contractFromDatePicker.getValue()), null, Double.valueOf(salaryTextField.getText().trim()));
+            if (contractToDatePicker.getValue() != null) {
+                employmentContract.setValidationDate(java.sql.Date.valueOf(contractToDatePicker.getValue()));
+            }
+            boolean result = false;
             switch(positionComboBox.getSelectionModel().getSelectedItem()) {
                 case "Administrator":
-                    AzilUtilities.getDAOFactory().getAdministratorDAO().insert(new AdministratorDTO(usernameTextField.getText(), passwordField.getText(),
-                            nameTextField.getText(), surnameTextField.getText(), qualificationsTextField.getText(), placeOfResidenceTextField.getText(),
-                            phoneNumberTextField.getText(), identificationNumberTextField.getText()),null);
+                    result = AzilUtilities.getDAOFactory().getAdministratorDAO().insert(new AdministratorDTO(usernameTextField.getText().trim(), passwordField.getText().trim(),
+                             nameTextField.getText().trim(), surnameTextField.getText().trim(), qualificationsTextField.getText().trim(), placeOfResidenceTextField.getText().trim(),
+                             phoneNumberTextField.getText(), identificationNumberTextField.getText()), employmentContract);
                     break;
-
                 case "Veterinar":
-                    AzilUtilities.getDAOFactory().getVeterinarinaDAO().insert(new VeterinarianDTO(usernameTextField.getText(), passwordField.getText(),
-                            nameTextField.getText(), surnameTextField.getText(), qualificationsTextField.getText(), placeOfResidenceTextField.getText(),
-                            phoneNumberTextField.getText(), identificationNumberTextField.getText()), null);
+                    result = AzilUtilities.getDAOFactory().getVeterinarinaDAO().insert(new VeterinarianDTO(usernameTextField.getText().trim(), passwordField.getText().trim(),
+                             nameTextField.getText().trim(), surnameTextField.getText().trim(), qualificationsTextField.getText().trim(), placeOfResidenceTextField.getText().trim(),
+                             phoneNumberTextField.getText().trim(), identificationNumberTextField.getText().trim()), employmentContract);
                     break;
-
-                case "Službenik":
-                    AzilUtilities.getDAOFactory().getServantDAO().insert(new ServantDTO(usernameTextField.getText(), passwordField.getText(),
-                            nameTextField.getText(), surnameTextField.getText(), qualificationsTextField.getText(), placeOfResidenceTextField.getText(),
-                            phoneNumberTextField.getText(), identificationNumberTextField.getText()),null);
+                case "Sluzbenik":
+                    result = AzilUtilities.getDAOFactory().getServantDAO().insert(new ServantDTO(usernameTextField.getText().trim(), passwordField.getText().trim(),
+                             nameTextField.getText().trim(), surnameTextField.getText().trim(), qualificationsTextField.getText().trim(), placeOfResidenceTextField.getText().trim(),
+                             phoneNumberTextField.getText().trim(), identificationNumberTextField.getText().trim()), employmentContract);
                     break;
-
                 default:
                     break;
             }
-
-            stage.close();
+            if (result) {
+                displayAlertBox("Nalog je uspijesno dodan u sistem");
+                quit();
+            }
+            else {
+                displayAlertBox("Desila se greska prilikom dodavanja naloga u sistem");
+            }
         }
     }
 
@@ -85,11 +97,11 @@ public class AddAccountController {
     }
 
     private boolean checkUsername() {
-        if("".equals(usernameTextField.getText())) {
+        if("".equals(usernameTextField.getText().trim())) {
             displayAlertBox("Unos za korisničko ime nije odgovarajući!");
             return false;
         }
-        else if(AzilUtilities.getDAOFactory().getEmployeeDAO().exists(usernameTextField.getText(), identificationNumberTextField.getText())) {
+        else if(AzilUtilities.getDAOFactory().getEmployeeDAO().exists(usernameTextField.getText().trim(), identificationNumberTextField.getText().trim())) {
             displayAlertBox("Korisničko ime ili JMBG postoji u bazi!");
             return false;
         }
@@ -97,7 +109,7 @@ public class AddAccountController {
     }
 
     private boolean checkPassword() {
-        if("".equals(passwordField.getText())) {
+        if("".equals(passwordField.getText().trim()) || "".equals(repeatPasswordField.getText().trim()) || !repeatPasswordField.getText().trim().equals(passwordField.getText().trim())) {
             displayAlertBox("Unos za lozinku nije odgovarajući!");
             return false;
         }
@@ -162,7 +174,7 @@ public class AddAccountController {
     }
 
     private boolean checkValidUntil() {
-        if ("".equals(contractValidUntilTextField.getText().trim())) {
+        if ("".equals(contractFromDatePicker.toString().trim())) {
             displayAlertBox("Unos za polje ugovor važi do nije odgovarajući!");
             return false;
         }

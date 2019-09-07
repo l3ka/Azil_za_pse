@@ -13,39 +13,35 @@ public class MySQLEmployeeDAO implements EmployeeDAO {
     public boolean insert(EmployeeDTO employee, EmploymentContractDTO contract){
         boolean retVal = true;
 
-        if(!AzilUtilities.getDAOFactory().getEmployeeDAO().exists(employee)){
+        if(!AzilUtilities.getDAOFactory().getEmployeeDAO().exists(employee)) {
             Connection conn = null;
-            PreparedStatement ps = null;
+            CallableStatement cs = null;
 
-            String query = "INSERT INTO zaposleni VALUES "
-                    + "(?, ?, ?, ?, ?, ?, ?, ?) ";
-            try{
+            String query = "call add_employee_contract(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            try {
                 conn = ConnectionPool.getInstance().checkOut();
-                ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-                ps.setString(1, employee.getJMB());
-                ps.setString(2, employee.getName());
-                ps.setString(3, employee.getSurname());
-                ps.setString(4,employee.getUsername());
-                ps.setString(5,employee.getPassword());
-                ps.setString(6, employee.getQualifications());
-                ps.setString(7, employee.getResidenceAddress());
-                ps.setString(8, employee.getTelephoneNumber());
-
-                retVal = ps.executeUpdate() == 1;
-                if(!retVal) {
-                    return retVal;
-                }
-            }catch (Exception e){
+                cs = conn.prepareCall(query);
+                cs.setString(1, employee.getJMB());
+                cs.setString(2, employee.getName());
+                cs.setString(3, employee.getSurname());
+                cs.setString(4, employee.getUsername());
+                cs.setString(5, employee.getPassword());
+                cs.setString(6, employee.getQualifications());
+                cs.setString(7, employee.getResidenceAddress());
+                cs.setString(8, employee.getTelephoneNumber());
+                cs.setString(9, contract.getPosition());
+                cs.setDouble(10, contract.getSalary());
+                cs.setDate(11, contract.getSigningDate());
+                cs.setDate(12, contract.getValidationDate());
+                retVal = !cs.execute();
+            } catch (Exception e) {
                 retVal = false;
                 e.printStackTrace();
-            }finally {
+            } finally {
                 ConnectionPool.getInstance().checkIn(conn);
-                DBUtilities.getInstance().close(ps);
+                DBUtilities.getInstance().close(cs);
             }
         }
-
-        retVal = AzilUtilities.getDAOFactory().getContractDAO().insert(contract, employee);
-
         return  retVal;
     }
 
