@@ -1,6 +1,7 @@
 package GUI.vet.medicine_quantity;
 
 import GUI.vet.taking_medicine.TakingMedicineController;
+import data.dto.EmployeeDTO;
 import data.dto.MedicineDTO;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,9 +12,11 @@ import javafx.stage.Stage;
 public class MedicineQuantityForm {
 
     public static MedicineDTO medicine;
+    public static EmployeeDTO employee;
 
-    public MedicineQuantityForm(MedicineDTO medicine) {
+    public MedicineQuantityForm(MedicineDTO medicine, EmployeeDTO employee) {
         MedicineQuantityForm.medicine = medicine;
+        MedicineQuantityForm.employee = employee;
     }
 
     public void display() throws Exception {
