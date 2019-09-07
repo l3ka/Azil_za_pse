@@ -50,7 +50,17 @@
                   <ComboBox fx:id="genderComboBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="187.0" promptText="Izaberi pol" />
                </children>
             </HBox>
-            <HBox alignment="CENTER" layoutX="10.0" layoutY="245.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+               <children>
+                  <Label text="Kavez" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="cagesComboBox" minHeight="-Infinity" prefHeight="31.0" prefWidth="187.0" promptText="Izaberite kavez" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" layoutX="10.0" layoutY="245.0" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
                <children>
                   <Label text="Težina" textFill="WHITE" />
                   <TextField fx:id="weightTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="187.0" />

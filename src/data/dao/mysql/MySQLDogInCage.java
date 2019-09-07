@@ -12,7 +12,7 @@ import java.util.List;
 public class MySQLDogInCage implements DogInCageDAO {
 
     @Override
-    public boolean insert(CageDTO cage, DogInCageDTO dogInCage){
+    public boolean insert(DogInCageDTO dogInCage) {
         boolean retVal = true;
 
         Connection conn = null;
@@ -24,7 +24,7 @@ public class MySQLDogInCage implements DogInCageDAO {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
             ps.setDate(1, dogInCage.getDateForm());
-            ps.setInt(2, cage.getId());
+            ps.setInt(2, dogInCage.getCage().getId());
             ps.setInt(3, dogInCage.getDog().getDogId());
             ps.setDate(4, dogInCage.getDateTo());
 
@@ -57,7 +57,7 @@ public class MySQLDogInCage implements DogInCageDAO {
 
             while (rs.next())
                 retVal.add(new DogInCageDTO(
-                        AzilUtilities.getDAOFactory().getDogDAO().getByID(rs.getInt("Pas_IdPsa")),
+                        AzilUtilities.getDAOFactory().getDogDAO().getByID(rs.getInt("Pas_IdPsa")), cage,
                         rs.getDate("datumOd"),
                         rs.getDate("DatumDo")
                 ));
@@ -71,7 +71,7 @@ public class MySQLDogInCage implements DogInCageDAO {
         return retVal;
     }
 
-    public boolean update(CageDTO cage, DogInCageDTO dogInCage, Date dateFrom, int cageId, int dogId){
+    public boolean update(DogInCageDTO dogInCage, Date dateFrom, int cageId, int dogId){
         boolean retVal = true;
 
         Connection conn = null;
@@ -87,7 +87,7 @@ public class MySQLDogInCage implements DogInCageDAO {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
             ps.setDate(1, dogInCage.getDateForm());
-            ps.setInt(2, cage.getId());
+            ps.setInt(2, dogInCage.getCage().getId());
             ps.setInt(3, dogInCage.getDog().getDogId());
             ps.setDate(4, dogInCage.getDateTo());
 

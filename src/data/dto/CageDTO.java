@@ -41,4 +41,9 @@ public class CageDTO {
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
+
+    @Override
+    public String toString() {
+        return "Kavez " + cageId;
+    }
 }

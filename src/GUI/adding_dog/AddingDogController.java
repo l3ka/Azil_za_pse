@@ -1,7 +1,9 @@
 package GUI.adding_dog;
 
 import GUI.alert_box.AlertBoxForm;
+import data.dto.CageDTO;
 import data.dto.DogDTO;
+import data.dto.DogInCageDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -12,6 +14,8 @@ import util.AzilUtilities;
 
 import java.io.File;
 import java.sql.Date;
+import java.util.Calendar;
+import java.util.List;
 
 public class AddingDogController {
 
@@ -21,11 +25,21 @@ public class AddingDogController {
     @FXML private TextField weightTextField;
     @FXML private TextField heightTextField;
     @FXML private DatePicker dateofBirthDatePicker;
+    @FXML private ComboBox<CageDTO> cagesComboBox;
     private File photo;
     private Stage stage;
+    private List<CageDTO> listOfCages = AzilUtilities.getDAOFactory().getCageDAO().cages();
+    private DogDTO dogToAdd;
 
     public void initialize(Stage stage) {
         genderComboBox.getItems().addAll("M", "Ž");
+
+        for(CageDTO cage : listOfCages) {
+            if(cage.getCapacity() >= 1) {
+                cagesComboBox.getItems().add(cage);
+            }
+        }
+
         this.stage = stage;
     }
 
@@ -41,12 +55,14 @@ public class AddingDogController {
         } else {
             image = photo.getAbsolutePath();
         }
-        if (checkName() && checkRace() && checkGender() && checkWeight() && checkHeight() && checkAge()) {
-            if (AzilUtilities.getDAOFactory().getDogDAO().insert(new DogDTO(0, genderComboBox.getSelectionModel().getSelectedItem(), nameTextField.getText(),
-                    raceTextField.getText(), Integer.parseInt(heightTextField.getText()), Double.parseDouble(weightTextField.getText()), Date.valueOf(dateofBirthDatePicker.getValue()), image))) {
+        if (checkName() && checkRace() && checkGender() && checkWeight() && checkHeight() && checkAge() && checkSelectedCage()) {
+            dogToAdd = new DogDTO(0, genderComboBox.getSelectionModel().getSelectedItem(), nameTextField.getText(),
+                    raceTextField.getText(), Integer.parseInt(heightTextField.getText()), Double.parseDouble(weightTextField.getText()), Date.valueOf(dateofBirthDatePicker.getValue()), image);
+            if (AzilUtilities.getDAOFactory().getDogDAO().insert(dogToAdd)) {
                 displayAlertBox("Pas je uspješno dodat!");
-                stage.close();
             }
+            AzilUtilities.getDAOFactory().getDogInCageDAO().insert(new DogInCageDTO(AzilUtilities.getDAOFactory().getDogDAO().getLastDog(), cagesComboBox.getSelectionModel().getSelectedItem(), new Date(Calendar.getInstance().getTime().getTime()), null));
+            stage.close();
         }
     }
 
@@ -116,6 +132,14 @@ public class AddingDogController {
         } catch(NumberFormatException exception) {
             return false;
         }
+    }
+
+    private boolean checkSelectedCage() {
+        if(cagesComboBox.getSelectionModel().getSelectedItem() == null) {
+            displayAlertBox("Nije izabran kavez!");
+            return false;
+        }
+        return true;
     }
 
     private void displayAlertBox(String content) {
