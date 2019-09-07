@@ -5,6 +5,9 @@ import data.dto.DogDTO;
 import java.util.List;
 
 public interface DogDAO {
+
+    public DogDTO getLastDog();
+
     public List<DogDTO> dogs();
 
     public DogDTO getByID(int ID);

@@ -5,15 +5,17 @@ import java.util.Objects;
 
 public class DogInCageDTO {
     DogDTO dog;
+    CageDTO cage;
     Date dateForm;
     Date dateTo;
 
     public DogInCageDTO(){}
 
-    public DogInCageDTO(DogDTO dog, Date dateForm, Date dateTo) {
+    public DogInCageDTO(DogDTO dog, CageDTO cage, Date dateForm, Date dateTo) {
         this.dog = dog;
         this.dateForm = dateForm;
         this.dateTo = dateTo;
+        this.cage = cage;
     }
 
     public DogDTO getDog() {
@@ -38,6 +40,14 @@ public class DogInCageDTO {
 
     public void setDateTo(Date dateTo) {
         this.dateTo = dateTo;
+    }
+
+    public CageDTO getCage() {
+        return cage;
+    }
+
+    public void setCage(CageDTO cage) {
+        this.cage = cage;
     }
 
     @Override

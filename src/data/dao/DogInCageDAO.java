@@ -8,11 +8,11 @@ import java.util.List;
 
 public interface DogInCageDAO {
 
-    public boolean insert(CageDTO cage, DogInCageDTO dogInCage);
+    public boolean insert(DogInCageDTO dogInCage);
 
     public List<DogInCageDTO> dogInCages(CageDTO cage);
 
-    public boolean update(CageDTO cage, DogInCageDTO dogInCage, Date dateFrom, int cageId, int dogId);
+    public boolean update(DogInCageDTO dogInCage, Date dateFrom, int cageId, int dogId);
 
     public boolean delete(Date dateFrom, int cageId, int dogId);
 }

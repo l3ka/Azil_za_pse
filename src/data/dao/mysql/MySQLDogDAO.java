@@ -13,6 +13,40 @@ import java.util.List;
 public class MySQLDogDAO implements DogDAO {
 
     @Override
+    public DogDTO getLastDog() {
+        DogDTO retVal = null;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String query = "SELECT * FROM pas WHERE IdPsa=(SELECT max(IdPsa) FROM pas)";
+
+        try {
+            conn = ConnectionPool.getInstance().checkOut();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+
+            if (rs.next())
+                retVal = new DogDTO(
+                        rs.getInt("IdPsa"),
+                        rs.getString("Pol"),
+                        rs.getString("Ime"),
+                        rs.getString("Rasa"),
+                        rs.getInt("Visina"),
+                        rs.getDouble("Tezina"),
+                        rs.getDate("DatumRodjenja"),
+                        rs.getString("Fotografija")
+                );
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionPool.getInstance().checkIn(conn);
+            DBUtilities.getInstance().close(ps, rs);
+        }
+        return retVal;
+    }
+
+    @Override
     public List<DogDTO> dogs(){
         List<DogDTO> retVal = new ArrayList<>();
 
