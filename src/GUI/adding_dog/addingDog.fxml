@@ -75,7 +75,7 @@
             <HBox alignment="CENTER" layoutX="10.0" layoutY="298.0" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                <children>
                   <Label text="Rođenje" textFill="WHITE" />
-                  <DatePicker fx:id="dateofBirthDatePicker" prefHeight="31.0" prefWidth="187.0" />
+                  <DatePicker fx:id="dateOfBirthDatePicker" prefHeight="31.0" prefWidth="187.0" />
                </children>
             </HBox>
             <HBox alignment="CENTER" layoutX="10.0" layoutY="310.0" prefHeight="100.0" prefWidth="200.0" spacing="75.0">

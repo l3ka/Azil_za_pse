@@ -9,6 +9,7 @@ import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
 public class ConnectionPool {
+
     private String jdbcURL;
     private String username;
     private String password;
@@ -106,4 +107,5 @@ public class ConnectionPool {
             notify();
         }
     }
+
 }

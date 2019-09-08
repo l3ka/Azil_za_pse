@@ -15,6 +15,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import util.AzilUtilities;
 
@@ -37,6 +39,7 @@ public class MainScreenController {
     @FXML
     private TextField searchParametarTextField;
 
+
     private List<DogDTO> listOfDogs;
     private Stage stage;
     private EmployeeDTO employee;
@@ -51,7 +54,6 @@ public class MainScreenController {
         loggedUserLabel.setText("Prijavljeni korisnik: " + employee.getUsername());
     }
 
-
     public void initialize(Stage stage) {
         this.stage = stage;
 
@@ -63,7 +65,16 @@ public class MainScreenController {
         dogsTableView.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
 
         displayDogs();
+        initButtonEvent();
+    }
 
+    private void initButtonEvent() {
+        logOutButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                logOutButton.fire();
+                e.consume();
+            }
+        });
     }
 
     public void addDog() {
@@ -90,6 +101,7 @@ public class MainScreenController {
 
         }
     }
+
     public void adoptDog() {
         try {
             new AdoptingDogForm().display();
@@ -110,7 +122,7 @@ public class MainScreenController {
         if(checkSearchParameter()) {
             dogsTableView.getItems().clear();
             dogsTableView.refresh();
-            listOfSearchedDogs = AzilUtilities.getDAOFactory().getDogDAO().dogsByBreed(searchParametarTextField.getText());
+            listOfSearchedDogs = AzilUtilities.getDAOFactory().getDogDAO().dogsByBreed(searchParametarTextField.getText().trim());
             for(DogDTO dog : listOfSearchedDogs) {
                 dogsTableView.getItems().add(dog);
             }
@@ -144,10 +156,11 @@ public class MainScreenController {
     }
 
     private boolean checkSearchParameter() {
-        if("".equals(searchParametarTextField.getText())) {
+        if("".equals(searchParametarTextField.getText().trim())) {
             displayAlertBox("Niste unijeli naziv na pretragu!");
             return false;
         }
         return true;
     }
+
 }

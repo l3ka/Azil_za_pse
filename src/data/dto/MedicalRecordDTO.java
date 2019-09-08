@@ -2,13 +2,12 @@ package data.dto;
 
 import java.sql.Date;
 
-//Karton
 public class MedicalRecordDTO {
+
     private Integer medicalRecordId;
     private Date creationDate;
 
-    public MedicalRecordDTO() {
-    }
+    public MedicalRecordDTO() {}
 
     public MedicalRecordDTO(Integer medicalRecordId, Date creationDate) {
         this.medicalRecordId = medicalRecordId;
@@ -30,4 +29,5 @@ public class MedicalRecordDTO {
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
     }
+
 }

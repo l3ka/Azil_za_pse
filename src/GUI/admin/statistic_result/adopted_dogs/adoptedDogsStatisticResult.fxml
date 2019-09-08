@@ -29,7 +29,7 @@
             <TableColumn prefWidth="125.0" text="Datum rođenja" />
          </columns>
       </TableView>
-      <Button mnemonicParsing="false" onAction="#OKButtonPressed" text="OK">
+      <Button fx:id="adopterDogStatisticOk" mnemonicParsing="false" onAction="#OKButtonPressed" text="OK">
          <VBox.margin>
             <Insets top="40.0" />
          </VBox.margin>

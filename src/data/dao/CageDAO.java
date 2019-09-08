@@ -1,17 +1,18 @@
 package data.dao;
 
 import data.dto.CageDTO;
-
 import java.util.List;
 
 public interface CageDAO {
-    public List<CageDTO> cages();
 
-    public CageDTO getById(int Id);
+    List<CageDTO> cages();
 
-    public boolean insert(CageDTO cage);
+    CageDTO getById(int Id);
 
-    public boolean update(CageDTO cage);
+    boolean insert(CageDTO cage);
 
-    public boolean delete(int cageID);
+    boolean update(CageDTO cage);
+
+    boolean delete(int cageID);
+
 }

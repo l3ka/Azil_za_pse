@@ -2,7 +2,6 @@ package data.dao.mysql;
 
 import data.dao.TakingMedicineDAO;
 import data.dto.TakingMedicineDTO;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -45,7 +44,7 @@ public class MySQLTakingMedicineDAO implements TakingMedicineDAO {
 
         String query = "UPDATE uzimanjelijeka SET " +
                 "DatumUzimanja=?, " +
-                "Sluzbenik_Zaposleni_JMBG=?, " +
+                "Veterinar_Zaposleni_JMBG=?, " +
                 "Lijek_IdLijeka=?, " +
                 "Nalaz_IdNalaza=?, " +
                 "Kolicina=? " +

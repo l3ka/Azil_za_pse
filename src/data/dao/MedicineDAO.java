@@ -1,18 +1,18 @@
 package data.dao;
 
 import data.dto.MedicineDTO;
-
-import java.security.MessageDigest;
 import java.util.List;
 
 public interface MedicineDAO {
-    public boolean insert(MedicineDTO medicine);
 
-    public MedicineDTO getById(int id);
+    boolean insert(MedicineDTO medicine);
 
-    public boolean update(MedicineDTO medicine);
+    MedicineDTO getById(int id);
 
-    public boolean delete(int Id);
+    boolean update(MedicineDTO medicine);
 
-    public List<MedicineDTO> medicines();
+    boolean delete(int Id);
+
+    List<MedicineDTO> medicines();
+
 }

@@ -13,7 +13,7 @@
       <Insets bottom="25.0" top="25.0" />
    </padding>
    <top>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="157.0" prefWidth="1200.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -62,14 +62,14 @@
       </VBox>
    </bottom>
    <center>
-      <TableView fx:id="dogsTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="592.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="dogsTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="419.0" prefWidth="726.0" BorderPane.alignment="CENTER">
         <columns>
-          <TableColumn prefWidth="105.0" text="Ime" />
-          <TableColumn prefWidth="105.0" text="Rasa" />
-            <TableColumn prefWidth="85.0" text="Pol" />
-            <TableColumn prefWidth="85.0" text="Visina" />
-            <TableColumn prefWidth="85.0" text="Težina" />
-            <TableColumn prefWidth="125.0" text="Datum rođenja" />
+          <TableColumn prefWidth="125.0" text="Ime" />
+          <TableColumn prefWidth="125.0" text="Rasa" />
+            <TableColumn prefWidth="70.0" text="Pol" />
+            <TableColumn prefWidth="100.0" text="Visina" />
+            <TableColumn prefWidth="100.0" text="Težina" />
+            <TableColumn prefWidth="190.0" text="Datum rođenja" />
         </columns>
       </TableView>
    </center>
@@ -86,13 +86,13 @@
                         <Insets top="30.0" />
                      </VBox.margin>
                   </Label>
-                  <TextField fx:id="searchParametarTextField" />
-                  <Button mnemonicParsing="false" onAction="#searchDog" prefHeight="31.0" prefWidth="90.0" text="Pretraži">
+                  <TextField fx:id="searchParameterTextField" />
+                  <Button fx:id="searchDogButton" mnemonicParsing="false" onAction="#searchDog" prefHeight="31.0" prefWidth="90.0" text="Pretraži">
                      <VBox.margin>
                         <Insets top="15.0" />
                      </VBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#displayDogs" prefHeight="31.0" prefWidth="90.0" text="Prikaži sve" />
+                  <Button fx:id="searchAllDogButton" mnemonicParsing="false" onAction="#displayDogs" prefHeight="31.0" prefWidth="90.0" text="Prikaži sve" />
                </children>
             </VBox>
          </children>

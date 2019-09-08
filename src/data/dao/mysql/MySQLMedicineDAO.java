@@ -2,7 +2,6 @@ package data.dao.mysql;
 
 import data.dao.MedicineDAO;
 import data.dto.MedicineDTO;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

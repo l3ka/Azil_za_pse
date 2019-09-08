@@ -2,25 +2,26 @@ package data.dao;
 
 import data.dto.EmploymentContractDTO;
 import data.dto.ServantDTO;
-
 import java.util.List;
 
 public interface ServantDAO {
-    public boolean insert(ServantDTO servant, EmploymentContractDTO contract);
 
-    public List<ServantDTO> servants();
+    boolean insert(ServantDTO servant, EmploymentContractDTO contract);
 
-    public ServantDTO getByUsername(String username);
+    List<ServantDTO> servants();
 
-    public boolean update(ServantDTO servant);
+    ServantDTO getByUsername(String username);
 
-    public boolean updateWithJMB(ServantDTO servant, String oldJMB);
+    boolean update(ServantDTO servant);
 
-    public boolean delete(ServantDTO servant);
+    boolean updateWithJMB(ServantDTO servant, String oldJMB);
 
-    public boolean exists(ServantDTO servant);
+    boolean delete(ServantDTO servant);
 
-    public boolean exists(String username, String password);
+    boolean exists(ServantDTO servant);
 
-    public ServantDTO login(String username, String password);
+    boolean exists(String username, String password);
+
+    ServantDTO login(String username, String password);
+
 }

@@ -13,19 +13,26 @@ import GUI.login.LoginForm;
 import data.dto.DogDTO;
 import data.dto.EmployeeDTO;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import util.AzilUtilities;
 
 import java.util.List;
 
 public class AdminMainController {
+
     @FXML private TableView<DogDTO> dogsTableView;
     @FXML private Label loggedUserLabel;
-    @FXML private TextField searchParametarTextField;
+    @FXML private TextField searchParameterTextField;
+    @FXML private Button logOutButton;
+    @FXML private Button searchDogButton;
+    @FXML private Button searchAllDogButton;
 
     private List<DogDTO> listOfDogs;
     private List<DogDTO> listOfSearchedDogs;
@@ -51,6 +58,28 @@ public class AdminMainController {
         dogsTableView.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
 
         displayDogs();
+        initButtonEvent();
+    }
+
+    private void initButtonEvent() {
+        logOutButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                logOutButton.fire();
+                e.consume();
+            }
+        });
+        searchDogButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                searchDogButton.fire();
+                e.consume();
+            }
+        });
+        searchAllDogButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                searchAllDogButton.fire();
+                e.consume();
+            }
+        });
     }
 
     public void addDog() {
@@ -130,7 +159,7 @@ public class AdminMainController {
     public void searchDog() {
         if(checkSearchParameter()) {
             dogsTableView.getItems().clear();
-            listOfSearchedDogs = AzilUtilities.getDAOFactory().getDogDAO().dogsByBreed(searchParametarTextField.getText());
+            listOfSearchedDogs = AzilUtilities.getDAOFactory().getDogDAO().dogsByBreed(searchParameterTextField.getText().trim());
             for(DogDTO dog : listOfSearchedDogs) {
                 dogsTableView.getItems().add(dog);
             }
@@ -148,7 +177,7 @@ public class AdminMainController {
     }
 
     private boolean checkSearchParameter() {
-        if("".equals(searchParametarTextField.getText())) {
+        if("".equals(searchParameterTextField.getText().trim())) {
             displayAlertBox("Niste unijeli naziv na pretragu!");
             return false;
         }

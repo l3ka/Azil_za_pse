@@ -8,6 +8,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import util.AzilUtilities;
 
@@ -17,8 +19,16 @@ import java.util.List;
 
 public class AdoptingDogController {
 
-    @FXML private TableView<DogDTO> dogsTableView;
-    @FXML private TableView<FosterParentDTO> fosterParentsTableView;
+    @FXML
+    private TableView<DogDTO> dogsTableView;
+    @FXML
+    private TableView<FosterParentDTO> fosterParentsTableView;
+    @FXML
+    private Button adoptDogButton;
+    @FXML
+    private Button quitButton;
+
+
     private List<DogDTO> listOfDogs;
     private List<FosterParentDTO> listOfFosterParents;
     private DogDTO selectedDog;
@@ -44,6 +54,22 @@ public class AdoptingDogController {
 
         displayDogs();
         displayFosterParents();
+        initButtonEvent();
+    }
+
+    private void initButtonEvent() {
+        adoptDogButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                adoptDogButton.fire();
+                e.consume();
+            }
+        });
+        quitButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                quitButton.fire();
+                e.consume();
+            }
+        });
     }
 
     public void adoptDog() {
@@ -58,7 +84,7 @@ public class AdoptingDogController {
 
             AzilUtilities.getDAOFactory().getAdoptingDAO().insert(selectedFosterParent, adoptingDTO);
             displayAlertBox("Pas je uspješno udomljen!");
-            stage.close();
+            quit();
         }
     }
 
@@ -105,4 +131,5 @@ public class AdoptingDogController {
             fosterParentsTableView.getItems().add(fosterParent);
         }
     }
+
 }

@@ -4,7 +4,6 @@ import data.dao.AdoptingDAO;
 import data.dto.AdoptingDTO;
 import data.dto.FosterParentDTO;
 import util.AzilUtilities;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

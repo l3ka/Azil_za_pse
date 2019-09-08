@@ -4,16 +4,17 @@ import data.dto.EmployeeDTO;
 import data.dto.EmploymentContractDTO;
 
 public interface EmployeeDAO {
-    public boolean insert(EmployeeDTO employee, EmploymentContractDTO contract);
 
-    public boolean update(EmployeeDTO employee);
+    boolean insert(EmployeeDTO employee, EmploymentContractDTO contract);
 
-    public boolean updateWithJMB(EmployeeDTO employee, String oldJMB);
+    boolean update(EmployeeDTO employee);
 
-    public boolean delete(EmployeeDTO employee);
+    boolean updateWithJMB(EmployeeDTO employee, String oldJMB);
 
-    public boolean exists(EmployeeDTO employee);
+    boolean delete(EmployeeDTO employee);
 
-    public boolean exists(String username, String JMB);
+    boolean exists(EmployeeDTO employee);
+
+    boolean exists(String username, String JMB);
 
 }

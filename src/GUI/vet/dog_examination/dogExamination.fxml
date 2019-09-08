@@ -13,7 +13,7 @@
       <Insets bottom="25.0" left="25.0" right="40.0" top="25.0" />
    </padding>
    <top>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="164.0" prefWidth="1035.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -30,7 +30,7 @@
       </VBox>
    </top>
    <bottom>
-      <VBox alignment="CENTER" prefHeight="120.0" prefWidth="900.0" spacing="15.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="145.0" prefWidth="1035.0" spacing="15.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="takeMedicineButton" mnemonicParsing="false" onAction="#takeMedicine" prefWidth="100.0" text="Uzmi lijek" />
             <Button fx:id="generateFindingButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#generateFinding" prefHeight="25.0" prefWidth="100.0" text="Generiši nalaz" />
@@ -44,7 +44,7 @@
    <center>
       <VBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="medicalResultsTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0">
+            <TableView fx:id="medicalResultsTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="346.0" prefWidth="716.0">
               <columns>
                 <TableColumn prefWidth="114.0" text="Datum pregleda" />
                 <TableColumn prefWidth="123.0" text="Veterinar" />

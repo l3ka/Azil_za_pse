@@ -1,10 +1,10 @@
 package data.dto;
 
-import java.io.File;
 import java.sql.Date;
 import java.util.Objects;
 
 public class DogDTO {
+
     private Integer dogId;
     private String gender;
     private String name;
@@ -15,8 +15,7 @@ public class DogDTO {
     private String image;
     private boolean adopted = false;
 
-    public DogDTO() {
-    }
+    public DogDTO() {}
 
     public DogDTO(Integer dogId, String gender, String name, String breed, int height, double weight, Date dateOfBirth, String image, boolean adopted) {
         this.dogId = dogId;
@@ -119,4 +118,5 @@ public class DogDTO {
     public String toString() {
         return name + " " + breed;
     }
+
 }

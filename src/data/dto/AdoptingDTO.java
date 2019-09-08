@@ -4,11 +4,12 @@ import java.sql.Date;
 import java.util.Objects;
 
 public class AdoptingDTO {
+
     private DogDTO dog;
     private Date dateFrom;
     private Date dateTo;
 
-    public AdoptingDTO(){}
+    public AdoptingDTO() {}
 
     public AdoptingDTO(DogDTO dog, Date dateFrom, Date dateTo) {
         this.dog = dog;
@@ -53,4 +54,5 @@ public class AdoptingDTO {
     public int hashCode() {
         return Objects.hash(dog, dateFrom);
     }
+
 }

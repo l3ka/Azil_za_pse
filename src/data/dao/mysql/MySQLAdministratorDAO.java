@@ -4,7 +4,6 @@ import data.dao.AdministratorDAO;
 import data.dto.AdministratorDTO;
 import data.dto.EmploymentContractDTO;
 import util.AzilUtilities;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

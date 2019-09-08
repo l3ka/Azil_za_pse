@@ -5,9 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import javax.swing.JOptionPane;
-
 public class DBUtilities {
+
 	private static DBUtilities instance;
 
 	public static DBUtilities getInstance() {
@@ -16,8 +15,7 @@ public class DBUtilities {
 		return instance;
 	}
 
-	private DBUtilities() {
-	}
+	private DBUtilities() {}
 
 	public void close(Connection conn) {
 		if (conn != null) {
@@ -73,4 +71,5 @@ public class DBUtilities {
 	public String preparePattern(String text) {
 		return text.replace('*', '%').replace('?', '_');
 	}
+
 }

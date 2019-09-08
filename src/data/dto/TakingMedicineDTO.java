@@ -1,7 +1,5 @@
 package data.dto;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Objects;
 
@@ -77,4 +75,5 @@ public class TakingMedicineDTO {
     public int hashCode() {
         return Objects.hash(date, veterinarian, medicine, medicalResult, quantity);
     }
+
 }

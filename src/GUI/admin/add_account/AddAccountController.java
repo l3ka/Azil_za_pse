@@ -7,12 +7,12 @@ import data.dto.ServantDTO;
 import data.dto.VeterinarianDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import util.AzilUtilities;
 
 public class AddAccountController {
-
-    private Stage stage;
 
     @FXML
     private TextField nameTextField;
@@ -45,12 +45,29 @@ public class AddAccountController {
     @FXML
     private Button quitButton;
 
+    private Stage stage;
+
     public void initialize(Stage stage) {
         this.stage = stage;
-
         positionComboBox.getItems().add("Administrator");
         positionComboBox.getItems().add("Veterinar");
         positionComboBox.getItems().add("Sluzbenik");
+        initButtonEvent();
+    }
+
+    private void initButtonEvent() {
+        saveButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                saveButton.fire();
+                e.consume();
+            }
+        });
+        quitButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                quitButton.fire();
+                e.consume();
+            }
+        });
     }
 
     public void save() {
@@ -163,7 +180,6 @@ public class AddAccountController {
         return true;
     }
 
-
     private boolean checkSalary() {
         if ("".equals(salaryTextField.getText().trim())) {
             displayAlertBox("Unos za polje plata nije odgovarajući!");
@@ -179,6 +195,7 @@ public class AddAccountController {
         }
         return true;
     }
+
     private boolean checkIsNumber(String number) {
         return number.matches("^[0-9]*$");
     }
@@ -189,6 +206,6 @@ public class AddAccountController {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
     }
+
 }

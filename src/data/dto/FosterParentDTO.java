@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 
 public class FosterParentDTO {
+
     private String name;
     private String surname;
     private String residenceAddress;
@@ -12,8 +13,7 @@ public class FosterParentDTO {
     private String JMB;
     private HashSet<AdoptingDTO> adoptings;
 
-    public FosterParentDTO(){
-    }
+    public FosterParentDTO() {}
 
     public FosterParentDTO(String JMB, String name, String surname, String residenceAddress, String telephoneNumber) {
         this.name = name;
@@ -71,4 +71,5 @@ public class FosterParentDTO {
     public void setJMB(String JMB) {
         this.JMB = JMB;
     }
+
 }

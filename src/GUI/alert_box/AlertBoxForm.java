@@ -1,10 +1,8 @@
 package GUI.alert_box;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -30,4 +28,5 @@ public class AlertBoxForm {
         controller.initialize(stage);
         stage.showAndWait();
     }
+
 }

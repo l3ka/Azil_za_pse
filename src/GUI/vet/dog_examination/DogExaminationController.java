@@ -7,15 +7,26 @@ import data.dto.DogDTO;
 import data.dto.EmployeeDTO;
 import data.dto.MedicalResultDTO;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import util.AzilUtilities;
-
 import java.util.List;
 
 public class DogExaminationController {
-    @FXML private TableView<MedicalResultDTO> medicalResultsTableView;
+
+    @FXML
+    private TableView<MedicalResultDTO> medicalResultsTableView;
+    @FXML
+    private Button takeMedicineButton;
+    @FXML
+    private Button generateFindingButton;
+    @FXML
+    private Button quitButton;
+
     private Stage stage;
     private EmployeeDTO employee;
     private DogDTO dog;
@@ -31,6 +42,28 @@ public class DogExaminationController {
         medicalResultsTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("resultsAndOpinion"));
 
         displayMedicalResults();
+        initButtonEvent();
+    }
+
+    private void initButtonEvent() {
+        takeMedicineButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                takeMedicineButton.fire();
+                e.consume();
+            }
+        });
+        generateFindingButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                generateFindingButton.fire();
+                e.consume();
+            }
+        });
+        quitButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                quitButton.fire();
+                e.consume();
+            }
+        });
     }
 
     public void quit() {
@@ -77,4 +110,5 @@ public class DogExaminationController {
             return false;
         }
     }
+
 }
