@@ -4,6 +4,7 @@ import GUI.add_foster_parent.AddFosterParent;
 import GUI.adding_dog.AddingDogForm;
 import GUI.adding_medicine.AddingMedicineForm;
 import GUI.adopting_dog.AdoptingDogForm;
+import GUI.alert_box.AlertBoxForm;
 import GUI.login.LoginForm;
 import data.dto.DogDTO;
 import data.dto.EmployeeDTO;
@@ -11,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import util.AzilUtilities;
@@ -31,10 +33,13 @@ public class MainScreenController {
     private TableView<DogDTO> dogsTableView;
     @FXML
     private Label loggedUserLabel;
+    @FXML
+    private TextField searchParametarTextField;
 
     private List<DogDTO> listOfDogs;
     private Stage stage;
     private EmployeeDTO employee;
+    private List<DogDTO> listOfSearchedDogs;
 
     public EmployeeDTO getEmployee() {
         return employee;
@@ -68,7 +73,6 @@ public class MainScreenController {
         }
     }
 
-
     public void addFosterParent() {
         try {
             new AddFosterParent().display();
@@ -92,6 +96,16 @@ public class MainScreenController {
         }
     }
 
+    public void searchDog() {
+        if(checkSearchParameter()) {
+            dogsTableView.getItems().clear();
+            listOfSearchedDogs = AzilUtilities.getDAOFactory().getDogDAO().dogsByBreed(searchParametarTextField.getText());
+            for(DogDTO dog : listOfSearchedDogs) {
+                dogsTableView.getItems().add(dog);
+            }
+        }
+    }
+
     public void logOut() {
         stage.close();
         try {
@@ -101,10 +115,27 @@ public class MainScreenController {
         }
     }
 
-    private void displayDogs() {
+    public void displayDogs() {
+        dogsTableView.getItems().clear();
         listOfDogs = AzilUtilities.getDAOFactory().getDogDAO().dogs();
         for(DogDTO dog : listOfDogs) {
             dogsTableView.getItems().add(dog);
         }
+    }
+
+    private void displayAlertBox(String content) {
+        try {
+            new AlertBoxForm(content).display();
+        } catch(Exception ex) {
+
+        }
+    }
+
+    private boolean checkSearchParameter() {
+        if("".equals(searchParametarTextField.getText())) {
+            displayAlertBox("Niste unijeli naziv na pretragu!");
+            return false;
+        }
+        return true;
     }
 }

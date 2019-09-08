@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +36,8 @@ public class MySQLDogDAO implements DogDAO {
                         rs.getInt("Visina"),
                         rs.getDouble("Tezina"),
                         rs.getDate("DatumRodjenja"),
-                        rs.getString("Fotografija")
+                        rs.getString("Fotografija"),
+                        rs.getBoolean("Udomljen")
                 );
         } catch (SQLException e) {
             e.printStackTrace();
@@ -69,7 +71,8 @@ public class MySQLDogDAO implements DogDAO {
                         rs.getInt("Visina"),
                         rs.getDouble("Tezina"),
                         rs.getDate("DatumRodjenja"),
-                        rs.getString("Fotografija")
+                        rs.getString("Fotografija"),
+                        rs.getBoolean("Udomljen")
                 ));
         } catch (SQLException e) {
             e.printStackTrace();
@@ -104,11 +107,88 @@ public class MySQLDogDAO implements DogDAO {
                         rs.getInt("Visina"),
                         rs.getDouble("Tezina"),
                         rs.getDate("DatumRodjenja"),
-                        rs.getString("Fotografija")
+                        rs.getString("Fotografija"),
+                        rs.getBoolean("Udomljen")
                 );
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            ConnectionPool.getInstance().checkIn(conn);
+            DBUtilities.getInstance().close(ps, rs);
+        }
+        return retVal;
+    }
+
+    @Override
+    public List<DogDTO> getAdoptedDogs(LocalDate dateFrom) {
+        List<DogDTO> retVal = new ArrayList<>();
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String query = "SELECT * FROM pas p " +
+                       "LEFT OUTER JOIN udomljavanjepsa up ON up.Pas_IdPsa=p.IdPsa " +
+                       "WHERE p.Udomljen=1 AND up.DatumOd>=DATE(?) ";
+        try {
+            conn = ConnectionPool.getInstance().checkOut();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, dateFrom.toString());
+            rs = ps.executeQuery();
+
+            while (rs.next())
+                retVal.add(new DogDTO(
+                        rs.getInt("IdPsa"),
+                        rs.getString("Pol"),
+                        rs.getString("Ime"),
+                        rs.getString("Rasa"),
+                        rs.getInt("Visina"),
+                        rs.getDouble("Tezina"),
+                        rs.getDate("DatumRodjenja"),
+                        rs.getString("Fotografija"),
+                        rs.getBoolean("Udomljen")
+                ));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionPool.getInstance().checkIn(conn);
+            DBUtilities.getInstance().close(ps, rs);
+        }
+        return retVal;
+    }
+
+    @Override
+    public List<DogDTO> dogsByBreed(String breed) {
+        List<DogDTO> retVal = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String query = "SELECT * FROM pas " +
+                       "WHERE Rasa=? ";
+
+        try {
+            conn = ConnectionPool.getInstance().checkOut();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, breed);
+            rs = ps.executeQuery();
+
+            while(rs.next()) {
+                retVal.add(new DogDTO(
+                        rs.getInt("IdPsa"),
+                        rs.getString("Pol"),
+                        rs.getString("Ime"),
+                        rs.getString("Rasa"),
+                        rs.getInt("Visina"),
+                        rs.getDouble("Tezina"),
+                        rs.getDate("DatumRodjenja"),
+                        rs.getString("Fotografija"),
+                        rs.getBoolean("Udomljen")
+                ));
+            }
+        } catch(SQLException ex) {
+            ex.printStackTrace();
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -123,7 +203,7 @@ public class MySQLDogDAO implements DogDAO {
         Connection conn = null;
         PreparedStatement ps = null;
 
-        String query = "INSERT INTO pas (Ime, Pol, Rasa, DatumRodjenja, Visina, Tezina, Fotografija) "
+        String query = "INSERT INTO pas (Ime, Pol, Rasa, DatumRodjenja, Visina, Tezina, Fotografija, Udomljen) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?) ";
         try{
             conn = ConnectionPool.getInstance().checkOut();
@@ -135,6 +215,7 @@ public class MySQLDogDAO implements DogDAO {
             ps.setInt(5, dogDTO.getHeight());
             ps.setDouble(6, dogDTO.getWeight());
             ps.setString(7, dogDTO.getImage());
+            ps.setBoolean(8, dogDTO.isAdopted());
 
             retVal = ps.executeUpdate() == 1;
         }catch (Exception e){
@@ -162,7 +243,8 @@ public class MySQLDogDAO implements DogDAO {
                 "Visina=?, " +
                 "Tezina=?, " +
                 "DatumRodjenja=?, " +
-                "Fotografija=? "
+                "Fotografija=?, " +
+                "Udomljen=? "
                 + "WHERE IdPsa=? ";
         try {
             conn = ConnectionPool.getInstance().checkOut();
@@ -174,8 +256,8 @@ public class MySQLDogDAO implements DogDAO {
             ps.setDouble(5, dogDTO.getWeight());
             ps.setDate(6, dogDTO.getDateOfBirth());
             ps.setString(7, dogDTO.getImage());
-
-            ps.setInt(8, dogDTO.getDogId());
+            ps.setBoolean(8, dogDTO.isAdopted());
+            ps.setInt(9, dogDTO.getDogId());
 
             ps.executeUpdate();
         } catch (SQLException e) {

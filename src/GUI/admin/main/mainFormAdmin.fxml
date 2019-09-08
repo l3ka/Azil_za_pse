@@ -8,7 +8,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #c71c1c;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.admin.main.AdminMainController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #c71c1c;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.admin.main.AdminMainController">
    <padding>
       <Insets bottom="25.0" top="25.0" />
    </padding>
@@ -29,18 +29,6 @@
          </children>
       </VBox>
    </top>
-   <center>
-      <TableView fx:id="dogsTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="592.0" BorderPane.alignment="CENTER">
-        <columns>
-          <TableColumn prefWidth="105.0" text="Ime" />
-          <TableColumn prefWidth="105.0" text="Rasa" />
-            <TableColumn prefWidth="85.0" text="Pol" />
-            <TableColumn prefWidth="85.0" text="Visina" />
-            <TableColumn prefWidth="85.0" text="Težina" />
-            <TableColumn prefWidth="125.0" text="Datum rođenja" />
-        </columns>
-      </TableView>
-   </center>
    <left>
       <VBox alignment="CENTER" prefHeight="400.0" prefWidth="160.0" spacing="15.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -72,4 +60,41 @@
          </BorderPane.margin>
       </VBox>
    </bottom>
+   <center>
+      <TableView fx:id="dogsTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="592.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn prefWidth="105.0" text="Ime" />
+          <TableColumn prefWidth="105.0" text="Rasa" />
+            <TableColumn prefWidth="85.0" text="Pol" />
+            <TableColumn prefWidth="85.0" text="Visina" />
+            <TableColumn prefWidth="85.0" text="Težina" />
+            <TableColumn prefWidth="125.0" text="Datum rođenja" />
+        </columns>
+      </TableView>
+   </center>
+   <right>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets right="40.0" />
+         </BorderPane.margin>
+         <children>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <Label text="Unesite rasu za pretragu" textFill="WHITE">
+                     <VBox.margin>
+                        <Insets top="30.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TextField fx:id="searchParametarTextField" />
+                  <Button mnemonicParsing="false" onAction="#searchDog" prefHeight="31.0" prefWidth="90.0" text="Pretraži">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#displayDogs" prefHeight="31.0" prefWidth="90.0" text="Prikaži sve" />
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </right>
 </BorderPane>

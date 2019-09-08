@@ -11,7 +11,6 @@ public class DogDTO {
     private String breed;
     private int height;
     private double weight;
-
     private Date dateOfBirth;
     private String image;
     private boolean adopted = false;
@@ -19,7 +18,7 @@ public class DogDTO {
     public DogDTO() {
     }
 
-    public DogDTO(Integer dogId, String gender, String name, String breed, int height, double weight, Date dateOfBirth, String image) {
+    public DogDTO(Integer dogId, String gender, String name, String breed, int height, double weight, Date dateOfBirth, String image, boolean adopted) {
         this.dogId = dogId;
         this.gender = gender;
         this.name = name;
@@ -28,6 +27,7 @@ public class DogDTO {
         this.weight = weight;
         this.dateOfBirth = dateOfBirth;
         this.image = image;
+        this.adopted = adopted;
     }
 
     public Integer getDogId() {

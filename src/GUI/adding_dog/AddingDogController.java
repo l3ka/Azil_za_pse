@@ -57,7 +57,7 @@ public class AddingDogController {
         }
         if (checkName() && checkRace() && checkGender() && checkWeight() && checkHeight() && checkAge() && checkSelectedCage()) {
             dogToAdd = new DogDTO(0, genderComboBox.getSelectionModel().getSelectedItem(), nameTextField.getText(),
-                    raceTextField.getText(), Integer.parseInt(heightTextField.getText()), Double.parseDouble(weightTextField.getText()), Date.valueOf(dateofBirthDatePicker.getValue()), image);
+                    raceTextField.getText(), Integer.parseInt(heightTextField.getText()), Double.parseDouble(weightTextField.getText()), Date.valueOf(dateofBirthDatePicker.getValue()), image, false);
             if (AzilUtilities.getDAOFactory().getDogDAO().insert(dogToAdd)) {
                 displayAlertBox("Pas je uspješno dodat!");
             }
