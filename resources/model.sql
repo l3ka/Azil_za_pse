@@ -135,6 +135,7 @@ CREATE TABLE IF NOT EXISTS `azil`.`Pas` (
   `Visina` INT NULL,
   `Tezina` DOUBLE NULL,
   `Fotografija` VARCHAR(255) NULL,
+  `Udomljen` TINYINT DEFAULT 0,
   PRIMARY KEY (`IdPsa`))
 ENGINE = InnoDB;
 
@@ -175,6 +176,7 @@ CREATE TABLE IF NOT EXISTS `azil`.`Lijek` (
   `IdLijeka` INT NOT NULL AUTO_INCREMENT,
   `NazivLijeka` VARCHAR(45) NULL,
   `Opis` VARCHAR(255) NULL,
+  `Kolicina` INT NOT NULL,
   PRIMARY KEY (`IdLijeka`))
 ENGINE = InnoDB;
 
