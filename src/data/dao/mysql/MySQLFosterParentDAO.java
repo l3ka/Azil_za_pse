@@ -48,9 +48,10 @@ public class MySQLFosterParentDAO implements FosterParentDAO  {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String query = "SELECT * FROM udomitelj u " +
+        String query = "SELECT DISTINCT * FROM udomitelj u " +
                        "LEFT OUTER JOIN udomljavanjepsa up ON u.JMBG=up.Udomitelj_JMBG " +
-                       "WHERE DatumOd>=DATE(?) ";
+                       "WHERE up.Pas_IdPsa is not null AND DatumOd>=DATE(?) " +
+                       "GROUP BY up.Udomitelj_JMBG ";
 
         try {
             conn = ConnectionPool.getInstance().checkOut();

@@ -43,6 +43,7 @@ public class AdoptedDogsStatisticResultController {
 
     private void displayDogs() {
         listOfDogs = AzilUtilities.getDAOFactory().getDogDAO().getAdoptedDogs(dateFrom);
+        dogsTableView.getItems().clear();
         for(DogDTO dog : listOfDogs) {
             dogsTableView.getItems().add(dog);
         }
