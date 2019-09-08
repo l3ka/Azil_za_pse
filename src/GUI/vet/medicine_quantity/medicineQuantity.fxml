@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="20.0" style="-fx-background-color: #b71c1c;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.vet.medicine_quantity.MedicineQuantityController">
+   <children>
+      <Label fx:id="medicineNameLabel" text="?" textFill="WHITE" />
+      <ComboBox fx:id="quantityComboBox" prefHeight="31.0" prefWidth="170.0" promptText="Izaberite količinu" />
+      <Button fx:id="saveButtonClick" mnemonicParsing="false" onAction="#save" text="Sačuvaj">
+         <VBox.margin>
+            <Insets top="90.0" />
+         </VBox.margin>
+      </Button>
+      <Button fx:id="quitButtonClick" mnemonicParsing="false" onAction="#quit" text="Odustani" />
+   </children>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+</VBox>

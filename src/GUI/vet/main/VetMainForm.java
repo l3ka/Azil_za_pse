@@ -1,20 +1,34 @@
 package GUI.vet.main;
 
+import data.dto.EmployeeDTO;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Modality;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
+
+import java.io.File;
 
 public class VetMainForm {
 
+    private EmployeeDTO employee;
+
+    public VetMainForm(EmployeeDTO employee) {
+        this.employee = employee;
+    }
+
     public void display() throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("mainFormVet.fxml"));
         Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        Parent root = FXMLLoader.load(getClass().getResource("mainFormVet.fxml"));
+        stage.getIcons().add(new Image("file:" + "src" + File.separator + "GUI" + File.separator + "icons" + File.separator + "dog-icon.png"));
         stage.setTitle("Azil za pse - veterinarski dio");
-        Scene scene = new Scene(root, 1000, 780);
+        Scene scene = new Scene(loader.load());
         stage.setScene(scene);
+        stage.setMinWidth(1200);
+        stage.setMinHeight(720);
+        VetMainController controller = loader.getController();
+        controller.initialize(stage);
+        controller.setEmployee(employee);
         stage.show();
     }
+
 }

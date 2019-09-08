@@ -1,99 +1,82 @@
 package GUI.adding_medicine;
 
 import GUI.alert_box.AlertBoxForm;
+import data.dto.LoggerDTO;
+import data.dto.MedicineDTO;
 import javafx.fxml.FXML;
-import javafx.scene.control.DatePicker;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import util.AzilUtilities;
 
 public class AddingMedicineController {
-    @FXML private TextField nameTextField;
-    @FXML private DatePicker dateOfManufacturePicker;
-    @FXML private DatePicker expirationDatePicker;
-    @FXML private TextField amountTextField;
-    @FXML private TextField descriptionTextField;
 
     @FXML
-    private void initialize() {
+    private TextField nameTextField;
+    @FXML
+    private TextField amountTextField;
+    @FXML
+    private TextField descriptionTextField;
+    @FXML
+    private Button saveButton;
+    @FXML
+    private Button quitButton;
 
+    private Stage stage;
+
+    public void initialize(Stage stage) {
+        this.stage = stage;
+        initButtonEvent();
+    }
+
+    private void initButtonEvent() {
+        saveButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                saveButton.fire();
+                e.consume();
+            }
+        });
+        quitButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                quitButton.fire();
+                e.consume();
+            }
+        });
     }
 
     public void addDrug() {
-        if(checkName() && checkDateOfMaunfacturer() && checkExpirationDate() && checkAmount() && checkDescription()) {
-            try {
-                new AlertBoxForm("Lijek je uspješno dodat!").display();
-            } catch(Exception exception) {
-
-            }
-
-            nameTextField.clear();
-            dateOfManufacturePicker.setValue(null);
-            expirationDatePicker.setValue(null);
-            amountTextField.clear();
-            descriptionTextField.clear();
+        if(checkName() && checkAmount() && checkDescription()) {
+            AzilUtilities.getDAOFactory().getMedicineDAO().insert(new MedicineDTO(0, nameTextField.getText().trim(), descriptionTextField.getText().trim(), Integer.valueOf(amountTextField.getText().trim())));
+            displayAlertBox("Lijek je uspješno dodat!");
+            quit();
         }
     }
 
     public void quit() {
-        Stage stage = (Stage) nameTextField.getScene().getWindow();
         stage.close();
     }
 
     private boolean checkName() {
-        if("".equals(nameTextField.getText())) {
-            try {
-                new AlertBoxForm("Unos za polje naziv nije odgovarajući!").display();
-            } catch(Exception exception) {
-
-            }
-            return false;
-        }
-        return true;
-    }
-
-    private boolean checkDateOfMaunfacturer() {
-        if (dateOfManufacturePicker.getValue() == null) {
-            try {
-                new AlertBoxForm("Datum proizvodnje nije izabran!").display();
-            } catch(Exception exception) {
-
-            }
-            return false;
-        }
-        return true;
-    }
-
-    private boolean checkExpirationDate() {
-        if(expirationDatePicker.getValue() == null) {
-            try {
-                new AlertBoxForm("Rok trajanja nije izabran!").display();
-            } catch(Exception exception) {
-
-            }
+        if("".equals(nameTextField.getText().trim())) {
+            displayAlertBox("Unos za polje naziv nije odgovarajući!");
             return false;
         }
         return true;
     }
 
     private boolean checkAmount() {
-        if("".equals(amountTextField.getText()) || !checkNumber(amountTextField.getText())) {
-            try {
-                new AlertBoxForm("Unos za polje količina nije odgovarajući!").display();
-            } catch(Exception exception) {
-
-            }
+        if("".equals(amountTextField.getText().trim()) || !checkNumber(amountTextField.getText().trim())) {
+            displayAlertBox("Unos za polje količina nije odgovarajući!");
             return false;
         }
         return true;
     }
 
     private boolean checkDescription() {
-        if("".equals(descriptionTextField.getText())) {
-            try {
-                new AlertBoxForm("Unos za polje opis nije odgovarajući!").display();
-            } catch(Exception exception) {
-
-            }
+        if("".equals(descriptionTextField.getText().trim())) {
+            displayAlertBox("Unos za polje opis nije odgovarajući!");
             return false;
         }
         return true;
@@ -103,8 +86,18 @@ public class AddingMedicineController {
         try {
             Integer.parseInt(string);
             return true;
-        } catch(NumberFormatException exception) {
+        } catch(NumberFormatException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddingMedicineController", ex.fillInStackTrace().toString()));
             return false;
         }
     }
+
+    private void displayAlertBox(String content) {
+        try {
+            new AlertBoxForm(content).display();
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddingMedicineController", ex.fillInStackTrace().toString()));
+        }
+    }
+
 }

@@ -8,16 +8,16 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: #b71c1c;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.vet.main.VetMainController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #b71c1c;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.vet.main.VetMainController">
    <padding>
-      <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+      <Insets bottom="25.0" left="50.0" right="50.0" top="25.0" />
    </padding>
    <top>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../images/dog-icon.png" />
+                  <Image url="@../../icons/dog-icon.png" />
                </image>
             </ImageView>
             <Label text="Azil za pse" textFill="WHITE">
@@ -30,30 +30,59 @@
       </VBox>
    </top>
    <bottom>
-      <Button fx:id="logOutButton" mnemonicParsing="false" onAction="#logOut" text="Odjavi se" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" spacing="10.0">
+         <children>
+            <Label fx:id="loggedUserLabel" text="Prijavljeni korisnik: " textFill="WHITE" />
+            <Button fx:id="logOutButton" mnemonicParsing="false" onAction="#logOut" text="Odjavi se" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets top="20.0" />
+               </BorderPane.margin>
+            </Button>
+         </children>
          <BorderPane.margin>
-            <Insets top="20.0" />
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </BorderPane.margin>
-      </Button>
+      </VBox>
    </bottom>
    <left>
       <VBox alignment="CENTER" prefHeight="499.0" prefWidth="160.0" spacing="15.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="examineDogButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#examineDog" prefHeight="31.0" prefWidth="112.0" text="Pregledaj psa" />
-            <Button fx:id="takeDrugButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#takeDrug" prefHeight="31.0" prefWidth="112.0" text="Uzmi lijek" />
-            <Button fx:id="generateFindingButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#generateFinding" prefHeight="31.0" prefWidth="112.0" text="Generiši nalaz" />
          </children>
       </VBox>
    </left>
-   <right>
-      <TableView maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-        <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
-        </columns>
-         <BorderPane.margin>
-            <Insets />
-         </BorderPane.margin>
+   <center>
+      <TableView fx:id="dogsTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="700.0" BorderPane.alignment="CENTER">
+         <columns>
+            <TableColumn prefWidth="120.0" text="Ime" />
+            <TableColumn prefWidth="120.0" text="Rasa" />
+            <TableColumn prefWidth="95.0" text="Pol" />
+            <TableColumn prefWidth="100.0" text="Visina" />
+            <TableColumn minWidth="0.0" prefWidth="100.0" text="Težina" />
+            <TableColumn minWidth="0.0" prefWidth="164.0" text="Datum rođenja" />
+         </columns>
       </TableView>
+   </center>
+   <right>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <Label text="Unesite rasu za pretragu" textFill="WHITE">
+                     <VBox.margin>
+                        <Insets top="30.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TextField fx:id="searchParametarTextField" />
+                  <Button mnemonicParsing="false" onAction="#searchDog" prefHeight="31.0" prefWidth="90.0" text="Pretraži">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#displayDogs" prefHeight="31.0" prefWidth="90.0" text="Prikaži sve" />
+               </children>
+            </VBox>
+         </children>
+      </VBox>
    </right>
 </BorderPane>

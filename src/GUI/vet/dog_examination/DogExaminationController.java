@@ -1,65 +1,117 @@
 package GUI.vet.dog_examination;
 
 import GUI.alert_box.AlertBoxForm;
+import GUI.vet.generating_finding.GeneratingFindingForm;
+import GUI.vet.taking_medicine.TakingMedicineForm;
+import data.dto.DogDTO;
+import data.dto.EmployeeDTO;
+import data.dto.LoggerDTO;
+import data.dto.MedicalResultDTO;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
-import javafx.stage.FileChooser;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import java.io.File;
+import util.AzilUtilities;
+import java.util.List;
 
 public class DogExaminationController {
-    @FXML TableView<String> dogsTableView;
-    private File finding;
 
     @FXML
-    private void initialize() {
+    private TableView<MedicalResultDTO> medicalResultsTableView;
+    @FXML
+    private Button takeMedicineButton;
+    @FXML
+    private Button generateFindingButton;
+    @FXML
+    private Button quitButton;
 
+    private Stage stage;
+    private EmployeeDTO employee;
+    private DogDTO dog;
+    private List<MedicalResultDTO> listOfMedicalResults;
+
+    public void initialize(Stage stage, DogDTO dog, EmployeeDTO employee) {
+        this.stage = stage;
+        this.dog = dog;
+        this.employee = employee;
+
+        medicalResultsTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("date"));
+        medicalResultsTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("veterinarianJMB"));
+        medicalResultsTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("resultsAndOpinion"));
+
+        displayMedicalResults();
+        initButtonEvent();
     }
 
-    public void chooseFinding() {
-        FileChooser fileChooser = new FileChooser();
-        finding = fileChooser.showOpenDialog(dogsTableView.getScene().getWindow());
-    }
-
-    public void save() {
-        if(checkSelectedDog() && checkFinding()) {
-            try {
-                new AlertBoxForm("Pas je uspješno pregledan!").display();
-            } catch (Exception exception) {
-
+    private void initButtonEvent() {
+        takeMedicineButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                takeMedicineButton.fire();
+                e.consume();
             }
-
-            finding = null;
-            dogsTableView.getSelectionModel().clearSelection();
-        }
+        });
+        generateFindingButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                generateFindingButton.fire();
+                e.consume();
+            }
+        });
+        quitButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                quitButton.fire();
+                e.consume();
+            }
+        });
     }
 
     public void quit() {
-        Stage stage = (Stage) dogsTableView.getScene().getWindow();
         stage.close();
     }
 
-    private boolean checkFinding() {
-        if(finding == null) {
+    public void generateFinding() {
+        try {
+            new GeneratingFindingForm(dog, employee).display();
+            displayMedicalResults();
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), ex.fillInStackTrace().toString()));
+        }
+    }
+
+    public void takeMedicine() {
+        if (checkMedicalResult()) {
+            try {
+                new TakingMedicineForm(employee, medicalResultsTableView.getSelectionModel().getSelectedItem()).display();
+            } catch (Exception ex) {
+                AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), ex.fillInStackTrace().toString()));
+            }
+        }
+    }
+
+    private void displayMedicalResults() {
+        medicalResultsTableView.getItems().clear();
+        medicalResultsTableView.refresh();
+        listOfMedicalResults = AzilUtilities.getDAOFactory().getMedicalResultDAO().medicalResults(dog);
+        for(MedicalResultDTO medicalResult : listOfMedicalResults) {
+            medicalResultsTableView.getItems().add(medicalResult);
+        }
+    }
+
+    private boolean checkMedicalResult() {
+        if (medicalResultsTableView.getSelectionModel().getSelectedItem() != null) {
+            return true;
+        }
+        else {
             try {
                 new AlertBoxForm("Nije izabran nalaz!").display();
-            } catch(Exception exception) {
-
+            }
+            catch (Exception ex) {
+                AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), ex.fillInStackTrace().toString()));
             }
             return false;
         }
-        return true;
     }
 
-    private boolean checkSelectedDog() {
-        if(dogsTableView.getSelectionModel().getSelectedCells().isEmpty()) {
-            try {
-                new AlertBoxForm("Nije izabran pas za pregled!").display();
-            } catch(Exception exception) {
-
-            }
-            return false;
-        }
-        return true;
-    }
 }

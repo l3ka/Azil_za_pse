@@ -8,16 +8,16 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1300.0" style="-fx-background-color: #b71c1c;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.adopting_dog.AdoptingDogController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #b71c1c;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.adopting_dog.AdoptingDogController">
    <padding>
-      <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+      <Insets bottom="25.0" left="50.0" right="50.0" top="25.0" />
    </padding>
    <top>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/dog-icon.png" />
+                  <Image url="@../icons/dog-icon.png" />
                </image>
             </ImageView>
             <Label text="Azil za pse" textFill="WHITE">
@@ -30,22 +30,29 @@
       </VBox>
    </top>
    <bottom>
-      <VBox alignment="CENTER" prefHeight="150.0" prefWidth="1200.0" spacing="15.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="120.0" prefWidth="1200.0" spacing="15.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="adoptDogButton" mnemonicParsing="false" onAction="#adoptDog" text="Udomi psa" />
             <Button fx:id="quitButton" layoutX="403.0" layoutY="95.0" mnemonicParsing="false" onAction="#quit" text="Odustani" />
          </children>
+         <BorderPane.margin>
+            <Insets top="10.0" />
+         </BorderPane.margin>
       </VBox>
    </bottom>
    <left>
       <VBox alignment="CENTER_LEFT" prefHeight="400.0" prefWidth="500.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Izaberi psa" textFill="WHITE" />
-            <TableView fx:id="dogsTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="500.0">
-              <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
-              </columns>
+            <Label text="Izaberite psa" textFill="WHITE" />
+            <TableView fx:id="dogsTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="280.0" prefWidth="500.0">
+               <columns>
+                  <TableColumn prefWidth="88.0" text="Ime" />
+                  <TableColumn prefWidth="78.0" text="Rasa" />
+                  <TableColumn prefWidth="73.0" text="Pol" />
+                  <TableColumn prefWidth="93.0" text="Visina" />
+                  <TableColumn prefWidth="65.0" text="Težina" />
+                  <TableColumn prefWidth="101.0" text="Datum rođenja" />
+               </columns>
             </TableView>
          </children>
          <padding>
@@ -56,11 +63,13 @@
    <right>
       <VBox alignment="CENTER_LEFT" prefHeight="400.0" prefWidth="500.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Izaberi udomitelja" textFill="WHITE" />
-            <TableView fx:id="fosterParentsTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="500.0">
+            <Label text="Izaberite udomitelja" textFill="WHITE" />
+            <TableView fx:id="fosterParentsTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="280.0" prefWidth="500.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
+                <TableColumn prefWidth="100.0" text="Ime" />
+                <TableColumn prefWidth="102.0" text="Prezime" />
+                  <TableColumn prefWidth="140.0" text="Mjesto stanovanja" />
+                  <TableColumn prefWidth="157.0" text="Broj telefona" />
               </columns>
             </TableView>
          </children>

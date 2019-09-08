@@ -1,10 +1,11 @@
 package GUI.alert_box;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Modality;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
+
+import java.io.File;
 
 public class AlertBoxForm {
 
@@ -15,12 +16,17 @@ public class AlertBoxForm {
     }
 
     public void display() throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("alertBox.fxml"));
         Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        Parent root = FXMLLoader.load(getClass().getResource("alertBox.fxml"));
+        stage.getIcons().add(new Image("file:" + "src" + File.separator + "GUI" + File.separator + "icons" + File.separator + "notification-icon.png"));
         stage.setTitle("Upozorenje");
-        Scene scena = new Scene(root, 500, 380);
+        Scene scena = new Scene(loader.load());
         stage.setScene(scena);
+        stage.setMinHeight(420);
+        stage.setMinWidth(600);
+        AlertBoxController controller = loader.getController();
+        controller.initialize(stage);
         stage.showAndWait();
     }
+
 }

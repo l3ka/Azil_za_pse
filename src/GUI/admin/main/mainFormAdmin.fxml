@@ -8,16 +8,16 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: #c71c1c;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.admin.main.AdminMainController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #c71c1c;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.admin.main.AdminMainController">
    <padding>
-      <Insets bottom="50.0" top="50.0" />
+      <Insets bottom="25.0" top="25.0" />
    </padding>
    <top>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="157.0" prefWidth="1200.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../images/dog-icon.png" />
+                  <Image url="@../../icons/dog-icon.png" />
                </image>
             </ImageView>
             <Label text="Azil za pse" textFill="WHITE">
@@ -29,20 +29,6 @@
          </children>
       </VBox>
    </top>
-   <center>
-      <TableView maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-        <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
-            <TableColumn prefWidth="75.0" text="Column X" />
-            <TableColumn prefWidth="75.0" text="Column X" />
-            <TableColumn prefWidth="75.0" text="Column X" />
-        </columns>
-         <columnResizePolicy>
-            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-         </columnResizePolicy>
-      </TableView>
-   </center>
    <left>
       <VBox alignment="CENTER" prefHeight="400.0" prefWidth="160.0" spacing="15.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -51,6 +37,8 @@
          <children>
             <Button fx:id="addDogButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#addDog" prefHeight="30.0" prefWidth="140.0" text="Dodaj psa" />
             <Button fx:id="adoptDogButton" layoutX="58.0" layoutY="195.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#adoptDog" prefHeight="30.0" prefWidth="140.0" text="Udomi psa" />
+            <Button fx:id="addFosterParentButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#addFosterParent" prefHeight="30.0" prefWidth="140.0" text="Dodaj udomitelja" />
+            <Button mnemonicParsing="false" onAction="#addCage" prefHeight="30.0" prefWidth="140.0" text="Dodaj kavez" />
             <Button fx:id="addMedicineButton" layoutX="58.0" layoutY="215.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#addMedicine" prefHeight="30.0" prefWidth="140.0" text="Dodaj lijek" />
             <Button fx:id="addAcountButton" layoutX="58.0" layoutY="236.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#addAccount" prefHeight="30.0" prefWidth="140.0" text="Dodaj nalog" />
             <Button fx:id="editAccountButton" layoutX="58.0" layoutY="256.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#editAccount" prefHeight="30.0" prefWidth="140.0" text="Izmijeni nalog" />
@@ -59,10 +47,55 @@
       </VBox>
    </left>
    <bottom>
-      <Button fx:id="logOutButton" mnemonicParsing="false" onAction="#logOut" text="Odjavi se" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" spacing="10.0">
+         <children>
+            <Label fx:id="loggedUserLabel" text="Prijavljeni korisnik: " textFill="WHITE" />
+            <Button fx:id="logOutButton" mnemonicParsing="false" onAction="#logOut" text="Odjavi se" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets top="20.0" />
+               </BorderPane.margin>
+            </Button>
+         </children>
          <BorderPane.margin>
-            <Insets top="20.0" />
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </BorderPane.margin>
-      </Button>
+      </VBox>
    </bottom>
+   <center>
+      <TableView fx:id="dogsTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="419.0" prefWidth="726.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn prefWidth="125.0" text="Ime" />
+          <TableColumn prefWidth="125.0" text="Rasa" />
+            <TableColumn prefWidth="70.0" text="Pol" />
+            <TableColumn prefWidth="100.0" text="Visina" />
+            <TableColumn prefWidth="100.0" text="Težina" />
+            <TableColumn prefWidth="190.0" text="Datum rođenja" />
+        </columns>
+      </TableView>
+   </center>
+   <right>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets right="40.0" />
+         </BorderPane.margin>
+         <children>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <Label text="Unesite rasu za pretragu" textFill="WHITE">
+                     <VBox.margin>
+                        <Insets top="30.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TextField fx:id="searchParameterTextField" />
+                  <Button fx:id="searchDogButton" mnemonicParsing="false" onAction="#searchDog" prefHeight="31.0" prefWidth="90.0" text="Pretraži">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="searchAllDogButton" mnemonicParsing="false" onAction="#displayDogs" prefHeight="31.0" prefWidth="90.0" text="Prikaži sve" />
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </right>
 </BorderPane>

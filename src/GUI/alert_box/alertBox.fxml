@@ -3,9 +3,6 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -13,7 +10,7 @@
     <children>
       <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../images/notification-icon.png" />
+            <Image url="@../icons/notification-icon.png" />
          </image>
       </ImageView>
         <Label fx:id="label" textAlignment="CENTER" textFill="WHITE">
