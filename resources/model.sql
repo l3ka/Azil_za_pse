@@ -213,17 +213,17 @@ DROP TABLE IF EXISTS `azil`.`UzimanjeLijeka` ;
 
 CREATE TABLE IF NOT EXISTS `azil`.`UzimanjeLijeka` (
   `DatumUzimanja` DATETIME NOT NULL,
-  `Sluzbenik_Zaposleni_JMBG` CHAR(13) NOT NULL,
+  `Veterinar_Zaposleni_JMBG` CHAR(13) NOT NULL,
   `Lijek_IdLijeka` INT NOT NULL,
   `Nalaz_IdNalaza` INT NOT NULL,
   `Kolicina` VARCHAR(45) NULL,
-  PRIMARY KEY (`DatumUzimanja`, `Sluzbenik_Zaposleni_JMBG`, `Lijek_IdLijeka`, `Nalaz_IdNalaza`),
-  INDEX `fk_UzimanjeLijeka_Sluzbenik1_idx` (`Sluzbenik_Zaposleni_JMBG` ASC),
+  PRIMARY KEY (`DatumUzimanja`, `Veterinar_Zaposleni_JMBG`, `Lijek_IdLijeka`, `Nalaz_IdNalaza`),
+  INDEX `fk_UzimanjeLijeka_Veterinar1_idx` (`Veterinar_Zaposleni_JMBG` ASC),
   INDEX `fk_UzimanjeLijeka_Lijek1_idx` (`Lijek_IdLijeka` ASC) ,
   INDEX `fk_UzimanjeLijeka_Nalaz1_idx` (`Nalaz_IdNalaza` ASC) ,
-  CONSTRAINT `fk_UzimanjeLijeka_Sluzbenik1`
-    FOREIGN KEY (`Sluzbenik_Zaposleni_JMBG`)
-    REFERENCES `azil`.`Sluzbenik` (`Zaposleni_JMBG`)
+  CONSTRAINT `fk_UzimanjeLijeka_Veterinar1`
+    FOREIGN KEY (`Veterinar_Zaposleni_JMBG`)
+    REFERENCES `azil`.`Veterinar` (`Zaposleni_JMBG`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_UzimanjeLijeka_Lijek1`
