@@ -320,6 +320,19 @@ CREATE TABLE IF NOT EXISTS `azil`.`UdomljavanjePsa` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `azil`.`Logger`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `azil`.`Logger` ;
+
+CREATE TABLE IF NOT EXISTS `azil`.`Logger` (
+  `IdLogger` INT NOT NULL AUTO_INCREMENT,
+  `Username` VARCHAR(50) NULL,
+  `Opis` TEXT NOT NULL,
+  PRIMARY KEY (`IdLogger`))
+ENGINE = InnoDB;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
