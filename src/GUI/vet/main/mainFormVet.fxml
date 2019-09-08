@@ -48,7 +48,6 @@
       <VBox alignment="CENTER" prefHeight="499.0" prefWidth="160.0" spacing="15.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="examineDogButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#examineDog" prefHeight="31.0" prefWidth="112.0" text="Pregledaj psa" />
-            <Button fx:id="takeDrugButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#takeDrug" prefHeight="31.0" prefWidth="112.0" text="Uzmi lijek" />
          </children>
       </VBox>
    </left>

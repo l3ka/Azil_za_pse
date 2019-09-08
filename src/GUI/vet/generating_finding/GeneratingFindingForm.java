@@ -21,7 +21,9 @@ public class GeneratingFindingForm {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("generatingFinding.fxml"));
         Stage stage = new Stage();
         stage.setTitle("Azil za pse - generisanje nalaza");
-        Scene scene = new Scene(loader.load(), 850, 700);
+        Scene scene = new Scene(loader.load());
+        stage.setMinHeight(720);
+        stage.setMinWidth(800);
         GeneratingFindingController controller = loader.getController();
         controller.initialize(stage);
         stage.setScene(scene);

@@ -19,6 +19,8 @@ public class AdminMainForm {
         stage.setTitle("Azil za pse - administratorski dio");
         Scene scene = new Scene(loader.load());
         stage.setScene(scene);
+        stage.setMinWidth(1000);
+        stage.setMinHeight(720);
         AdminMainController controller = loader.getController();
         controller.setEmployee(employee);
         controller.initialize(stage);

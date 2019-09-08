@@ -12,7 +12,9 @@ public class AddingMedicineForm {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("addingMedicine.fxml"));
         Stage stage = new Stage();
         stage.setTitle("Azil za pse - dodavanje lijeka");
-        Scene scene = new Scene(loader.load(), 850, 700);
+        Scene scene = new Scene(loader.load());
+        stage.setMinWidth(800);
+        stage.setMinHeight(600);
         AddingMedicineController controller = loader.getController();
         controller.initialize(stage);
         stage.setScene(scene);

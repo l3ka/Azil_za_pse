@@ -1,17 +1,19 @@
 package data.dto;
 
 import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 public class TakingMedicineDTO {
 
-    private Date date;
+    private Timestamp date;
     private VeterinarianDTO veterinarian;
     private MedicineDTO medicine;
     private MedicalResultDTO medicalResult;
     private Integer quantity;
 
-    public TakingMedicineDTO(Date date, VeterinarianDTO veterinarian, MedicineDTO medicine, MedicalResultDTO medicalResult, Integer quantity) {
+    public TakingMedicineDTO(Timestamp date, VeterinarianDTO veterinarian, MedicineDTO medicine, MedicalResultDTO medicalResult, Integer quantity) {
         this.date = date;
         this.veterinarian = veterinarian;
         this.medicine = medicine;
@@ -19,11 +21,11 @@ public class TakingMedicineDTO {
         this.quantity = quantity;
     }
 
-    public Date getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 

@@ -22,6 +22,8 @@ public class MainScreen {
         Scene scene = new Scene(loader.load());
         stage.setTitle("Azil za pse - glavni meni");
         stage.setScene(scene);
+        stage.setMinWidth(1000);
+        stage.setMinHeight(720);
         MainScreenController controller = loader.getController();
         controller.initialize(stage);
         controller.setEmployee(employee);

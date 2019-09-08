@@ -14,6 +14,8 @@ public class AdoptingDogForm {
         stage.setTitle("Azil za pse - udomljavanje psa");
         Scene scene = new Scene(loader.load());
         stage.setScene(scene);
+        stage.setMinWidth(1200);
+        stage.setMinHeight(720);
         AdoptingDogController controller = loader.getController();
         controller.initialize(stage);
         stage.showAndWait();

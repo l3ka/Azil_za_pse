@@ -3,6 +3,7 @@ package GUI.vet.taking_medicine;
 import GUI.alert_box.AlertBoxForm;
 import GUI.vet.medicine_quantity.MedicineQuantityForm;
 import data.dto.EmployeeDTO;
+import data.dto.MedicalResultDTO;
 import data.dto.MedicineDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -18,11 +19,13 @@ public class TakingMedicineController {
     @FXML private TableView<MedicineDTO> drugsTableView;
     private Stage stage;
     private List<MedicineDTO> listOfMedicines;
-    private EmployeeDTO employee = TakingMedicineForm.employee;
+    private EmployeeDTO employee;
+    private MedicalResultDTO medicalResult;
 
-    public void initialize(Stage stage) {
+    public void initialize(Stage stage, EmployeeDTO employee, MedicalResultDTO medicalResult) {
         this.stage = stage;
-
+        this.employee = employee;
+        this.medicalResult = medicalResult;
         drugsTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("name"));
         drugsTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("quantity"));
         drugsTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -33,7 +36,7 @@ public class TakingMedicineController {
     public void takeMedicine() {
         if(checkSelectedDrug()) {
             try {
-                new MedicineQuantityForm(drugsTableView.getSelectionModel().getSelectedItem(), employee).display();
+                new MedicineQuantityForm(drugsTableView.getSelectionModel().getSelectedItem(), employee, medicalResult).display();
                 drugsTableView.getItems().clear();
                 displayMedicines();
             } catch(Exception ex) {

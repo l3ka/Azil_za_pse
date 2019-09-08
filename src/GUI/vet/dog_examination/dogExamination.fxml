@@ -32,6 +32,7 @@
    <bottom>
       <VBox alignment="CENTER" prefHeight="120.0" prefWidth="900.0" spacing="15.0" BorderPane.alignment="CENTER">
          <children>
+            <Button fx:id="takeMedicineButton" mnemonicParsing="false" onAction="#takeMedicine" prefWidth="100.0" text="Uzmi lijek" />
             <Button fx:id="generateFindingButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#generateFinding" prefHeight="25.0" prefWidth="100.0" text="Generiši nalaz" />
             <Button fx:id="quitButton" layoutX="353.0" layoutY="95.0" mnemonicParsing="false" onAction="#quit" text="Odustani" />
          </children>
@@ -43,7 +44,7 @@
    <center>
       <VBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="medicalResultsTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="700.0">
+            <TableView fx:id="medicalResultsTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0">
               <columns>
                 <TableColumn prefWidth="114.0" text="Datum pregleda" />
                 <TableColumn prefWidth="123.0" text="Veterinar" />
