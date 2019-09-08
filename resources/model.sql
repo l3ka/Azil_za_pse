@@ -321,7 +321,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `azil`.`Logger`
+-- Table `azil`.`LoggerDTO`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `azil`.`Logger` ;
 
