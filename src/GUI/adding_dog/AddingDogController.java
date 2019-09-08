@@ -5,10 +5,7 @@ import data.dto.CageDTO;
 import data.dto.DogDTO;
 import data.dto.DogInCageDTO;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
@@ -41,6 +38,8 @@ public class AddingDogController {
     private Button saveButton;
     @FXML
     private Button quitButton;
+    @FXML
+    private Button choosePhotoButton;
 
     private File photo;
     private Stage stage;
@@ -78,6 +77,7 @@ public class AddingDogController {
     public void choosePhoto() {
         FileChooser fileChooser = new FileChooser();
         photo = fileChooser.showOpenDialog(stage);
+        choosePhotoButton.setText("Promijeni fotografiju");
     }
 
     public void addDog() {

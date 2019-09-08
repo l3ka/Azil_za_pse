@@ -47,16 +47,12 @@
             <HBox alignment="CENTER" layoutX="10.0" layoutY="190.0" prefHeight="100.0" prefWidth="200.0" spacing="35.0">
                <children>
                   <Label text="Pol" textFill="WHITE" />
-                  <ComboBox fx:id="genderComboBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="187.0" promptText="Izaberi pol" />
+                  <ComboBox fx:id="genderComboBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="187.0" promptText="Izaberite pol" />
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                <children>
-                  <Label text="Kavez" textFill="WHITE">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
+                  <Label text="Kavez" textFill="WHITE" />
                   <ComboBox fx:id="cagesComboBox" minHeight="-Infinity" prefHeight="31.0" prefWidth="187.0" promptText="Izaberite kavez" />
                </children>
             </HBox>
@@ -78,10 +74,10 @@
                   <DatePicker fx:id="dateOfBirthDatePicker" prefHeight="31.0" prefWidth="187.0" />
                </children>
             </HBox>
-            <HBox alignment="CENTER" layoutX="10.0" layoutY="310.0" prefHeight="100.0" prefWidth="200.0" spacing="75.0">
+            <HBox alignment="CENTER" layoutX="10.0" layoutY="310.0" prefHeight="100.0" prefWidth="200.0" spacing="45.0">
                <children>
                   <Label text="Fotografija" textFill="WHITE" />
-                  <Button fx:id="choosePhotoButton" mnemonicParsing="false" onAction="#choosePhoto" text="Izaberi fotografiju" />
+                  <Button fx:id="choosePhotoButton" mnemonicParsing="false" onAction="#choosePhoto" prefHeight="31.0" prefWidth="140.0" text="Izaberi fotografiju" />
                </children>
             </HBox>
          </children>
