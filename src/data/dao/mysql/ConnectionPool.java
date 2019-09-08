@@ -1,5 +1,8 @@
 package data.dao.mysql;
 
+import data.dto.LoggerDTO;
+import util.AzilUtilities;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -62,8 +65,8 @@ public class ConnectionPool {
                     .getString("maxIdleConnections"));
             maxConnections = Integer.parseInt(bundle
                     .getString("maxConnections"));
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("ConnectionPool", ex.fillInStackTrace().toString()));
         }
     }
 
@@ -82,8 +85,8 @@ public class ConnectionPool {
                     wait();
                     conn = freeConnections.remove(0);
                     usedConnections.add(conn);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                } catch (InterruptedException ex) {
+                    AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("ConnectionPool", ex.fillInStackTrace().toString()));
                 }
             }
         }
@@ -100,8 +103,8 @@ public class ConnectionPool {
                 Connection c = freeConnections.remove(lastOne);
                 try {
                     c.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                } catch (SQLException ex) {
+                    AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("ConnectionPool", ex.fillInStackTrace().toString()));
                 }
             }
             notify();

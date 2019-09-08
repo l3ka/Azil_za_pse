@@ -3,6 +3,7 @@ package data.dao.mysql;
 import data.dao.AdoptingDAO;
 import data.dto.AdoptingDTO;
 import data.dto.FosterParentDTO;
+import data.dto.LoggerDTO;
 import util.AzilUtilities;
 import java.sql.*;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class MySQLAdoptingDAO implements AdoptingDAO {
 
         String query = "INSERT INTO udomljavanjepsa "
                 + "VALUES (?, ?, ?, ?) ";
-        try{
+        try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
             ps.setDate(1, adopting.getDateFrom());
@@ -28,10 +29,10 @@ public class MySQLAdoptingDAO implements AdoptingDAO {
             ps.setDate(4, adopting.getDateTo());
 
             retVal = ps.executeUpdate() == 1;
-        }catch (Exception e){
+        } catch (Exception ex) {
             retVal = false;
-            e.printStackTrace();
-        }finally {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLAdoptingDAO", ex.fillInStackTrace().toString()));
+        } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
         }
@@ -59,8 +60,8 @@ public class MySQLAdoptingDAO implements AdoptingDAO {
                         rs.getDate("datumOd"),
                         rs.getDate("DatumDo")
                 ));
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLAdoptingDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -95,8 +96,8 @@ public class MySQLAdoptingDAO implements AdoptingDAO {
             ps.setString(7, JMB);
 
             ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLAdoptingDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
@@ -121,8 +122,8 @@ public class MySQLAdoptingDAO implements AdoptingDAO {
             ps.setString(3, JMB);
 
             ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLAdoptingDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
@@ -130,4 +131,5 @@ public class MySQLAdoptingDAO implements AdoptingDAO {
 
         return retVal;
     }
+
 }

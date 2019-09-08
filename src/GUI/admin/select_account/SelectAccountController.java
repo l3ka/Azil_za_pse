@@ -3,6 +3,7 @@ package GUI.admin.select_account;
 import GUI.admin.change_account.ChangeAccount;
 import GUI.alert_box.AlertBoxForm;
 import data.dto.EmployeeDTO;
+import data.dto.LoggerDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
@@ -16,13 +17,14 @@ import java.util.List;
 
 public class SelectAccountController {
 
-    private Stage stage;
     @FXML
     private TableView<EmployeeDTO> accountsTableView;
     @FXML
     private Button selectButton;
     @FXML
     private Button quitButton;
+
+    private Stage stage;
 
     private List<EmployeeDTO> listOfEmployees = new ArrayList<>();
 
@@ -57,7 +59,7 @@ public class SelectAccountController {
             try {
                 new ChangeAccount(accountsTableView.getSelectionModel().getSelectedItem()).display();
             } catch(Exception ex) {
-
+                AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("SelectAccountController", ex.fillInStackTrace().toString()));
             }
         }
     }
@@ -87,7 +89,7 @@ public class SelectAccountController {
         try {
             new AlertBoxForm(content).display();
         } catch(Exception ex) {
-
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("SelectAccountController", ex.fillInStackTrace().toString()));
         }
     }
 

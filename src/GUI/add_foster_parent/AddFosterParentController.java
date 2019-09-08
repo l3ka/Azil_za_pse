@@ -2,6 +2,7 @@ package GUI.add_foster_parent;
 
 import GUI.alert_box.AlertBoxForm;
 import data.dto.FosterParentDTO;
+import data.dto.LoggerDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -99,7 +100,7 @@ public class AddFosterParentController {
         try {
             new AlertBoxForm(content).display();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddFosterParentController", ex.fillInStackTrace().toString()));
         }
     }
 

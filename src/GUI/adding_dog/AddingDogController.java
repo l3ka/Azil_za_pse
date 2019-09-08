@@ -4,6 +4,7 @@ import GUI.alert_box.AlertBoxForm;
 import data.dto.CageDTO;
 import data.dto.DogDTO;
 import data.dto.DogInCageDTO;
+import data.dto.LoggerDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -163,7 +164,8 @@ public class AddingDogController {
         try {
             Double.parseDouble(string);
             return true;
-        } catch(NumberFormatException exception) {
+        } catch(NumberFormatException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddingDogController", ex.fillInStackTrace().toString()));
             return false;
         }
     }
@@ -182,8 +184,8 @@ public class AddingDogController {
     private void displayAlertBox(String content) {
         try {
             new AlertBoxForm(content).display();
-        } catch(Exception exception) {
-
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddingDogController", ex.fillInStackTrace().toString()));
         }
     }
 

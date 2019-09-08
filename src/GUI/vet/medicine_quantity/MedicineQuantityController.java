@@ -62,8 +62,8 @@ public class MedicineQuantityController {
             try {
                 AzilUtilities.getDAOFactory().getTakingMedicineDAO().insert(new TakingMedicineDTO(new java.sql.Timestamp(new Date().getTime()), (VeterinarianDTO) employee, medicine, medicalResult, quantityComboBox.getSelectionModel().getSelectedItem()));
             }
-            catch (Exception e) {
-                e.printStackTrace();
+            catch (Exception ex) {
+                AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), ex.fillInStackTrace().toString()));
             }
             quit();
         }
@@ -85,7 +85,7 @@ public class MedicineQuantityController {
         try {
             new AlertBoxForm(content).display();
         } catch(Exception ex) {
-
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), ex.fillInStackTrace().toString()));
         }
     }
 

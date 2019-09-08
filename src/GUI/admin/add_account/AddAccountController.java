@@ -1,10 +1,7 @@
 package GUI.admin.add_account;
 
 import GUI.alert_box.AlertBoxForm;
-import data.dto.AdministratorDTO;
-import data.dto.EmploymentContractDTO;
-import data.dto.ServantDTO;
-import data.dto.VeterinarianDTO;
+import data.dto.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
@@ -204,7 +201,7 @@ public class AddAccountController {
         try {
             new AlertBoxForm(content).display();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddAccountController", ex.fillInStackTrace().toString()));
         }
     }
 

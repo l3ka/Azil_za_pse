@@ -1,6 +1,7 @@
 package GUI.adding_medicine;
 
 import GUI.alert_box.AlertBoxForm;
+import data.dto.LoggerDTO;
 import data.dto.MedicineDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -85,7 +86,8 @@ public class AddingMedicineController {
         try {
             Integer.parseInt(string);
             return true;
-        } catch(NumberFormatException exception) {
+        } catch(NumberFormatException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddingMedicineController", ex.fillInStackTrace().toString()));
             return false;
         }
     }
@@ -93,8 +95,8 @@ public class AddingMedicineController {
     private void displayAlertBox(String content) {
         try {
             new AlertBoxForm(content).display();
-        } catch(Exception exception) {
-
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddingMedicineController", ex.fillInStackTrace().toString()));
         }
     }
 

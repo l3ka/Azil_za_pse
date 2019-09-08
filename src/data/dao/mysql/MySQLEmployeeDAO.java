@@ -3,6 +3,7 @@ package data.dao.mysql;
 import data.dao.EmployeeDAO;
 import data.dto.EmployeeDTO;
 import data.dto.EmploymentContractDTO;
+import data.dto.LoggerDTO;
 import util.AzilUtilities;
 import java.sql.*;
 import java.util.List;
@@ -33,9 +34,9 @@ public class MySQLEmployeeDAO implements EmployeeDAO {
                 cs.setDate(11, contract.getSigningDate());
                 cs.setDate(12, contract.getValidationDate());
                 retVal = !cs.execute();
-            } catch (Exception e) {
+            } catch (Exception ex) {
                 retVal = false;
-                e.printStackTrace();
+                AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLEmployeeDAO", ex.fillInStackTrace().toString()));
             } finally {
                 ConnectionPool.getInstance().checkIn(conn);
                 DBUtilities.getInstance().close(cs);
@@ -73,8 +74,8 @@ public class MySQLEmployeeDAO implements EmployeeDAO {
             ps.setString(8, employee.getJMB());
 
             ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLEmployeeDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
@@ -114,8 +115,8 @@ public class MySQLEmployeeDAO implements EmployeeDAO {
             ps.setString(9, oldJMB);
 
             ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLEmployeeDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
@@ -143,9 +144,9 @@ public class MySQLEmployeeDAO implements EmployeeDAO {
             ps.setString(1, employee.getJMB());
 
             retVal = ps.executeUpdate() == 1;
-        } catch (SQLException e) {
+        } catch (SQLException ex) {
             retVal = false;
-            e.printStackTrace();
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLEmployeeDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
@@ -170,9 +171,9 @@ public class MySQLEmployeeDAO implements EmployeeDAO {
             rs = ps.executeQuery();
 
            retVal = rs.next();
-        } catch (SQLException e) {
+        } catch (SQLException ex) {
             retVal = false;
-            e.printStackTrace();
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLEmployeeDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -198,9 +199,9 @@ public class MySQLEmployeeDAO implements EmployeeDAO {
             rs = ps.executeQuery();
 
             retVal = rs.next();
-        } catch (SQLException e) {
+        } catch (SQLException ex) {
             retVal = false;
-            e.printStackTrace();
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLEmployeeDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);

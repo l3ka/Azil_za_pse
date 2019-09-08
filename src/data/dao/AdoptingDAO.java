@@ -2,7 +2,6 @@ package data.dao;
 
 import data.dto.AdoptingDTO;
 import data.dto.FosterParentDTO;
-
 import java.sql.Date;
 import java.util.List;
 

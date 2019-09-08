@@ -3,6 +3,7 @@ package GUI.vet.generating_finding;
 import GUI.alert_box.AlertBoxForm;
 import data.dto.DogDTO;
 import data.dto.EmployeeDTO;
+import data.dto.LoggerDTO;
 import data.dto.MedicalResultDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -71,8 +72,8 @@ public class GeneratingFindingController {
     private void displayAlertBox(String content) {
         try {
             new AlertBoxForm(content).display();
-        } catch (Exception exception) {
-
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(veterinarian.getUsername(), ex.fillInStackTrace().toString()));
         }
     }
 

@@ -2,8 +2,11 @@ package data.dao.mysql;
 
 import data.dao.MedicalResultDAO;
 import data.dto.DogDTO;
+import data.dto.LoggerDTO;
 import data.dto.MedicalResultDTO;
 import data.dto.VeterinarianDTO;
+import util.AzilUtilities;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -31,9 +34,9 @@ public class MySQLMedicalResultDAO implements MedicalResultDAO {
             ps.setInt(4, medicalResult.getDogId());
 
             retVal = ps.executeUpdate() == 1;
-        }catch (Exception e){
+        }catch (Exception ex){
             retVal = false;
-            e.printStackTrace();
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLMedicalResultDAO", ex.fillInStackTrace().toString()));
         }finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
@@ -65,8 +68,8 @@ public class MySQLMedicalResultDAO implements MedicalResultDAO {
                         rs.getInt("Pas_IdPsa"),
                         rs.getString("Veterinar_Zaposleni_JMBG")
                 ));
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLMedicalResultDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -97,8 +100,8 @@ public class MySQLMedicalResultDAO implements MedicalResultDAO {
                         rs.getInt("Pas_IdPsa"),
                         rs.getString("Veterinar_Zaposleni_JMBG")
                 ));
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLMedicalResultDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -130,8 +133,8 @@ public class MySQLMedicalResultDAO implements MedicalResultDAO {
                         rs.getInt("Pas_IdPsa"),
                         rs.getString("Veterinar_Zaposleni_JMBG")
                 ));
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLMedicalResultDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -163,8 +166,8 @@ public class MySQLMedicalResultDAO implements MedicalResultDAO {
                         rs.getString("Veterinar_Zaposleni_JMBG")
                 );
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLMedicalResultDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -193,8 +196,8 @@ public class MySQLMedicalResultDAO implements MedicalResultDAO {
             ps.setString(4, medicalResult.getVeterinarianJMB());
 
             ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLMedicalResultDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
@@ -227,8 +230,8 @@ public class MySQLMedicalResultDAO implements MedicalResultDAO {
             ps.setString(6, veterinarianJMB);
 
             ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLMedicalResultDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
@@ -251,12 +254,13 @@ public class MySQLMedicalResultDAO implements MedicalResultDAO {
             ps.setInt(1, Id);
 
             retVal = ps.executeUpdate() == 1;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLMedicalResultDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
         }
         return  retVal;
     }
+
 }
