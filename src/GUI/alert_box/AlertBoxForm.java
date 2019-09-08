@@ -3,8 +3,11 @@ package GUI.alert_box;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.io.File;
 
 public class AlertBoxForm {
 
@@ -17,6 +20,7 @@ public class AlertBoxForm {
     public void display() throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("alertBox.fxml"));
         Stage stage = new Stage();
+        stage.getIcons().add(new Image("file:" + "src" + File.separator + "GUI" + File.separator + "images" + File.separator + "notification-icon.png"));
         stage.setTitle("Upozorenje");
         Scene scena = new Scene(loader.load());
         stage.setScene(scena);

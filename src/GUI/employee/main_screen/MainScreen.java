@@ -4,9 +4,11 @@ import data.dto.EmployeeDTO;
 import data.dto.ServantDTO;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 
 public class MainScreen {
@@ -19,6 +21,7 @@ public class MainScreen {
     public void display() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScreen.fxml"));
         Stage stage = new Stage();
+        stage.getIcons().add(new Image("file:" + "src" + File.separator + "GUI" + File.separator + "images" + File.separator + "dog-icon.png"));
         Scene scene = new Scene(loader.load());
         stage.setTitle("Azil za pse - glavni meni");
         stage.setScene(scene);

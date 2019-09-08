@@ -2,14 +2,17 @@ package GUI.adding_cage;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.io.File;
+
 public class AddingCageForm {
-    private Stage stage;
 
     public void display() throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("addingCage.fxml"));
         Stage stage = new Stage();
+        stage.getIcons().add(new Image("file:" + "src" + File.separator + "GUI" + File.separator + "images" + File.separator + "dog-icon.png"));
         stage.setTitle("Azil za pse - dodavanje kaveza");
         Scene scene = new Scene(loader.load());
         stage.setMinHeight(700);
