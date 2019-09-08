@@ -47,5 +47,5 @@ public class MySQLDAOFactory extends DAOFactory {
 
     @Override
     public LoggerDAO getLoggerDAO() { return new MySQLLoggerDAO(); }
-    
+
 }
