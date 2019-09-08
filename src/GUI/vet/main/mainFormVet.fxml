@@ -8,7 +8,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #b71c1c;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.vet.main.VetMainController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #b71c1c;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.vet.main.VetMainController">
    <padding>
       <Insets bottom="25.0" left="50.0" right="50.0" top="25.0" />
    </padding>
@@ -52,7 +52,7 @@
          </children>
       </VBox>
    </left>
-   <right>
+   <center>
       <TableView fx:id="dogsTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="700.0" BorderPane.alignment="CENTER">
          <columns>
             <TableColumn prefWidth="120.0" text="Ime" />
@@ -63,5 +63,27 @@
             <TableColumn minWidth="0.0" prefWidth="164.0" text="Datum rođenja" />
          </columns>
       </TableView>
+   </center>
+   <right>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <Label text="Unesite rasu za pretragu" textFill="WHITE">
+                     <VBox.margin>
+                        <Insets top="30.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TextField fx:id="searchParametarTextField" />
+                  <Button mnemonicParsing="false" onAction="#searchDog" prefHeight="31.0" prefWidth="90.0" text="Pretraži">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#displayDogs" prefHeight="31.0" prefWidth="90.0" text="Prikaži sve" />
+               </children>
+            </VBox>
+         </children>
+      </VBox>
    </right>
 </BorderPane>

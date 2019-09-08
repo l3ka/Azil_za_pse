@@ -3,10 +3,8 @@ package data.dao.mysql;
 import data.dao.FosterParentDAO;
 import data.dto.FosterParentDTO;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +39,39 @@ public class MySQLFosterParentDAO implements FosterParentDAO  {
             DBUtilities.getInstance().close(ps, rs);
         }
 
+        return retVal;
+    }
+
+    @Override
+    public List<FosterParentDTO> fosterParents(LocalDate dateFrom) {
+        List<FosterParentDTO> retVal = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String query = "SELECT * FROM udomitelj u " +
+                       "LEFT OUTER JOIN udomljavanjepsa up ON u.JMBG=up.Udomitelj_JMBG " +
+                       "WHERE DatumOd>=DATE(?) ";
+
+        try {
+            conn = ConnectionPool.getInstance().checkOut();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, dateFrom.toString());
+            rs = ps.executeQuery();
+
+            while (rs.next())
+                retVal.add(new FosterParentDTO(
+                        rs.getString("JMBG"),
+                        rs.getString("Ime"),
+                        rs.getString("Prezime"),
+                        rs.getString("MjestoPrebivalista"),
+                        rs.getString("BrojTelefona")
+                ));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionPool.getInstance().checkIn(conn);
+            DBUtilities.getInstance().close(ps, rs);
+        }
         return retVal;
     }
 

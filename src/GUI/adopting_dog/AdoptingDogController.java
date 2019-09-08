@@ -93,7 +93,9 @@ public class AdoptingDogController {
     private void displayDogs() {
         listOfDogs = AzilUtilities.getDAOFactory().getDogDAO().dogs();
         for (DogDTO dog : listOfDogs) {
-            dogsTableView.getItems().add(dog);
+            if(!dog.isAdopted()) {
+                dogsTableView.getItems().add(dog);
+            }
         }
     }
 

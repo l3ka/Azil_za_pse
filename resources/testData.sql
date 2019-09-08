@@ -61,6 +61,7 @@ insert into lijek values (0, 'Amoksicilin', null, 10);
 insert into udomitelj values ('1507988102015', 'Jelena', 'Miletic', 'Banja Luka', '065/722-980');
 insert into udomitelj values ('2001991107013', 'Marko', 'Markovic', 'Gradiska', '066/777-352');
 
+alter table pas add column Udomljen BOOLEAN NOT NULL DEFAULT false;
 
 
 

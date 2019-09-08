@@ -1,9 +1,7 @@
 package GUI.admin.generating_statistic;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class GeneratingStatisticForm {
@@ -12,7 +10,7 @@ public class GeneratingStatisticForm {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("generatingStatistic.fxml"));
         Stage stage = new Stage();
         stage.setTitle("Azil za pse - generisanje statistike");
-        Scene scene = new Scene(loader.load(), 850, 700);
+        Scene scene = new Scene(loader.load());
         stage.setScene(scene);
         GeneratingStatisticController controller = loader.getController();
         controller.initialize(stage);

@@ -2,11 +2,14 @@ package data.dao;
 
 import data.dto.FosterParentDTO;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface FosterParentDAO {
 
     public List<FosterParentDTO> fosterParents();
+
+    public List<FosterParentDTO> fosterParents(LocalDate dateFrom);
 
     public FosterParentDTO getByJMB(String JMB);
 

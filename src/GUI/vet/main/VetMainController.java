@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import util.AzilUtilities;
@@ -24,9 +25,13 @@ public class VetMainController {
     private TableView<DogDTO> dogsTableView;
     @FXML
     private Label loggedUserLabel;
+    @FXML
+    private TextField searchParametarTextField;
+
     private List<DogDTO> listOfDogs;
     private Stage stage;
     private EmployeeDTO employee;
+    private List<DogDTO> listOfSearchedDogs;
 
     public EmployeeDTO getEmployee() {
         return employee;
@@ -47,10 +52,7 @@ public class VetMainController {
         dogsTableView.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("weight"));
         dogsTableView.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
 
-        listOfDogs = AzilUtilities.getDAOFactory().getDogDAO().dogs();
-        for(DogDTO dog : listOfDogs) {
-            dogsTableView.getItems().add(dog);
-        }
+        displayDogs();
     }
 
     public void examineDog() {
@@ -68,6 +70,24 @@ public class VetMainController {
             new TakingMedicineForm(employee).display();
         } catch(Exception exception) {
             exception.printStackTrace();
+        }
+    }
+
+    public void searchDog() {
+        if(checkSearchParameter()) {
+            dogsTableView.getItems().clear();
+            listOfSearchedDogs = AzilUtilities.getDAOFactory().getDogDAO().dogsByBreed(searchParametarTextField.getText());
+            for(DogDTO dog : listOfSearchedDogs) {
+                dogsTableView.getItems().add(dog);
+            }
+        }
+    }
+
+    public void displayDogs() {
+        dogsTableView.getItems().clear();
+        listOfDogs = AzilUtilities.getDAOFactory().getDogDAO().dogs();
+        for(DogDTO dog : listOfDogs) {
+            dogsTableView.getItems().add(dog);
         }
     }
 
@@ -95,5 +115,13 @@ public class VetMainController {
         } catch(Exception ex) {
 
         }
+    }
+
+    private boolean checkSearchParameter() {
+        if("".equals(searchParametarTextField.getText())) {
+            displayAlertBox("Niste unijeli naziv na pretragu!");
+            return false;
+        }
+        return true;
     }
 }

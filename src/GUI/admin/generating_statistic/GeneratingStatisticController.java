@@ -1,5 +1,7 @@
 package GUI.admin.generating_statistic;
 
+import GUI.admin.statistic_result.adopted_dogs.AdoptedDogsStatisticResultForm;
+import GUI.admin.statistic_result.foster_parents.FosterParentsStatisticResultForm;
 import GUI.alert_box.AlertBoxForm;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -10,18 +12,28 @@ public class GeneratingStatisticController {
 
     @FXML private ComboBox<String> statisticComboBox;
     @FXML private DatePicker startDatePicker;
-    @FXML private DatePicker endDatePicker;
     private Stage stage;
 
     public void initialize(Stage stage) {
         this.stage = stage;
-        statisticComboBox.getItems().addAll("Pol", "Rasa", "Visina", "Težina", "Starost");
+        statisticComboBox.getItems().addAll("Udomitelji", "Udmoljeni psi");
     }
 
     public void generateStatistic() {
-        if(checkParameter() && checkStartDate() && checkEndDate()) {
-            displayAlertBox("Uspješno generisana statistika!");
-            stage.close();
+        if(checkParameter() && checkStartDate()) {
+            if("Udomitelji".equals(statisticComboBox.getSelectionModel().getSelectedItem())) {
+                try {
+                    new FosterParentsStatisticResultForm(startDatePicker.getValue()).display();
+                } catch (Exception ex) {
+
+                }
+            } else {
+                try {
+                    new AdoptedDogsStatisticResultForm(startDatePicker.getValue()).display();
+                } catch(Exception ex) {
+
+                }
+            }
         }
     }
 
@@ -32,14 +44,6 @@ public class GeneratingStatisticController {
     private boolean checkStartDate() {
         if(startDatePicker.getValue() == null) {
             displayAlertBox("Nije izabran početni datum!");
-            return false;
-        }
-        return true;
-    }
-
-    private boolean checkEndDate() {
-        if(endDatePicker.getValue() == null) {
-            displayAlertBox("Nije izabran krajnji datum!");
             return false;
         }
         return true;

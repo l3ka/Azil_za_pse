@@ -4,17 +4,17 @@ import GUI.add_foster_parent.AddFosterParent;
 import GUI.adding_dog.AddingDogForm;
 import GUI.adding_medicine.AddingMedicineForm;
 import GUI.admin.add_account.AddAccount;
-import GUI.admin.change_account.ChangeAccount;
 import GUI.admin.select_account.SelectAccount;
 import GUI.adopting_dog.AdoptingDogForm;
 import GUI.admin.generating_statistic.GeneratingStatisticForm;
+import GUI.alert_box.AlertBoxForm;
 import GUI.login.LoginForm;
 import data.dto.DogDTO;
 import data.dto.EmployeeDTO;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import util.AzilUtilities;
@@ -24,9 +24,11 @@ import java.util.List;
 public class AdminMainController {
     @FXML private TableView<DogDTO> dogsTableView;
     @FXML private Label loggedUserLabel;
-    private List<DogDTO> listOfDogs;
-    private Stage stage;
+    @FXML private TextField searchParametarTextField;
 
+    private List<DogDTO> listOfDogs;
+    private List<DogDTO> listOfSearchedDogs;
+    private Stage stage;
     private EmployeeDTO employee;
 
     public EmployeeDTO getEmployee() {
@@ -47,11 +49,7 @@ public class AdminMainController {
         dogsTableView.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("weight"));
         dogsTableView.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
 
-        listOfDogs = AzilUtilities.getDAOFactory().getDogDAO().dogs();
-
-        for(DogDTO dog : listOfDogs) {
-            dogsTableView.getItems().add(dog);
-        }
+        displayDogs();
     }
 
     public void addDog() {
@@ -110,12 +108,45 @@ public class AdminMainController {
         }
     }
 
+    public void displayDogs() {
+        listOfDogs = AzilUtilities.getDAOFactory().getDogDAO().dogs();
+        for(DogDTO dog : listOfDogs) {
+            dogsTableView.getItems().add(dog);
+        }
+    }
+
+    public void searchDog() {
+        if(checkSearchParameter()) {
+            dogsTableView.getItems().clear();
+            listOfSearchedDogs = AzilUtilities.getDAOFactory().getDogDAO().dogsByBreed(searchParametarTextField.getText());
+            for(DogDTO dog : listOfSearchedDogs) {
+                dogsTableView.getItems().add(dog);
+            }
+        }
+    }
+
     public void logOut() {
         stage.close();
 
         try {
             new LoginForm().start(new Stage());
         } catch(Exception exception) {
+
+        }
+    }
+
+    private boolean checkSearchParameter() {
+        if("".equals(searchParametarTextField.getText())) {
+            displayAlertBox("Niste unijeli naziv na pretragu!");
+            return false;
+        }
+        return true;
+    }
+
+    private void displayAlertBox(String content) {
+        try {
+            new AlertBoxForm(content).display();
+        } catch(Exception ex) {
 
         }
     }
