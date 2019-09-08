@@ -4,6 +4,7 @@ import GUI.alert_box.AlertBoxForm;
 import data.dto.AdoptingDTO;
 import data.dto.DogDTO;
 import data.dto.FosterParentDTO;
+import data.dto.LoggerDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
@@ -111,8 +112,8 @@ public class AdoptingDogController {
     private void displayAlertBox(String content) {
         try {
             new AlertBoxForm(content).display();
-        } catch (Exception exception) {
-
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AdoptingDogController", ex.fillInStackTrace().toString()));
         }
     }
 

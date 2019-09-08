@@ -1,10 +1,8 @@
 package util;
 
 import data.dao.DAOFactory;
-import java.nio.charset.StandardCharsets;
+import data.dto.LoggerDTO;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -28,7 +26,7 @@ public class AzilUtilities {
                                     .mapToObj(i -> Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1))
                                     .collect(Collectors.joining());
         } catch(Exception e){
-            e.printStackTrace();
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AzilUtilities", e.fillInStackTrace().toString()));
         }
         return passwordHash;
     }

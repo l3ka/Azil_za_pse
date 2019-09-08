@@ -2,6 +2,9 @@ package data.dao.mysql;
 
 import data.dao.DogDAO;
 import data.dto.DogDTO;
+import data.dto.LoggerDTO;
+import util.AzilUtilities;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -38,8 +41,8 @@ public class MySQLDogDAO implements DogDAO {
                         rs.getString("Fotografija"),
                         rs.getBoolean("Udomljen")
                 );
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLDogDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -73,8 +76,8 @@ public class MySQLDogDAO implements DogDAO {
                         rs.getString("Fotografija"),
                         rs.getBoolean("Udomljen")
                 ));
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLDogDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -110,8 +113,8 @@ public class MySQLDogDAO implements DogDAO {
                         rs.getBoolean("Udomljen")
                 );
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLDogDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -148,8 +151,8 @@ public class MySQLDogDAO implements DogDAO {
                         rs.getString("Fotografija"),
                         rs.getBoolean("Udomljen")
                 ));
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLDogDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -187,7 +190,7 @@ public class MySQLDogDAO implements DogDAO {
                 ));
             }
         } catch(SQLException ex) {
-            ex.printStackTrace();
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLDogDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -204,7 +207,7 @@ public class MySQLDogDAO implements DogDAO {
 
         String query = "INSERT INTO pas (Ime, Pol, Rasa, DatumRodjenja, Visina, Tezina, Fotografija, Udomljen) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?) ";
-        try{
+        try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
             ps.setString(1, dogDTO.getName());
@@ -217,10 +220,10 @@ public class MySQLDogDAO implements DogDAO {
             ps.setBoolean(8, dogDTO.isAdopted());
 
             retVal = ps.executeUpdate() == 1;
-        }catch (Exception e){
+        } catch (Exception ex) {
             retVal = false;
-            e.printStackTrace();
-        }finally {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLDogDAO", ex.fillInStackTrace().toString()));
+        } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
         }
@@ -259,8 +262,8 @@ public class MySQLDogDAO implements DogDAO {
             ps.setInt(9, dogDTO.getDogId());
 
             ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLDogDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
@@ -283,12 +286,13 @@ public class MySQLDogDAO implements DogDAO {
             ps.setInt(1, dog.getDogId());
 
             retVal = ps.executeUpdate() == 1;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLDogDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
         }
         return  retVal;
     }
+
 }

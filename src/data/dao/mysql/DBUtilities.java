@@ -1,5 +1,8 @@
 package data.dao.mysql;
 
+import data.dto.LoggerDTO;
+import util.AzilUtilities;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,8 +24,8 @@ public class DBUtilities {
 		if (conn != null) {
 			try {
 				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
+			} catch (SQLException ex) {
+				AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DBUtilities", ex.fillInStackTrace().toString()));
 			}
 		}
 	}
@@ -31,8 +34,8 @@ public class DBUtilities {
 		if (s != null) {
 			try {
 				s.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
+			} catch (SQLException ex) {
+				AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DBUtilities", ex.fillInStackTrace().toString()));
 			}
 		}
 	}
@@ -41,8 +44,8 @@ public class DBUtilities {
 		if (rs != null) {
 			try {
 				rs.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
+			} catch (SQLException ex) {
+				AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DBUtilities", ex.fillInStackTrace().toString()));
 			}
 		}
 	}

@@ -2,6 +2,7 @@ package data.dao.mysql;
 
 import data.dao.VeterinarianDAO;
 import data.dto.EmploymentContractDTO;
+import data.dto.LoggerDTO;
 import data.dto.VeterinarianDTO;
 import util.AzilUtilities;
 
@@ -42,8 +43,8 @@ public class MySQLVeterinarianDAO implements VeterinarianDAO {
                         rs.getString("BrojTelefona"),
                         rs.getString("JMBG")
                 ));
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLVeterinarianDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -80,8 +81,8 @@ public class MySQLVeterinarianDAO implements VeterinarianDAO {
                         rs.getString("BrojTelefona"),
                         rs.getString("JMBG")
                 );
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLVeterinarianDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -118,8 +119,8 @@ public class MySQLVeterinarianDAO implements VeterinarianDAO {
             if(!retVal){
                 return retVal;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLVeterinarianDAO", ex.fillInStackTrace().toString()));
             return false;
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
@@ -147,9 +148,9 @@ public class MySQLVeterinarianDAO implements VeterinarianDAO {
             rs = ps.executeQuery();
 
             retVal = rs.next();
-        } catch (SQLException e) {
+        } catch (SQLException ex) {
             retVal = false;
-            e.printStackTrace();
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLVeterinarianDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -177,9 +178,9 @@ public class MySQLVeterinarianDAO implements VeterinarianDAO {
             rs = ps.executeQuery();
 
             retVal = rs.next();
-        } catch (SQLException e) {
+        } catch (SQLException ex) {
             retVal = false;
-            e.printStackTrace();
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLVeterinarianDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -217,8 +218,8 @@ public class MySQLVeterinarianDAO implements VeterinarianDAO {
                         rs.getString("BrojTelefona"),
                         rs.getString("JMBG")
                 );
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLVeterinarianDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);

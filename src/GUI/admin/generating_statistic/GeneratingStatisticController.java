@@ -3,6 +3,7 @@ package GUI.admin.generating_statistic;
 import GUI.admin.statistic_result.adopted_dogs.AdoptedDogsStatisticResultForm;
 import GUI.admin.statistic_result.foster_parents.FosterParentsStatisticResultForm;
 import GUI.alert_box.AlertBoxForm;
+import data.dto.LoggerDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -10,6 +11,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import util.AzilUtilities;
 
 public class GeneratingStatisticController {
 
@@ -51,13 +53,13 @@ public class GeneratingStatisticController {
                 try {
                     new FosterParentsStatisticResultForm(startDatePicker.getValue()).display();
                 } catch (Exception ex) {
-
+                    AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("GeneratingStatisticController", ex.fillInStackTrace().toString()));
                 }
             } else {
                 try {
                     new AdoptedDogsStatisticResultForm(startDatePicker.getValue()).display();
                 } catch(Exception ex) {
-
+                    AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("GeneratingStatisticController", ex.fillInStackTrace().toString()));
                 }
             }
         }
@@ -86,8 +88,8 @@ public class GeneratingStatisticController {
     private void displayAlertBox(String content) {
         try {
             new AlertBoxForm(content).display();
-        } catch (Exception exception) {
-
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("GeneratingStatisticController", ex.fillInStackTrace().toString()));
         }
     }
 

@@ -1,7 +1,10 @@
 package data.dao.mysql;
 
 import data.dao.MedicineDAO;
+import data.dto.LoggerDTO;
 import data.dto.MedicineDTO;
+import util.AzilUtilities;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +22,7 @@ public class MySQLMedicineDAO implements MedicineDAO{
 
         String query = "INSERT INTO lijek (NazivLijeka, Opis, Kolicina) "
                 + "VALUES (?, ?, ?) ";
-        try{
+        try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
             ps.setString(1, medicine.getName());
@@ -27,10 +30,10 @@ public class MySQLMedicineDAO implements MedicineDAO{
             ps.setInt(3, medicine.getQuantity());
 
             retVal = ps.executeUpdate() == 1;
-        }catch (Exception e){
+        } catch (Exception ex) {
             retVal = false;
-            e.printStackTrace();
-        }finally {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLMedicineDAO", ex.fillInStackTrace().toString()));
+        } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
         }
@@ -58,8 +61,8 @@ public class MySQLMedicineDAO implements MedicineDAO{
                         rs.getString("NazivLijeka"),
                         rs.getString("Opis"), rs.getInt("Kolicina"));
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLMedicineDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
@@ -87,8 +90,8 @@ public class MySQLMedicineDAO implements MedicineDAO{
             ps.setInt(4, medicine.getMedicineId());
 
             ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLMedicineDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
@@ -110,8 +113,8 @@ public class MySQLMedicineDAO implements MedicineDAO{
             ps.setInt(1, Id);
 
             retVal = ps.executeUpdate() == 1;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLMedicineDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
@@ -137,11 +140,12 @@ public class MySQLMedicineDAO implements MedicineDAO{
             }
 
         } catch(SQLException ex) {
-            ex.printStackTrace();
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLMedicineDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
         }
         return retVal;
     }
+
 }

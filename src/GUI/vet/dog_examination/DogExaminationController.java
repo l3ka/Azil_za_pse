@@ -5,6 +5,7 @@ import GUI.vet.generating_finding.GeneratingFindingForm;
 import GUI.vet.taking_medicine.TakingMedicineForm;
 import data.dto.DogDTO;
 import data.dto.EmployeeDTO;
+import data.dto.LoggerDTO;
 import data.dto.MedicalResultDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -74,8 +75,8 @@ public class DogExaminationController {
         try {
             new GeneratingFindingForm(dog, employee).display();
             displayMedicalResults();
-        } catch (Exception exception) {
-
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), ex.fillInStackTrace().toString()));
         }
     }
 
@@ -83,13 +84,15 @@ public class DogExaminationController {
         if (checkMedicalResult()) {
             try {
                 new TakingMedicineForm(employee, medicalResultsTableView.getSelectionModel().getSelectedItem()).display();
-            } catch (Exception exception) {
-                exception.printStackTrace();
+            } catch (Exception ex) {
+                AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), ex.fillInStackTrace().toString()));
             }
         }
     }
 
     private void displayMedicalResults() {
+        medicalResultsTableView.getItems().clear();
+        medicalResultsTableView.refresh();
         listOfMedicalResults = AzilUtilities.getDAOFactory().getMedicalResultDAO().medicalResults(dog);
         for(MedicalResultDTO medicalResult : listOfMedicalResults) {
             medicalResultsTableView.getItems().add(medicalResult);
@@ -104,8 +107,8 @@ public class DogExaminationController {
             try {
                 new AlertBoxForm("Nije izabran nalaz!").display();
             }
-            catch (Exception exception) {
-
+            catch (Exception ex) {
+                AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), ex.fillInStackTrace().toString()));
             }
             return false;
         }

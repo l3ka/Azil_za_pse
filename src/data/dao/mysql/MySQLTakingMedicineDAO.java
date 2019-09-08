@@ -1,7 +1,10 @@
 package data.dao.mysql;
 
 import data.dao.TakingMedicineDAO;
+import data.dto.LoggerDTO;
 import data.dto.TakingMedicineDTO;
+import util.AzilUtilities;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -28,7 +31,7 @@ public class MySQLTakingMedicineDAO implements TakingMedicineDAO {
             ps.setInt(5, takingMedicine.getQuantity());
             retVal = ps.executeUpdate() == 1;
         } catch(SQLException ex) {
-            ex.printStackTrace();
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLTakingMedicineDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
@@ -63,7 +66,7 @@ public class MySQLTakingMedicineDAO implements TakingMedicineDAO {
 
             retVal = ps.executeUpdate() == 1;
         } catch(SQLException ex) {
-            ex.printStackTrace();
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLTakingMedicineDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
@@ -87,13 +90,12 @@ public class MySQLTakingMedicineDAO implements TakingMedicineDAO {
 
              retVal = ps.executeUpdate() == 1;
          } catch(SQLException ex) {
-             ex.printStackTrace();
+             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLTakingMedicineDAO", ex.fillInStackTrace().toString()));
          } finally {
              ConnectionPool.getInstance().checkIn(conn);
              DBUtilities.getInstance().close(ps);
          }
          return retVal;
      }
-
 
 }

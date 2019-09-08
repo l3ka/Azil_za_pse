@@ -3,6 +3,7 @@ package data.dao.mysql;
 import data.dao.DogInCageDAO;
 import data.dto.CageDTO;
 import data.dto.DogInCageDTO;
+import data.dto.LoggerDTO;
 import util.AzilUtilities;
 import java.sql.*;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class MySQLDogInCage implements DogInCageDAO {
 
         String query = "INSERT INTO kavez_pas  "
                 + "VALUES (?, ?, ?, ?) ";
-        try{
+        try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
             ps.setTimestamp(1, dogInCage.getDateForm());
@@ -28,10 +29,10 @@ public class MySQLDogInCage implements DogInCageDAO {
             ps.setTimestamp(4, dogInCage.getDateTo());
 
             retVal = ps.executeUpdate() == 1;
-        }catch (Exception e){
+        } catch (Exception ex) {
             retVal = false;
-            e.printStackTrace();
-        }finally {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLDogInCage", ex.fillInStackTrace().toString()));
+        } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
         }
@@ -60,8 +61,8 @@ public class MySQLDogInCage implements DogInCageDAO {
                         rs.getTimestamp("datumOd"),
                         rs.getTimestamp("DatumDo")
                 ));
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLDogInCage", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -95,8 +96,8 @@ public class MySQLDogInCage implements DogInCageDAO {
             ps.setInt(7, dogId);
 
             ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLDogInCage", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
@@ -121,12 +122,13 @@ public class MySQLDogInCage implements DogInCageDAO {
             ps.setInt(3, dogId);
 
             ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLDogInCage", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
         }
         return retVal;
     }
+
 }

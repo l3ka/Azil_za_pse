@@ -2,6 +2,7 @@ package data.dao.mysql;
 
 import data.dao.ServantDAO;
 import data.dto.EmploymentContractDTO;
+import data.dto.LoggerDTO;
 import data.dto.ServantDTO;
 import util.AzilUtilities;
 import java.sql.*;
@@ -41,8 +42,8 @@ public class MySQLServantDAO implements ServantDAO {
                         rs.getString("BrojTelefona"),
                         rs.getString("JMBG")
                 ));
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLServantDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -79,8 +80,8 @@ public class MySQLServantDAO implements ServantDAO {
                         rs.getString("BrojTelefona"),
                         rs.getString("JMBG")
                 );
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLServantDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -117,8 +118,8 @@ public class MySQLServantDAO implements ServantDAO {
             if(!retVal){
                 return retVal;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLServantDAO", ex.fillInStackTrace().toString()));
             return false;
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
@@ -146,9 +147,9 @@ public class MySQLServantDAO implements ServantDAO {
             rs = ps.executeQuery();
 
             retVal = rs.next();
-        } catch (SQLException e) {
+        } catch (SQLException ex) {
             retVal = false;
-            e.printStackTrace();
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLServantDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -176,9 +177,9 @@ public class MySQLServantDAO implements ServantDAO {
             rs = ps.executeQuery();
 
             retVal = rs.next();
-        } catch (SQLException e) {
+        } catch (SQLException ex) {
             retVal = false;
-            e.printStackTrace();
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLServantDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -216,8 +217,8 @@ public class MySQLServantDAO implements ServantDAO {
                         rs.getString("BrojTelefona"),
                         rs.getString("JMBG")
                 );
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLServantDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -225,4 +226,5 @@ public class MySQLServantDAO implements ServantDAO {
 
         return retVal;
     }
+
 }

@@ -2,6 +2,9 @@ package data.dao.mysql;
 
 import data.dao.CageDAO;
 import data.dto.CageDTO;
+import data.dto.LoggerDTO;
+import util.AzilUtilities;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,8 +33,8 @@ public class MySQLCageDAO implements CageDAO {
                         rs.getInt("Idkaveza"),
                         rs.getInt("Kapacitet")
                 ));
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLCageDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -60,8 +63,8 @@ public class MySQLCageDAO implements CageDAO {
                         rs.getInt("Kapacitet")
                 );
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLCageDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -78,16 +81,16 @@ public class MySQLCageDAO implements CageDAO {
 
         String query = "INSERT INTO kavez (Kapacitet) "
                 + "VALUES (?) ";
-        try{
+        try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
             ps.setInt(1, cage.getCapacity());
 
             retVal = ps.executeUpdate() == 1;
-        }catch (Exception e){
+        } catch (Exception ex) {
             retVal = false;
-            e.printStackTrace();
-        }finally {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLCageDAO", ex.fillInStackTrace().toString()));
+        } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
         }
@@ -112,8 +115,8 @@ public class MySQLCageDAO implements CageDAO {
             ps.setInt(2, cage.getId());
 
             ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLCageDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
@@ -135,12 +138,13 @@ public class MySQLCageDAO implements CageDAO {
             ps.setInt(1, cageID);
 
             retVal = ps.executeUpdate() == 1;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLCageDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
         }
         return  retVal;
     }
+
 }

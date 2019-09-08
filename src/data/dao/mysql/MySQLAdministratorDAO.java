@@ -3,6 +3,7 @@ package data.dao.mysql;
 import data.dao.AdministratorDAO;
 import data.dto.AdministratorDTO;
 import data.dto.EmploymentContractDTO;
+import data.dto.LoggerDTO;
 import util.AzilUtilities;
 import java.sql.*;
 import java.util.ArrayList;
@@ -41,8 +42,8 @@ public class MySQLAdministratorDAO implements AdministratorDAO {
                         rs.getString("BrojTelefona"),
                         rs.getString("JMBG")
                 ));
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLAdministratorDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -80,8 +81,8 @@ public class MySQLAdministratorDAO implements AdministratorDAO {
                         rs.getString("BrojTelefona"),
                         rs.getString("JMBG")
                 );
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLAdministratorDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -118,8 +119,8 @@ public class MySQLAdministratorDAO implements AdministratorDAO {
             if(!retVal){
                 return retVal;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLAdministratorDAO", ex.fillInStackTrace().toString()));
             return false;
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
@@ -147,9 +148,9 @@ public class MySQLAdministratorDAO implements AdministratorDAO {
             rs = ps.executeQuery();
 
             retVal = rs.next();
-        } catch (SQLException e) {
+        } catch (SQLException ex) {
             retVal = false;
-            e.printStackTrace();
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLAdministratorDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -177,9 +178,9 @@ public class MySQLAdministratorDAO implements AdministratorDAO {
             rs = ps.executeQuery();
 
             retVal = rs.next();
-        } catch (SQLException e) {
+        } catch (SQLException ex) {
             retVal = false;
-            e.printStackTrace();
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLAdministratorDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -218,8 +219,8 @@ public class MySQLAdministratorDAO implements AdministratorDAO {
                         rs.getString("JMBG")
                 );
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLAdministratorDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);

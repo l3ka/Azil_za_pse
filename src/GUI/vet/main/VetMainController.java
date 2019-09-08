@@ -5,6 +5,7 @@ import GUI.login.LoginForm;
 import GUI.vet.dog_examination.DogExaminationForm;
 import data.dto.DogDTO;
 import data.dto.EmployeeDTO;
+import data.dto.LoggerDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -78,8 +79,8 @@ public class VetMainController {
         if (checkSelectedDog()) {
             try {
                 new DogExaminationForm(dogsTableView.getSelectionModel().getSelectedItem(),employee).display();
-            } catch (Exception exception) {
-                exception.printStackTrace();
+            } catch (Exception ex) {
+                AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), ex.fillInStackTrace().toString()));
             }
         }
     }
@@ -108,8 +109,8 @@ public class VetMainController {
         quit();
         try {
             new LoginForm().start(new Stage());
-        } catch(Exception exception) {
-
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), ex.fillInStackTrace().toString()));
         }
     }
 
@@ -125,7 +126,7 @@ public class VetMainController {
         try {
             new AlertBoxForm(content).display();
         } catch(Exception ex) {
-
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), ex.fillInStackTrace().toString()));
         }
     }
 

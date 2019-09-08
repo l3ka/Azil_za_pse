@@ -1,6 +1,6 @@
 package data.dto;
 
-public class VeterinarianDTO extends  EmployeeDTO{
+public class VeterinarianDTO extends EmployeeDTO {
 
     public VeterinarianDTO(){
         super();

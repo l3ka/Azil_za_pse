@@ -2,6 +2,7 @@ package GUI.admin.change_account;
 
 import GUI.alert_box.AlertBoxForm;
 import data.dto.EmployeeDTO;
+import data.dto.LoggerDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -12,8 +13,6 @@ import javafx.stage.Stage;
 import util.AzilUtilities;
 
 public class ChangeAccountController {
-
-    private Stage stage;
 
     @FXML
     private TextField nameTextField;
@@ -38,6 +37,7 @@ public class ChangeAccountController {
     @FXML
     private Button quitButton;
 
+    private Stage stage;
     private EmployeeDTO employeeForEdit = ChangeAccount.employee;
 
     public void initialize(Stage stage) {
@@ -154,7 +154,7 @@ public class ChangeAccountController {
         try {
             new AlertBoxForm(content).display();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("ChangeAccountController", ex.fillInStackTrace().toString()));
         }
     }
 

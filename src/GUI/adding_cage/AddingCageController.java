@@ -2,6 +2,7 @@ package GUI.adding_cage;
 
 import GUI.alert_box.AlertBoxForm;
 import data.dto.CageDTO;
+import data.dto.LoggerDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -68,7 +69,7 @@ public class AddingCageController {
         try {
             new AlertBoxForm(content).display();
         } catch(Exception ex) {
-
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddingCageController", ex.fillInStackTrace().toString()));
         }
     }
 

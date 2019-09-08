@@ -3,6 +3,7 @@ package GUI.vet.taking_medicine;
 import GUI.alert_box.AlertBoxForm;
 import GUI.vet.medicine_quantity.MedicineQuantityForm;
 import data.dto.EmployeeDTO;
+import data.dto.LoggerDTO;
 import data.dto.MedicalResultDTO;
 import data.dto.MedicineDTO;
 import javafx.fxml.FXML;
@@ -63,7 +64,7 @@ public class TakingMedicineController {
                 drugsTableView.getItems().clear();
                 displayMedicines();
             } catch(Exception ex) {
-                ex.printStackTrace();
+                AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), ex.fillInStackTrace().toString()));
             }
         }
     }
@@ -83,8 +84,8 @@ public class TakingMedicineController {
     private void displayAlertBox(String content) {
         try {
             new AlertBoxForm(content).display();
-        } catch (Exception exception) {
-
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), ex.fillInStackTrace().toString()));
         }
     }
 

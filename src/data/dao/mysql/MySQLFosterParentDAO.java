@@ -2,6 +2,9 @@ package data.dao.mysql;
 
 import data.dao.FosterParentDAO;
 import data.dto.FosterParentDTO;
+import data.dto.LoggerDTO;
+import util.AzilUtilities;
+
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -31,8 +34,8 @@ public class MySQLFosterParentDAO implements FosterParentDAO  {
                         rs.getString("MjestoPrebivalista"),
                         rs.getString("BrojTelefona")
                 ));
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLFosterParentDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -66,8 +69,8 @@ public class MySQLFosterParentDAO implements FosterParentDAO  {
                         rs.getString("MjestoPrebivalista"),
                         rs.getString("BrojTelefona")
                 ));
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLFosterParentDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -98,8 +101,8 @@ public class MySQLFosterParentDAO implements FosterParentDAO  {
                         rs.getString("MjestoPrebivalista"),
                         rs.getString("BrojTelefona")
                 );
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLFosterParentDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -117,7 +120,7 @@ public class MySQLFosterParentDAO implements FosterParentDAO  {
 
         String query = "INSERT INTO udomitelj "
                 + "VALUES (?, ?, ?, ?, ?) ";
-        try{
+        try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
             ps.setString(1, fosterParent.getJMB());
@@ -127,10 +130,10 @@ public class MySQLFosterParentDAO implements FosterParentDAO  {
             ps.setString(5, fosterParent.getTelephoneNumber());
 
             retVal = ps.executeUpdate() == 1;
-        }catch (Exception e){
+        } catch (Exception ex) {
             retVal = false;
-            e.printStackTrace();
-        }finally {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLFosterParentDAO", ex.fillInStackTrace().toString()));
+        } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
         }
@@ -162,8 +165,8 @@ public class MySQLFosterParentDAO implements FosterParentDAO  {
             ps.setString(5, fosterParent.getJMB());
 
             ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLFosterParentDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
@@ -198,8 +201,8 @@ public class MySQLFosterParentDAO implements FosterParentDAO  {
             ps.setString(6, oldJMB);
 
             ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLFosterParentDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
@@ -222,12 +225,13 @@ public class MySQLFosterParentDAO implements FosterParentDAO  {
             ps.setString(1, JMB);
 
             retVal = ps.executeUpdate() == 1;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLFosterParentDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
         }
         return  retVal;
     }
+
 }

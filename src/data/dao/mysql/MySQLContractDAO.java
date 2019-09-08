@@ -3,11 +3,15 @@ package data.dao.mysql;
 import data.dao.ContractDAO;
 import data.dto.EmployeeDTO;
 import data.dto.EmploymentContractDTO;
+import data.dto.LoggerDTO;
+import util.AzilUtilities;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MySQLContractDAO implements ContractDAO {
+
     public boolean insert(EmploymentContractDTO contract, EmployeeDTO employee){
         boolean retVal = true;
 
@@ -16,7 +20,7 @@ public class MySQLContractDAO implements ContractDAO {
 
         String query = "INSERT INTO ugovororadu (Pozicija, aktivan, Plata) VALUES "
                 + "(?, ?, ?) ";
-        try{
+        try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, contract.getPosition());
@@ -32,10 +36,10 @@ public class MySQLContractDAO implements ContractDAO {
             }
 
             retVal = joinContractToEmployee(contract, employee);
-        }catch (Exception e){
+        } catch (Exception ex) {
             retVal = false;
-            e.printStackTrace();
-        }finally {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLContractDAO", ex.fillInStackTrace().toString()));
+        } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
         }
@@ -51,7 +55,7 @@ public class MySQLContractDAO implements ContractDAO {
 
         String query = "INSERT INTO zaposleni_ugovor VALUES "
                 + "(?, ?, ?, ?) ";
-        try{
+        try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
             ps.setDate(1, contract.getSigningDate());
@@ -61,10 +65,10 @@ public class MySQLContractDAO implements ContractDAO {
 
             retVal = ps.executeUpdate() == 1;
 
-        }catch (Exception e){
+        } catch (Exception ex) {
             retVal = false;
-            e.printStackTrace();
-        }finally {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLContractDAO", ex.fillInStackTrace().toString()));
+        } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
         }
@@ -84,7 +88,7 @@ public class MySQLContractDAO implements ContractDAO {
                 "INNER JOIN ugovororadu  u ON u.IdUgovora = zu.UgovorORadu_IdUgovora " +
                 "WHERE z.JMBG = ?";
 
-        try{
+        try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
             ps.setString(1, employee.getJMB());
@@ -100,9 +104,9 @@ public class MySQLContractDAO implements ContractDAO {
                         rs.getDouble("Plata")
                 ));
             }
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally {
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLContractDAO", ex.fillInStackTrace().toString()));
+        } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
         }
@@ -122,7 +126,7 @@ public class MySQLContractDAO implements ContractDAO {
                 "INNER JOIN ugovororadu  u ON u.IdUgovora = zu.UgovorORadu_IdUgovora " +
                 "WHERE u.IdUgovora = ?";
 
-        try{
+        try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
             ps.setInt(1, contractId);
@@ -138,9 +142,9 @@ public class MySQLContractDAO implements ContractDAO {
                         rs.getDouble("Plata")
                 );
             }
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally {
+        } catch (Exception ex){
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLContractDAO", ex.fillInStackTrace().toString()));
+        } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
         }
@@ -163,8 +167,8 @@ public class MySQLContractDAO implements ContractDAO {
             ps.setInt(1, contract.getEmploymentContractId());
 
             retVal = ps.executeUpdate() == 1;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLContractDAO", ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
@@ -205,8 +209,8 @@ public class MySQLContractDAO implements ContractDAO {
             ps.setInt(2, contract.getEmploymentContractId());
 
             ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLContractDAO", ex.fillInStackTrace().toString()));
             retVal = false;
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
@@ -215,4 +219,5 @@ public class MySQLContractDAO implements ContractDAO {
 
         return retVal;
     }
+
 }

@@ -5,6 +5,7 @@ import GUI.alert_box.AlertBoxForm;
 import GUI.employee.main_screen.MainScreen;
 import GUI.vet.main.VetMainForm;
 import data.dto.EmployeeDTO;
+import data.dto.LoggerDTO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -49,7 +50,7 @@ public class LoginController {
             try {
                 new AlertBoxForm("Korisničko ime ili lozinka nisu ispravno uneseni!").display();
             } catch (Exception ex) {
-                ex.printStackTrace();
+                AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("LoginController", ex.fillInStackTrace().toString()));
             }
         }
         else {
@@ -79,7 +80,7 @@ public class LoginController {
                 }
                 quit();
             } catch (Exception ex) {
-                ex.printStackTrace();
+                AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("LoginController", ex.fillInStackTrace().toString()));
             }
         }
     }
@@ -96,7 +97,7 @@ public class LoginController {
             appStage.setScene(scene);
             appStage.show();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("LoginController", ex.fillInStackTrace().toString()));
         }
     }
 

@@ -12,6 +12,7 @@ import GUI.alert_box.AlertBoxForm;
 import GUI.login.LoginForm;
 import data.dto.DogDTO;
 import data.dto.EmployeeDTO;
+import data.dto.LoggerDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -22,17 +23,22 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import util.AzilUtilities;
-
 import java.util.List;
 
 public class AdminMainController {
 
-    @FXML private TableView<DogDTO> dogsTableView;
-    @FXML private Label loggedUserLabel;
-    @FXML private TextField searchParameterTextField;
-    @FXML private Button logOutButton;
-    @FXML private Button searchDogButton;
-    @FXML private Button searchAllDogButton;
+    @FXML
+    private TableView<DogDTO> dogsTableView;
+    @FXML
+    private Label loggedUserLabel;
+    @FXML
+    private TextField searchParameterTextField;
+    @FXML
+    private Button logOutButton;
+    @FXML
+    private Button searchDogButton;
+    @FXML
+    private Button searchAllDogButton;
 
     private List<DogDTO> listOfDogs;
     private List<DogDTO> listOfSearchedDogs;
@@ -85,8 +91,8 @@ public class AdminMainController {
     public void addDog() {
         try {
             new AddingDogForm().display();
-        } catch(Exception exception) {
-
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), ex.fillInStackTrace().toString()));
         }
         displayDogs();
     }
@@ -94,56 +100,56 @@ public class AdminMainController {
     public void adoptDog() {
         try {
             new AdoptingDogForm().display();
-        } catch(Exception exception) {
-
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), ex.fillInStackTrace().toString()));
         }
     }
 
     public void addFosterParent() {
         try {
             new AddFosterParent().display();
-        } catch (Exception exception) {
-            exception.printStackTrace();
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), ex.fillInStackTrace().toString()));
         }
     }
 
     public void addCage() {
         try {
             new AddingCageForm().display();
-        } catch(Exception exception) {
-            exception.printStackTrace();
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), ex.fillInStackTrace().toString()));
         }
     }
 
     public void addMedicine() {
         try {
             new AddingMedicineForm().display();
-        } catch(Exception exception) {
-
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), ex.fillInStackTrace().toString()));
         }
     }
 
     public void addAccount() {
         try {
             new AddAccount().display();
-        } catch (Exception exception) {
-
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), ex.fillInStackTrace().toString()));
         }
     }
 
     public void editAccount() {
         try {
             new SelectAccount().display();
-        } catch (Exception exception) {
-
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), ex.fillInStackTrace().toString()));
         }
     }
 
     public void generateStatistic() {
         try {
             new GeneratingStatisticForm().display();
-        } catch(Exception exception) {
-
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), ex.fillInStackTrace().toString()));
         }
     }
 
@@ -168,11 +174,10 @@ public class AdminMainController {
 
     public void logOut() {
         stage.close();
-
         try {
             new LoginForm().start(new Stage());
-        } catch(Exception exception) {
-
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), ex.fillInStackTrace().toString()));
         }
     }
 
@@ -188,7 +193,7 @@ public class AdminMainController {
         try {
             new AlertBoxForm(content).display();
         } catch(Exception ex) {
-
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), ex.fillInStackTrace().toString()));
         }
     }
 }
