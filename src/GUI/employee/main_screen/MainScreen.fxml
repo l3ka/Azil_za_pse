@@ -37,6 +37,7 @@
             <Button fx:id="addDogButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#addDog" prefHeight="30.0" prefWidth="140.0" text="Dodaj psa" />
             <Button fx:id="adoptDogButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#adoptDog" prefHeight="30.0" prefWidth="140.0" text="Udomi psa" />
             <Button fx:id="addFosterParentButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#addFosterParent" prefHeight="30.0" prefWidth="140.0" text="Dodaj udomitelja" />
+            <Button mnemonicParsing="false" onAction="#addCage" prefHeight="30.0" prefWidth="140.0" text="Dodaj kavez" />
             <Button fx:id="addMedicineButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#addMedicine" prefHeight="30.0" prefWidth="140.0" text="Dodaj lijek" />
          </children>
          <BorderPane.margin>

@@ -1,6 +1,7 @@
 package GUI.admin.main;
 
 import GUI.add_foster_parent.AddFosterParent;
+import GUI.adding_cage.AddingCageForm;
 import GUI.adding_dog.AddingDogForm;
 import GUI.adding_medicine.AddingMedicineForm;
 import GUI.admin.add_account.AddAccount;
@@ -72,6 +73,14 @@ public class AdminMainController {
         try {
             new AddFosterParent().display();
         } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    public void addCage() {
+        try {
+            new AddingCageForm().display();
+        } catch(Exception exception) {
             exception.printStackTrace();
         }
     }
