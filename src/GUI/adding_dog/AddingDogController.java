@@ -63,6 +63,8 @@ public class AddingDogController {
                 displayAlertBox("Pas je uspješno dodat!");
             }
             AzilUtilities.getDAOFactory().getDogInCageDAO().insert(new DogInCageDTO(AzilUtilities.getDAOFactory().getDogDAO().getLastDog(), cagesComboBox.getSelectionModel().getSelectedItem(), new Timestamp(Calendar.getInstance().getTime().getTime()), null));
+            cagesComboBox.getSelectionModel().getSelectedItem().setCapacity(cagesComboBox.getSelectionModel().getSelectedItem().getCapacity() - 1);
+            AzilUtilities.getDAOFactory().getCageDAO().update(cagesComboBox.getSelectionModel().getSelectedItem());
             stage.close();
         }
     }
@@ -138,6 +140,9 @@ public class AddingDogController {
     private boolean checkSelectedCage() {
         if(cagesComboBox.getSelectionModel().getSelectedItem() == null) {
             displayAlertBox("Nije izabran kavez!");
+            return false;
+        } else if(cagesComboBox.getSelectionModel().getSelectedItem().getCapacity() == 0) {
+            displayAlertBox("Izabrani kavez je popunjen, izaberite drugi!");
             return false;
         }
         return true;

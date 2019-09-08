@@ -26,7 +26,7 @@ public class AddingCageController {
     }
 
     public void quit() {
-
+        stage.close();
     }
 
     private boolean checkCapacity() {
