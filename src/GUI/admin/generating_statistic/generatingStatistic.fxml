@@ -42,13 +42,19 @@
          <children>
             <HBox alignment="CENTER" prefHeight="70.0" prefWidth="850.0" spacing="25.0">
                <children>
-                  <Label text="Vrsta statistike" textFill="WHITE" />
+                  <Label text="Vrsta statistike" textFill="WHITE">
+                     <font>
+                        <Font size="16.0" />
+                     </font></Label>
                   <ComboBox fx:id="statisticComboBox" prefHeight="31.0" prefWidth="218.0" promptText="Izaberi parametar" />
                </children>
             </HBox>
             <HBox alignment="CENTER" layoutX="10.0" layoutY="60.0" prefHeight="70.0" prefWidth="850.0" spacing="30.0">
                <children>
-                  <Label text="Početni datum" textFill="WHITE" />
+                  <Label text="Početni datum" textFill="WHITE">
+                     <font>
+                        <Font size="16.0" />
+                     </font></Label>
                   <DatePicker fx:id="startDatePicker" prefHeight="31.0" prefWidth="218.0" />
                </children>
             </HBox>
