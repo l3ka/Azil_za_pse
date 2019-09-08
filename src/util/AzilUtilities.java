@@ -1,7 +1,6 @@
 package util;
 
 import data.dao.DAOFactory;
-
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -17,16 +16,6 @@ public class AzilUtilities {
         if (daoFactory == null)
             daoFactory = DAOFactory.getDAOFactory();
         return daoFactory;
-    }
-
-    public static  String getSHA256_OLD(String text){
-        MessageDigest digest = null;
-        try {
-            digest = MessageDigest.getInstance("SHA-256");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return Base64.getEncoder().encodeToString(digest.digest(text.getBytes(StandardCharsets.UTF_8)));
     }
 
     public static String getSHA256(String password){

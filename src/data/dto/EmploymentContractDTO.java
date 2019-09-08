@@ -3,6 +3,7 @@ package data.dto;
 import java.sql.Date;
 
 public class EmploymentContractDTO {
+
     private Integer employmentContractId;
     private int active;
     private String position;
@@ -10,8 +11,7 @@ public class EmploymentContractDTO {
     private Date validationDate;
     private double salary;
 
-    public EmploymentContractDTO() {
-    }
+    public EmploymentContractDTO() {}
 
     public EmploymentContractDTO(Integer employmentContractId, int active, String position, Date signingDate, Date validationDate, double salary) {
         this.employmentContractId = employmentContractId;
@@ -65,4 +65,5 @@ public class EmploymentContractDTO {
     public void setSalary(double salary) {
         this.salary = salary;
     }
+
 }

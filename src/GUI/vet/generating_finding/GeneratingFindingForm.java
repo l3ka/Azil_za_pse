@@ -5,9 +5,7 @@ import data.dto.EmployeeDTO;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.File;
 
 public class GeneratingFindingForm {
@@ -33,4 +31,5 @@ public class GeneratingFindingForm {
         stage.setScene(scene);
         stage.showAndWait();
     }
+
 }

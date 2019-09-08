@@ -3,13 +3,13 @@ package GUI.vet.medicine_quantity;
 import GUI.alert_box.AlertBoxForm;
 import data.dto.*;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import util.AzilUtilities;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 public class MedicineQuantityController {
@@ -18,13 +18,17 @@ public class MedicineQuantityController {
     private Label medicineNameLabel;
     @FXML
     private ComboBox<Integer> quantityComboBox;
+    @FXML
+    private Button saveButtonClick;
+    @FXML
+    private Button quitButtonClick;
 
     private Stage stage;
     private MedicineDTO medicine;
     private EmployeeDTO employee;
     private MedicalResultDTO medicalResult;
 
-    public void initialize(Stage stage,MedicineDTO medicine,EmployeeDTO employee,MedicalResultDTO medicalResult) {
+    public void initialize(Stage stage, MedicineDTO medicine, EmployeeDTO employee, MedicalResultDTO medicalResult) {
         this.stage = stage;
         this.medicine = medicine;
         this.employee = employee;
@@ -33,6 +37,22 @@ public class MedicineQuantityController {
         for(int i = 1; i <= medicine.getQuantity(); i++) {
             quantityComboBox.getItems().add(i);
         }
+        initButtonEvent();
+    }
+
+    private void initButtonEvent() {
+        saveButtonClick.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                saveButtonClick.fire();
+                e.consume();
+            }
+        });
+        quitButtonClick.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                quitButtonClick.fire();
+                e.consume();
+            }
+        });
     }
 
     public void save() {
@@ -45,7 +65,7 @@ public class MedicineQuantityController {
             catch (Exception e) {
                 e.printStackTrace();
             }
-            stage.close();
+            quit();
         }
     }
 
@@ -68,4 +88,5 @@ public class MedicineQuantityController {
 
         }
     }
+
 }

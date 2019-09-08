@@ -1,11 +1,9 @@
 package GUI.vet.main;
 
 import data.dto.EmployeeDTO;
-import data.dto.VeterinarianDTO;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.File;

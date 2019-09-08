@@ -2,25 +2,26 @@ package data.dao;
 
 import data.dto.EmploymentContractDTO;
 import data.dto.VeterinarianDTO;
-
 import java.util.List;
 
 public interface VeterinarianDAO {
-    public boolean insert(VeterinarianDTO veterinarian, EmploymentContractDTO contract);
 
-    public List<VeterinarianDTO> veterinarians();
+    boolean insert(VeterinarianDTO veterinarian, EmploymentContractDTO contract);
 
-    public VeterinarianDTO getByUsername(String username);
+    List<VeterinarianDTO> veterinarians();
 
-    public boolean update(VeterinarianDTO veterinarian);
+    VeterinarianDTO getByUsername(String username);
 
-    public boolean updateWithJMB(VeterinarianDTO veterinarian, String oldJMB);
+    boolean update(VeterinarianDTO veterinarian);
 
-    public boolean delete(VeterinarianDTO veterinarian);
+    boolean updateWithJMB(VeterinarianDTO veterinarian, String oldJMB);
 
-    public boolean exists(VeterinarianDTO veterinarian);
+    boolean delete(VeterinarianDTO veterinarian);
 
-    public boolean exists(String username, String password);
+    boolean exists(VeterinarianDTO veterinarian);
 
-    public VeterinarianDTO login(String username, String password);
+    boolean exists(String username, String password);
+
+    VeterinarianDTO login(String username, String password);
+
 }

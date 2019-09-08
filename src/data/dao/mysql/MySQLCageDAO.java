@@ -2,7 +2,6 @@ package data.dao.mysql;
 
 import data.dao.CageDAO;
 import data.dto.CageDTO;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

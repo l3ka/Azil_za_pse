@@ -1,38 +1,47 @@
 package GUI.login;
 
-import GUI.admin.add_account.AddAccount;
-import GUI.admin.change_account.ChangeAccount;
 import GUI.admin.main.AdminMainForm;
-import GUI.admin.select_account.SelectAccount;
 import GUI.alert_box.AlertBoxForm;
 import GUI.employee.main_screen.MainScreen;
 import GUI.vet.main.VetMainForm;
-import data.dto.AdministratorDTO;
 import data.dto.EmployeeDTO;
-import data.dto.ServantDTO;
-import data.dto.VeterinarianDTO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import util.AzilUtilities;
 
-import java.io.File;
-
 public class LoginController {
 
-    @FXML private TextField usernameTextField;
-    @FXML private PasswordField passwordField;
+    @FXML
+    private TextField usernameTextField;
+    @FXML
+    private PasswordField passwordField;
+    @FXML
+    private Button loginButton;
 
     private Stage stage;
 
     public void initialize(Stage stage) {
         this.stage = stage;
+        initButtonEvent();
+    }
+
+    private void initButtonEvent() {
+        loginButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                loginButton.fire();
+                e.consume();
+            }
+        });
     }
 
     public void logIn() {
@@ -53,25 +62,22 @@ public class LoginController {
                     if (employee != null) {
                         new AdminMainForm(employee).display();
                     }
-                    // changeStage(event, ".." + File.separatorChar + "admin" + File.separatorChar + "main" + File.separatorChar + "mainFormAdmin.fxml");
                 } else if (AzilUtilities.getDAOFactory().getVeterinarinaDAO().exists(username, password)) {
                     employee = AzilUtilities.getDAOFactory().getVeterinarinaDAO().login(username, password);
                     if (employee != null) {
                         new VetMainForm(employee).display();
                     }
-                    // changeStage(event, ".." + File.separatorChar + "vet" + File.separatorChar + "main" + File.separatorChar + "mainFormVet.fxml");
                 } else if (AzilUtilities.getDAOFactory().getServantDAO().exists(username, password)) {
                     employee = AzilUtilities.getDAOFactory().getServantDAO().login(username, password);
                     if (employee != null) {
                         new MainScreen(employee).display();
                     }
-                    // changeStage(event, ".." + File.separatorChar + "employee" + File.separatorChar + "main_screen" + File.separatorChar + "MainScreen.fxml");
                 }
                 else {
                     new AlertBoxForm("Neispravno korisničko ime ili lozinka!").display();
                     return;
                 }
-                stage.close();
+                quit();
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -92,6 +98,10 @@ public class LoginController {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    private void quit() {
+        stage.close();
     }
 
 }

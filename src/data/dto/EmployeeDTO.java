@@ -3,6 +3,7 @@ package data.dto;
 import util.AzilUtilities;
 
 public abstract class EmployeeDTO {
+
     private String username;
     private String password;
     private String name;
@@ -12,8 +13,7 @@ public abstract class EmployeeDTO {
     private String telephoneNumber;
     private String JMB;
 
-    public EmployeeDTO() {
-    }
+    public EmployeeDTO() {}
 
     public EmployeeDTO(String username, String password, String name, String surname, String qualifications,
                        String residenceAddress, String telephoneNumber, String JMB) {
@@ -87,4 +87,5 @@ public abstract class EmployeeDTO {
     public String toString() {
         return name + " " + surname;
     }
+
 }

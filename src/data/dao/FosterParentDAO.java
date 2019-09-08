@@ -1,23 +1,23 @@
 package data.dao;
 
 import data.dto.FosterParentDTO;
-
 import java.time.LocalDate;
 import java.util.List;
 
 public interface FosterParentDAO {
 
-    public List<FosterParentDTO> fosterParents();
+    List<FosterParentDTO> fosterParents();
 
-    public List<FosterParentDTO> fosterParents(LocalDate dateFrom);
+    List<FosterParentDTO> fosterParents(LocalDate dateFrom);
 
-    public FosterParentDTO getByJMB(String JMB);
+    FosterParentDTO getByJMB(String JMB);
 
-    public boolean insert(FosterParentDTO fosterParent);
+    boolean insert(FosterParentDTO fosterParent);
 
-    public boolean update(FosterParentDTO fosterParent);
+    boolean update(FosterParentDTO fosterParent);
 
-    public boolean updateWithJMB(FosterParentDTO fosterParent, String oldJMB);
+    boolean updateWithJMB(FosterParentDTO fosterParent, String oldJMB);
 
-    public boolean delete(String JMB);
+    boolean delete(String JMB);
+
 }

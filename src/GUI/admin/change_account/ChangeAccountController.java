@@ -5,8 +5,9 @@ import data.dto.EmployeeDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import util.AzilUtilities;
 
@@ -41,7 +42,6 @@ public class ChangeAccountController {
 
     public void initialize(Stage stage) {
         this.stage = stage;
-
         nameTextField.setText(employeeForEdit.getName());
         surnameTextField.setText(employeeForEdit.getSurname());
         qualificationsTextField.setText(employeeForEdit.getQualifications());
@@ -49,6 +49,22 @@ public class ChangeAccountController {
         placeOfResidenceTextField.setText(employeeForEdit.getResidenceAddress());
         phoneNumberTextField.setText(employeeForEdit.getTelephoneNumber());
         usernameTextField.setText(employeeForEdit.getUsername());
+        initButtonEvent();
+    }
+
+    private void initButtonEvent() {
+        saveButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                saveButton.fire();
+                e.consume();
+            }
+        });
+        quitButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                quitButton.fire();
+                e.consume();
+            }
+        });
     }
 
     public void saveAccount() {

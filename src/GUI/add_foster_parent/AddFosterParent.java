@@ -22,4 +22,5 @@ public class AddFosterParent {
         controller.initialize(stage);
         stage.showAndWait();
     }
+
 }

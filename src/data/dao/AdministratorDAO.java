@@ -1,28 +1,27 @@
 package data.dao;
 
 import data.dto.AdministratorDTO;
-import data.dto.EmployeeDTO;
 import data.dto.EmploymentContractDTO;
-
-import java.sql.Date;
 import java.util.List;
 
 public interface AdministratorDAO {
-    public boolean insert(AdministratorDTO administrator, EmploymentContractDTO contract);
 
-    public List<AdministratorDTO> adminstartors();
+    boolean insert(AdministratorDTO administrator, EmploymentContractDTO contract);
 
-    public AdministratorDTO getByUsername(String username);
+    List<AdministratorDTO> adminstartors();
 
-    public boolean update(AdministratorDTO administrator);
+    AdministratorDTO getByUsername(String username);
 
-    public boolean updateWithJMB(AdministratorDTO administrator, String oldJMB);
+    boolean update(AdministratorDTO administrator);
 
-    public boolean delete(AdministratorDTO administrator);
+    boolean updateWithJMB(AdministratorDTO administrator, String oldJMB);
 
-    public boolean exists(AdministratorDTO administrator);
+    boolean delete(AdministratorDTO administrator);
 
-    public boolean exists(String username, String password);
+    boolean exists(AdministratorDTO administrator);
 
-    public AdministratorDTO login(String username, String password);
+    boolean exists(String username, String password);
+
+    AdministratorDTO login(String username, String password);
+
 }

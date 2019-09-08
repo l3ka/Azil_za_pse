@@ -10,4 +10,5 @@ public class VeterinarianDTO extends  EmployeeDTO{
                            String residenceAddress, String telephoneNumber, String JMB){
         super(username, password, name, surname, qualifications, residenceAddress, telephoneNumber, JMB);
     }
+
 }

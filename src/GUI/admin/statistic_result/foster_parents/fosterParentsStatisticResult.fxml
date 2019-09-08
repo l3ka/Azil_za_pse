@@ -27,7 +27,7 @@
             <TableColumn prefWidth="122.0" text="Broj telefona" />
          </columns>
       </TableView>
-      <Button mnemonicParsing="false" onAction="#OKButtonPressed" text="OK">
+      <Button fx:id="fosterParentsStatisticOk" mnemonicParsing="false" onAction="#OKButtonPressed" text="OK">
          <VBox.margin>
             <Insets top="40.0" />
          </VBox.margin>

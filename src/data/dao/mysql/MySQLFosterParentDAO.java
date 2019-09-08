@@ -2,7 +2,6 @@ package data.dao.mysql;
 
 import data.dao.FosterParentDAO;
 import data.dto.FosterParentDTO;
-
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;

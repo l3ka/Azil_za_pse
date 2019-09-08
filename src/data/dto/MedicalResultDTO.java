@@ -2,16 +2,15 @@ package data.dto;
 
 import java.sql.Date;
 
-//Nalaz
 public class MedicalResultDTO {
+
     private Integer medicalResultId;
     private String resultsAndOpinion;
     private Date date;
     private Integer dogId;
     private String veterinarianJMB;
 
-    public MedicalResultDTO() {
-    }
+    public MedicalResultDTO() {}
 
     public MedicalResultDTO(Integer medicalResultId, String resultsAndOpinion, Date date, Integer dogId, String veterinarianJMB) {
         this.medicalResultId = medicalResultId;
@@ -52,4 +51,5 @@ public class MedicalResultDTO {
     public String getVeterinarianJMB() { return  this.veterinarianJMB; }
 
     public void setVeterinarianJMB(String veterinarianJMB) { this.veterinarianJMB = veterinarianJMB; }
+
 }

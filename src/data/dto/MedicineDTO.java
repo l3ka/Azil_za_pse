@@ -1,15 +1,13 @@
 package data.dto;
 
-import java.sql.Date;
-
 public class MedicineDTO {
+
     private Integer medicineId;
     private String name;
     private String description;
     private Integer quantity;
 
-    public MedicineDTO() {
-    }
+    public MedicineDTO() {}
 
     public MedicineDTO(Integer medicineId, String name, String description, Integer quantity) {
         this.medicineId = medicineId;
@@ -49,4 +47,5 @@ public class MedicineDTO {
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
+
 }

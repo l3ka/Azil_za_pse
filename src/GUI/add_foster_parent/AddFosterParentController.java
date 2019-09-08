@@ -3,11 +3,15 @@ package GUI.add_foster_parent;
 import GUI.alert_box.AlertBoxForm;
 import data.dto.FosterParentDTO;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import util.AzilUtilities;
 
 public class AddFosterParentController {
+
     @FXML
     private TextField nameTextField;
     @FXML
@@ -18,16 +22,37 @@ public class AddFosterParentController {
     private TextField placeOfResidenceTextField;
     @FXML
     private TextField phoneNumberTextField;
+    @FXML
+    private Button saveButton;
+    @FXML
+    private Button quitButton;
 
     private Stage stage;
 
     public void initialize(Stage stage) {
         this.stage = stage;
+        initButtonEvent();
+    }
+
+    private void initButtonEvent() {
+        saveButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                saveButton.fire();
+                e.consume();
+            }
+        });
+        quitButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                quitButton.fire();
+                e.consume();
+            }
+        });
     }
 
     public void quit() {
         stage.close();
     }
+
     public void addFosterParent() {
         if (checkName() && checkIsNumber(identificationNumberTextField.getText()) && checkPhoneNumber() && checkPlaceOfResidence()) {
             if (AzilUtilities.getDAOFactory().getFosterParentDAO().insert
@@ -37,7 +62,7 @@ public class AddFosterParentController {
                             placeOfResidenceTextField.getText(),
                             phoneNumberTextField.getText()))) {
                 displayAlertBox("Udomitelj je uspješno dodat!");
-                stage.close();
+                quit();
             }
         }
     }
@@ -76,7 +101,6 @@ public class AddFosterParentController {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
     }
 
 }

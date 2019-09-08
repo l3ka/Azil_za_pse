@@ -1,17 +1,15 @@
 package GUI.employee.main_screen;
 
 import data.dto.EmployeeDTO;
-import data.dto.ServantDTO;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.File;
 import java.io.IOException;
 
 public class MainScreen {
+
     private EmployeeDTO employee;
 
     public MainScreen(EmployeeDTO employee) {

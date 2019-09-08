@@ -2,17 +2,14 @@ package GUI.vet.taking_medicine;
 
 import data.dto.EmployeeDTO;
 import data.dto.MedicalResultDTO;
-import data.dto.TakingMedicineDTO;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.File;
 
 public class TakingMedicineForm {
+
     private EmployeeDTO employee;
     private MedicalResultDTO medicalResult;
 
@@ -34,4 +31,5 @@ public class TakingMedicineForm {
         controller.initialize(stage, employee, medicalResult);
         stage.showAndWait();
     }
+
 }

@@ -5,12 +5,12 @@ import java.util.HashSet;
 import java.util.List;
 
 public class CageDTO {
+
     private Integer cageId;
     private int capacity;
     private HashSet<DogInCageDTO> dogsInCage;
 
-    public CageDTO(){
-    }
+    public CageDTO() {}
 
     public CageDTO(Integer cageId, int capacity) {
         this.cageId = cageId;
@@ -46,4 +46,5 @@ public class CageDTO {
     public String toString() {
         return "Kavez " + cageId;
     }
+
 }

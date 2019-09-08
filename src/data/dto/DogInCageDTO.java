@@ -1,10 +1,10 @@
 package data.dto;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Objects;
 
 public class DogInCageDTO {
+
     DogDTO dog;
     CageDTO cage;
     Timestamp dateForm;
@@ -64,4 +64,5 @@ public class DogInCageDTO {
     public int hashCode() {
         return Objects.hash(dog, dateForm);
     }
+
 }

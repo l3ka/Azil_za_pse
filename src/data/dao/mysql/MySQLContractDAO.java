@@ -3,7 +3,6 @@ package data.dao.mysql;
 import data.dao.ContractDAO;
 import data.dto.EmployeeDTO;
 import data.dto.EmploymentContractDTO;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

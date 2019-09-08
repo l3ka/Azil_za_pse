@@ -7,10 +7,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import util.AzilUtilities;
-
-import javax.swing.text.Utilities;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,12 +29,28 @@ public class SelectAccountController {
     public void initialize(Stage stage) {
         this.stage = stage;
         displayEmployees();
-
         accountsTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("username"));
         accountsTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("name"));
         accountsTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("surname"));
         accountsTableView.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("telephoneNumber"));
+        initButtonEvent();
     }
+
+    private void initButtonEvent() {
+        selectButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                selectButton.fire();
+                e.consume();
+            }
+        });
+        quitButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                quitButton.fire();
+                e.consume();
+            }
+        });
+    }
+
 
     public void select() {
         if(checkSelectedEmployee()) {
@@ -74,4 +90,5 @@ public class SelectAccountController {
 
         }
     }
+
 }

@@ -22,4 +22,5 @@ public class AddingCageForm {
         controller.initialize(stage);
         stage.showAndWait();
     }
+
 }

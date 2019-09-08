@@ -2,14 +2,10 @@ package GUI.vet.dog_examination;
 
 import data.dto.DogDTO;
 import data.dto.EmployeeDTO;
-import data.dto.VeterinarianDTO;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.File;
 
 public class DogExaminationForm {
@@ -35,4 +31,5 @@ public class DogExaminationForm {
         controller.initialize(stage,dog, employee);
         stage.showAndWait();
     }
+
 }

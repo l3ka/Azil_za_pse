@@ -13,7 +13,7 @@
       <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
    </padding>
    <top>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="170.0" prefWidth="750.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -30,7 +30,7 @@
       </VBox>
    </top>
    <bottom>
-      <VBox alignment="CENTER" prefHeight="150.0" prefWidth="750.0" spacing="15.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="97.0" prefWidth="750.0" spacing="15.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="saveButton" mnemonicParsing="false" onAction="#save" text="Sačuvaj" />
             <Button fx:id="quitButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#quit" text="Odustani" />
@@ -41,10 +41,10 @@
       </VBox>
    </bottom>
    <center>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" prefHeight="322.0" prefWidth="750.0" spacing="15.0" BorderPane.alignment="CENTER">
          <children>
             <Label text="Opis" textFill="WHITE" />
-            <TextArea fx:id="descriptionTextArea" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="200.0" prefWidth="400.0" wrapText="true" />
+            <TextArea fx:id="descriptionTextArea" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="242.0" prefWidth="555.0" wrapText="true" />
          </children>
          <BorderPane.margin>
             <Insets top="20.0" />

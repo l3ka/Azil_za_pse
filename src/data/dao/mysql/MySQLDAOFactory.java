@@ -44,4 +44,5 @@ public class MySQLDAOFactory extends DAOFactory {
 
     @Override
     public TakingMedicineDAO getTakingMedicineDAO() { return new MySQLTakingMedicineDAO(); }
+
 }

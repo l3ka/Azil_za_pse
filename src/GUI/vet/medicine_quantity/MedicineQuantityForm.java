@@ -1,17 +1,12 @@
 package GUI.vet.medicine_quantity;
 
-import GUI.vet.taking_medicine.TakingMedicineController;
 import data.dto.EmployeeDTO;
 import data.dto.MedicalResultDTO;
 import data.dto.MedicineDTO;
-import data.dto.VeterinarianDTO;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.File;
 
 public class MedicineQuantityForm {
@@ -39,4 +34,5 @@ public class MedicineQuantityForm {
         controller.initialize(stage, medicine, employee, medicalResult);
         stage.showAndWait();
     }
+
 }

@@ -4,7 +4,6 @@ import data.dao.MedicalResultDAO;
 import data.dto.DogDTO;
 import data.dto.MedicalResultDTO;
 import data.dto.VeterinarianDTO;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

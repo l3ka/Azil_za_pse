@@ -223,7 +223,7 @@ public class MySQLVeterinarianDAO implements VeterinarianDAO {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
         }
-
         return retVal;
     }
+
 }

@@ -1,6 +1,7 @@
 package data.dto;
 
 public class ServantDTO extends EmployeeDTO {
+
     public ServantDTO(){
         super();
     }
@@ -9,5 +10,6 @@ public class ServantDTO extends EmployeeDTO {
                       String residenceAddress, String telephoneNumber, String JMB){
         super(username, password, name, surname, qualifications, residenceAddress, telephoneNumber, JMB);
     }
+
 }
 
