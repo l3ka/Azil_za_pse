@@ -14,6 +14,7 @@ import util.AzilUtilities;
 
 import java.io.File;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.List;
 
@@ -61,7 +62,7 @@ public class AddingDogController {
             if (AzilUtilities.getDAOFactory().getDogDAO().insert(dogToAdd)) {
                 displayAlertBox("Pas je uspješno dodat!");
             }
-            AzilUtilities.getDAOFactory().getDogInCageDAO().insert(new DogInCageDTO(AzilUtilities.getDAOFactory().getDogDAO().getLastDog(), cagesComboBox.getSelectionModel().getSelectedItem(), new Date(Calendar.getInstance().getTime().getTime()), null));
+            AzilUtilities.getDAOFactory().getDogInCageDAO().insert(new DogInCageDTO(AzilUtilities.getDAOFactory().getDogDAO().getLastDog(), cagesComboBox.getSelectionModel().getSelectedItem(), new Timestamp(Calendar.getInstance().getTime().getTime()), null));
             stage.close();
         }
     }

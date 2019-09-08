@@ -23,10 +23,10 @@ public class MySQLDogInCage implements DogInCageDAO {
         try{
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
-            ps.setDate(1, dogInCage.getDateForm());
+            ps.setTimestamp(1, dogInCage.getDateForm());
             ps.setInt(2, dogInCage.getCage().getId());
             ps.setInt(3, dogInCage.getDog().getDogId());
-            ps.setDate(4, dogInCage.getDateTo());
+            ps.setTimestamp(4, dogInCage.getDateTo());
 
             retVal = ps.executeUpdate() == 1;
         }catch (Exception e){
@@ -58,8 +58,8 @@ public class MySQLDogInCage implements DogInCageDAO {
             while (rs.next())
                 retVal.add(new DogInCageDTO(
                         AzilUtilities.getDAOFactory().getDogDAO().getByID(rs.getInt("Pas_IdPsa")), cage,
-                        rs.getDate("datumOd"),
-                        rs.getDate("DatumDo")
+                        rs.getTimestamp("datumOd"),
+                        rs.getTimestamp("DatumDo")
                 ));
         } catch (SQLException e) {
             e.printStackTrace();
@@ -86,10 +86,10 @@ public class MySQLDogInCage implements DogInCageDAO {
         try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
-            ps.setDate(1, dogInCage.getDateForm());
+            ps.setTimestamp(1, dogInCage.getDateForm());
             ps.setInt(2, dogInCage.getCage().getId());
             ps.setInt(3, dogInCage.getDog().getDogId());
-            ps.setDate(4, dogInCage.getDateTo());
+            ps.setTimestamp(4, dogInCage.getDateTo());
 
             ps.setDate(5, dateFrom);
             ps.setInt(6, cageId);

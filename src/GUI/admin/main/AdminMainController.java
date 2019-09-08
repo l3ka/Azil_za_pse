@@ -59,6 +59,7 @@ public class AdminMainController {
         } catch(Exception exception) {
 
         }
+        displayDogs();
     }
 
     public void adoptDog() {

@@ -21,7 +21,7 @@ public class VetMainForm {
         stage.setTitle("Azil za pse - veterinarski dio");
         Scene scene = new Scene(loader.load());
         stage.setScene(scene);
-        stage.setMinWidth(1000);
+        stage.setMinWidth(1200);
         stage.setMinHeight(720);
         VetMainController controller = loader.getController();
         controller.initialize(stage);

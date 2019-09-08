@@ -72,6 +72,7 @@ public class MainScreenController {
         } catch(Exception exception) {
 
         }
+        displayDogs();
     }
 
     public void addFosterParent() {

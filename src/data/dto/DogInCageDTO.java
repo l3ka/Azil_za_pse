@@ -1,17 +1,18 @@
 package data.dto;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 public class DogInCageDTO {
     DogDTO dog;
     CageDTO cage;
-    Date dateForm;
-    Date dateTo;
+    Timestamp dateForm;
+    Timestamp dateTo;
 
     public DogInCageDTO(){}
 
-    public DogInCageDTO(DogDTO dog, CageDTO cage, Date dateForm, Date dateTo) {
+    public DogInCageDTO(DogDTO dog, CageDTO cage, Timestamp dateForm, Timestamp dateTo) {
         this.dog = dog;
         this.dateForm = dateForm;
         this.dateTo = dateTo;
@@ -26,19 +27,19 @@ public class DogInCageDTO {
         this.dog = dog;
     }
 
-    public Date getDateForm() {
+    public Timestamp getDateForm() {
         return dateForm;
     }
 
-    public void setDateForm(Date dateForm) {
+    public void setDateForm(Timestamp dateForm) {
         this.dateForm = dateForm;
     }
 
-    public Date getDateTo() {
+    public Timestamp getDateTo() {
         return dateTo;
     }
 
-    public void setDateTo(Date dateTo) {
+    public void setDateTo(Timestamp dateTo) {
         this.dateTo = dateTo;
     }
 
