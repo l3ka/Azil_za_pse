@@ -69,6 +69,7 @@ public class VetMainController {
     public void searchDog() {
         if(checkSearchParameter()) {
             dogsTableView.getItems().clear();
+            dogsTableView.refresh();
             listOfSearchedDogs = AzilUtilities.getDAOFactory().getDogDAO().dogsByBreed(searchParametarTextField.getText());
             for(DogDTO dog : listOfSearchedDogs) {
                 dogsTableView.getItems().add(dog);
@@ -78,6 +79,7 @@ public class VetMainController {
 
     public void displayDogs() {
         dogsTableView.getItems().clear();
+        dogsTableView.refresh();
         listOfDogs = AzilUtilities.getDAOFactory().getDogDAO().dogs();
         for(DogDTO dog : listOfDogs) {
             dogsTableView.getItems().add(dog);

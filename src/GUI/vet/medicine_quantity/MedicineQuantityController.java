@@ -40,7 +40,6 @@ public class MedicineQuantityController {
             medicine.setQuantity(medicine.getQuantity() - quantityComboBox.getSelectionModel().getSelectedItem());
             AzilUtilities.getDAOFactory().getMedicineDAO().update(medicine);
             try {
-                System.out.println( quantityComboBox.getSelectionModel().getSelectedItem());
                 AzilUtilities.getDAOFactory().getTakingMedicineDAO().insert(new TakingMedicineDTO(new java.sql.Timestamp(new Date().getTime()), (VeterinarianDTO) employee, medicine, medicalResult, quantityComboBox.getSelectionModel().getSelectedItem()));
             }
             catch (Exception e) {
