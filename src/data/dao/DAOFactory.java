@@ -34,4 +34,6 @@ public abstract class DAOFactory {
 
     public abstract TakingMedicineDAO getTakingMedicineDAO();
 
+    public abstract LoggerDAO getLoggerDAO();
+
 }
