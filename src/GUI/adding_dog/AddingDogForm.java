@@ -14,6 +14,8 @@ public class AddingDogForm {
         stage.setTitle("Azil za pse - dodavanje psa");
         Scene scene = new Scene(loader.load());
         stage.setScene(scene);
+        stage.setMinHeight(700);
+        stage.setMinWidth(850);
         AddingDogController controller = loader.getController();
         controller.initialize(stage);
         stage.showAndWait();

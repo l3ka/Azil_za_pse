@@ -18,8 +18,10 @@ public class AlertBoxForm {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("alertBox.fxml"));
         Stage stage = new Stage();
         stage.setTitle("Upozorenje");
-        Scene scena = new Scene(loader.load(), 500, 380);
+        Scene scena = new Scene(loader.load());
         stage.setScene(scena);
+        stage.setMinHeight(420);
+        stage.setMinWidth(600);
         AlertBoxController controller = loader.getController();
         controller.initialize(stage);
         stage.showAndWait();

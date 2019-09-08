@@ -15,9 +15,10 @@ public class LoginForm extends Application {
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
         stage.setTitle("Azil za pse - prijava");
-        stage.setResizable(false);
-        Scene scene = new Scene(loader.load(), 600, 600);
+        Scene scene = new Scene(loader.load());
         stage.setScene(scene);
+        stage.setMinHeight(620);
+        stage.setMinWidth(600);
         LoginController controller = loader.getController();
         controller.initialize(stage);
         stage.show();

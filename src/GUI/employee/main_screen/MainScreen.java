@@ -19,10 +19,11 @@ public class MainScreen {
     public void display() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScreen.fxml"));
         Stage stage = new Stage();
-        Scene scene = new Scene(loader.load(), 1000, 700);
+        Scene scene = new Scene(loader.load());
         stage.setTitle("Azil za pse - glavni meni");
-        stage.setResizable(false);
         stage.setScene(scene);
+        stage.setMinWidth(1000);
+        stage.setMinHeight(720);
         MainScreenController controller = loader.getController();
         controller.initialize(stage);
         controller.setEmployee(employee);

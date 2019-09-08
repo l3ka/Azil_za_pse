@@ -8,8 +8,9 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import util.AzilUtilities;
 
-import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class MedicineQuantityController {
 
@@ -19,12 +20,15 @@ public class MedicineQuantityController {
     private ComboBox<Integer> quantityComboBox;
 
     private Stage stage;
-    private MedicineDTO medicine = MedicineQuantityForm.medicine;
-    private EmployeeDTO employee = MedicineQuantityForm.employee;
+    private MedicineDTO medicine;
+    private EmployeeDTO employee;
+    private MedicalResultDTO medicalResult;
 
-    public void initialize(Stage stage) {
+    public void initialize(Stage stage,MedicineDTO medicine,EmployeeDTO employee,MedicalResultDTO medicalResult) {
         this.stage = stage;
-
+        this.medicine = medicine;
+        this.employee = employee;
+        this.medicalResult = medicalResult;
         medicineNameLabel.setText(medicine.getName());
         for(int i = 1; i <= medicine.getQuantity(); i++) {
             quantityComboBox.getItems().add(i);
@@ -35,7 +39,13 @@ public class MedicineQuantityController {
         if(checkSelectedQuantity()) {
             medicine.setQuantity(medicine.getQuantity() - quantityComboBox.getSelectionModel().getSelectedItem());
             AzilUtilities.getDAOFactory().getMedicineDAO().update(medicine);
-            AzilUtilities.getDAOFactory().getTakingMedicineDAO().insert(new TakingMedicineDTO(new Date(Calendar.getInstance().getTime().getTime()), (VeterinarianDTO) employee, medicine, null, quantityComboBox.getSelectionModel().getSelectedItem()));
+            try {
+                System.out.println( quantityComboBox.getSelectionModel().getSelectedItem());
+                AzilUtilities.getDAOFactory().getTakingMedicineDAO().insert(new TakingMedicineDTO(new java.sql.Timestamp(new Date().getTime()), (VeterinarianDTO) employee, medicine, medicalResult, quantityComboBox.getSelectionModel().getSelectedItem()));
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
             stage.close();
         }
     }

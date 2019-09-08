@@ -1,6 +1,7 @@
 package GUI.vet.taking_medicine;
 
 import data.dto.EmployeeDTO;
+import data.dto.MedicalResultDTO;
 import data.dto.TakingMedicineDTO;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,10 +10,12 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class TakingMedicineForm {
-    public static EmployeeDTO employee;
+    private EmployeeDTO employee;
+    private MedicalResultDTO medicalResult;
 
-    public TakingMedicineForm(EmployeeDTO employee) {
-        TakingMedicineForm.employee = employee;
+    public TakingMedicineForm(EmployeeDTO employee, MedicalResultDTO medicalResult) {
+        this.employee = employee;
+        this.medicalResult = medicalResult;
     }
 
     public void display() throws Exception {
@@ -21,8 +24,10 @@ public class TakingMedicineForm {
         stage.setTitle("Azil za pse - uzimanje lijeka");
         Scene scene = new Scene(loader.load());
         stage.setScene(scene);
+        stage.setMinWidth(1000);
+        stage.setMinHeight(720);
         TakingMedicineController controller = loader.getController();
-        controller.initialize(stage);
+        controller.initialize(stage, employee, medicalResult);
         stage.showAndWait();
     }
 }

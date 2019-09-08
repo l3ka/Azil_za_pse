@@ -14,6 +14,8 @@ public class AddAccount {
         Scene scene = new Scene(loader.load());
         stage.setTitle("Azil za pse - dodavanje korisničkog naloga");
         stage.setScene(scene);
+        stage.setMinHeight(725);
+        stage.setMinWidth(700);
         AddAccountController controller = loader.getController();
         controller.initialize(stage);
         stage.show();

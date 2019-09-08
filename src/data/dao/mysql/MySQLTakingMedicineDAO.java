@@ -22,12 +22,11 @@ public class MySQLTakingMedicineDAO implements TakingMedicineDAO {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
 
-            ps.setDate(1, takingMedicine.getDate());
+            ps.setTimestamp(1, takingMedicine.getDate());
             ps.setString(2, takingMedicine.getVeterinarian().getJMB());
             ps.setInt(3, takingMedicine.getMedicine().getMedicineId());
             ps.setInt(4, takingMedicine.getMedicalResult().getMedicalResultId());
             ps.setInt(5, takingMedicine.getQuantity());
-
             retVal = ps.executeUpdate() == 1;
         } catch(SQLException ex) {
             ex.printStackTrace();
@@ -56,7 +55,7 @@ public class MySQLTakingMedicineDAO implements TakingMedicineDAO {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
 
-            ps.setDate(1, takingMedicine.getDate());
+            ps.setTimestamp(1, takingMedicine.getDate());
             ps.setString(2, takingMedicine.getVeterinarian().getJMB());
             ps.setInt(3, takingMedicine.getMedicine().getMedicineId());
             ps.setInt(4, takingMedicine.getMedicalResult().getMedicalResultId());
@@ -96,4 +95,6 @@ public class MySQLTakingMedicineDAO implements TakingMedicineDAO {
          }
          return retVal;
      }
+
+
 }

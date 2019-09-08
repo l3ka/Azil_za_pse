@@ -11,6 +11,8 @@ public class AddFosterParent {
         Stage stage = new Stage();
         stage.setTitle("Azil za pse - dodavanje udomitelja");
         Scene scene = new Scene(loader.load());
+        stage.setMinHeight(700);
+        stage.setMinWidth(850);
         stage.setScene(scene);
         AddFosterParentController controller = loader.getController();
         controller.initialize(stage);

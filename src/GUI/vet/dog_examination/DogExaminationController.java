@@ -1,6 +1,8 @@
 package GUI.vet.dog_examination;
 
+import GUI.alert_box.AlertBoxForm;
 import GUI.vet.generating_finding.GeneratingFindingForm;
+import GUI.vet.taking_medicine.TakingMedicineForm;
 import data.dto.DogDTO;
 import data.dto.EmployeeDTO;
 import data.dto.MedicalResultDTO;
@@ -44,10 +46,35 @@ public class DogExaminationController {
         }
     }
 
+    public void takeMedicine() {
+        if (checkMedicalResult()) {
+            try {
+                new TakingMedicineForm(employee, medicalResultsTableView.getSelectionModel().getSelectedItem()).display();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        }
+    }
+
     private void displayMedicalResults() {
         listOfMedicalResults = AzilUtilities.getDAOFactory().getMedicalResultDAO().medicalResults(dog);
         for(MedicalResultDTO medicalResult : listOfMedicalResults) {
             medicalResultsTableView.getItems().add(medicalResult);
+        }
+    }
+
+    private boolean checkMedicalResult() {
+        if (medicalResultsTableView.getSelectionModel().getSelectedItem() != null) {
+            return true;
+        }
+        else {
+            try {
+                new AlertBoxForm("Nije izabran nalaz!").display();
+            }
+            catch (Exception exception) {
+
+            }
+            return false;
         }
     }
 }

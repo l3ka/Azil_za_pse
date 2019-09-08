@@ -11,10 +11,12 @@ public class SelectAccount {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("SelectAccount.fxml"));
         Stage stage = new Stage();
         stage.setTitle("Azil za pse - izbor naloga");
-        Scene scene = new Scene(loader.load(), 850, 700);
+        Scene scene = new Scene(loader.load());
         SelectAccountController controller = loader.getController();
         controller.initialize(stage);
         stage.setScene(scene);
+        stage.setMinHeight(720);
+        stage.setMinWidth(700);
         stage.showAndWait();
     }
 }

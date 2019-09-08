@@ -63,13 +63,6 @@ public class VetMainController {
         }
     }
 
-    public void takeDrug() {
-        try {
-            new TakingMedicineForm(employee).display();
-        } catch(Exception exception) {
-            exception.printStackTrace();
-        }
-    }
 
     public void logOut() {
         stage.close();
