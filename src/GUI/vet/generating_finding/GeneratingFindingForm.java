@@ -21,7 +21,7 @@ public class GeneratingFindingForm {
     public void display() throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("generatingFinding.fxml"));
         Stage stage = new Stage();
-        stage.getIcons().add(new Image("file:" + "src" + File.separator + "GUI" + File.separator + "images" + File.separator + "dog-icon.png"));
+        stage.getIcons().add(new Image("file:" + "src" + File.separator + "GUI" + File.separator + "icons" + File.separator + "dog-icon.png"));
         stage.setTitle("Azil za pse - generisanje nalaza");
         Scene scene = new Scene(loader.load());
         stage.setMinHeight(720);

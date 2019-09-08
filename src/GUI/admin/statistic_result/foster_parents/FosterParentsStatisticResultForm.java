@@ -19,7 +19,7 @@ public class FosterParentsStatisticResultForm {
     public void display() throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("fosterParentsStatisticResult.fxml"));
         Stage stage = new Stage();
-        stage.getIcons().add(new Image("file:" + "src" + File.separator + "GUI" + File.separator + "images" + File.separator + "dog-icon.png"));
+        stage.getIcons().add(new Image("file:" + "src" + File.separator + "GUI" + File.separator + "icons" + File.separator + "dog-icon.png"));
         stage.setTitle("Azil za pse - rezultati statistike");
         Scene scene = new Scene(loader.load());
         stage.setScene(scene);

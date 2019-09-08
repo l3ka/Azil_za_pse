@@ -14,7 +14,7 @@
          <children>
             <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/dog-icon.png" />
+                  <Image url="@../icons/dog-icon.png" />
                </image>
             </ImageView>
             <Label text="Azil za pse" textFill="WHITE">

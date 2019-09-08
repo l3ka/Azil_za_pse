@@ -13,7 +13,7 @@ public class SelectAccount {
     public void display() throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("SelectAccount.fxml"));
         Stage stage = new Stage();
-        stage.getIcons().add(new Image("file:" + "src" + File.separator + "GUI" + File.separator + "images" + File.separator + "dog-icon.png"));
+        stage.getIcons().add(new Image("file:" + "src" + File.separator + "GUI" + File.separator + "icons" + File.separator + "dog-icon.png"));
         stage.setTitle("Azil za pse - izbor naloga");
         Scene scene = new Scene(loader.load());
         SelectAccountController controller = loader.getController();

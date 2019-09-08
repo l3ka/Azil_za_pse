@@ -14,7 +14,7 @@
          <children>
             <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/dog-icon.png" />
+                  <Image url="@../icons/dog-icon.png" />
                </image>
             </ImageView>
             <Label text="Azil za pse" textFill="WHITE">
@@ -33,7 +33,7 @@
                <children>
                   <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../images/user-icon.png" />
+                        <Image url="@../icons/user-icon.png" />
                      </image>
                   </ImageView>
                   <Label text="Korisničko ime" textFill="WHITE">
@@ -48,7 +48,7 @@
                <children>
                   <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../images/password-icon.png" />
+                        <Image url="@../icons/password-icon.png" />
                      </image>
                   </ImageView>
                   <Label text="Lozinka" textFill="WHITE">
@@ -73,7 +73,7 @@
          <children>
             <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/login-icon.png" />
+                  <Image url="@../icons/login-icon.png" />
                </image>
             </ImageView>
             <Button fx:id="loginButton" mnemonicParsing="false" onAction="#logIn" text="Prijavi se" />

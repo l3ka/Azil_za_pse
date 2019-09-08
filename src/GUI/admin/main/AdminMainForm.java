@@ -19,7 +19,7 @@ public class AdminMainForm {
     public void display() throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("mainFormAdmin.fxml"));
         Stage stage = new Stage();
-        stage.getIcons().add(new Image("file:" + "src" + File.separator + "GUI" + File.separator + "images" + File.separator + "dog-icon.png"));
+        stage.getIcons().add(new Image("file:" + "src" + File.separator + "GUI" + File.separator + "icons" + File.separator + "dog-icon.png"));
         stage.setTitle("Azil za pse - administratorski dio");
         Scene scene = new Scene(loader.load());
         stage.setScene(scene);

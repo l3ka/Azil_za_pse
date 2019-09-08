@@ -21,7 +21,7 @@ public class ChangeAccount {
     public void display() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ChangeAccount.fxml"));
         Stage stage = new Stage();
-        stage.getIcons().add(new Image("file:" + "src" + File.separator + "GUI" + File.separator + "images" + File.separator + "dog-icon.png"));
+        stage.getIcons().add(new Image("file:" + "src" + File.separator + "GUI" + File.separator + "icons" + File.separator + "dog-icon.png"));
         Scene scene = new Scene(loader.load());
         stage.setTitle("Azil za pse - izmjena korisničkog naloga");
         stage.setScene(scene);
