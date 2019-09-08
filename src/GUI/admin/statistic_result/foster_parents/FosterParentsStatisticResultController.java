@@ -41,7 +41,7 @@ public class FosterParentsStatisticResultController {
 
     private void displayFosterParents() {
         listOfFosterParents = AzilUtilities.getDAOFactory().getFosterParentDAO().fosterParents(dateFrom);
-
+        fosterParentsTableView.getItems().clear();
         for(FosterParentDTO fosterParent : listOfFosterParents) {
             fosterParentsTableView.getItems().add(fosterParent);
         }
