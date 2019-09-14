@@ -13,6 +13,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import util.AzilUtilities;
 
+import java.sql.Date;
+import java.util.Calendar;
+
 public class GeneratingStatisticController {
 
     @FXML
@@ -53,13 +56,13 @@ public class GeneratingStatisticController {
                 try {
                     new FosterParentsStatisticResultForm(startDatePicker.getValue()).display();
                 } catch (Exception ex) {
-                    AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("GeneratingStatisticController", ex.fillInStackTrace().toString()));
+                    AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("GeneratingStatisticController - generateStatistic", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
                 }
             } else {
                 try {
                     new AdoptedDogsStatisticResultForm(startDatePicker.getValue()).display();
                 } catch(Exception ex) {
-                    AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("GeneratingStatisticController", ex.fillInStackTrace().toString()));
+                    AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("GeneratingStatisticController - generateStatistic", new Date(Calendar.getInstance().getTime().getTime()),  ex.fillInStackTrace().toString()));
                 }
             }
         }
@@ -89,7 +92,7 @@ public class GeneratingStatisticController {
         try {
             new AlertBoxForm(content).display();
         } catch (Exception ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("GeneratingStatisticController", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("GeneratingStatisticController - displayAlertBox", new Date(Calendar.getInstance().getTime().getTime()),  ex.fillInStackTrace().toString()));
         }
     }
 

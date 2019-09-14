@@ -7,11 +7,9 @@ import data.dto.MedicalResultDTO;
 import data.dto.VeterinarianDTO;
 import util.AzilUtilities;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class MySQLMedicalResultDAO implements MedicalResultDAO {
@@ -23,8 +21,8 @@ public class MySQLMedicalResultDAO implements MedicalResultDAO {
         Connection conn = null;
         PreparedStatement ps = null;
 
-        String query = "INSERT INTO nalaz (DatumPregleda, Dijagnoza, Veterinar_Zaposleni_JMBG, Pas_IdPsa) "
-                + "VALUES (?, ?, ?, ?) ";
+        String query = "INSERT INTO nalaz (DatumPregleda, Dijagnoza, VeterinarJMBG, IdPsa) " +
+                       "VALUES (?, ?, ?, ?) ";
         try{
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
@@ -36,7 +34,7 @@ public class MySQLMedicalResultDAO implements MedicalResultDAO {
             retVal = ps.executeUpdate() == 1;
         }catch (Exception ex){
             retVal = false;
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLMedicalResultDAO", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLMedicalResultDAO - insert", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
@@ -65,11 +63,11 @@ public class MySQLMedicalResultDAO implements MedicalResultDAO {
                         rs.getInt("IdNalaza"),
                         rs.getString("Dijagnoza"),
                         rs.getDate("DatumPregleda"),
-                        rs.getInt("Pas_IdPsa"),
-                        rs.getString("Veterinar_Zaposleni_JMBG")
+                        rs.getInt("IdPsa"),
+                        rs.getString("VeterinarJMBG")
                 ));
         } catch (SQLException ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLMedicalResultDAO", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLMedicalResultDAO - medicalResults", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -85,7 +83,7 @@ public class MySQLMedicalResultDAO implements MedicalResultDAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        String query = "SELECT * FROM nalaz WHERE  Pas_IdPsa=?";
+        String query = "SELECT * FROM nalaz WHERE IdPsa=?";
         try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
@@ -97,11 +95,11 @@ public class MySQLMedicalResultDAO implements MedicalResultDAO {
                         rs.getInt("IdNalaza"),
                         rs.getString("Dijagnoza"),
                         rs.getDate("DatumPregleda"),
-                        rs.getInt("Pas_IdPsa"),
-                        rs.getString("Veterinar_Zaposleni_JMBG")
+                        rs.getInt("IdPsa"),
+                        rs.getString("VeterinarJMBG")
                 ));
         } catch (SQLException ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLMedicalResultDAO", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLMedicalResultDAO - medicalResults", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -117,7 +115,7 @@ public class MySQLMedicalResultDAO implements MedicalResultDAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        String query = "SELECT * FROM nalaz WHERE  Pas_IdPsa=? AND Veterinar_Zaposleni_JMBG=?";
+        String query = "SELECT * FROM nalaz WHERE IdPsa=? AND VeterinarJMBG=?";
         try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
@@ -130,11 +128,11 @@ public class MySQLMedicalResultDAO implements MedicalResultDAO {
                         rs.getInt("IdNalaza"),
                         rs.getString("Dijagnoza"),
                         rs.getDate("DatumPregleda"),
-                        rs.getInt("Pas_IdPsa"),
-                        rs.getString("Veterinar_Zaposleni_JMBG")
+                        rs.getInt("IdPsa"),
+                        rs.getString("VeterinarJMBG")
                 ));
         } catch (SQLException ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLMedicalResultDAO", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLMedicalResultDAO - medicalResults", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -162,12 +160,12 @@ public class MySQLMedicalResultDAO implements MedicalResultDAO {
                         rs.getInt("IdNalaza"),
                         rs.getString("Dijagnoza"),
                         rs.getDate("DatumPregleda"),
-                        rs.getInt("Pas_IdPsa"),
-                        rs.getString("Veterinar_Zaposleni_JMBG")
+                        rs.getInt("IdPsa"),
+                        rs.getString("VeterinarJMBG")
                 );
             }
         } catch (SQLException ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLMedicalResultDAO", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLMedicalResultDAO - getById", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -183,9 +181,9 @@ public class MySQLMedicalResultDAO implements MedicalResultDAO {
         PreparedStatement ps = null;
 
         String query = "UPDATE nalaz SET " +
-                "DatumPregleda=?, " +
-                "Dijagnoza=? " +
-                "WHERE  Pas_IdPsa=? AND Veterinar_Zaposleni_JMBG=? ";
+                        "DatumPregleda=?, " +
+                        "Dijagnoza=? " +
+                       "WHERE IdPsa=? AND VeterinarJMBG=? ";
         try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
@@ -197,7 +195,7 @@ public class MySQLMedicalResultDAO implements MedicalResultDAO {
 
             ps.executeUpdate();
         } catch (SQLException ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLMedicalResultDAO", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLMedicalResultDAO - update", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
@@ -213,11 +211,11 @@ public class MySQLMedicalResultDAO implements MedicalResultDAO {
         PreparedStatement ps = null;
 
         String query = "UPDATE nalaz SET " +
-                "DatumPregleda=?, " +
-                "Dijagnoza=?, " +
-                "Veterinar_Zaposleni_JMBG=?, " +
-                "Pas_IdPsa=? " +
-                "WHERE  Pas_IdPsa=? AND Veterinar_Zaposleni_JMBG=? ";
+                        "DatumPregleda=?, " +
+                        "Dijagnoza=?, " +
+                        "VeterinarJMBG=?, " +
+                        "IdPsa=? " +
+                       "WHERE IdPsa=? AND VeterinarJMBG=? ";
         try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
@@ -225,13 +223,12 @@ public class MySQLMedicalResultDAO implements MedicalResultDAO {
             ps.setString(2, medicalResult.getResultsAndOpinion());
             ps.setString(3, medicalResult.getVeterinarianJMB());
             ps.setInt(4, medicalResult.getDogId());
-
             ps.setInt(5, dogId);
             ps.setString(6, veterinarianJMB);
 
             ps.executeUpdate();
         } catch (SQLException ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLMedicalResultDAO", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLMedicalResultDAO - update", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
@@ -246,8 +243,8 @@ public class MySQLMedicalResultDAO implements MedicalResultDAO {
         Connection conn = null;
         PreparedStatement ps = null;
 
-        String query = "DELETE FROM nalaz "
-                + "WHERE IdNalaza=? ";
+        String query = "DELETE FROM nalaz " +
+                       "WHERE IdNalaza=? ";
         try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
@@ -255,7 +252,7 @@ public class MySQLMedicalResultDAO implements MedicalResultDAO {
 
             retVal = ps.executeUpdate() == 1;
         } catch (SQLException ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLMedicalResultDAO", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLMedicalResultDAO - delete", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);

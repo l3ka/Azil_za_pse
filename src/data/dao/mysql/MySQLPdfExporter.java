@@ -13,11 +13,9 @@ import util.AzilUtilities;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 
 public class MySQLPdfExporter implements PdfExporterDAO  {
@@ -138,7 +136,7 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
             conn.close();
 
         } catch (Exception ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLPdfExporter - exportEmployees", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLPdfExporter - exportEmployees", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
@@ -212,7 +210,7 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
                 pdfTableCell.setMinimumHeight(20);
                 pdfPTable.addCell(pdfTableCell);
 
-                pdfTableCell = new PdfPCell(new Phrase(rs.getString("NazivLijeka")));
+                pdfTableCell = new PdfPCell(new Phrase(rs.getString("Naziv")));
                 pdfTableCell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 pdfTableCell.setVerticalAlignment(Element.ALIGN_CENTER);
                 pdfTableCell.setMinimumHeight(20);
@@ -234,7 +232,7 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
             conn.close();
 
         } catch (Exception ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLPdfExporter - exportMedicine", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLPdfExporter - exportMedicine", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
@@ -243,14 +241,11 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String QueryNew = "SELECT * FROM nalaz n " +
-                       "JOIN veterinar v ON n.VeterinarJMBG = v.VeterinarJMBG " +
-                       "JOIN pas p ON n.PasID = p.PasID";
 
         String Query = "SELECT z.Ime ImeVeterinara, n.DatumPregleda DatumPregleda, p.Ime Pas, n.Dijagnoza Dijagnoza FROM nalaz n " +
-                "JOIN veterinar v ON n.Veterinar_Zaposleni_JMBG = v.Zaposleni_JMBG " +
-                "JOIN zaposleni z ON v.Zaposleni_JMBG = z.JMBG " +
-                "JOIN pas p ON n.Pas_IdPsa = p.IdPsa";
+                       "JOIN veterinar v ON n.VeterinarJMBG = v.VeterinarJMBG " +
+                       "JOIN zaposleni z ON v.VeterinarJMBG = z.JMBG " +
+                       "JOIN pas p ON n.IdPsa = p.IdPsa";
         try {
             conn = ConnectionPool.getInstance().checkOut();
             Statement statement = conn.createStatement();
@@ -361,7 +356,7 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
             conn.close();
 
         } catch (Exception ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLPdfExporter - exportMedicalReports", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLPdfExporter - exportMedicalReports", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
@@ -465,7 +460,7 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
 
             pdfReport.close();
         } catch (Exception ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLPdfExporter - exportFosters", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLPdfExporter - exportFosters", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
@@ -594,7 +589,7 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
 
             pdfReport.close();
         } catch (Exception ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLPdfExporter - exportAdoptedDogs", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLPdfExporter - exportAdoptedDogs", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
