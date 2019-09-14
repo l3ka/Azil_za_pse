@@ -99,11 +99,11 @@ public class AddAccountController {
                     break;
             }
             if (result) {
-                displayAlertBox("Nalog je uspijesno dodan u sistem");
+                displayAlertBox("Nalog je uspješno dodat u sistem!");
                 quit();
             }
             else {
-                displayAlertBox("Desila se greska prilikom dodavanja naloga u sistem");
+                displayAlertBox("Desila se greška prilikom dodavanja naloga u sistem!");
             }
         }
     }
