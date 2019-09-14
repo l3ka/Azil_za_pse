@@ -2,6 +2,7 @@ package GUI.preview.foster_parents_preview;
 
 import GUI.add_foster_parent.AddFosterParent;
 import GUI.alert_box.AlertBoxForm;
+import GUI.decide_box.DecideBox;
 import GUI.edit_foster_parent.EditFosterParentForm;
 import data.dto.FosterParentDTO;
 import javafx.fxml.FXML;
@@ -54,8 +55,23 @@ public class FosterParentsController {
     }
 
     public void deleteFosterParent() {
-        if(checkSelectedFosterParent()) {
-            AzilUtilities.getDAOFactory().getFosterParentDAO().delete(fosterParentsTableView.getSelectionModel().getSelectedItem().getJMB());
+        try {
+            if (checkSelectedFosterParent()) {
+                boolean choice = new DecideBox("Da li ste sigurni da želite da obrišete udomitelja?").display();
+                if (choice) {
+                   if  (AzilUtilities.getDAOFactory().getFosterParentDAO().delete(fosterParentsTableView.getSelectionModel()
+                            .getSelectedItem().getJMB())) {
+                       displayAlertBox("Udomitelj je uspješno obrisan!");
+                   }
+                   else {
+                       displayAlertBox("Desila se greška prilikom brisanja udomitelja!");
+                   }
+                   displayAllFosterParents();
+                }
+
+            }
+        } catch (Exception ex) {
+
         }
     }
 
@@ -83,6 +99,7 @@ public class FosterParentsController {
 
     private void displayFosterParents() {
         fosterParentsTableView.getItems().clear();
+        fosterParentsTableView.refresh();
         listOfFosterParents = AzilUtilities.getDAOFactory().getFosterParentDAO().fosterParents();
         for(FosterParentDTO fosterParent : listOfFosterParents) {
             fosterParentsTableView.getItems().add(fosterParent);

@@ -18,12 +18,6 @@
                   <Image url="@../icons/notification-icon.png" />
                </image>
             </ImageView>
-            <Label text="Azil za pse" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="22.0" />
-               </font>
-            </Label>
-            <Line endX="200.0" startX="-200.0" stroke="WHITE" />
          </children>
       </VBox>
       <Label fx:id="messageLabel" textFill="WHITE">

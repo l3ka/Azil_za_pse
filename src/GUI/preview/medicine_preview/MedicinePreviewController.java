@@ -2,6 +2,7 @@ package GUI.preview.medicine_preview;
 
 import GUI.adding_medicine.AddingMedicineForm;
 import GUI.alert_box.AlertBoxForm;
+import GUI.decide_box.DecideBox;
 import data.dto.DogDTO;
 import data.dto.MedicineDTO;
 import javafx.fxml.FXML;
@@ -70,8 +71,17 @@ public class MedicinePreviewController {
 
     public void deleteMedicine() {
         try {
-            if (medicineTableView.getSelectionModel().getSelectedItem() == null) {
-                new AlertBoxForm("Nije izabran lijek!").display();
+            if (checkSelectedMedicine()) {
+               boolean choice = new DecideBox("Da li ste sigurno da želite da obrišete lijek?").display();
+                if (choice) {
+                    if (AzilUtilities.getDAOFactory().getMedicineDAO().delete(medicineTableView.getSelectionModel().getSelectedItem().getMedicineId())) {
+                        displayAlertBox("Lijek je uspješno obrisan!");
+                    }
+                    else {
+                        displayAlertBox("Desila se greška prilikom brisanja lijeka!");
+                    }
+                    displayMedicine();
+                }
             }
         } catch (Exception ex) {
 
@@ -90,6 +100,22 @@ public class MedicinePreviewController {
         try {
 
         } catch (Exception ex) {
+
+        }
+    }
+
+    private boolean checkSelectedMedicine() {
+            if (medicineTableView.getSelectionModel().getSelectedItem() == null) {
+                displayAlertBox("Nije izabran lijek!");
+                return false;
+            }
+            return true;
+        }
+
+    private void displayAlertBox(String content) {
+        try {
+            new AlertBoxForm(content).display();
+        } catch(Exception ex) {
 
         }
     }

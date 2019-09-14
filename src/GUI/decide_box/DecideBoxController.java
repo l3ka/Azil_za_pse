@@ -17,8 +17,8 @@ public class DecideBoxController {
     }
 
     public void yesClicked() {
-        this.stage.close();
-        this.decision = true;
+        stage.close();
+        decision = true;
     }
 
     public void noClicked() {
