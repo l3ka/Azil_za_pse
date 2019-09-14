@@ -4,6 +4,7 @@ import GUI.adding_medicine.AddingMedicineForm;
 import GUI.alert_box.AlertBoxForm;
 import GUI.decide_box.DecideBox;
 import GUI.editing_medicine.EditingMedicineForm;
+import data.dto.LoggerDTO;
 import data.dto.MedicineDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -13,6 +14,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import util.AzilUtilities;
 
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,24 +33,32 @@ public class MedicinePreviewController {
     private TextField searchTextField;
 
     public void initialize(Stage stage) {
-        this.stage = stage;
-        medicineTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("name"));
-        medicineTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("description"));
-        medicineTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("quantity"));
-        displayMedicines();
+        try {
+            this.stage = stage;
+            medicineTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("name"));
+            medicineTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("description"));
+            medicineTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("quantity"));
+            displayMedicines();
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MedicinePreviewController - initialize", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     private void displayMedicines() {
-        medicineTableView.getItems().clear();
-        medicineTableView.refresh();
-        listOfMedicine = AzilUtilities.getDAOFactory().getMedicineDAO().medicines();
-        differentTypesLabel.setText("Ukupno vrsta: " + listOfMedicine.size());
-        int medicineSummary = 0;
-        for (MedicineDTO medicine : listOfMedicine) {
-            medicineTableView.getItems().add(medicine);
-            medicineSummary += medicine.getQuantity();
+        try {
+            medicineTableView.getItems().clear();
+            medicineTableView.refresh();
+            listOfMedicine = AzilUtilities.getDAOFactory().getMedicineDAO().medicines();
+            differentTypesLabel.setText("Ukupno vrsta: " + listOfMedicine.size());
+            int medicineSummary = 0;
+            for (MedicineDTO medicine : listOfMedicine) {
+                medicineTableView.getItems().add(medicine);
+                medicineSummary += medicine.getQuantity();
+            }
+            medicineSummaryLabel.setText("Ukupno lijekova: " + medicineSummary);
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MedicinePreviewController - displayMedicines", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
-        medicineSummaryLabel.setText("Ukupno lijekova: " + medicineSummary);
     }
 
     public void addMedicine() {
@@ -55,19 +66,19 @@ public class MedicinePreviewController {
             new AddingMedicineForm().display();
             displayMedicines();
         } catch (Exception ex) {
-
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MedicinePreviewController - addMedicine", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
     public void editMedicine() {
-       if(checkSelectedMedicine()) {
-           try {
-               new EditingMedicineForm(medicineTableView.getSelectionModel().getSelectedItem()).display();
-               displayMedicines();
-           } catch(Exception ex) {
-
-           }
-       }
+        try {
+            if(checkSelectedMedicine()) {
+                new EditingMedicineForm(medicineTableView.getSelectionModel().getSelectedItem()).display();
+                displayMedicines();
+            }
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MedicinePreviewController - editMedicine", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     public void deleteMedicine() {
@@ -85,7 +96,7 @@ public class MedicinePreviewController {
                 }
             }
         } catch (Exception ex) {
-
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MedicinePreviewController - deleteMedicine", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
@@ -93,7 +104,7 @@ public class MedicinePreviewController {
         try {
 
         } catch (Exception ex) {
-
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MedicinePreviewController - search", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
@@ -101,23 +112,28 @@ public class MedicinePreviewController {
         try {
 
         } catch (Exception ex) {
-
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MedicinePreviewController - showAll", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
     private boolean checkSelectedMedicine() {
+        try {
             if (medicineTableView.getSelectionModel().getSelectedItem() == null) {
                 displayAlertBox("Nije izabran lijek!");
                 return false;
             }
             return true;
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MedicinePreviewController - checkSelectedMedicine", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+            return false;
         }
+    }
 
     private void displayAlertBox(String content) {
         try {
             new AlertBoxForm(content).display();
         } catch(Exception ex) {
-
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MedicinePreviewController - displayAlertBox", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
@@ -126,13 +142,18 @@ public class MedicinePreviewController {
     }
 
     public void searchParameters() {
-        String value = searchTextField.getText();
-        List<MedicineDTO> filteredList = listOfMedicine.stream().filter((medicineDTO -> medicineDTO.getName().contains(value))).collect(Collectors.toList());
-        medicineTableView.getItems().clear();
-        medicineTableView.refresh();
-        for (MedicineDTO medicine : filteredList) {
-            medicineTableView.getItems().add(medicine);
+        try {
+            String value = searchTextField.getText();
+            List<MedicineDTO> filteredList = listOfMedicine.stream().filter((medicineDTO -> medicineDTO.getName().contains(value))).collect(Collectors.toList());
+            medicineTableView.getItems().clear();
+            medicineTableView.refresh();
+            for (MedicineDTO medicine : filteredList) {
+                medicineTableView.getItems().add(medicine);
+            }
+            medicineTableView.refresh();
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MedicinePreviewController - searchParameters", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
-        medicineTableView.refresh();
     }
+
 }
