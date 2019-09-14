@@ -1,6 +1,7 @@
 package GUI.admin.statistic_result.adopted_dogs;
 
 import data.dto.DogDTO;
+import data.dto.LoggerDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -10,7 +11,10 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import util.AzilUtilities;
+
+import java.sql.Date;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.List;
 
 public class AdoptedDogsStatisticResultController {
@@ -56,7 +60,11 @@ public class AdoptedDogsStatisticResultController {
     }
 
     public void GeneratePDFButtonPressed() {
-        AzilUtilities.getDAOFactory().getPdfExporterDAO().exportAdoptedDogs(dogsTableView);
+        try {
+            AzilUtilities.getDAOFactory().getPdfExporterDAO().exportAdoptedDogs(dogsTableView, titleLabel.getText().trim().split(" ")[2]);
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AdoptedDogsStatisticResultController - GeneratePDFButtonPressed", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
 

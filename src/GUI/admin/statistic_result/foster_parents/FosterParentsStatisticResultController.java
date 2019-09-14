@@ -1,6 +1,7 @@
 package GUI.admin.statistic_result.foster_parents;
 
 import data.dto.FosterParentDTO;
+import data.dto.LoggerDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -10,7 +11,10 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import util.AzilUtilities;
+
+import java.sql.Date;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.List;
 
 public class FosterParentsStatisticResultController {
@@ -57,7 +61,11 @@ public class FosterParentsStatisticResultController {
     }
 
     public void GeneratePDFButtonPressed() {
-        AzilUtilities.getDAOFactory().getPdfExporterDAO().exportFosters(fosterParentsTableView);
+        try {
+            AzilUtilities.getDAOFactory().getPdfExporterDAO().exportFosters(fosterParentsTableView, titleLabel.getText().trim().split(" ")[2]);
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("FosterParentsStatisticResultController - GeneratePDFButtonPressed", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     private void displayFosterParents() {
