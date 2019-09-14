@@ -18,4 +18,7 @@ public interface DogInCageDAO {
 
     CageDTO getCage(DogDTO dog);
 
+    public DogInCageDTO getDogInCage(int IdCage, int IdDog);
+
+
 }

@@ -138,6 +138,7 @@ public class MySQLDogInCage implements DogInCageDAO {
 
         Connection conn = null;
         PreparedStatement ps = null;
+        ResultSet rs = null;
 
         String query = "SELECT * FROM kavez_pas " +
                        "WHERE Do IS NULL AND IdPsa = ?";
@@ -146,9 +147,51 @@ public class MySQLDogInCage implements DogInCageDAO {
             ps = conn.prepareStatement(query);
             ps.setInt(1, dog.getDogId());
 
-            ps.executeUpdate();
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                retVal = new CageDTO(
+                        rs.getInt("IdKaveza"),
+                        rs.getString("Naziv"),
+                        rs.getInt("Kapacitet")
+                );
+            }
         } catch (SQLException ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLDogInCage - getCage", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        } finally {
+            ConnectionPool.getInstance().checkIn(conn);
+            DBUtilities.getInstance().close(ps);
+        }
+        return retVal;
+    }
+
+    public DogInCageDTO getDogInCage(int IdCage, int IdDog) {
+        DogInCageDTO retVal = null;
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String query = "SELECT * FROM kavez_pas " +
+                       "WHERE IdKaveza = ? AND IdPsa = ?";
+        try {
+            conn = ConnectionPool.getInstance().checkOut();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, IdCage);
+            ps.setInt(2, IdDog);
+
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                retVal = new DogInCageDTO(
+                        AzilUtilities.getDAOFactory().getDogDAO().getByID(rs.getInt("IdPsa")),
+                        AzilUtilities.getDAOFactory().getCageDAO().getById(rs.getInt("IdKaveza")),
+                        rs.getTimestamp("Od"),
+                        rs.getTimestamp("Do")
+                );
+            }
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLDogInCage - getDogInCage", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
