@@ -85,9 +85,9 @@
                         </TextField>
                     </children>
                 </HBox>
-                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="100.0">
                     <children>
-                        <Label text="Mjesto prebivališta " textFill="WHITE">
+                        <Label text="Adresa" textFill="WHITE">
                             <font>
                                 <Font size="14.0" />
                             </font>

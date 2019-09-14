@@ -43,7 +43,17 @@ public class EditFosterParentController {
     }
 
     public void save() {
-        
+        if(checkName() && checkIsNumber(identificationNumberTextField.getText()) && checkPhoneNumber() && checkPlaceOfResidence()) {
+            fosterParent.setName(nameTextField.getText());
+            fosterParent.setSurname(surnameTextField.getText());
+            fosterParent.setJMB(identificationNumberTextField.getText());
+            fosterParent.setResidenceAddress(placeOfResidenceTextField.getText());
+            fosterParent.setTelephoneNumber(phoneNumberTextField.getText());
+
+            if(AzilUtilities.getDAOFactory().getFosterParentDAO().update(fosterParent)) {
+                displayAlertBox("Uspješno izmijenjeni podaci o udomitelju!");
+            }
+        }
     }
 
     public void quit() {
