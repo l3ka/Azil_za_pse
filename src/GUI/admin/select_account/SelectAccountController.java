@@ -12,7 +12,10 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import util.AzilUtilities;
+
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class SelectAccountController {
@@ -59,7 +62,7 @@ public class SelectAccountController {
             try {
                 new ChangeAccount(accountsTableView.getSelectionModel().getSelectedItem()).display();
             } catch(Exception ex) {
-                AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("SelectAccountController", ex.fillInStackTrace().toString()));
+                AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("SelectAccountController - select", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             }
         }
     }
@@ -89,7 +92,7 @@ public class SelectAccountController {
         try {
             new AlertBoxForm(content).display();
         } catch(Exception ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("SelectAccountController", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("SelectAccountController - displayAlertBox", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 

@@ -17,6 +17,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import util.AzilUtilities;
 
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 public class VetMainController {
@@ -80,7 +82,7 @@ public class VetMainController {
             try {
                 new DogExaminationForm(dogsTableView.getSelectionModel().getSelectedItem(),employee).display();
             } catch (Exception ex) {
-                AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), ex.fillInStackTrace().toString()));
+                AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             }
         }
     }
@@ -110,7 +112,7 @@ public class VetMainController {
         try {
             new LoginForm().start(new Stage());
         } catch(Exception ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
@@ -126,7 +128,7 @@ public class VetMainController {
         try {
             new AlertBoxForm(content).display();
         } catch(Exception ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 

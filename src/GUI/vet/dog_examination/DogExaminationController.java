@@ -15,6 +15,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import util.AzilUtilities;
+
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 public class DogExaminationController {
@@ -76,7 +79,7 @@ public class DogExaminationController {
             new GeneratingFindingForm(dog, employee).display();
             displayMedicalResults();
         } catch (Exception ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
@@ -85,7 +88,7 @@ public class DogExaminationController {
             try {
                 new TakingMedicineForm(employee, medicalResultsTableView.getSelectionModel().getSelectedItem()).display();
             } catch (Exception ex) {
-                AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), ex.fillInStackTrace().toString()));
+                AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             }
         }
     }
@@ -108,7 +111,7 @@ public class DogExaminationController {
                 new AlertBoxForm("Nije izabran nalaz!").display();
             }
             catch (Exception ex) {
-                AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), ex.fillInStackTrace().toString()));
+                AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             }
             return false;
         }

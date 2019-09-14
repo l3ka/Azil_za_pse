@@ -8,6 +8,7 @@ import util.AzilUtilities;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class MySQLFosterParentDAO implements FosterParentDAO  {
@@ -31,11 +32,11 @@ public class MySQLFosterParentDAO implements FosterParentDAO  {
                         rs.getString("JMBG"),
                         rs.getString("Ime"),
                         rs.getString("Prezime"),
-                        rs.getString("MjestoPrebivalista"),
+                        rs.getString("Adresa"),
                         rs.getString("BrojTelefona")
                 ));
         } catch (SQLException ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLFosterParentDAO", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLFosterParentDAO - fosterParents", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -51,9 +52,9 @@ public class MySQLFosterParentDAO implements FosterParentDAO  {
         PreparedStatement ps = null;
         ResultSet rs = null;
         String query = "SELECT DISTINCT * FROM udomitelj u " +
-                       "LEFT OUTER JOIN udomljavanjepsa up ON u.JMBG=up.Udomitelj_JMBG " +
-                       "WHERE up.Pas_IdPsa is not null AND DatumOd>=DATE(?) " +
-                       "GROUP BY up.Udomitelj_JMBG ";
+                       "LEFT OUTER JOIN udomljavanjepsa up ON u.JMBG=up.UdomiteljJMBG " +
+                       "WHERE up.IdPsa is not null AND DatumOd>=DATE(?) " +
+                       "GROUP BY up.UdomiteljJMBG ";
 
         try {
             conn = ConnectionPool.getInstance().checkOut();
@@ -66,11 +67,11 @@ public class MySQLFosterParentDAO implements FosterParentDAO  {
                         rs.getString("JMBG"),
                         rs.getString("Ime"),
                         rs.getString("Prezime"),
-                        rs.getString("MjestoPrebivalista"),
+                        rs.getString("Adresa"),
                         rs.getString("BrojTelefona")
                 ));
         } catch (SQLException ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLFosterParentDAO", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLFosterParentDAO - fosterParents", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -98,11 +99,11 @@ public class MySQLFosterParentDAO implements FosterParentDAO  {
                         rs.getString("JMBG"),
                         rs.getString("Ime"),
                         rs.getString("Prezime"),
-                        rs.getString("MjestoPrebivalista"),
+                        rs.getString("Adresa"),
                         rs.getString("BrojTelefona")
                 );
         } catch (SQLException ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLFosterParentDAO", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLFosterParentDAO - getByJMB", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -118,8 +119,8 @@ public class MySQLFosterParentDAO implements FosterParentDAO  {
         Connection conn = null;
         PreparedStatement ps = null;
 
-        String query = "INSERT INTO udomitelj "
-                + "VALUES (?, ?, ?, ?, ?) ";
+        String query = "INSERT INTO udomitelj " +
+                       "VALUES (?, ?, ?, ?, ?) ";
         try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
@@ -132,7 +133,7 @@ public class MySQLFosterParentDAO implements FosterParentDAO  {
             retVal = ps.executeUpdate() == 1;
         } catch (Exception ex) {
             retVal = false;
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLFosterParentDAO", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLFosterParentDAO - insert", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
@@ -148,11 +149,11 @@ public class MySQLFosterParentDAO implements FosterParentDAO  {
         Connection conn = null;
         PreparedStatement ps = null;
         String query = "UPDATE udomitelj SET " +
-                "Ime=?, " +
-                "Prezime=?, " +
-                "MjestoPrebivalista=?, " +
-                "BrojTelefona=? " +
-                "WHERE JMBG=? ";
+                        "Ime=?, " +
+                        "Prezime=?, " +
+                        "Adresa=?, " +
+                        "BrojTelefona=? " +
+                       "WHERE JMBG=? ";
 
         try {
             conn = ConnectionPool.getInstance().checkOut();
@@ -161,12 +162,11 @@ public class MySQLFosterParentDAO implements FosterParentDAO  {
             ps.setString(2, fosterParent.getSurname());
             ps.setString(3, fosterParent.getResidenceAddress());
             ps.setString(4, fosterParent.getTelephoneNumber());
-
             ps.setString(5, fosterParent.getJMB());
 
             ps.executeUpdate();
         } catch (SQLException ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLFosterParentDAO", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLFosterParentDAO - update", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
@@ -182,12 +182,12 @@ public class MySQLFosterParentDAO implements FosterParentDAO  {
         Connection conn = null;
         PreparedStatement ps = null;
         String query = "UPDATE udomitelj SET " +
-                "JMBG=?, " +
-                "Ime=?, " +
-                "Prezime=?, " +
-                "MjestoPrebivalista=?, " +
-                "BrojTelefona=? " +
-                "WHERE JMBG=? ";
+                        "JMBG=?, " +
+                        "Ime=?, " +
+                        "Prezime=?, " +
+                        "Adresa=?, " +
+                        "BrojTelefona=? " +
+                       "WHERE JMBG=? ";
 
         try {
             conn = ConnectionPool.getInstance().checkOut();
@@ -197,12 +197,11 @@ public class MySQLFosterParentDAO implements FosterParentDAO  {
             ps.setString(3, fosterParent.getSurname());
             ps.setString(4, fosterParent.getResidenceAddress());
             ps.setString(5, fosterParent.getTelephoneNumber());
-
             ps.setString(6, oldJMB);
 
             ps.executeUpdate();
         } catch (SQLException ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLFosterParentDAO", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLFosterParentDAO - updateWithJMB", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
@@ -217,8 +216,8 @@ public class MySQLFosterParentDAO implements FosterParentDAO  {
         Connection conn = null;
         PreparedStatement ps = null;
 
-        String query = "DELETE FROM udomitelj "
-                + "WHERE JMBG=? ";
+        String query = "DELETE FROM udomitelj " +
+                       "WHERE JMBG=? ";
         try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
@@ -226,7 +225,7 @@ public class MySQLFosterParentDAO implements FosterParentDAO  {
 
             retVal = ps.executeUpdate() == 1;
         } catch (SQLException ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLFosterParentDAO", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLFosterParentDAO - delete", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);

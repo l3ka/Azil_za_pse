@@ -7,6 +7,7 @@ import data.dto.LoggerDTO;
 import util.AzilUtilities;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class MySQLAdministratorDAO implements AdministratorDAO {
@@ -24,7 +25,7 @@ public class MySQLAdministratorDAO implements AdministratorDAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
         String query = "SELECT z.JMBG, z.Ime, z.Prezime, z.Username, z.Password, z.StrucnaSprema, z.MjestoPrebivalista, z.BrojTelefona " +
-                "FROM zaposleni z INNER JOIN administrator a ON z.JMBG = a.Zaposleni_JMBG";
+                "FROM zaposleni z INNER JOIN administrator a ON z.JMBG = a.AdministratorJMBG";
 
         try {
             conn = ConnectionPool.getInstance().checkOut();
@@ -43,7 +44,7 @@ public class MySQLAdministratorDAO implements AdministratorDAO {
                         rs.getString("JMBG")
                 ));
         } catch (SQLException ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLAdministratorDAO", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLAdministratorDAO - adminstartors", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -61,7 +62,7 @@ public class MySQLAdministratorDAO implements AdministratorDAO {
         ResultSet rs = null;
 
         String query = "SELECT z.JMBG, z.Ime, z.Prezime, z.Username, z.Password, z.StrucnaSprema, z.MjestoPrebivalista, " +
-                "z.BrojTelefona  FROM zaposleni z INNER JOIN administrator a ON z.JMBG = a.Zaposleni_JMBG " +
+                "z.BrojTelefona  FROM zaposleni z INNER JOIN administrator a ON z.JMBG = a.AdministratorJMBG " +
                 "WHERE z.Username = ?";
 
         try {
@@ -82,7 +83,7 @@ public class MySQLAdministratorDAO implements AdministratorDAO {
                         rs.getString("JMBG")
                 );
         } catch (SQLException ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLAdministratorDAO", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLAdministratorDAO - getByUsername", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -108,8 +109,8 @@ public class MySQLAdministratorDAO implements AdministratorDAO {
         Connection conn = null;
         PreparedStatement ps = null;
 
-        String query = "DELETE FROM administrator "
-                + "WHERE Zaposleni_JMBG=? ";
+        String query = "DELETE FROM administrator " +
+                       "WHERE AdministratorJMBG = ?";
         try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
@@ -120,7 +121,7 @@ public class MySQLAdministratorDAO implements AdministratorDAO {
                 return retVal;
             }
         } catch (SQLException ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLAdministratorDAO", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLAdministratorDAO - delete", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             return false;
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
@@ -139,7 +140,7 @@ public class MySQLAdministratorDAO implements AdministratorDAO {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String query = "SELECT * FROM administrator WHERE Zaposleni_JMBG=?";
+        String query = "SELECT * FROM administrator WHERE AdministratorJMBG = ?";
 
         try {
             conn = ConnectionPool.getInstance().checkOut();
@@ -150,7 +151,7 @@ public class MySQLAdministratorDAO implements AdministratorDAO {
             retVal = rs.next();
         } catch (SQLException ex) {
             retVal = false;
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLAdministratorDAO", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLAdministratorDAO - exists", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -168,7 +169,7 @@ public class MySQLAdministratorDAO implements AdministratorDAO {
         ResultSet rs = null;
         String query = "SELECT * FROM zaposleni z " +
                        "JOIN administrator a " +
-                       "ON z.JMBG = a.Zaposleni_JMBG " +
+                       "ON z.JMBG = a.AdministratorJMBG " +
                        "WHERE z.username = ? AND z.password = ?";
         try {
             conn = ConnectionPool.getInstance().checkOut();
@@ -180,7 +181,7 @@ public class MySQLAdministratorDAO implements AdministratorDAO {
             retVal = rs.next();
         } catch (SQLException ex) {
             retVal = false;
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLAdministratorDAO", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLAdministratorDAO - exists", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -195,9 +196,8 @@ public class MySQLAdministratorDAO implements AdministratorDAO {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-
-        String query = "SELECT z.JMBG, z.Ime, z.Prezime, z.Username, z.Password, z.StrucnaSprema, z.MjestoPrebivalista, " +
-                       "z.BrojTelefona  FROM zaposleni z INNER JOIN administrator a ON z.JMBG = a.Zaposleni_JMBG " +
+        String query = "SELECT z.JMBG, z.Ime, z.Prezime, z.Username, z.Password, z.StrucnaSprema, z.MjestoPrebivalista, z.BrojTelefona " +
+                       "FROM zaposleni z INNER JOIN administrator a ON z.JMBG = a.AdministratorJMBG " +
                        "WHERE z.Username = ? AND Password = ?";
 
         try {
@@ -206,7 +206,6 @@ public class MySQLAdministratorDAO implements AdministratorDAO {
             ps.setString(1, username);
             ps.setString(2, AzilUtilities.getSHA256(password));
             rs = ps.executeQuery();
-
             if (rs.next()) {
                 retVal = new AdministratorDTO(
                         rs.getString("Username"),
@@ -220,12 +219,11 @@ public class MySQLAdministratorDAO implements AdministratorDAO {
                 );
             }
         } catch (SQLException ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLAdministratorDAO", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLAdministratorDAO - login", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
         }
-
         return retVal;
     }
 

@@ -20,6 +20,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import util.AzilUtilities;
 
+import java.sql.Date;
+import java.util.Calendar;
+
 public class LoginController {
 
     @FXML
@@ -54,7 +57,7 @@ public class LoginController {
             try {
                 new AlertBoxForm("Korisničko ime ili lozinka nisu ispravno uneseni!").display();
             } catch (Exception ex) {
-                AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("LoginController - logIn", ex.fillInStackTrace().toString()));
+                AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("LoginController - logIn", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             }
         }
         else {
@@ -84,7 +87,7 @@ public class LoginController {
                 }
                 quit();
             } catch (Exception ex) {
-                AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("LoginController - logIn", ex.fillInStackTrace().toString()));
+                AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("LoginController - logIn", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             }
         }
     }
@@ -101,7 +104,7 @@ public class LoginController {
             appStage.setScene(scene);
             appStage.show();
         } catch (Exception ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("LoginController", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("LoginController - changeStage", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 

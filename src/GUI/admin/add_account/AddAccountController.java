@@ -9,6 +9,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import util.AzilUtilities;
 
+import java.sql.Date;
+import java.util.Calendar;
+
 public class AddAccountController {
 
     @FXML
@@ -201,7 +204,7 @@ public class AddAccountController {
         try {
             new AlertBoxForm(content).display();
         } catch (Exception ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddAccountController", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddAccountController - displayAlertBox", new Date(Calendar.getInstance().getTime().getTime()),  ex.fillInStackTrace().toString()));
         }
     }
 

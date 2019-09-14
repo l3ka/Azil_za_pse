@@ -11,6 +11,10 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import util.AzilUtilities;
 
+import java.sql.Date;
+import java.util.Calendar;
+import java.util.Random;
+
 public class AddingCageController {
 
     @FXML
@@ -44,7 +48,8 @@ public class AddingCageController {
 
     public void save() {
         if(checkCapacity()) {
-            AzilUtilities.getDAOFactory().getCageDAO().insert(new CageDTO(0, Integer.valueOf(cageCapacityTextField.getText().trim())));
+            // TODO:
+            AzilUtilities.getDAOFactory().getCageDAO().insert(new CageDTO(0, "NazivKazveza" + new Random().nextInt(1000), Integer.valueOf(cageCapacityTextField.getText().trim())));
             displayAlertBox("Kavez je uspješno dodat!");
             quit();
         }
@@ -69,7 +74,7 @@ public class AddingCageController {
         try {
             new AlertBoxForm(content).display();
         } catch(Exception ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddingCageController", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddingCageController - displayAlertBox", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 

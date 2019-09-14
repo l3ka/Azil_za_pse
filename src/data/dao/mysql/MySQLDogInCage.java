@@ -7,6 +7,7 @@ import data.dto.LoggerDTO;
 import util.AzilUtilities;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class MySQLDogInCage implements DogInCageDAO {
@@ -31,7 +32,7 @@ public class MySQLDogInCage implements DogInCageDAO {
             retVal = ps.executeUpdate() == 1;
         } catch (Exception ex) {
             retVal = false;
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLDogInCage", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLDogInCage - insert", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
@@ -47,7 +48,7 @@ public class MySQLDogInCage implements DogInCageDAO {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String query = "SELECT * FROM kavez_pas WHERE KavezIdKaveza=?";
+        String query = "SELECT * FROM kavez_pas WHERE IdKaveza=?";
 
         try {
             conn = ConnectionPool.getInstance().checkOut();
@@ -57,12 +58,12 @@ public class MySQLDogInCage implements DogInCageDAO {
 
             while (rs.next())
                 retVal.add(new DogInCageDTO(
-                        AzilUtilities.getDAOFactory().getDogDAO().getByID(rs.getInt("Pas_IdPsa")), cage,
-                        rs.getTimestamp("datumOd"),
-                        rs.getTimestamp("DatumDo")
+                        AzilUtilities.getDAOFactory().getDogDAO().getByID(rs.getInt("IdPsa")), cage,
+                        rs.getTimestamp("Od"),
+                        rs.getTimestamp("Do")
                 ));
         } catch (SQLException ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLDogInCage", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLDogInCage - dogInCages", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -78,11 +79,11 @@ public class MySQLDogInCage implements DogInCageDAO {
         PreparedStatement ps = null;
 
         String query = "UPDATE kavez_pas SET " +
-                "Od=?, " +
-                "Kavez_IdKavez=?," +
-                "Pas_IdPsa=?," +
-                "Do=? " +
-                "WHERE Od=?  AND Kavez_IdKaveza=? AND Pas_IdPsa=?";
+                        "Od=?, " +
+                        "IdKavez=?," +
+                        "IdPsa=?," +
+                        "Do=? " +
+                       "WHERE Od=? AND IdKaveza=? AND IdPsa=?";
         try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
@@ -97,7 +98,7 @@ public class MySQLDogInCage implements DogInCageDAO {
 
             ps.executeUpdate();
         } catch (SQLException ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLDogInCage", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLDogInCage - update", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
@@ -112,7 +113,7 @@ public class MySQLDogInCage implements DogInCageDAO {
         PreparedStatement ps = null;
 
         String query = "DELETE FROM kavez_pas " +
-                "WHERE Od=?  AND Kavez_IdKaveza=? AND Pas_IdPsa=?";
+                       "WHERE Od=?  AND IdKaveza=? AND IdPsa=?";
         try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
@@ -123,7 +124,7 @@ public class MySQLDogInCage implements DogInCageDAO {
 
             ps.executeUpdate();
         } catch (SQLException ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLDogInCage", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLDogInCage - delete", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);

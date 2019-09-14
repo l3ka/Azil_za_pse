@@ -2,7 +2,7 @@ use azil;
 
 drop procedure if exists add_employee_contract;
 delimiter $$
-create procedure add_employee_contract(in pJMBG char(13), in pIme varchar(45), in pPrezime varchar(45), in pUsername varchar(255), in pPassword varchar(255), in pStrucnaSprema varchar(255), in pMjestoPrebivalista varchar(255), in pBrojTelefona varchar(255), in pPozicija varchar(45), in pPlata decimal(10, 0), in pOd date, in pDo date)
+create procedure add_employee_contract(in pJMBG char(13), in pIme varchar(255), in pPrezime varchar(255), in pUsername varchar(255), in pPassword varchar(255), in pStrucnaSprema varchar(255), in pMjestoPrebivalista varchar(255), in pBrojTelefona varchar(255), in pPozicija varchar(255), in pPlata decimal, in pOd date, in pDo date)
 begin 
     declare vID int;
     DECLARE exit handler for sqlexception

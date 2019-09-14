@@ -10,7 +10,7 @@ public interface ContractDAO {
 
     List<EmploymentContractDTO> contractsForEmployee(EmployeeDTO employee);
 
-    EmploymentContractDTO contarctById(int ContractId);
+    EmploymentContractDTO contractById(int ContractId);
 
     boolean delete(EmploymentContractDTO contract);
 
