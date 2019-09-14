@@ -31,10 +31,9 @@ public class AccountsController {
 
     private Stage stage;
     private EmployeeDTO employee;
+    private List<EmployeeDTO> listOfEmployees = new ArrayList<>();
 
     public void setEmployee(EmployeeDTO employee) { this.employee = employee; }
-
-    private List<EmployeeDTO> listOfEmployees = new ArrayList<>();
 
 
     public void initialize(Stage stage) {
@@ -64,13 +63,13 @@ public class AccountsController {
     }
 
     public void updateAccount() {
-        if (checkSelectedAccount()) {
-            try {
+        try {
+            if (checkSelectedAccount()) {
                 new ChangeAccount(accountsTableView.getSelectionModel().getSelectedItem()).display();
                 displayEmployees();
-            } catch (Exception ex) {
-                AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AccountsController - updateAccount", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             }
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AccountsController - updateAccount", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
@@ -103,8 +102,12 @@ public class AccountsController {
     }
 
     public void search() {
-        if(checkName()) {
+        try {
+            if(checkName()) {
 
+            }
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AccountsController - search", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
@@ -117,31 +120,40 @@ public class AccountsController {
     }
 
     private void displayEmployees() {
-        accountsTableView.getItems().clear();
-        accountsTableView.refresh();
-        listOfEmployees.clear();
-        listOfEmployees.addAll(AzilUtilities.getDAOFactory().getAdministratorDAO().adminstartors());
-        int i = 0;
-        for (; i < listOfEmployees.size(); ++i) {
-            EmployeeDTO employeeDTO = listOfEmployees.get(i);
-            if (employeeDTO.getUsername().equals(employee.getUsername())) {
-                listOfEmployees.remove(i);
+        try {
+            accountsTableView.getItems().clear();
+            accountsTableView.refresh();
+            listOfEmployees.clear();
+            listOfEmployees.addAll(AzilUtilities.getDAOFactory().getAdministratorDAO().adminstartors());
+            int i = 0;
+            for (; i < listOfEmployees.size(); ++i) {
+                EmployeeDTO employeeDTO = listOfEmployees.get(i);
+                if (employeeDTO.getUsername().equals(employee.getUsername())) {
+                    listOfEmployees.remove(i);
+                }
             }
-        }
-        listOfEmployees.addAll(AzilUtilities.getDAOFactory().getVeterinarinaDAO().veterinarians());
-        listOfEmployees.addAll(AzilUtilities.getDAOFactory().getServantDAO().servants());
-        numberOfEmployees.setText("Broj zaposlenih: " + listOfEmployees.size());
-        for(EmployeeDTO employee : listOfEmployees) {
-            accountsTableView.getItems().add(employee);
+            listOfEmployees.addAll(AzilUtilities.getDAOFactory().getVeterinarinaDAO().veterinarians());
+            listOfEmployees.addAll(AzilUtilities.getDAOFactory().getServantDAO().servants());
+            numberOfEmployees.setText("Broj zaposlenih: " + listOfEmployees.size());
+            for(EmployeeDTO employee : listOfEmployees) {
+                accountsTableView.getItems().add(employee);
+            }
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AccountsController - displayEmployees", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
     private boolean checkSelectedAccount() {
-        if(accountsTableView.getSelectionModel().getSelectedItem() == null) {
-            displayAlertBox("Nije izabran nalog!");
-            return false;
+        try {
+            if(accountsTableView.getSelectionModel().getSelectedItem() == null) {
+                displayAlertBox("Nije izabran nalog!");
+                return false;
+            }
+            return true;
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AccountsController - checkSelectedAccount", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+            return  false;
         }
-        return true;
     }
 
     private void displayAlertBox(String content) {
@@ -153,10 +165,16 @@ public class AccountsController {
     }
 
     private boolean checkName() {
-        if("".equals(nameTextField.getText())) {
-            displayAlertBox("Nije uneseno ime za pretragu!");
+        try {
+            if("".equals(nameTextField.getText())) {
+                displayAlertBox("Nije uneseno ime za pretragu!");
+                return false;
+            }
+            return true;
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AccountsController - checkName", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             return false;
         }
-        return true;
     }
+
 }
