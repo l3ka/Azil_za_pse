@@ -3,7 +3,7 @@ package GUI.preview.medicine_preview;
 import GUI.adding_medicine.AddingMedicineForm;
 import GUI.alert_box.AlertBoxForm;
 import GUI.decide_box.DecideBox;
-import data.dto.DogDTO;
+import GUI.editing_medicine.EditingMedicineForm;
 import data.dto.MedicineDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -34,10 +34,10 @@ public class MedicinePreviewController {
         medicineTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("name"));
         medicineTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("description"));
         medicineTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("quantity"));
-        displayMedicine();
+        displayMedicines();
     }
 
-    private void displayMedicine() {
+    private void displayMedicines() {
         medicineTableView.getItems().clear();
         medicineTableView.refresh();
         listOfMedicine = AzilUtilities.getDAOFactory().getMedicineDAO().medicines();
@@ -53,20 +53,21 @@ public class MedicinePreviewController {
     public void addMedicine() {
         try {
             new AddingMedicineForm().display();
-            displayMedicine();
+            displayMedicines();
         } catch (Exception ex) {
 
         }
     }
 
     public void editMedicine() {
-        try {
-            if (medicineTableView.getSelectionModel().getSelectedItem() == null) {
-                new AlertBoxForm("Nije izabran lijek!").display();
-            }
-        } catch (Exception ex) {
+       if(checkSelectedMedicine()) {
+           try {
+               new EditingMedicineForm(medicineTableView.getSelectionModel().getSelectedItem()).display();
+               displayMedicines();
+           } catch(Exception ex) {
 
-        }
+           }
+       }
     }
 
     public void deleteMedicine() {
@@ -80,7 +81,7 @@ public class MedicinePreviewController {
                     else {
                         displayAlertBox("Desila se greška prilikom brisanja lijeka!");
                     }
-                    displayMedicine();
+                    displayMedicines();
                 }
             }
         } catch (Exception ex) {

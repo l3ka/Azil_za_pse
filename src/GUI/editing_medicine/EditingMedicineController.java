@@ -1,4 +1,4 @@
-package GUI.adding_medicine;
+package GUI.editing_medicine;
 
 import GUI.alert_box.AlertBoxForm;
 import data.dto.LoggerDTO;
@@ -6,15 +6,13 @@ import data.dto.MedicineDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import util.AzilUtilities;
 
 import java.sql.Date;
 import java.util.Calendar;
 
-public class AddingMedicineController {
+public class EditingMedicineController {
 
     @FXML
     private TextField nameTextField;
@@ -28,32 +26,26 @@ public class AddingMedicineController {
     private Button quitButton;
 
     private Stage stage;
+    private MedicineDTO medicine;
 
-    public void initialize(Stage stage) {
+    public void initialize(Stage stage, MedicineDTO medicine) {
         this.stage = stage;
-        initButtonEvent();
+        this.medicine = medicine;
+
+        nameTextField.setText(medicine.getName());
+        amountTextField.setText("" + medicine.getQuantity());
+        descriptionTextField.setText(medicine.getDescription());
     }
 
-    private void initButtonEvent() {
-        saveButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
-            if (e.getCode() == KeyCode.ENTER) {
-                saveButton.fire();
-                e.consume();
-            }
-        });
-        quitButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
-            if (e.getCode() == KeyCode.ENTER) {
-                quitButton.fire();
-                e.consume();
-            }
-        });
-    }
-
-    public void addDrug() {
+    public void save() {
         if(checkName() && checkAmount()) {
-            AzilUtilities.getDAOFactory().getMedicineDAO().insert(new MedicineDTO(0, nameTextField.getText().trim(), descriptionTextField.getText().trim(), Integer.valueOf(amountTextField.getText().trim())));
-            displayAlertBox("Lijek je uspješno dodat!");
-            quit();
+            medicine.setName(nameTextField.getText());
+            medicine.setQuantity(Integer.valueOf(amountTextField.getText()));
+            medicine.setDescription(descriptionTextField.getText());
+            if(AzilUtilities.getDAOFactory().getMedicineDAO().update(medicine)) {
+                displayAlertBox("Podaci o lijeku su uspješno izmijenjeni!");
+                stage.close();
+            }
         }
     }
 
@@ -94,5 +86,4 @@ public class AddingMedicineController {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddingMedicineController - displayAlertBox", new Date(Calendar.getInstance().getTime().getTime()),  ex.fillInStackTrace().toString()));
         }
     }
-
 }

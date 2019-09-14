@@ -4,7 +4,9 @@ import GUI.adding_dog.AddingDogForm;
 import GUI.alert_box.AlertBoxForm;
 import GUI.decide_box.DecideBox;
 import GUI.editing_dog.EditingDogForm;
+import data.dto.CageDTO;
 import data.dto.DogDTO;
+import data.dto.DogInCageDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -12,6 +14,8 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import util.AzilUtilities;
 
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 public class DogsPreviewController {
@@ -23,6 +27,9 @@ public class DogsPreviewController {
     private ImageView dogImageView;
     @FXML
     private TableView<DogDTO> dogsTableView;
+
+    private CageDTO cage;
+    private DogInCageDTO dogInCage;
 
     public void initialize(Stage stage) {
         this.stage = stage;
@@ -39,6 +46,7 @@ public class DogsPreviewController {
     public void addDog() {
         try {
             new AddingDogForm().display();
+            displayDogs();
         } catch (Exception ex) {
 
         }
@@ -48,6 +56,7 @@ public class DogsPreviewController {
         if(checkSelectedDog()) {
             try {
                 new EditingDogForm(dogsTableView.getSelectionModel().getSelectedItem()).display();
+                displayDogs();
             } catch (Exception ex) {
 
             }
@@ -59,17 +68,20 @@ public class DogsPreviewController {
             if (checkSelectedDog()) {
                 boolean choice = new DecideBox("Da li ste sigurni da želite da obrišete psa?").display();
                 if (choice) {
+                    cage = AzilUtilities.getDAOFactory().getDogInCageDAO().getCage(dogsTableView.getSelectionModel().getSelectedItem());
+                    dogInCage = AzilUtilities.getDAOFactory().getDogInCageDAO().getDogInCage(cage.getId(), dogsTableView.getSelectionModel().getSelectedItem().getDogId());
+                    AzilUtilities.getDAOFactory().getDogInCageDAO().update(dogInCage, new Date(Calendar.getInstance().getTime().getTime()), dogInCage.getCage().getId(), dogInCage.getDog().getDogId());
                     if (AzilUtilities.getDAOFactory().getDogDAO().delete(dogsTableView.getSelectionModel().getSelectedItem())) {
                        displayAlertBox("Pas je uspješno obrisan!");
+                       displayDogs();
                     }
                     else {
-                        displayAlertBox("Desila se greška prilikom brisanja");
+                        displayAlertBox("Desila se greška prilikom brisanja!");
                     }
-                    displayDogs();
                 }
             }
         } catch (Exception ex) {
-
+            ex.printStackTrace();
         }
     }
 
