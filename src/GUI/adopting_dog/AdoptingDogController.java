@@ -29,7 +29,6 @@ public class AdoptingDogController {
     @FXML
     private Button quitButton;
 
-
     private List<DogDTO> listOfDogs;
     private List<FosterParentDTO> listOfFosterParents;
     private DogDTO selectedDog;
@@ -39,53 +38,65 @@ public class AdoptingDogController {
 
     @FXML
     public void initialize(Stage stage) {
-        this.stage = stage;
+        try {
+            this.stage = stage;
 
-        dogsTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("name"));
-        dogsTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("breed"));
-        dogsTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("gender"));
-        dogsTableView.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("height"));
-        dogsTableView.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("weight"));
-        dogsTableView.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
+            dogsTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("name"));
+            dogsTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("breed"));
+            dogsTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("gender"));
+            dogsTableView.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("height"));
+            dogsTableView.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("weight"));
+            dogsTableView.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
 
-        fosterParentsTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("name"));
-        fosterParentsTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("surname"));
-        fosterParentsTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("residenceAddress"));
-        fosterParentsTableView.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("telephoneNumber"));
+            fosterParentsTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("name"));
+            fosterParentsTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("surname"));
+            fosterParentsTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("residenceAddress"));
+            fosterParentsTableView.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("telephoneNumber"));
 
-        displayDogs();
-        displayFosterParents();
-        initButtonEvent();
+            displayDogs();
+            displayFosterParents();
+            initButtonEvent();
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AdoptingDogController - initialize", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     private void initButtonEvent() {
-        adoptDogButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
-            if (e.getCode() == KeyCode.ENTER) {
-                adoptDogButton.fire();
-                e.consume();
-            }
-        });
-        quitButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
-            if (e.getCode() == KeyCode.ENTER) {
-                quitButton.fire();
-                e.consume();
-            }
-        });
+        try {
+            adoptDogButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+                if (e.getCode() == KeyCode.ENTER) {
+                    adoptDogButton.fire();
+                    e.consume();
+                }
+            });
+            quitButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+                if (e.getCode() == KeyCode.ENTER) {
+                    quitButton.fire();
+                    e.consume();
+                }
+            });
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AdoptingDogController - initButtonEvent", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     public void adoptDog() {
-        if(checkDog() && checkFosterParent()) {
-            selectedDog = dogsTableView.getSelectionModel().getSelectedItem();
-            selectedFosterParent = fosterParentsTableView.getSelectionModel().getSelectedItem();
+        try {
+            if(checkDog() && checkFosterParent()) {
+                selectedDog = dogsTableView.getSelectionModel().getSelectedItem();
+                selectedFosterParent = fosterParentsTableView.getSelectionModel().getSelectedItem();
 
-            selectedDog.setAdopted(true);
-            AzilUtilities.getDAOFactory().getDogDAO().update(selectedDog);
-            adoptingDTO = new AdoptingDTO(selectedDog, new Date(Calendar.getInstance().getTime().getTime()), null);
-            selectedFosterParent.addDog(adoptingDTO);
+                selectedDog.setAdopted(true);
+                AzilUtilities.getDAOFactory().getDogDAO().update(selectedDog);
+                adoptingDTO = new AdoptingDTO(selectedDog, new Date(Calendar.getInstance().getTime().getTime()), null);
+                selectedFosterParent.addDog(adoptingDTO);
 
-            AzilUtilities.getDAOFactory().getAdoptingDAO().insert(selectedFosterParent, adoptingDTO);
-            displayAlertBox("Pas je uspješno udomljen!");
-            quit();
+                AzilUtilities.getDAOFactory().getAdoptingDAO().insert(selectedFosterParent, adoptingDTO);
+                displayAlertBox("Pas je uspješno udomljen!");
+                quit();
+            }
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AdoptingDogController - adoptDog", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
@@ -94,19 +105,54 @@ public class AdoptingDogController {
     }
 
     private boolean checkDog() {
-        if(dogsTableView.getSelectionModel().getSelectedItem() == null) {
-            displayAlertBox("Nije izabran pas!");
+        try {
+            if(dogsTableView.getSelectionModel().getSelectedItem() == null) {
+                displayAlertBox("Nije izabran pas!");
+                return false;
+            }
+            return true;
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AdoptingDogController - checkDog", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             return false;
         }
-        return true;
     }
 
     private boolean checkFosterParent() {
-        if(fosterParentsTableView.getSelectionModel().getSelectedItem() == null) {
-            displayAlertBox("Nije izabran udomitelj!");
+        try {
+            if(fosterParentsTableView.getSelectionModel().getSelectedItem() == null) {
+                displayAlertBox("Nije izabran udomitelj!");
+                return false;
+            }
+            return true;
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AdoptingDogController - checkFosterParent", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             return false;
         }
-        return true;
+    }
+
+
+    private void displayDogs() {
+        try {
+            listOfDogs = AzilUtilities.getDAOFactory().getDogDAO().dogs();
+            for (DogDTO dog : listOfDogs) {
+                if(!dog.isAdopted()) {
+                    dogsTableView.getItems().add(dog);
+                }
+            }
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AdoptingDogController - displayDogs", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
+    }
+
+    private void displayFosterParents() {
+        try {
+            listOfFosterParents = AzilUtilities.getDAOFactory().getFosterParentDAO().fosterParents();
+            for(FosterParentDTO fosterParent : listOfFosterParents) {
+                fosterParentsTableView.getItems().add(fosterParent);
+            }
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AdoptingDogController - displayFosterParents", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     private void displayAlertBox(String content) {
@@ -114,22 +160,6 @@ public class AdoptingDogController {
             new AlertBoxForm(content).display();
         } catch (Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AdoptingDogController - displayAlertBox", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
-        }
-    }
-
-    private void displayDogs() {
-        listOfDogs = AzilUtilities.getDAOFactory().getDogDAO().dogs();
-        for (DogDTO dog : listOfDogs) {
-            if(!dog.isAdopted()) {
-                dogsTableView.getItems().add(dog);
-            }
-        }
-    }
-
-    private void displayFosterParents() {
-        listOfFosterParents = AzilUtilities.getDAOFactory().getFosterParentDAO().fosterParents();
-        for(FosterParentDTO fosterParent : listOfFosterParents) {
-            fosterParentsTableView.getItems().add(fosterParent);
         }
     }
 

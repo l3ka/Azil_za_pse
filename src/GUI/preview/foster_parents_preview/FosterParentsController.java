@@ -83,7 +83,11 @@ public class FosterParentsController {
     }
 
     public void displayAllFosterParents() {
-        displayFosterParents();
+        try {
+            displayFosterParents();
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("FosterParentsController - displayAllFosterParents", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     public void search() {
@@ -97,7 +101,11 @@ public class FosterParentsController {
     }
 
     public void quit() {
-        stage.close();
+        try {
+            stage.close();
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("FosterParentsController - quit", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     private boolean checkSelectedFosterParent() {

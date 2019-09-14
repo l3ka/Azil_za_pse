@@ -23,4 +23,5 @@ public class MedicinePreviewForm {
         controller.initialize(stage);
         stage.show();
     }
+
 }

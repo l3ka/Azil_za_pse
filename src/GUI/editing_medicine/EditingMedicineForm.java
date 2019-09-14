@@ -29,4 +29,5 @@ public class EditingMedicineForm {
         stage.setScene(scene);
         stage.showAndWait();
     }
+
 }

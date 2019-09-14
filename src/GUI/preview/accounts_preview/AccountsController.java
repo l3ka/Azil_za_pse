@@ -112,11 +112,19 @@ public class AccountsController {
     }
 
     public void displayAllAccounts() {
-        displayEmployees();
+        try {
+            displayEmployees();
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AccountsController - displayAllAccounts", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     public void quit() {
-        stage.close();
+        try {
+            stage.close();
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AccountsController - quit", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     private void displayEmployees() {

@@ -13,6 +13,7 @@ import java.sql.Date;
 import java.util.Calendar;
 
 public class EditFosterParentController {
+
     @FXML
     private TextField nameTextField;
     @FXML
@@ -32,28 +33,36 @@ public class EditFosterParentController {
     private FosterParentDTO fosterParent;
 
     public void initialize(Stage stage, FosterParentDTO fosterParent) {
-        this.stage = stage;
-        this.fosterParent = fosterParent;
+        try {
+            this.stage = stage;
+            this.fosterParent = fosterParent;
 
-        nameTextField.setText(fosterParent.getName());
-        surnameTextField.setText(fosterParent.getSurname());
-        identificationNumberTextField.setText(fosterParent.getJMB());
-        placeOfResidenceTextField.setText(fosterParent.getResidenceAddress());
-        phoneNumberTextField.setText(fosterParent.getTelephoneNumber());
+            nameTextField.setText(fosterParent.getName());
+            surnameTextField.setText(fosterParent.getSurname());
+            identificationNumberTextField.setText(fosterParent.getJMB());
+            placeOfResidenceTextField.setText(fosterParent.getResidenceAddress());
+            phoneNumberTextField.setText(fosterParent.getTelephoneNumber());
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditFosterParentController - initialize", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     public void save() {
-        if(checkName() && checkIsNumber(identificationNumberTextField.getText()) && checkPhoneNumber() && checkPlaceOfResidence()) {
-            fosterParent.setName(nameTextField.getText());
-            fosterParent.setSurname(surnameTextField.getText());
-            fosterParent.setJMB(identificationNumberTextField.getText());
-            fosterParent.setResidenceAddress(placeOfResidenceTextField.getText());
-            fosterParent.setTelephoneNumber(phoneNumberTextField.getText());
+        try {
+            if(checkName() && checkIsNumber(identificationNumberTextField.getText()) && checkPhoneNumber() && checkPlaceOfResidence()) {
+                fosterParent.setName(nameTextField.getText());
+                fosterParent.setSurname(surnameTextField.getText());
+                fosterParent.setJMB(identificationNumberTextField.getText());
+                fosterParent.setResidenceAddress(placeOfResidenceTextField.getText());
+                fosterParent.setTelephoneNumber(phoneNumberTextField.getText());
 
-            if(AzilUtilities.getDAOFactory().getFosterParentDAO().update(fosterParent)) {
-                displayAlertBox("Uspješno izmijenjeni podaci o udomitelju!");
-                stage.close();
+                if(AzilUtilities.getDAOFactory().getFosterParentDAO().update(fosterParent)) {
+                    displayAlertBox("Uspješno izmijenjeni podaci o udomitelju!");
+                    stage.close();
+                }
             }
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditFosterParentController - save", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
@@ -62,11 +71,16 @@ public class EditFosterParentController {
     }
 
     private boolean checkName() {
-        if ("".equals(nameTextField.getText().trim()) || "".equals(surnameTextField.getText().trim())) {
-            displayAlertBox("Unos za polja ime i prezime nije odgovarajući!");
+        try {
+            if ("".equals(nameTextField.getText().trim()) || "".equals(surnameTextField.getText().trim())) {
+                displayAlertBox("Unos za polja ime i prezime nije odgovarajući!");
+                return false;
+            }
+            return true;
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditFosterParentController - checkName", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             return false;
         }
-        return true;
     }
 
     private boolean checkIsNumber(String number) {
@@ -74,26 +88,37 @@ public class EditFosterParentController {
     }
 
     private boolean checkPlaceOfResidence() {
-        if ("".equals(placeOfResidenceTextField.getText().trim())) {
-            displayAlertBox("Unos za polje mjesto stanovanja nije odgovarajući!");
+        try {
+            if ("".equals(placeOfResidenceTextField.getText().trim())) {
+                displayAlertBox("Unos za polje mjesto stanovanja nije odgovarajući!");
+                return false;
+            }
+            return true;
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditFosterParentController - checkPlaceOfResidence", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             return false;
         }
-        return true;
     }
 
     private boolean checkPhoneNumber() {
-        if ("".equals(phoneNumberTextField.getText().trim())) {
-            displayAlertBox("Unos za polje broj telefona nije odgovarajući!");
+        try {
+            if ("".equals(phoneNumberTextField.getText().trim())) {
+                displayAlertBox("Unos za polje broj telefona nije odgovarajući!");
+                return false;
+            }
+            return true;
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditFosterParentController - checkPhoneNumber", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             return false;
         }
-        return true;
     }
 
     private void displayAlertBox(String content) {
         try {
             new AlertBoxForm(content).display();
         } catch (Exception ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddFosterParentController - displayAlertBox", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditFosterParentController - displayAlertBox", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
+
 }

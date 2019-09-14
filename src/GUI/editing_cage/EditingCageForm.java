@@ -29,4 +29,5 @@ public class EditingCageForm {
         controller.initialize(stage, cage);
         stage.showAndWait();
     }
+
 }

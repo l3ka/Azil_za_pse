@@ -23,4 +23,5 @@ public class DogsPreviewForm {
             controller.initialize(stage);
             stage.show();
     }
+
 }

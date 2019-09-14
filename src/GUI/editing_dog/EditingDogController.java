@@ -20,6 +20,7 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 
 public class EditingDogController {
+
     @FXML
     private TextField nameTextField;
     @FXML
@@ -47,50 +48,61 @@ public class EditingDogController {
     private CageDTO cage;
 
     public void initialize(Stage stage, DogDTO dog) {
-        this.stage = stage;
-        this.dog = dog;
+        try {
+            this.stage = stage;
+            this.dog = dog;
 
-        genderComboBox.getItems().addAll("M", "Ž");
-        for(CageDTO cage : AzilUtilities.getDAOFactory().getCageDAO().cages()) {
-            cagesComboBox.getItems().add(cage);
+            genderComboBox.getItems().addAll("M", "Ž");
+            for(CageDTO cage : AzilUtilities.getDAOFactory().getCageDAO().cages()) {
+                cagesComboBox.getItems().add(cage);
+            }
+
+            genderComboBox.getSelectionModel().select(dog.getGender());
+            cagesComboBox.getSelectionModel().select(AzilUtilities.getDAOFactory().getDogInCageDAO().getCage(dog));
+            nameTextField.setText(dog.getName());
+            raceTextField.setText(dog.getBreed());
+            weightTextField.setText("" + dog.getWeight());
+            heightTextField.setText("" + dog.getHeight());
+            dateOfBirthDatePicker.setValue(dog.getDateOfBirth().toLocalDate());
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditingDogController - initialize", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
-
-        genderComboBox.getSelectionModel().select(dog.getGender());
-        cagesComboBox.getSelectionModel().select(AzilUtilities.getDAOFactory().getDogInCageDAO().getCage(dog));
-        nameTextField.setText(dog.getName());
-        raceTextField.setText(dog.getBreed());
-        weightTextField.setText("" + dog.getWeight());
-        heightTextField.setText("" + dog.getHeight());
-        dateOfBirthDatePicker.setValue(dog.getDateOfBirth().toLocalDate());
     }
 
     public void choosePhoto() {
-        FileChooser fileChooser = new FileChooser();
-        photo = fileChooser.showOpenDialog(stage);
-        choosePhotoButton.setText("Promijeni fotografiju");
+        try {
+            FileChooser fileChooser = new FileChooser();
+            photo = fileChooser.showOpenDialog(stage);
+            choosePhotoButton.setText("Promijeni fotografiju");
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditingDogController - choosePhoto", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     public void save() {
-        String image;
-        if (!checkPhoto()) {
-            image = null;
-        }
-        else {
-            image = photo.getAbsolutePath();
-        }
-
-        if (checkName() && checkRace() && checkGender() && checkWeight() && checkHeight() && checkAge() && checkSelectedCage()) {
-            cage = AzilUtilities.getDAOFactory().getDogInCageDAO().getCage(dog);
-            if(!cagesComboBox.getSelectionModel().getSelectedItem().equals(cage)) {
-                cage.setCapacity(cage.getCapacity() + 1);
-                AzilUtilities.getDAOFactory().getDogInCageDAO().getDogInCage(cage.getId(), dog.getDogId()).setDateTo(new Timestamp(Calendar.getInstance().getTime().getTime()));
-                cagesComboBox.getSelectionModel().getSelectedItem().setCapacity(cagesComboBox.getSelectionModel().getSelectedItem().getCapacity() - 1);
-                AzilUtilities.getDAOFactory().getDogInCageDAO().insert(new DogInCageDTO(dog, cagesComboBox.getSelectionModel().getSelectedItem(), new Timestamp(Calendar.getInstance().getTime().getTime()), null));
+        try {
+            String image;
+            if (!checkPhoto()) {
+                image = null;
             }
-            if (AzilUtilities.getDAOFactory().getDogDAO().update(new DogDTO(0, genderComboBox.getSelectionModel().getSelectedItem(), nameTextField.getText(),
-                    raceTextField.getText(), Integer.parseInt(heightTextField.getText()), Double.parseDouble(weightTextField.getText()), Date.valueOf(dateOfBirthDatePicker.getValue()), image, false))) {
-                displayAlertBox("Informacije o psu su uspješno izmijenjene!");
+            else {
+                image = photo.getAbsolutePath();
             }
+            if (checkName() && checkRace() && checkGender() && checkWeight() && checkHeight() && checkAge() && checkSelectedCage()) {
+                cage = AzilUtilities.getDAOFactory().getDogInCageDAO().getCage(dog);
+                if(!cagesComboBox.getSelectionModel().getSelectedItem().equals(cage)) {
+                    cage.setCapacity(cage.getCapacity() + 1);
+                    AzilUtilities.getDAOFactory().getDogInCageDAO().getDogInCage(cage.getId(), dog.getDogId()).setDateTo(new Timestamp(Calendar.getInstance().getTime().getTime()));
+                    cagesComboBox.getSelectionModel().getSelectedItem().setCapacity(cagesComboBox.getSelectionModel().getSelectedItem().getCapacity() - 1);
+                    AzilUtilities.getDAOFactory().getDogInCageDAO().insert(new DogInCageDTO(dog, cagesComboBox.getSelectionModel().getSelectedItem(), new Timestamp(Calendar.getInstance().getTime().getTime()), null));
+                }
+                if (AzilUtilities.getDAOFactory().getDogDAO().update(new DogDTO(0, genderComboBox.getSelectionModel().getSelectedItem(), nameTextField.getText(),
+                        raceTextField.getText(), Integer.parseInt(heightTextField.getText()), Double.parseDouble(weightTextField.getText()), Date.valueOf(dateOfBirthDatePicker.getValue()), image, false))) {
+                    displayAlertBox("Informacije o psu su uspješno izmijenjene!");
+                }
+            }
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditingDogController - save", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
@@ -99,58 +111,93 @@ public class EditingDogController {
     }
 
     private boolean checkName() {
-        if("".equals(nameTextField.getText().trim())) {
-            displayAlertBox("Unos za polje ime nije odgovarajući!");
+        try {
+            if("".equals(nameTextField.getText().trim())) {
+                displayAlertBox("Unos za polje ime nije odgovarajući!");
+                return false;
+            }
+            return true;
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditingDogController - checkName", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             return false;
         }
-        return true;
     }
 
     private boolean checkRace() {
-        if("".equals(raceTextField.getText().trim())) {
-            displayAlertBox("Unos za polje rasa nije odgovarajući!");
+        try {
+            if("".equals(raceTextField.getText().trim())) {
+                displayAlertBox("Unos za polje rasa nije odgovarajući!");
+                return false;
+            }
+            return true;
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditingDogController - checkRace", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             return false;
         }
-        return true;
     }
 
     private boolean checkGender() {
-        if(genderComboBox.getSelectionModel().getSelectedItem() == null) {
-            displayAlertBox("Pol psa nije izabran!");
+        try {
+            if(genderComboBox.getSelectionModel().getSelectedItem() == null) {
+                displayAlertBox("Pol psa nije izabran!");
+                return false;
+            }
+            return true;
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditingDogController - checkGender", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             return false;
         }
-        return true;
     }
 
     private boolean checkWeight() {
-        if("".equals(weightTextField.getText().trim()) || !checkNumber(weightTextField.getText().trim())) {
-            displayAlertBox("Unos za polje težina nije odgovarajući!");
+        try {
+            if("".equals(weightTextField.getText().trim()) || !checkNumber(weightTextField.getText().trim())) {
+                displayAlertBox("Unos za polje težina nije odgovarajući!");
+                return false;
+            }
+            return true;
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditingDogController - checkWeight", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             return false;
         }
-        return true;
     }
 
     private boolean checkHeight() {
-        if("".equals(heightTextField.getText().trim()) || !checkNumber(heightTextField.getText().trim())) {
-            displayAlertBox("Unos za polje visina nije odgovarajući!");
+        try {
+            if("".equals(heightTextField.getText().trim()) || !checkNumber(heightTextField.getText().trim())) {
+                displayAlertBox("Unos za polje visina nije odgovarajući!");
+                return false;
+            }
+            return true;
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditingDogController - checkHeight", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             return false;
         }
-        return true;
     }
 
     private boolean checkAge() {
-        if(dateOfBirthDatePicker.getValue() == null) {
-            displayAlertBox("Unos za polje rođenje nije odgovarajući!");
+        try {
+            if(dateOfBirthDatePicker.getValue() == null) {
+                displayAlertBox("Unos za polje rođenje nije odgovarajući!");
+                return false;
+            }
+            return true;
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditingDogController - checkAge", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             return false;
         }
-        return true;
     }
 
     private boolean checkPhoto() {
-        if(photo == null) {
+        try {
+            if(photo == null) {
+                return false;
+            }
+            return true;
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditingDogController - checkPhoto", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             return false;
         }
-        return true;
     }
 
     private boolean checkNumber(String string) {
@@ -158,27 +205,33 @@ public class EditingDogController {
             Double.parseDouble(string);
             return true;
         } catch(NumberFormatException ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddingDogController - checkNumber", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditingDogController - checkNumber", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             return false;
         }
     }
 
     private boolean checkSelectedCage() {
-        if(cagesComboBox.getSelectionModel().getSelectedItem() == null) {
-            displayAlertBox("Nije izabran kavez!");
-            return false;
-        } else if(cagesComboBox.getSelectionModel().getSelectedItem().getCapacity() == 0) {
-            displayAlertBox("Izabrani kavez je popunjen, izaberite drugi!");
+        try {
+            if(cagesComboBox.getSelectionModel().getSelectedItem() == null) {
+                displayAlertBox("Nije izabran kavez!");
+                return false;
+            } else if(cagesComboBox.getSelectionModel().getSelectedItem().getCapacity() == 0) {
+                displayAlertBox("Izabrani kavez je popunjen, izaberite drugi!");
+                return false;
+            }
+            return true;
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditingDogController - checkSelectedCage", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             return false;
         }
-        return true;
     }
 
     private void displayAlertBox(String content) {
         try {
             new AlertBoxForm(content).display();
         } catch(Exception ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddingDogController - displayAlertBox", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditingDogController - displayAlertBox", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
+
 }

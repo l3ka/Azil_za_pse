@@ -30,6 +30,6 @@ public class DecideBox {
         controller.initialize(stage, message);
         stage.showAndWait();
         return controller.getDecision();
-
     }
+
 }

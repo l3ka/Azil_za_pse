@@ -94,11 +94,19 @@ public class CagesController {
     }
 
     public void displayAllCages() {
-        displayCages();
+        try {
+            displayCages();
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("CagesController - displayAllCages", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     public void quit() {
-        stage.close();
+        try {
+            stage.close();
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("CagesController - quit", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     private void displayAlertBox(String content) {

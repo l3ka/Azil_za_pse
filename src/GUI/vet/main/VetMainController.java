@@ -145,14 +145,6 @@ public class VetMainController {
         }
     }
 
-    private void displayAlertBox(String content) {
-        try {
-            new AlertBoxForm(content).display();
-        } catch(Exception ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername() + " --> VetMainController - displayAlertBox", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
-        }
-    }
-
     private boolean checkSearchParameter() {
         try {
             if("".equals(searchParametarTextField.getText().trim())) {
@@ -167,7 +159,20 @@ public class VetMainController {
     }
 
     private void quit() {
-        stage.close();
+        try {
+            stage.close();
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername() + " --> VetMainController - quit", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
+
+    private void displayAlertBox(String content) {
+        try {
+            new AlertBoxForm(content).display();
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername() + " --> VetMainController - displayAlertBox", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
+    }
+
 
 }

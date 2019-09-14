@@ -33,26 +33,34 @@ public class AdoptedDogsStatisticResultController {
     private List<DogDTO> listOfDogs;
 
     public void initialize(Stage stage, LocalDate dateFrom) {
-        this.stage = stage;
-        this.dateFrom = dateFrom;
-        titleLabel.setText("Udomljeni psi od " + dateFrom);
-        dogsTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("name"));
-        dogsTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("breed"));
-        dogsTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("gender"));
-        dogsTableView.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("height"));
-        dogsTableView.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("weight"));
-        dogsTableView.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
-        displayDogs();
-        initButtonEvent();
+        try {
+            this.stage = stage;
+            this.dateFrom = dateFrom;
+            titleLabel.setText("Udomljeni psi od " + dateFrom);
+            dogsTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("name"));
+            dogsTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("breed"));
+            dogsTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("gender"));
+            dogsTableView.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("height"));
+            dogsTableView.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("weight"));
+            dogsTableView.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
+            displayDogs();
+            initButtonEvent();
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AdoptedDogsStatisticResultController - initialize", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     private void initButtonEvent() {
-        adopterDogStatisticOk.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
-            if (e.getCode() == KeyCode.ENTER) {
-                adopterDogStatisticOk.fire();
-                e.consume();
-            }
-        });
+        try {
+            adopterDogStatisticOk.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+                if (e.getCode() == KeyCode.ENTER) {
+                    adopterDogStatisticOk.fire();
+                    e.consume();
+                }
+            });
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AdoptedDogsStatisticResultController - initButtonEvent", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     public void OKButtonPressed() {
@@ -67,12 +75,15 @@ public class AdoptedDogsStatisticResultController {
         }
     }
 
-
     private void displayDogs() {
-        listOfDogs = AzilUtilities.getDAOFactory().getDogDAO().getAdoptedDogs(dateFrom);
-        dogsTableView.getItems().clear();
-        for(DogDTO dog : listOfDogs) {
-            dogsTableView.getItems().add(dog);
+        try {
+            listOfDogs = AzilUtilities.getDAOFactory().getDogDAO().getAdoptedDogs(dateFrom);
+            dogsTableView.getItems().clear();
+            for(DogDTO dog : listOfDogs) {
+                dogsTableView.getItems().add(dog);
+            }
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AdoptedDogsStatisticResultController - displayDogs", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 

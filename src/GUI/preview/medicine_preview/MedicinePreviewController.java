@@ -138,7 +138,11 @@ public class MedicinePreviewController {
     }
 
     public void close() {
-        this.stage.close();
+        try {
+            this.stage.close();
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MedicinePreviewController - close", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     public void searchParameters() {

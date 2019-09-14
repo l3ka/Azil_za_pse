@@ -84,7 +84,11 @@ public class MedicineQuantityController {
     }
 
     public void quit() {
-        stage.close();
+        try {
+            stage.close();
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername() + " --> MedicineQuantityController - quit" , new java.sql.Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     private boolean checkSelectedQuantity() {

@@ -29,23 +29,31 @@ public class EditingMedicineController {
     private MedicineDTO medicine;
 
     public void initialize(Stage stage, MedicineDTO medicine) {
-        this.stage = stage;
-        this.medicine = medicine;
+        try {
+            this.stage = stage;
+            this.medicine = medicine;
 
-        nameTextField.setText(medicine.getName());
-        amountTextField.setText("" + medicine.getQuantity());
-        descriptionTextField.setText(medicine.getDescription());
+            nameTextField.setText(medicine.getName());
+            amountTextField.setText("" + medicine.getQuantity());
+            descriptionTextField.setText(medicine.getDescription());
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditingMedicineController - initialize", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     public void save() {
-        if(checkName() && checkAmount()) {
-            medicine.setName(nameTextField.getText());
-            medicine.setQuantity(Integer.valueOf(amountTextField.getText()));
-            medicine.setDescription(descriptionTextField.getText());
-            if(AzilUtilities.getDAOFactory().getMedicineDAO().update(medicine)) {
-                displayAlertBox("Podaci o lijeku su uspješno izmijenjeni!");
-                stage.close();
+        try {
+            if(checkName() && checkAmount()) {
+                medicine.setName(nameTextField.getText());
+                medicine.setQuantity(Integer.valueOf(amountTextField.getText()));
+                medicine.setDescription(descriptionTextField.getText());
+                if(AzilUtilities.getDAOFactory().getMedicineDAO().update(medicine)) {
+                    displayAlertBox("Podaci o lijeku su uspješno izmijenjeni!");
+                    stage.close();
+                }
             }
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditingMedicineController - save", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
@@ -54,19 +62,29 @@ public class EditingMedicineController {
     }
 
     private boolean checkName() {
-        if("".equals(nameTextField.getText().trim())) {
-            displayAlertBox("Unos za polje naziv nije odgovarajući!");
+        try {
+            if("".equals(nameTextField.getText().trim())) {
+                displayAlertBox("Unos za polje naziv nije odgovarajući!");
+                return false;
+            }
+            return true;
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditingMedicineController - checkName", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             return false;
         }
-        return true;
     }
 
     private boolean checkAmount() {
-        if("".equals(amountTextField.getText().trim()) || !checkNumber(amountTextField.getText().trim())) {
-            displayAlertBox("Unos za polje količina nije odgovarajući!");
+        try {
+            if("".equals(amountTextField.getText().trim()) || !checkNumber(amountTextField.getText().trim())) {
+                displayAlertBox("Unos za polje količina nije odgovarajući!");
+                return false;
+            }
+            return true;
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditingMedicineController - checkAmount", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             return false;
         }
-        return true;
     }
 
     private boolean checkNumber(String string) {
@@ -74,7 +92,7 @@ public class EditingMedicineController {
             Integer.parseInt(string);
             return true;
         } catch(NumberFormatException ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddingMedicineController - checkNumber", new Date(Calendar.getInstance().getTime().getTime()),  ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditingMedicineController - checkNumber", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             return false;
         }
     }
@@ -83,7 +101,8 @@ public class EditingMedicineController {
         try {
             new AlertBoxForm(content).display();
         } catch(Exception ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddingMedicineController - displayAlertBox", new Date(Calendar.getInstance().getTime().getTime()),  ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditingMedicineController - displayAlertBox", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
+
 }

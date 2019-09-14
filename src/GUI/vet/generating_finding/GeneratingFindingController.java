@@ -70,7 +70,11 @@ public class GeneratingFindingController {
     }
 
     public void quit() {
-        stage.close();
+        try {
+            stage.close();
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(veterinarian.getUsername() + " --> GeneratingFindingController - quit", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     private boolean checkDescription() {

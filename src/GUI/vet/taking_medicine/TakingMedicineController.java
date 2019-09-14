@@ -81,7 +81,11 @@ public class TakingMedicineController {
     }
 
     public void quit() {
-        stage.close();
+        try {
+            stage.close();
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername() + " --> TakingMedicineController - quit", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     private boolean checkSelectedDrug() {
@@ -97,14 +101,6 @@ public class TakingMedicineController {
         }
     }
 
-    private void displayAlertBox(String content) {
-        try {
-            new AlertBoxForm(content).display();
-        } catch (Exception ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername() + " --> TakingMedicineController - displayAlertBox", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
-        }
-    }
-
     private void displayMedicines() {
         try {
             listOfMedicines = AzilUtilities.getDAOFactory().getMedicineDAO().medicines();
@@ -113,6 +109,14 @@ public class TakingMedicineController {
             }
         } catch (Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername() + " --> TakingMedicineController - displayMedicines", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
+    }
+
+    private void displayAlertBox(String content) {
+        try {
+            new AlertBoxForm(content).display();
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername() + " --> TakingMedicineController - displayAlertBox", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 

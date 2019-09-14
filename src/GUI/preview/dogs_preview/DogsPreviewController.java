@@ -98,11 +98,19 @@ public class DogsPreviewController {
     }
 
     public void showAll() {
-        displayDogs();
+        try {
+            displayDogs();
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DogsPreviewController - showAll", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     public void close() {
-        this.stage.close();
+        try {
+            this.stage.close();
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DogsPreviewController - close", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     public void displayDogs() {

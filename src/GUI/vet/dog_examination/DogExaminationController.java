@@ -79,7 +79,11 @@ public class DogExaminationController {
     }
 
     public void quit() {
-        stage.close();
+        try {
+            stage.close();
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername() + " --> DogExaminationController - quit", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     public void generateFinding() {

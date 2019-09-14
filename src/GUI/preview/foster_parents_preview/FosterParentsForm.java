@@ -1,6 +1,5 @@
 package GUI.preview.foster_parents_preview;
 
-import GUI.adding_dog.AddingDogController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -23,4 +22,5 @@ public class FosterParentsForm {
         controller.initialize(stage);
         stage.showAndWait();
     }
+
 }

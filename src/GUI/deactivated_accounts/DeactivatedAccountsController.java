@@ -30,16 +30,20 @@ public class DeactivatedAccountsController {
 
 
     public void initialize(Stage stage) {
-        this.stage = stage;
+        try {
+            this.stage = stage;
 
-        accountsTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("JMB"));
-        accountsTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("name"));
-        accountsTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("surname"));
-        accountsTableView.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("qualifications"));
-        accountsTableView.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("residenceAddress"));
-        accountsTableView.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("telephoneNumber"));
+            accountsTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("JMB"));
+            accountsTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("name"));
+            accountsTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("surname"));
+            accountsTableView.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("qualifications"));
+            accountsTableView.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("residenceAddress"));
+            accountsTableView.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("telephoneNumber"));
 
-        displayEmployees();
+            displayEmployees();
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DeactivatedAccountsController - initialize", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     public void activateAccount() {
@@ -59,8 +63,12 @@ public class DeactivatedAccountsController {
     }
 
     public void search() {
-        if(checkName()) {
+        try {
+            if(checkName()) {
 
+            }
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DeactivatedAccountsController - search", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
@@ -73,24 +81,46 @@ public class DeactivatedAccountsController {
     }
 
     private void displayEmployees() {
-        accountsTableView.getItems().clear();
-        accountsTableView.refresh();
-        listOfEmployees.clear();
-        listOfEmployees.addAll(AzilUtilities.getDAOFactory().getAdministratorDAO().adminstartorsDeactivated());
-        listOfEmployees.addAll(AzilUtilities.getDAOFactory().getVeterinarinaDAO().veterinariansDeactivated());
-        listOfEmployees.addAll(AzilUtilities.getDAOFactory().getServantDAO().servantsDeactivated());
-        numberOfEmployees.setText("Broj zaposlenih: " + listOfEmployees.size());
-        for(EmployeeDTO employee : listOfEmployees) {
-            accountsTableView.getItems().add(employee);
+        try {
+            accountsTableView.getItems().clear();
+            accountsTableView.refresh();
+            listOfEmployees.clear();
+            listOfEmployees.addAll(AzilUtilities.getDAOFactory().getAdministratorDAO().adminstartorsDeactivated());
+            listOfEmployees.addAll(AzilUtilities.getDAOFactory().getVeterinarinaDAO().veterinariansDeactivated());
+            listOfEmployees.addAll(AzilUtilities.getDAOFactory().getServantDAO().servantsDeactivated());
+            numberOfEmployees.setText("Broj zaposlenih: " + listOfEmployees.size());
+            for(EmployeeDTO employee : listOfEmployees) {
+                accountsTableView.getItems().add(employee);
+            }
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DeactivatedAccountsController - displayEmployees", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
     private boolean checkSelectedAccount() {
-        if(accountsTableView.getSelectionModel().getSelectedItem() == null) {
-            displayAlertBox("Nije izabran nalog!");
+        try {
+            if(accountsTableView.getSelectionModel().getSelectedItem() == null) {
+                displayAlertBox("Nije izabran nalog!");
+                return false;
+            }
+            return true;
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DeactivatedAccountsController - checkSelectedAccount", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             return false;
         }
-        return true;
+    }
+
+    private boolean checkName() {
+        try {
+            if("".equals(nameTextField.getText())) {
+                displayAlertBox("Nije uneseno ime za pretragu!");
+                return false;
+            }
+            return true;
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DeactivatedAccountsController - checkName", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+            return false;
+        }
     }
 
     private void displayAlertBox(String content) {
@@ -101,11 +131,5 @@ public class DeactivatedAccountsController {
         }
     }
 
-    private boolean checkName() {
-        if("".equals(nameTextField.getText())) {
-            displayAlertBox("Nije uneseno ime za pretragu!");
-            return false;
-        }
-        return true;
-    }
+
 }

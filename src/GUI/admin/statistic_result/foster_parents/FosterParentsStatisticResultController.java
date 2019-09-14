@@ -33,27 +33,35 @@ public class FosterParentsStatisticResultController {
     private List<FosterParentDTO> listOfFosterParents;
 
     public void initialize(Stage stage, LocalDate dateFrom) {
-        this.stage = stage;
-        this.dateFrom = dateFrom;
+        try {
+            this.stage = stage;
+            this.dateFrom = dateFrom;
 
-        titleLabel.setText("Udomitelji od " + dateFrom);
+            titleLabel.setText("Udomitelji od " + dateFrom);
 
-        fosterParentsTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("JMB"));
-        fosterParentsTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("name"));
-        fosterParentsTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("surname"));
-        fosterParentsTableView.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("residenceAddress"));
-        fosterParentsTableView.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("telephoneNumber"));
-        displayFosterParents();
-        initButtonEvent();
+            fosterParentsTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("JMB"));
+            fosterParentsTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("name"));
+            fosterParentsTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("surname"));
+            fosterParentsTableView.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("residenceAddress"));
+            fosterParentsTableView.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("telephoneNumber"));
+            displayFosterParents();
+            initButtonEvent();
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("FosterParentsStatisticResultController - initialize", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     private void initButtonEvent() {
-        fosterParentsStatisticOk.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
-            if (e.getCode() == KeyCode.ENTER) {
-                fosterParentsStatisticOk.fire();
-                e.consume();
-            }
-        });
+        try {
+            fosterParentsStatisticOk.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+                if (e.getCode() == KeyCode.ENTER) {
+                    fosterParentsStatisticOk.fire();
+                    e.consume();
+                }
+            });
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("FosterParentsStatisticResultController - initButtonEvent", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     public void OKButtonPressed() {
@@ -69,12 +77,16 @@ public class FosterParentsStatisticResultController {
     }
 
     private void displayFosterParents() {
-        fosterParentsTableView.getItems().clear();
-        fosterParentsTableView.refresh();
-        listOfFosterParents = AzilUtilities.getDAOFactory().getFosterParentDAO().fosterParents(dateFrom);
-        fosterParentsTableView.getItems().clear();
-        for(FosterParentDTO fosterParent : listOfFosterParents) {
-            fosterParentsTableView.getItems().add(fosterParent);
+        try {
+            fosterParentsTableView.getItems().clear();
+            fosterParentsTableView.refresh();
+            listOfFosterParents = AzilUtilities.getDAOFactory().getFosterParentDAO().fosterParents(dateFrom);
+            fosterParentsTableView.getItems().clear();
+            for(FosterParentDTO fosterParent : listOfFosterParents) {
+                fosterParentsTableView.getItems().add(fosterParent);
+            }
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("FosterParentsStatisticResultController - displayFosterParents", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
