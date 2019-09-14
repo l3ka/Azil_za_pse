@@ -73,6 +73,37 @@ public class MySQLCageDAO implements CageDAO {
     }
 
     @Override
+    public List<CageDTO> getByName(String name){
+        ArrayList<CageDTO> retVal = null;
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String query = "SELECT * FROM kavez WHERE Naziv LIKE ?%";
+        try {
+            conn = ConnectionPool.getInstance().checkOut();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, name);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                retVal.add(new CageDTO(
+                        rs.getInt("Idkaveza"),
+                        rs.getString("Naziv"),
+                        rs.getInt("Kapacitet")
+                ));
+            }
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLCageDAO - getByName", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        } finally {
+            ConnectionPool.getInstance().checkIn(conn);
+            DBUtilities.getInstance().close(ps, rs);
+        }
+        return retVal;
+    }
+
+    @Override
     public boolean insert(CageDTO cage){
         boolean retVal = true;
 

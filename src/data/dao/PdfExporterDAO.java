@@ -12,8 +12,8 @@ public interface PdfExporterDAO {
 
     void exportMedicalReports();
 
-    void exportFosters(TableView<FosterParentDTO> fosterParentsTableView);
+    void exportFosters(TableView<FosterParentDTO> fosterParentsTableView, String datumOd);
 
-    void exportAdoptedDogs(TableView<DogDTO> dogsTableView);
+    void exportAdoptedDogs(TableView<DogDTO> dogsTableView, String datumOd);
 
 }
