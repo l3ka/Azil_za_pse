@@ -197,9 +197,12 @@ public class MySQLVeterinarianDAO implements VeterinarianDAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        String query = "SELECT z.JMBG, z.Ime, z.Prezime, z.Username, z.Password, z.StrucnaSprema, z.MjestoPrebivalista, " +
-                       "z.BrojTelefona FROM zaposleni z INNER JOIN veterinar v ON z.JMBG = v.VeterinarJMBG " +
-                       "WHERE z.Username = ? AND Password = ?";
+        String query = "SELECT z.JMBG, z.Ime, z.Prezime, z.Username, z.Password, z.StrucnaSprema, z.MjestoPrebivalista, z.BrojTelefona " +
+                       "FROM zaposleni z " +
+                       "INNER JOIN veterinar v ON z.JMBG = v.VeterinarJMBG " +
+                       "INNER JOIN zaposleni_ugovor zu ON z.JMBG = zu.ZaposlenikJMBG " +
+                       "INNER JOIN ugovororadu uor ON zu.IdUgovora= uor.IdUgovora " +
+                       "WHERE z.Username = ? AND Password = ? AND Aktivan = 1";
 
         try {
             conn = ConnectionPool.getInstance().checkOut();

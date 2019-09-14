@@ -196,9 +196,12 @@ public class MySQLServantDAO implements ServantDAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        String query = "SELECT z.JMBG, z.Ime, z.Prezime, z.Username, z.Password, z.StrucnaSprema, z.MjestoPrebivalista, " +
-                       "z.BrojTelefona FROM zaposleni z INNER JOIN sluzbenik s ON z.JMBG = s.SluzbenikJMBG " +
-                       "WHERE z.Username = ? AND Password = ?";
+        String query = "SELECT z.JMBG, z.Ime, z.Prezime, z.Username, z.Password, z.StrucnaSprema, z.MjestoPrebivalista, z.BrojTelefona " +
+                       "FROM zaposleni z " + "" +
+                       "INNER JOIN sluzbenik s ON z.JMBG = s.SluzbenikJMBG " +
+                       "INNER JOIN zaposleni_ugovor zu ON z.JMBG = zu.ZaposlenikJMBG " +
+                       "INNER JOIN ugovororadu uor ON zu.IdUgovora= uor.IdUgovora " +
+                       "WHERE z.Username = ? AND Password = ? AND Aktivan = 1";
 
         try {
             conn = ConnectionPool.getInstance().checkOut();

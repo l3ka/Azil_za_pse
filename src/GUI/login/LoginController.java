@@ -70,15 +70,27 @@ public class LoginController {
                     if (employee != null) {
                         new AdminMainForm(employee).display();
                     }
+                    else {
+                        new AlertBoxForm("Izabrani korisnik vise nije aktivan!").display();
+                        return;
+                    }
                 } else if (AzilUtilities.getDAOFactory().getVeterinarinaDAO().exists(username, password)) {
                     employee = AzilUtilities.getDAOFactory().getVeterinarinaDAO().login(username, password);
                     if (employee != null) {
                         new VetMainForm(employee).display();
                     }
+                    else {
+                        new AlertBoxForm("Izabrani korisnik vise nije aktivan!").display();
+                        return;
+                    }
                 } else if (AzilUtilities.getDAOFactory().getServantDAO().exists(username, password)) {
                     employee = AzilUtilities.getDAOFactory().getServantDAO().login(username, password);
                     if (employee != null) {
                         new MainScreen(employee).display();
+                    }
+                    else {
+                        new AlertBoxForm("Izabrani korisnik vise nije aktivan!").display();
+                        return;
                     }
                 }
                 else {

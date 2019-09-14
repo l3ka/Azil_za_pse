@@ -2,6 +2,7 @@ package data.dao.mysql;
 
 import data.dao.DogInCageDAO;
 import data.dto.CageDTO;
+import data.dto.DogDTO;
 import data.dto.DogInCageDTO;
 import data.dto.LoggerDTO;
 import util.AzilUtilities;
@@ -125,6 +126,29 @@ public class MySQLDogInCage implements DogInCageDAO {
             ps.executeUpdate();
         } catch (SQLException ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLDogInCage - delete", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        } finally {
+            ConnectionPool.getInstance().checkIn(conn);
+            DBUtilities.getInstance().close(ps);
+        }
+        return retVal;
+    }
+
+    public CageDTO getCage(DogDTO dog) {
+        CageDTO retVal = null;
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        String query = "SELECT * FROM kavez_pas " +
+                       "WHERE Do IS NULL AND IdPsa = ?";
+        try {
+            conn = ConnectionPool.getInstance().checkOut();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, dog.getDogId());
+
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLDogInCage - getCage", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
