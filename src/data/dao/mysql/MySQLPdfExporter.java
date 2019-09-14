@@ -361,7 +361,7 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
     }
 
     @Override
-    public void exportFosters(TableView<FosterParentDTO> fosterParentsTableView) {
+    public void exportFosters(TableView<FosterParentDTO> fosterParentsTableView, String datumOd) {
         try {
             Document pdfReport = new Document();
             PdfWriter.getInstance(pdfReport, new FileOutputStream("reports" + File.separator + "Izvjestaj_udomitelji_" + new SimpleDateFormat("dd-MM-yyyy_HH-mm").format(new java.util.Date()) + ".pdf"));
@@ -383,7 +383,7 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
 
 
             pdfReport.add(new Paragraph("\n\n"));
-            pdfReport.add(new Paragraph("Lista svih udomitelja u azilu:"));
+            pdfReport.add(new Paragraph("Lista svih udomitelja u azilu od datuma " + datumOd + ":"));
             pdfReport.add(new Paragraph("\n"));
 
 
@@ -465,7 +465,7 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
     }
 
     @Override
-    public void exportAdoptedDogs(TableView<DogDTO> dogsTableView) {
+    public void exportAdoptedDogs(TableView<DogDTO> dogsTableView, String datumOd) {
         try {
             Document pdfReport = new Document();
             PdfWriter.getInstance(pdfReport, new FileOutputStream("reports" + File.separator + "Izvjestaj_udomljeniPsi_" + new SimpleDateFormat("dd-MM-yyyy_HH-mm").format(new java.util.Date()) + ".pdf"));
@@ -487,7 +487,7 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
 
 
             pdfReport.add(new Paragraph("\n\n"));
-            pdfReport.add(new Paragraph("Lista svih udomljenih pasa u azilu:"));
+            pdfReport.add(new Paragraph("Lista svih udomljenih pasa u azilu, od datuma " + datumOd + ":"));
             pdfReport.add(new Paragraph("\n"));
 
 
