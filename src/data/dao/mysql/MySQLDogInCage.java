@@ -140,7 +140,9 @@ public class MySQLDogInCage implements DogInCageDAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        String query = "SELECT * FROM kavez_pas " +
+        String query = "SELECT kp.IdKaveza IdKaveza, k.Naziv Naziv, k.Kapacitet Kapacitet FROM kavez_pas kp " +
+                       "JOIN kavez k " +
+                       "ON kp.IdKaveza = k.IdKaveza " +
                        "WHERE Do IS NULL AND IdPsa = ?";
         try {
             conn = ConnectionPool.getInstance().checkOut();
