@@ -10,6 +10,9 @@ import GUI.adopting_dog.AdoptingDogForm;
 import GUI.admin.generating_statistic.GeneratingStatisticForm;
 import GUI.alert_box.AlertBoxForm;
 import GUI.login.LoginForm;
+import GUI.preview.accounts_preview.AccountsForm;
+import GUI.preview.cages_preview.CagesForm;
+import GUI.preview.foster_parents_preview.FosterParentsForm;
 import data.dto.DogDTO;
 import data.dto.EmployeeDTO;
 import data.dto.LoggerDTO;
@@ -31,20 +34,10 @@ import java.util.List;
 public class AdminMainController {
 
     @FXML
-    private TableView<DogDTO> dogsTableView;
-    @FXML
     private Label loggedUserLabel;
     @FXML
-    private TextField searchParameterTextField;
-    @FXML
     private Button logOutButton;
-    @FXML
-    private Button searchDogButton;
-    @FXML
-    private Button searchAllDogButton;
 
-    private List<DogDTO> listOfDogs;
-    private List<DogDTO> listOfSearchedDogs;
     private Stage stage;
     private EmployeeDTO employee;
 
@@ -59,94 +52,8 @@ public class AdminMainController {
 
     public void initialize(Stage stage) {
         this.stage = stage;
-        dogsTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("name"));
-        dogsTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("breed"));
-        dogsTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("gender"));
-        dogsTableView.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("height"));
-        dogsTableView.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("weight"));
-        dogsTableView.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
-
-        displayDogs();
-        initButtonEvent();
     }
 
-    private void initButtonEvent() {
-        logOutButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
-            if (e.getCode() == KeyCode.ENTER) {
-                logOutButton.fire();
-                e.consume();
-            }
-        });
-        searchDogButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
-            if (e.getCode() == KeyCode.ENTER) {
-                searchDogButton.fire();
-                e.consume();
-            }
-        });
-        searchAllDogButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
-            if (e.getCode() == KeyCode.ENTER) {
-                searchAllDogButton.fire();
-                e.consume();
-            }
-        });
-    }
-
-    public void addDog() {
-        try {
-            new AddingDogForm().display();
-        } catch(Exception ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
-        }
-        displayDogs();
-    }
-
-    public void adoptDog() {
-        try {
-            new AdoptingDogForm().display();
-        } catch(Exception ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
-        }
-    }
-
-    public void addFosterParent() {
-        try {
-            new AddFosterParent().display();
-        } catch (Exception ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
-        }
-    }
-
-    public void addCage() {
-        try {
-            new AddingCageForm().display();
-        } catch(Exception ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
-        }
-    }
-
-    public void addMedicine() {
-        try {
-            new AddingMedicineForm().display();
-        } catch(Exception ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
-        }
-    }
-
-    public void addAccount() {
-        try {
-            new AddAccount().display();
-        } catch (Exception ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
-        }
-    }
-
-    public void editAccount() {
-        try {
-            new SelectAccount().display();
-        } catch (Exception ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
-        }
-    }
 
     public void generateStatistic() {
         try {
@@ -157,22 +64,35 @@ public class AdminMainController {
     }
 
     public void displayDogs() {
-        dogsTableView.getItems().clear();
-        dogsTableView.refresh();
-        listOfDogs = AzilUtilities.getDAOFactory().getDogDAO().dogs();
-        for(DogDTO dog : listOfDogs) {
-            dogsTableView.getItems().add(dog);
+
+    }
+
+    public void displayCages() {
+        try {
+            new CagesForm().display();
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
-    public void searchDog() {
-        if(checkSearchParameter()) {
-            dogsTableView.getItems().clear();
-            listOfSearchedDogs = AzilUtilities.getDAOFactory().getDogDAO().dogsByBreed(searchParameterTextField.getText().trim());
-            for(DogDTO dog : listOfSearchedDogs) {
-                dogsTableView.getItems().add(dog);
-            }
+    public void displayEmployees() {
+        try {
+            new AccountsForm().display();
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
+    }
+
+    public void displayFosterParents() {
+        try {
+            new FosterParentsForm().display();
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
+    }
+
+    public void displayMedicines() {
+
     }
 
     public void logOut() {
@@ -182,14 +102,6 @@ public class AdminMainController {
         } catch(Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
-    }
-
-    private boolean checkSearchParameter() {
-        if("".equals(searchParameterTextField.getText().trim())) {
-            displayAlertBox("Niste unijeli naziv na pretragu!");
-            return false;
-        }
-        return true;
     }
 
     private void displayAlertBox(String content) {

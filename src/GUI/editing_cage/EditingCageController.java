@@ -21,7 +21,7 @@ public class EditingCageController {
         this.stage = stage;
         this.cage = cage;
 
-        //cageNameTextField.setText(cage.getName());
+        cageNameTextField.setText(cage.getName());
         cageCapacityTextField.setText("" + cage.getCapacity());
     }
 
