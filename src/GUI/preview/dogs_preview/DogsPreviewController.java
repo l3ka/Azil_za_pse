@@ -2,6 +2,7 @@ package GUI.preview.dogs_preview;
 
 import GUI.adding_dog.AddingDogForm;
 import GUI.alert_box.AlertBoxForm;
+import GUI.decide_box.DecideBox;
 import GUI.editing_dog.EditingDogForm;
 import data.dto.DogDTO;
 import javafx.fxml.FXML;
@@ -54,12 +55,21 @@ public class DogsPreviewController {
     }
 
     public void deleteDog() {
-        if(checkSelectedDog()) {
-            try {
-                AzilUtilities.getDAOFactory().getDogDAO().delete(dogsTableView.getSelectionModel().getSelectedItem());
-            } catch (Exception ex) {
-
+        try {
+            if (checkSelectedDog()) {
+                boolean choice = new DecideBox("Da li ste sigurni da želite da obrišete psa?").display();
+                if (choice) {
+                    if (AzilUtilities.getDAOFactory().getDogDAO().delete(dogsTableView.getSelectionModel().getSelectedItem())) {
+                       displayAlertBox("Pas je uspješno obrisan!");
+                    }
+                    else {
+                        displayAlertBox("Desila se greška prilikom brisanja");
+                    }
+                    displayDogs();
+                }
             }
+        } catch (Exception ex) {
+
         }
     }
 

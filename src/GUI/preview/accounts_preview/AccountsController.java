@@ -4,6 +4,7 @@ import GUI.admin.add_account.AddAccount;
 import GUI.admin.change_account.ChangeAccount;
 import GUI.alert_box.AlertBoxForm;
 import GUI.deactivated_accounts.DeactivatedAccountsForm;
+import GUI.decide_box.DecideBox;
 import data.dto.EmployeeDTO;
 import data.dto.LoggerDTO;
 import javafx.fxml.FXML;
@@ -76,13 +77,16 @@ public class AccountsController {
     public void deactivateAccount() {
         try {
             if(checkSelectedAccount()) {
-                if (AzilUtilities.getDAOFactory().getEmployeeDAO().delete(accountsTableView.getSelectionModel().getSelectedItem())) {
-                    displayAlertBox("Nalog je uspjesno deaktiviran!");
+                boolean choice = new DecideBox("Da li ste sigurni da želite da deaktivirate korisnički nalog?").display();
+                if (choice)
+                {
+                    if (AzilUtilities.getDAOFactory().getEmployeeDAO().delete(accountsTableView.getSelectionModel().getSelectedItem())) {
+                        displayAlertBox("Nalog je uspješno deaktiviran!");
+                    } else {
+                        displayAlertBox("Desila se greška prilikom deaktiviranja naloga!");
+                    }
+                    displayEmployees();
                 }
-                else {
-                    displayAlertBox("Desila se greska prilikom deaktiviranja naloga!");
-                }
-                displayEmployees();
             }
         } catch (Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AccountsController - deactivateAccount", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));

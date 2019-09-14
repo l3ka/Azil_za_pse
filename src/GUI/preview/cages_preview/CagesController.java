@@ -2,6 +2,7 @@ package GUI.preview.cages_preview;
 
 import GUI.adding_cage.AddingCageForm;
 import GUI.alert_box.AlertBoxForm;
+import GUI.decide_box.DecideBox;
 import GUI.editing_cage.EditingCageForm;
 import data.dto.CageDTO;
 import javafx.fxml.FXML;
@@ -56,8 +57,21 @@ public class CagesController {
     }
 
     public void deleteCage() {
-        if(checkSelectedCage()) {
-            AzilUtilities.getDAOFactory().getCageDAO().delete(cagesTableView.getSelectionModel().getSelectedItem().getId());
+        try {
+            if (checkSelectedCage()) {
+                boolean choice = new DecideBox("Da li ste sigurni da želite da obrišete kavez?").display();
+                if (choice) {
+                    if (AzilUtilities.getDAOFactory().getCageDAO().delete(cagesTableView.getSelectionModel().getSelectedItem().getId())) {
+                        displayAlertBox("Kavez je uspješno obrisan!");
+                    }
+                    else {
+                        displayAlertBox("Desila se greška prilikom brisanja kaveza!");
+                    }
+                    displayCages();
+                }
+            }
+        } catch (Exception ex) {
+
         }
     }
 
@@ -86,6 +100,7 @@ public class CagesController {
     private void displayCages() {
         int numberOfFreeSpots = 0;
         cagesTableView.getItems().clear();
+        cagesTableView.refresh();
         listOfCages = AzilUtilities.getDAOFactory().getCageDAO().cages();
         numberOfCagesLabel.setText("Broj kaveza: " + listOfCages.size());
         for(CageDTO cage : listOfCages) {
