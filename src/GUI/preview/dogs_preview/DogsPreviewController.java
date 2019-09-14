@@ -1,6 +1,8 @@
 package GUI.preview.dogs_preview;
 
 import GUI.adding_dog.AddingDogForm;
+import GUI.alert_box.AlertBoxForm;
+import GUI.editing_dog.EditingDogForm;
 import data.dto.DogDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
@@ -20,8 +22,6 @@ public class DogsPreviewController {
     private ImageView dogImageView;
     @FXML
     private TableView<DogDTO> dogsTableView;
-
-
 
     public void initialize(Stage stage) {
         this.stage = stage;
@@ -44,18 +44,22 @@ public class DogsPreviewController {
     }
 
     public void editDog() {
-        try {
-
-        } catch (Exception ex) {
-
+        if(checkSelectedDog()) {
+            try {
+                new EditingDogForm(dogsTableView.getSelectionModel().getSelectedItem()).display();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
     public void deleteDog() {
-        try {
+        if(checkSelectedDog()) {
+            try {
+                AzilUtilities.getDAOFactory().getDogDAO().delete(dogsTableView.getSelectionModel().getSelectedItem());
+            } catch (Exception ex) {
 
-        } catch (Exception ex) {
-
+            }
         }
     }
 
@@ -64,7 +68,7 @@ public class DogsPreviewController {
     }
 
     public void showAll() {
-
+        displayDogs();
     }
 
     public void close() {
@@ -77,6 +81,22 @@ public class DogsPreviewController {
         listOfDogs = AzilUtilities.getDAOFactory().getDogDAO().dogs();
         for(DogDTO dog : listOfDogs) {
             dogsTableView.getItems().add(dog);
+        }
+    }
+
+    private boolean checkSelectedDog() {
+        if(dogsTableView.getSelectionModel().getSelectedItem() == null) {
+            displayAlertBox("Nije izabran pas!");
+            return false;
+        }
+        return true;
+    }
+
+    private void displayAlertBox(String content) {
+        try {
+            new AlertBoxForm(content).display();
+        } catch(Exception ex) {
+
         }
     }
 

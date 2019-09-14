@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="800.0" style="-fx-background-color: #b71c1c;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.editing_dog.EditingDogController">
+    <padding>
+        <Insets bottom="25.0" left="30.0" right="30.0" top="25.0" />
+    </padding>
+    <top>
+        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+            <children>
+                <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../icons/dog-icon.png" />
+                    </image>
+                </ImageView>
+                <Label text="Azil za pse" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="22.0" />
+                    </font>
+                </Label>
+                <Line endX="200.0" startX="-200.0" stroke="WHITE" />
+            </children>
+        </VBox>
+    </top>
+    <center>
+        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+            <children>
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+                    <children>
+                        <Label text="Ime" textFill="WHITE" />
+                        <TextField fx:id="nameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="187.0" />
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER" layoutX="10.0" layoutY="135.0" prefHeight="100.0" prefWidth="200.0" spacing="25.0">
+                    <children>
+                        <Label text="Rasa" textFill="WHITE" />
+                        <TextField fx:id="raceTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="187.0" />
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER" layoutX="10.0" layoutY="190.0" prefHeight="100.0" prefWidth="200.0" spacing="35.0">
+                    <children>
+                        <Label text="Pol" textFill="WHITE" />
+                        <ComboBox fx:id="genderComboBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="187.0" promptText="Izaberite pol" />
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                    <children>
+                        <Label text="Kavez" textFill="WHITE" />
+                        <ComboBox fx:id="cagesComboBox" minHeight="-Infinity" prefHeight="31.0" prefWidth="187.0" promptText="Izaberite kavez" />
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER" layoutX="10.0" layoutY="245.0" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+                    <children>
+                        <Label text="Težina" textFill="WHITE" />
+                        <TextField fx:id="weightTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="187.0" />
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER" layoutX="10.0" layoutY="280.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                    <children>
+                        <Label text="Visina" textFill="WHITE" />
+                        <TextField fx:id="heightTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="187.0" />
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER" layoutX="10.0" layoutY="298.0" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                    <children>
+                        <Label text="Rođenje" textFill="WHITE" />
+                        <DatePicker fx:id="dateOfBirthDatePicker" prefHeight="31.0" prefWidth="187.0" />
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER" layoutX="10.0" layoutY="310.0" prefHeight="100.0" prefWidth="200.0" spacing="45.0">
+                    <children>
+                        <Label text="Fotografija" textFill="WHITE" />
+                        <Button fx:id="choosePhotoButton" mnemonicParsing="false" onAction="#choosePhoto" prefHeight="31.0" prefWidth="140.0" text="Izaberi fotografiju" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </center>
+    <bottom>
+        <VBox alignment="CENTER" prefHeight="120.0" prefWidth="900.0" spacing="15.0" BorderPane.alignment="CENTER">
+            <children>
+                <Button fx:id="saveButton" mnemonicParsing="false" onAction="#save" text="Sačuvaj" />
+                <Button fx:id="quitButton" layoutX="353.0" layoutY="95.0" mnemonicParsing="false" onAction="#quit" text="Odustani" />
+            </children>
+            <BorderPane.margin>
+                <Insets top="15.0" />
+            </BorderPane.margin>
+        </VBox>
+    </bottom>
+</BorderPane>

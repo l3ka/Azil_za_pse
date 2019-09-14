@@ -2,6 +2,7 @@ package GUI.preview.foster_parents_preview;
 
 import GUI.add_foster_parent.AddFosterParent;
 import GUI.alert_box.AlertBoxForm;
+import GUI.edit_foster_parent.EditFosterParentForm;
 import data.dto.FosterParentDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
@@ -44,7 +45,11 @@ public class FosterParentsController {
 
     public void updateFosterParent() {
         if(checkSelectedFosterParent()) {
+            try {
+                new EditFosterParentForm(fosterParentsTableView.getSelectionModel().getSelectedItem()).display();
+            } catch(Exception ex) {
 
+            }
         }
     }
 
