@@ -25,18 +25,33 @@
             <Line endX="200.0" startX="-200.0" stroke="WHITE" />
          </children>
       </VBox>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+      <VBox>
          <children>
-            <Label text="Kapacitet kaveza" textFill="WHITE">
-               <font>
-                  <Font size="16.0" />
-               </font></Label>
-            <TextField fx:id="cageCapacityTextField" />
+            <HBox alignment="CENTER" prefHeight="70.0" prefWidth="580.0" spacing="60.0">
+               <children>
+                  <Label text="Naziv" textFill="WHITE">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="nameTextField" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="70.0" prefWidth="580.0" spacing="30.0">
+               <children>
+                  <Label text="Kapacitet" textFill="WHITE">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="cageCapacityTextField" />
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </HBox>
          </children>
-         <VBox.margin>
-            <Insets />
-         </VBox.margin>
-      </HBox>
+      </VBox>
       <VBox alignment="CENTER" spacing="15.0">
          <children>
             <Button fx:id="saveButton" mnemonicParsing="false" onAction="#save" prefWidth="80.0" text="Sačuvaj" />

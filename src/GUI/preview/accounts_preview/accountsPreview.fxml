@@ -99,7 +99,7 @@
         </VBox>
     </left>
    <right>
-      <VBox alignment="CENTER" prefHeight="419.0" prefWidth="180.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="419.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <Label fx:id="numberOfEmployees" text="Broj zaposlenih: " textFill="WHITE">
                <font>
