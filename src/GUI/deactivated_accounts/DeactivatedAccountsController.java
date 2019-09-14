@@ -2,6 +2,7 @@ package GUI.deactivated_accounts;
 
 import GUI.alert_box.AlertBoxForm;
 import data.dto.EmployeeDTO;
+import data.dto.LoggerDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
@@ -10,7 +11,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import util.AzilUtilities;
 
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class DeactivatedAccountsController {
@@ -40,8 +43,18 @@ public class DeactivatedAccountsController {
     }
 
     public void activateAccount() {
-        if(checkSelectedAccount()) {
-            // LEKA TODO
+        try {
+            if(checkSelectedAccount()) {
+                if (AzilUtilities.getDAOFactory().getEmployeeDAO().activate(accountsTableView.getSelectionModel().getSelectedItem())) {
+                    displayAlertBox("Nalog je uspjesno aktiviran!");
+                }
+                else {
+                    displayAlertBox("Desila se greska prilikom aktiviranja naloga!");
+                }
+                displayEmployees();
+            }
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DeactivatedAccountsController - activateAccount", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
@@ -61,9 +74,11 @@ public class DeactivatedAccountsController {
 
     private void displayEmployees() {
         accountsTableView.getItems().clear();
-        listOfEmployees.addAll(AzilUtilities.getDAOFactory().getAdministratorDAO().adminstartors());
-        listOfEmployees.addAll(AzilUtilities.getDAOFactory().getVeterinarinaDAO().veterinarians());
-        listOfEmployees.addAll(AzilUtilities.getDAOFactory().getServantDAO().servants());
+        accountsTableView.refresh();
+        listOfEmployees.clear();
+        listOfEmployees.addAll(AzilUtilities.getDAOFactory().getAdministratorDAO().adminstartorsDeactivated());
+        listOfEmployees.addAll(AzilUtilities.getDAOFactory().getVeterinarinaDAO().veterinariansDeactivated());
+        listOfEmployees.addAll(AzilUtilities.getDAOFactory().getServantDAO().servantsDeactivated());
         numberOfEmployees.setText("Broj zaposlenih: " + listOfEmployees.size());
         for(EmployeeDTO employee : listOfEmployees) {
             accountsTableView.getItems().add(employee);
@@ -82,7 +97,7 @@ public class DeactivatedAccountsController {
         try {
             new AlertBoxForm(content).display();
         } catch(Exception ex) {
-
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DeactivatedAccountsController - displayAlertBox", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 

@@ -65,11 +65,11 @@ public class MySQLAdministratorDAO implements AdministratorDAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
         String query = "SELECT z.JMBG, z.Ime, z.Prezime, z.Username, z.Password, z.StrucnaSprema, z.MjestoPrebivalista, z.BrojTelefona " +
-                "FROM zaposleni z " +
-                "INNER JOIN administrator a ON z.JMBG = a.AdministratorJMBG " +
-                "INNER JOIN zaposleni_ugovor zu ON z.JMBG = zu.ZaposlenikJMBG " +
-                "INNER JOIN ugovororadu uor ON zu.IdUgovora = uor.IdUgovora " +
-                "WHERE Aktivan = 0";
+                       "FROM zaposleni z " +
+                       "INNER JOIN administrator a ON z.JMBG = a.AdministratorJMBG " +
+                       "INNER JOIN zaposleni_ugovor zu ON z.JMBG = zu.ZaposlenikJMBG " +
+                       "INNER JOIN ugovororadu uor ON zu.IdUgovora = uor.IdUgovora " +
+                       "WHERE Aktivan = 0";
 
         try {
             conn = ConnectionPool.getInstance().checkOut();

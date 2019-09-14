@@ -3,6 +3,7 @@ package GUI.preview.accounts_preview;
 import GUI.admin.add_account.AddAccount;
 import GUI.admin.change_account.ChangeAccount;
 import GUI.alert_box.AlertBoxForm;
+import GUI.deactivated_accounts.DeactivatedAccountsForm;
 import data.dto.EmployeeDTO;
 import data.dto.LoggerDTO;
 import javafx.fxml.FXML;
@@ -90,7 +91,8 @@ public class AccountsController {
 
     public void displayDeactivatedAccounts() {
         try {
-            // TODO: Milice dodaj
+            new DeactivatedAccountsForm().display();
+            displayEmployees();
         } catch (Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AccountsController - displayDeactivatedAccounts", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
