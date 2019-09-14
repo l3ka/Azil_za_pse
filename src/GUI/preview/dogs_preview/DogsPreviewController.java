@@ -48,7 +48,7 @@ public class DogsPreviewController {
             try {
                 new EditingDogForm(dogsTableView.getSelectionModel().getSelectedItem()).display();
             } catch (Exception ex) {
-                ex.printStackTrace();
+
             }
         }
     }

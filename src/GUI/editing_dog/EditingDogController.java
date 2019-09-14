@@ -3,6 +3,7 @@ package GUI.editing_dog;
 import GUI.alert_box.AlertBoxForm;
 import data.dto.CageDTO;
 import data.dto.DogDTO;
+import data.dto.DogInCageDTO;
 import data.dto.LoggerDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -15,6 +16,7 @@ import util.AzilUtilities;
 
 import java.io.File;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Calendar;
 
 public class EditingDogController {
@@ -42,6 +44,7 @@ public class EditingDogController {
     private Stage stage;
     private DogDTO dog;
     private File photo;
+    private CageDTO cage;
 
     public void initialize(Stage stage, DogDTO dog) {
         this.stage = stage;
@@ -53,7 +56,7 @@ public class EditingDogController {
         }
 
         genderComboBox.getSelectionModel().select(dog.getGender());
-        //cagesComboBox.getSelectionModel().select(AzilUtilities.getDAOFactory().getDogInCageDAO());
+        cagesComboBox.getSelectionModel().select(AzilUtilities.getDAOFactory().getDogInCageDAO().getCage(dog));
         nameTextField.setText(dog.getName());
         raceTextField.setText(dog.getBreed());
         weightTextField.setText("" + dog.getWeight());
@@ -77,7 +80,13 @@ public class EditingDogController {
         }
 
         if (checkName() && checkRace() && checkGender() && checkWeight() && checkHeight() && checkAge() && checkSelectedCage()) {
-            //if(cagesComboBox.getSelectionModel().getSelectedItem().equals())
+            cage = AzilUtilities.getDAOFactory().getDogInCageDAO().getCage(dog);
+            if(!cagesComboBox.getSelectionModel().getSelectedItem().equals(cage)) {
+                cage.setCapacity(cage.getCapacity() + 1);
+                AzilUtilities.getDAOFactory().getDogInCageDAO().getDogInCage(cage.getId(), dog.getDogId()).setDateTo(new Timestamp(Calendar.getInstance().getTime().getTime()));
+                cagesComboBox.getSelectionModel().getSelectedItem().setCapacity(cagesComboBox.getSelectionModel().getSelectedItem().getCapacity() - 1);
+                AzilUtilities.getDAOFactory().getDogInCageDAO().insert(new DogInCageDTO(dog, cagesComboBox.getSelectionModel().getSelectedItem(), new Timestamp(Calendar.getInstance().getTime().getTime()), null));
+            }
             if (AzilUtilities.getDAOFactory().getDogDAO().update(new DogDTO(0, genderComboBox.getSelectionModel().getSelectedItem(), nameTextField.getText(),
                     raceTextField.getText(), Integer.parseInt(heightTextField.getText()), Double.parseDouble(weightTextField.getText()), Date.valueOf(dateOfBirthDatePicker.getValue()), image, false))) {
                 displayAlertBox("Informacije o psu su uspješno izmijenjene!");
