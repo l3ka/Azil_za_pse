@@ -66,7 +66,7 @@
                               <Image url="@../../../../resources/reportImages/dog.png" />
                            </image>
                         </ImageView>
-                        <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="115.0" text="Psi" />
+                        <Button mnemonicParsing="false" onAction="#displayDogs" prefHeight="31.0" prefWidth="115.0" text="Psi" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" spacing="10.0">
@@ -76,7 +76,7 @@
                               <Image url="@../../../../resources/reportImages/fosters.png" />
                            </image>
                         </ImageView>
-                        <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="115.0" text="Udomitelji" />
+                        <Button mnemonicParsing="false" onAction="#displayFosterParents" prefHeight="31.0" prefWidth="115.0" text="Udomitelji" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" spacing="10.0">
@@ -86,7 +86,7 @@
                               <Image url="@../../icons/dog-cage-icon.png" />
                            </image>
                         </ImageView>
-                        <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="115.0" text="Kavezi" />
+                        <Button mnemonicParsing="false" onAction="#displayCages" prefHeight="31.0" prefWidth="115.0" text="Kavezi" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" spacing="10.0">
@@ -96,7 +96,7 @@
                               <Image url="@../../../../resources/reportImages/medicine.png" />
                            </image>
                         </ImageView>
-                        <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="115.0" text="Lijekovi" />
+                        <Button mnemonicParsing="false" onAction="#displayMedicines" prefHeight="31.0" prefWidth="115.0" text="Lijekovi" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" spacing="10.0">
@@ -106,7 +106,7 @@
                               <Image url="@../../../../resources/reportImages/employee.png" />
                            </image>
                         </ImageView>
-                        <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="115.0" text="Zaposleni" />
+                        <Button mnemonicParsing="false" onAction="#displayEmployees" prefHeight="31.0" prefWidth="115.0" text="Zaposleni" />
                      </children>
                   </HBox>
                </children>

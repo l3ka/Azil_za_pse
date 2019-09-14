@@ -87,12 +87,12 @@ public class CagesController {
         int numberOfFreeSpots = 0;
         cagesTableView.getItems().clear();
         listOfCages = AzilUtilities.getDAOFactory().getCageDAO().cages();
-        numberOfCagesLabel.setText(numberOfCagesLabel.getText() + listOfCages.size());
+        numberOfCagesLabel.setText("Broj kaveza: " + listOfCages.size());
         for(CageDTO cage : listOfCages) {
             cagesTableView.getItems().add(cage);
             numberOfFreeSpots += cage.getCapacity();
         }
-        numberOfFreeSpotsLabel.setText(numberOfFreeSpotsLabel.getText() + numberOfFreeSpots);
+        numberOfFreeSpotsLabel.setText("Broj slobodnih mjesta: " + numberOfFreeSpots);
     }
 
     private boolean checkName() {
