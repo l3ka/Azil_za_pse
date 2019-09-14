@@ -35,17 +35,25 @@ public class LoginController {
     private Stage stage;
 
     public void initialize(Stage stage) {
-        this.stage = stage;
-        initButtonEvent();
+        try {
+            this.stage = stage;
+            initButtonEvent();
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("LoginController - initialize", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     private void initButtonEvent() {
-        loginButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
-            if (e.getCode() == KeyCode.ENTER) {
-                loginButton.fire();
-                e.consume();
-            }
-        });
+        try {
+            loginButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+                if (e.getCode() == KeyCode.ENTER) {
+                    loginButton.fire();
+                    e.consume();
+                }
+            });
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("LoginController - initButtonEvent", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     public void logIn() {
