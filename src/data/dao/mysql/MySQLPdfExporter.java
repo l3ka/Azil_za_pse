@@ -32,7 +32,7 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
             rs = statement.executeQuery(Query);
 
             Document pdfReport = new Document();
-            PdfWriter.getInstance(pdfReport, new FileOutputStream("reports" + File.separator + "zaposleni.pdf"));
+            PdfWriter.getInstance(pdfReport, new FileOutputStream("reports" + File.separator + "Izvjestaj_zaposleni_" + new SimpleDateFormat("dd-MM-yyyy_HH-mm").format(new java.util.Date()) + ".pdf"));
             pdfReport.open();
 
 
@@ -152,7 +152,7 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
             rs = statement.executeQuery(Query);
 
             Document pdfReport = new Document();
-            PdfWriter.getInstance(pdfReport, new FileOutputStream("reports" + File.separator + "lijekovi.pdf"));
+            PdfWriter.getInstance(pdfReport, new FileOutputStream("reports" + File.separator + "Izvjestaj_lijekovi_" + new SimpleDateFormat("dd-MM-yyyy_HH-mm").format(new java.util.Date()) + ".pdf"));
             pdfReport.open();
 
 
@@ -252,7 +252,7 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
             rs = statement.executeQuery(Query);
 
             Document pdfReport = new Document();
-            PdfWriter.getInstance(pdfReport, new FileOutputStream("reports" + File.separator + "nalazi.pdf"));
+            PdfWriter.getInstance(pdfReport, new FileOutputStream("reports" + File.separator + "Izvjestaj_nalazi_" + new SimpleDateFormat("dd-MM-yyyy_HH-mm").format(new java.util.Date()) + ".pdf"));
             pdfReport.open();
 
 
@@ -364,7 +364,7 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
     public void exportFosters(TableView<FosterParentDTO> fosterParentsTableView) {
         try {
             Document pdfReport = new Document();
-            PdfWriter.getInstance(pdfReport, new FileOutputStream("reports" + File.separator + "udomitelji.pdf"));
+            PdfWriter.getInstance(pdfReport, new FileOutputStream("reports" + File.separator + "Izvjestaj_udomitelji_" + new SimpleDateFormat("dd-MM-yyyy_HH-mm").format(new java.util.Date()) + ".pdf"));
             pdfReport.open();
 
 
@@ -468,7 +468,7 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
     public void exportAdoptedDogs(TableView<DogDTO> dogsTableView) {
         try {
             Document pdfReport = new Document();
-            PdfWriter.getInstance(pdfReport, new FileOutputStream("reports" + File.separator + "udomljeniPsi.pdf"));
+            PdfWriter.getInstance(pdfReport, new FileOutputStream("reports" + File.separator + "Izvjestaj_udomljeniPsi_" + new SimpleDateFormat("dd-MM-yyyy_HH-mm").format(new java.util.Date()) + ".pdf"));
             pdfReport.open();
 
 

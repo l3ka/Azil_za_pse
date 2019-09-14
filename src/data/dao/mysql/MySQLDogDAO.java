@@ -129,7 +129,7 @@ public class MySQLDogDAO implements DogDAO {
         ResultSet rs = null;
 
         String query = "SELECT * FROM pas p " +
-                       "LEFT OUTER JOIN udomljavanjepsa up ON up.Pas_IdPsa=p.IdPsa " +
+                       "LEFT OUTER JOIN udomljavanjepsa up ON up.IdPsa=p.IdPsa " +
                        "WHERE p.Udomljen=1 AND up.DatumOd>=DATE(?) ";
         try {
             conn = ConnectionPool.getInstance().checkOut();
