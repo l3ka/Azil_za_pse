@@ -36,4 +36,6 @@ public abstract class DAOFactory {
 
     public abstract LoggerDAO getLoggerDAO();
 
+    public abstract PdfExporterDAO getPdfExporterDAO();
+
 }

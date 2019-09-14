@@ -21,6 +21,8 @@ public class FosterParentsStatisticResultController {
     private TableView<FosterParentDTO> fosterParentsTableView;
     @FXML
     private Button fosterParentsStatisticOk;
+    @FXML
+    private Button generatePdf;
 
     private Stage stage;
     private LocalDate dateFrom;
@@ -52,6 +54,10 @@ public class FosterParentsStatisticResultController {
 
     public void OKButtonPressed() {
         stage.close();
+    }
+
+    public void GeneratePDFButtonPressed() {
+        AzilUtilities.getDAOFactory().getPdfExporterDAO().exportFosters(fosterParentsTableView);
     }
 
     private void displayFosterParents() {

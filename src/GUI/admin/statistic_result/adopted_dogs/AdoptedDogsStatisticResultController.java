@@ -21,6 +21,8 @@ public class AdoptedDogsStatisticResultController {
     private TableView<DogDTO> dogsTableView;
     @FXML
     private Button adopterDogStatisticOk;
+    @FXML
+    private Button generatePdf;
 
     private Stage stage;
     private LocalDate dateFrom;
@@ -52,6 +54,11 @@ public class AdoptedDogsStatisticResultController {
     public void OKButtonPressed() {
         stage.close();
     }
+
+    public void GeneratePDFButtonPressed() {
+        AzilUtilities.getDAOFactory().getPdfExporterDAO().exportAdoptedDogs(dogsTableView);
+    }
+
 
     private void displayDogs() {
         listOfDogs = AzilUtilities.getDAOFactory().getDogDAO().getAdoptedDogs(dateFrom);

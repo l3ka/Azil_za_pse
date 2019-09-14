@@ -46,11 +46,15 @@ public class LoginController {
     }
 
     public void logIn() {
+        AzilUtilities.getDAOFactory().getPdfExporterDAO().exportEmployees();
+        AzilUtilities.getDAOFactory().getPdfExporterDAO().exportMedicine();
+        AzilUtilities.getDAOFactory().getPdfExporterDAO().exportMedicalReports();
+
         if (checkCredentials()) {
             try {
                 new AlertBoxForm("Korisničko ime ili lozinka nisu ispravno uneseni!").display();
             } catch (Exception ex) {
-                AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("LoginController", ex.fillInStackTrace().toString()));
+                AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("LoginController - logIn", ex.fillInStackTrace().toString()));
             }
         }
         else {
@@ -80,7 +84,7 @@ public class LoginController {
                 }
                 quit();
             } catch (Exception ex) {
-                AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("LoginController", ex.fillInStackTrace().toString()));
+                AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("LoginController - logIn", ex.fillInStackTrace().toString()));
             }
         }
     }
