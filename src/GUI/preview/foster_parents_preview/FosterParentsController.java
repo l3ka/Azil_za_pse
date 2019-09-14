@@ -39,6 +39,7 @@ public class FosterParentsController {
     public void addFosterParent() {
         try {
             new AddFosterParent().display();
+            displayFosterParents();
         } catch(Exception ex) {
 
         }
@@ -48,6 +49,7 @@ public class FosterParentsController {
         if(checkSelectedFosterParent()) {
             try {
                 new EditFosterParentForm(fosterParentsTableView.getSelectionModel().getSelectedItem()).display();
+                displayFosterParents();
             } catch(Exception ex) {
 
             }
@@ -66,7 +68,7 @@ public class FosterParentsController {
                    else {
                        displayAlertBox("Desila se greška prilikom brisanja udomitelja!");
                    }
-                   displayAllFosterParents();
+                   displayFosterParents();
                 }
 
             }

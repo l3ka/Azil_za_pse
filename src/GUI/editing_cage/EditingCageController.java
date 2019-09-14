@@ -27,8 +27,12 @@ public class EditingCageController {
 
     public void save() {
         if(checkName() && checkCapacity()) {
+            cage.setName(cageNameTextField.getText());
+            cage.setCapacity(Integer.valueOf(cageCapacityTextField.getText()));
+
             if(AzilUtilities.getDAOFactory().getCageDAO().update(cage)) {
                 displayAlertBox("Kavez je uspješno izmijenjen!");
+                stage.close();
             }
         }
     }

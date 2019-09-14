@@ -52,6 +52,7 @@ public class EditFosterParentController {
 
             if(AzilUtilities.getDAOFactory().getFosterParentDAO().update(fosterParent)) {
                 displayAlertBox("Uspješno izmijenjeni podaci o udomitelju!");
+                stage.close();
             }
         }
     }

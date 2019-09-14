@@ -41,6 +41,7 @@ public class CagesController {
     public void addCage() {
         try {
             new AddingCageForm().display();
+            displayCages();
         } catch(Exception ex) {
 
         }
@@ -50,6 +51,7 @@ public class CagesController {
         if(checkSelectedCage()) {
             try {
                 new EditingCageForm(cagesTableView.getSelectionModel().getSelectedItem()).display();
+                displayCages();
             } catch(Exception ex) {
 
             }
