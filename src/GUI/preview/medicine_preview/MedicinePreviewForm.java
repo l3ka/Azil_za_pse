@@ -15,7 +15,7 @@ public class MedicinePreviewForm {
         Stage stage = new Stage();
         stage.getIcons().add(new Image("file:" + "src" + File.separator + "GUI" + File.separator + "icons" + File.separator + "dog-icon.png"));
         Scene scene = new Scene(loader.load());
-        stage.setTitle("Azil za pse - pregled pasa");
+        stage.setTitle("Azil za pse - lijekovi");
         stage.setScene(scene);
         stage.setMinWidth(1200);
         stage.setMinHeight(720);

@@ -10,6 +10,8 @@ public interface AdministratorDAO {
 
     List<AdministratorDTO> adminstartors();
 
+    List<AdministratorDTO> adminstartorsDeactivated();
+
     AdministratorDTO getByUsername(String username);
 
     boolean update(AdministratorDTO administrator);

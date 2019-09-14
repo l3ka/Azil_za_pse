@@ -26,7 +26,51 @@ public class MySQLVeterinarianDAO implements VeterinarianDAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
         String query = "SELECT z.JMBG, z.Ime, z.Prezime, z.Username, z.Password, z.StrucnaSprema, z.MjestoPrebivalista, z.BrojTelefona " +
-                       "FROM zaposleni z INNER JOIN veterinar v ON z.JMBG = v.VeterinarJMBG";
+                       "FROM zaposleni z " +
+                       "INNER JOIN veterinar v ON z.JMBG = v.VeterinarJMBG " +
+                       "INNER JOIN zaposleni_ugovor zu ON z.JMBG = zu.ZaposlenikJMBG " +
+                       "INNER JOIN ugovororadu uor ON zu.IdUgovora = uor.IdUgovora " +
+                       "WHERE Aktivan = 1";
+
+        try {
+            conn = ConnectionPool.getInstance().checkOut();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+
+            while (rs.next())
+                retVal.add(new VeterinarianDTO(
+                        rs.getString("Username"),
+                        rs.getString("Password"),
+                        rs.getString("Ime"),
+                        rs.getString("Prezime"),
+                        rs.getString("StrucnaSprema"),
+                        rs.getString("MjestoPrebivalista"),
+                        rs.getString("BrojTelefona"),
+                        rs.getString("JMBG")
+                ));
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLVeterinarianDAO - veterinarians", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        } finally {
+            ConnectionPool.getInstance().checkIn(conn);
+            DBUtilities.getInstance().close(ps, rs);
+        }
+
+        return retVal;
+    }
+
+    @Override
+    public List<VeterinarianDTO> veterinariansDeactivated(){
+        List<VeterinarianDTO> retVal =  new ArrayList<>();
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String query = "SELECT z.JMBG, z.Ime, z.Prezime, z.Username, z.Password, z.StrucnaSprema, z.MjestoPrebivalista, z.BrojTelefona " +
+                "FROM zaposleni z " +
+                "INNER JOIN veterinar v ON z.JMBG = v.VeterinarJMBG " +
+                "INNER JOIN zaposleni_ugovor zu ON z.JMBG = zu.ZaposlenikJMBG " +
+                "INNER JOIN ugovororadu uor ON zu.IdUgovora = uor.IdUgovora " +
+                "WHERE Aktivan = 0";
 
         try {
             conn = ConnectionPool.getInstance().checkOut();

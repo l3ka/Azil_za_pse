@@ -61,7 +61,7 @@ public class AdminMainController {
 
     public void displayEmployees() {
         try {
-            new AccountsForm().display();
+            new AccountsForm().display(employee);
         } catch(Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }

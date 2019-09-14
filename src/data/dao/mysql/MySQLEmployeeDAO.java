@@ -137,8 +137,9 @@ public class MySQLEmployeeDAO implements EmployeeDAO {
         Connection conn = null;
         PreparedStatement ps = null;
 
-        String query = "DELETE FROM zaposleni " +
-                       "WHERE JMBG = ? ";
+        String query = "UPDATE ugovororadu " +
+                       "SET AKTIVAN = 0 " +
+                       "WHERE IdUgovora = (SELECT IdUgovora FROM zaposleni_ugovor WHERE ZaposlenikJMBG = ?)";
         try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);

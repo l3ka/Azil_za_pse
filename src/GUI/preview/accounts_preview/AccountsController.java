@@ -4,6 +4,7 @@ import GUI.admin.add_account.AddAccount;
 import GUI.admin.change_account.ChangeAccount;
 import GUI.alert_box.AlertBoxForm;
 import data.dto.EmployeeDTO;
+import data.dto.LoggerDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
@@ -12,7 +13,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import util.AzilUtilities;
 
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class AccountsController {
@@ -25,27 +28,36 @@ public class AccountsController {
     private Label numberOfEmployees;
 
     private Stage stage;
+    private EmployeeDTO employee;
+
+    public void setEmployee(EmployeeDTO employee) { this.employee = employee; }
+
     private List<EmployeeDTO> listOfEmployees = new ArrayList<>();
 
 
     public void initialize(Stage stage) {
-        this.stage = stage;
+        try {
+            this.stage = stage;
 
-        accountsTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("JMB"));
-        accountsTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("name"));
-        accountsTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("surname"));
-        accountsTableView.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("qualifications"));
-        accountsTableView.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("residenceAddress"));
-        accountsTableView.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("telephoneNumber"));
+            accountsTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("JMB"));
+            accountsTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("name"));
+            accountsTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("surname"));
+            accountsTableView.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("qualifications"));
+            accountsTableView.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("residenceAddress"));
+            accountsTableView.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("telephoneNumber"));
 
-        displayEmployees();
+            displayEmployees();
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AccountsController - initialize", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     public void addAccount() {
         try {
             new AddAccount().display();
+            displayEmployees();
         } catch(Exception ex) {
-
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AccountsController - addAccount", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
@@ -53,15 +65,34 @@ public class AccountsController {
         if (checkSelectedAccount()) {
             try {
                 new ChangeAccount(accountsTableView.getSelectionModel().getSelectedItem()).display();
+                displayEmployees();
             } catch (Exception ex) {
-
+                AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AccountsController - updateAccount", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             }
         }
     }
 
-    public void deleteAccount() {
-        if(checkSelectedAccount()) {
-            AzilUtilities.getDAOFactory().getEmployeeDAO().delete(accountsTableView.getSelectionModel().getSelectedItem());
+    public void deactivateAccount() {
+        try {
+            if(checkSelectedAccount()) {
+                if (AzilUtilities.getDAOFactory().getEmployeeDAO().delete(accountsTableView.getSelectionModel().getSelectedItem())) {
+                    displayAlertBox("Nalog je uspjesno deaktiviran!");
+                }
+                else {
+                    displayAlertBox("Desila se greska prilikom deaktiviranja naloga!");
+                }
+                displayEmployees();
+            }
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AccountsController - deactivateAccount", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
+    }
+
+    public void displayDeactivatedAccounts() {
+        try {
+            // TODO: Milice dodaj
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AccountsController - displayDeactivatedAccounts", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
@@ -81,7 +112,16 @@ public class AccountsController {
 
     private void displayEmployees() {
         accountsTableView.getItems().clear();
+        accountsTableView.refresh();
+        listOfEmployees.clear();
         listOfEmployees.addAll(AzilUtilities.getDAOFactory().getAdministratorDAO().adminstartors());
+        int i = 0;
+        for (; i < listOfEmployees.size(); ++i) {
+            EmployeeDTO employeeDTO = listOfEmployees.get(i);
+            if (employeeDTO.getUsername().equals(employee.getUsername())) {
+                listOfEmployees.remove(i);
+            }
+        }
         listOfEmployees.addAll(AzilUtilities.getDAOFactory().getVeterinarinaDAO().veterinarians());
         listOfEmployees.addAll(AzilUtilities.getDAOFactory().getServantDAO().servants());
         numberOfEmployees.setText("Broj zaposlenih: " + listOfEmployees.size());
@@ -102,7 +142,7 @@ public class AccountsController {
         try {
             new AlertBoxForm(content).display();
         } catch(Exception ex) {
-
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AccountsController - displayAlertBox", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
