@@ -44,13 +44,6 @@
          </BorderPane.margin>
       </VBox>
    </bottom>
-   <left>
-      <VBox alignment="CENTER" prefHeight="499.0" prefWidth="160.0" spacing="15.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button fx:id="examineDogButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#examineDog" prefHeight="31.0" prefWidth="112.0" text="Pregledaj psa" />
-         </children>
-      </VBox>
-   </left>
    <center>
       <TableView fx:id="dogsTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="700.0" BorderPane.alignment="CENTER">
          <columns>
@@ -63,16 +56,35 @@
          </columns>
       </TableView>
    </center>
-   <right>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+   <left>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="200.0" spacing="40.0">
          <children>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="200.0" spacing="10.0">
+            <HBox alignment="CENTER" spacing="10.0">
                <children>
-                  <Label text="Unesite rasu za pretragu" textFill="WHITE">
-                     <VBox.margin>
-                        <Insets top="30.0" />
-                     </VBox.margin>
-                  </Label>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../icons/examine-dog-icon.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="examineDogButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#examineDog" prefHeight="31.0" prefWidth="112.0" text="Pregledaj psa" />
+               </children>
+            </HBox>
+            <VBox alignment="CENTER" spacing="5.0">
+               <children>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../icons/search-icon.png" />
+                           </image>
+                        </ImageView>
+                        <Label text="Unesite rasu za pretragu" textFill="WHITE">
+                           <VBox.margin>
+                              <Insets top="30.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
                   <TextField fx:id="searchParametarTextField" />
                   <Button mnemonicParsing="false" onAction="#searchDog" prefHeight="31.0" prefWidth="90.0" text="Pretraži">
                      <VBox.margin>
@@ -84,5 +96,5 @@
             </VBox>
          </children>
       </VBox>
-   </right>
+   </left>
 </BorderPane>

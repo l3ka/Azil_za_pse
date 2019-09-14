@@ -25,7 +25,7 @@ public class GeneratingFindingForm {
         stage.setTitle("Azil za pse - generisanje nalaza");
         Scene scene = new Scene(loader.load());
         stage.setMinHeight(720);
-        stage.setMinWidth(800);
+        stage.setMinWidth(700);
         GeneratingFindingController controller = loader.getController();
         controller.initialize(stage);
         stage.setScene(scene);
