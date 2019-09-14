@@ -12,6 +12,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import util.AzilUtilities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AccountsController {
@@ -24,7 +25,7 @@ public class AccountsController {
     private Label numberOfEmployees;
 
     private Stage stage;
-    private List<EmployeeDTO> listOfEmployees;
+    private List<EmployeeDTO> listOfEmployees = new ArrayList<>();
 
 
     public void initialize(Stage stage) {
@@ -83,7 +84,7 @@ public class AccountsController {
         listOfEmployees.addAll(AzilUtilities.getDAOFactory().getAdministratorDAO().adminstartors());
         listOfEmployees.addAll(AzilUtilities.getDAOFactory().getVeterinarinaDAO().veterinarians());
         listOfEmployees.addAll(AzilUtilities.getDAOFactory().getServantDAO().servants());
-        numberOfEmployees.setText("Broj zaposlenh: " + listOfEmployees.size());
+        numberOfEmployees.setText("Broj zaposlenih: " + listOfEmployees.size());
         for(EmployeeDTO employee : listOfEmployees) {
             accountsTableView.getItems().add(employee);
         }

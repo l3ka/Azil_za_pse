@@ -95,7 +95,7 @@
         </VBox>
     </left>
    <right>
-      <VBox alignment="CENTER" prefHeight="419.0" prefWidth="200.0" spacing="20.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="419.0" prefWidth="270.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
             <Label fx:id="numberOfCagesLabel" text="Broj kaveza: " textFill="WHITE">
                <font>

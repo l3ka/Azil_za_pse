@@ -1,35 +1,24 @@
 package GUI.admin.main;
 
-import GUI.add_foster_parent.AddFosterParent;
-import GUI.adding_cage.AddingCageForm;
-import GUI.adding_dog.AddingDogForm;
-import GUI.adding_medicine.AddingMedicineForm;
-import GUI.admin.add_account.AddAccount;
-import GUI.admin.select_account.SelectAccount;
 import GUI.adopting_dog.AdoptingDogForm;
 import GUI.admin.generating_statistic.GeneratingStatisticForm;
 import GUI.alert_box.AlertBoxForm;
 import GUI.login.LoginForm;
 import GUI.preview.accounts_preview.AccountsForm;
 import GUI.preview.cages_preview.CagesForm;
+import GUI.preview.dogs_preview.DogsPreviewForm;
 import GUI.preview.foster_parents_preview.FosterParentsForm;
-import data.dto.DogDTO;
+import GUI.preview.medicine_preview.MedicinePreviewForm;
 import data.dto.EmployeeDTO;
 import data.dto.LoggerDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import util.AzilUtilities;
 
 import java.sql.Date;
 import java.util.Calendar;
-import java.util.List;
 
 public class AdminMainController {
 
@@ -54,17 +43,12 @@ public class AdminMainController {
         this.stage = stage;
     }
 
-
-    public void generateStatistic() {
+    public void displayDogs() {
         try {
-            new GeneratingStatisticForm().display();
+            new DogsPreviewForm().display();
         } catch(Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
-    }
-
-    public void displayDogs() {
-
     }
 
     public void displayCages() {
@@ -92,6 +76,30 @@ public class AdminMainController {
     }
 
     public void displayMedicines() {
+        try {
+            new MedicinePreviewForm().display();
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
+    }
+
+    public void adopting() {
+        try {
+            new AdoptingDogForm().display();
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
+    }
+
+    public void statistic() {
+        try {
+            new GeneratingStatisticForm().display();
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
+    }
+
+    public void employment() {
 
     }
 

@@ -63,7 +63,7 @@
                      <children>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../resources/reportImages/dog.png" />
+                              <Image url="@../../icons/dog.png" />
                            </image>
                         </ImageView>
                         <Button mnemonicParsing="false" onAction="#displayDogs" prefHeight="31.0" prefWidth="115.0" text="Psi" />
@@ -73,7 +73,7 @@
                      <children>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../resources/reportImages/fosters.png" />
+                              <Image url="@../../icons/fosters.png" />
                            </image>
                         </ImageView>
                         <Button mnemonicParsing="false" onAction="#displayFosterParents" prefHeight="31.0" prefWidth="115.0" text="Udomitelji" />
@@ -93,7 +93,7 @@
                      <children>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../resources/reportImages/medicine.png" />
+                              <Image url="@../../icons/medicine.png" />
                            </image>
                         </ImageView>
                         <Button mnemonicParsing="false" onAction="#displayMedicines" prefHeight="31.0" prefWidth="115.0" text="Lijekovi" />
@@ -103,7 +103,7 @@
                      <children>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../resources/reportImages/employee.png" />
+                              <Image url="@../../icons/employee.png" />
                            </image>
                         </ImageView>
                         <Button mnemonicParsing="false" onAction="#displayEmployees" prefHeight="31.0" prefWidth="115.0" text="Zaposleni" />
@@ -118,7 +118,7 @@
                         <Image url="@../../icons/dog-house-icon.png" />
                      </image>
                   </ImageView>
-                  <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="115.0" text="Udomljavanje" />
+                  <Button mnemonicParsing="false" onAction="#adopting" prefHeight="31.0" prefWidth="115.0" text="Udomljavanje" />
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../icons/report-icon.png" />
@@ -127,7 +127,7 @@
                         <Insets top="30.0" />
                      </VBox.margin>
                   </ImageView>
-                  <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="115.0" text="Statistika" />
+                  <Button mnemonicParsing="false" onAction="#statistic" prefHeight="31.0" prefWidth="115.0" text="Statistika" />
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../icons/interview-icon.png" />
@@ -136,7 +136,7 @@
                         <Insets top="30.0" />
                      </VBox.margin>
                   </ImageView>
-                  <Button mnemonicParsing="false" text="Zapošljavanje" />
+                  <Button mnemonicParsing="false" onAction="#employment" prefHeight="31.0" prefWidth="115.0" text="Zapošljavanje" />
                </children>
             </VBox>
          </children>

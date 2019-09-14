@@ -1,5 +1,6 @@
 package GUI.preview.foster_parents_preview;
 
+import GUI.add_foster_parent.AddFosterParent;
 import GUI.alert_box.AlertBoxForm;
 import data.dto.FosterParentDTO;
 import javafx.fxml.FXML;
@@ -34,7 +35,11 @@ public class FosterParentsController {
     }
 
     public void addFosterParent() {
+        try {
+            new AddFosterParent().display();
+        } catch(Exception ex) {
 
+        }
     }
 
     public void updateFosterParent() {

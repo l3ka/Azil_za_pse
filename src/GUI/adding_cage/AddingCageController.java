@@ -20,6 +20,8 @@ public class AddingCageController {
     @FXML
     private TextField cageCapacityTextField;
     @FXML
+    private TextField nameTextField;
+    @FXML
     private Button saveButton;
     @FXML
     private Button quitButton;
@@ -47,10 +49,10 @@ public class AddingCageController {
     }
 
     public void save() {
-        if(checkCapacity()) {
-            // TODO:
-            AzilUtilities.getDAOFactory().getCageDAO().insert(new CageDTO(0, "NazivKazveza" + new Random().nextInt(1000), Integer.valueOf(cageCapacityTextField.getText().trim())));
-            displayAlertBox("Kavez je uspješno dodat!");
+        if(checkCapacity() && checkName()) {
+            if(AzilUtilities.getDAOFactory().getCageDAO().insert(new CageDTO(0, nameTextField.getText(), Integer.valueOf(cageCapacityTextField.getText().trim())))) {
+                displayAlertBox("Kavez je uspješno dodat!");
+            }
             quit();
         }
     }
@@ -65,6 +67,14 @@ public class AddingCageController {
             return false;
         } else if(!checkIsNumber(cageCapacityTextField.getText().trim())) {
             displayAlertBox("Unos za polje kapacitet nije odgovarajući!");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkName() {
+        if("".equals(nameTextField.getText())) {
+            displayAlertBox("Niste unijeli naziv kaveza!");
             return false;
         }
         return true;
