@@ -6,8 +6,10 @@ import data.dto.TakingMedicineDTO;
 import util.AzilUtilities;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Calendar;
 
 public class MySQLTakingMedicineDAO implements TakingMedicineDAO {
 
@@ -17,8 +19,8 @@ public class MySQLTakingMedicineDAO implements TakingMedicineDAO {
         Connection conn = null;
         PreparedStatement ps = null;
 
-        String query = "INSERT INTO uzimanjelijeka VALUES " +
-                       "(?, ?, ?, ?, ?)";
+        String query = "INSERT INTO uzimanjelijeka " +
+                       "VALUES (?, ?, ?, ?, ?)";
 
         try {
             conn = ConnectionPool.getInstance().checkOut();
@@ -31,7 +33,7 @@ public class MySQLTakingMedicineDAO implements TakingMedicineDAO {
             ps.setInt(5, takingMedicine.getQuantity());
             retVal = ps.executeUpdate() == 1;
         } catch(SQLException ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLTakingMedicineDAO", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLTakingMedicineDAO - insert", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
@@ -46,12 +48,12 @@ public class MySQLTakingMedicineDAO implements TakingMedicineDAO {
         PreparedStatement ps = null;
 
         String query = "UPDATE uzimanjelijeka SET " +
-                "DatumUzimanja=?, " +
-                "Veterinar_Zaposleni_JMBG=?, " +
-                "Lijek_IdLijeka=?, " +
-                "Nalaz_IdNalaza=?, " +
-                "Kolicina=? " +
-                "WHERE Lijek_IdLijeka=? ";
+                        "DatumUzimanja=?, " +
+                        "VeterinarJMBG=?, " +
+                        "IdLijeka=?, " +
+                        "IdNalaza=?, " +
+                        "Kolicina=? " +
+                       "WHERE IdLijeka=? ";
 
         try {
             conn = ConnectionPool.getInstance().checkOut();
@@ -66,7 +68,7 @@ public class MySQLTakingMedicineDAO implements TakingMedicineDAO {
 
             retVal = ps.executeUpdate() == 1;
         } catch(SQLException ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLTakingMedicineDAO", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLTakingMedicineDAO - update", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
@@ -81,7 +83,7 @@ public class MySQLTakingMedicineDAO implements TakingMedicineDAO {
          PreparedStatement ps = null;
 
          String query = "DELETE FROM uzimanjelijeka " +
-                        "WHERE Lijek_IdLijeka=? ";
+                        "WHERE IdLijeka=? ";
 
          try {
              conn = ConnectionPool.getInstance().checkOut();
@@ -90,7 +92,7 @@ public class MySQLTakingMedicineDAO implements TakingMedicineDAO {
 
              retVal = ps.executeUpdate() == 1;
          } catch(SQLException ex) {
-             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLTakingMedicineDAO", ex.fillInStackTrace().toString()));
+             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLTakingMedicineDAO - delete", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
          } finally {
              ConnectionPool.getInstance().checkIn(conn);
              DBUtilities.getInstance().close(ps);

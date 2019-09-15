@@ -27,4 +27,5 @@ public class FosterParentsStatisticResultForm {
         controller.initialize(stage, dateFrom);
         stage.showAndWait();
     }
+
 }

@@ -15,6 +15,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import util.AzilUtilities;
+
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 public class DogExaminationController {
@@ -34,41 +37,53 @@ public class DogExaminationController {
     private List<MedicalResultDTO> listOfMedicalResults;
 
     public void initialize(Stage stage, DogDTO dog, EmployeeDTO employee) {
-        this.stage = stage;
-        this.dog = dog;
-        this.employee = employee;
+        try {
+            this.stage = stage;
+            this.dog = dog;
+            this.employee = employee;
 
-        medicalResultsTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("date"));
-        medicalResultsTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("veterinarianJMB"));
-        medicalResultsTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("resultsAndOpinion"));
+            medicalResultsTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("date"));
+            medicalResultsTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("veterinarianJMB"));
+            medicalResultsTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("resultsAndOpinion"));
 
-        displayMedicalResults();
-        initButtonEvent();
+            displayMedicalResults();
+            initButtonEvent();
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername() + " --> DogExaminationController - initialize", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     private void initButtonEvent() {
-        takeMedicineButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
-            if (e.getCode() == KeyCode.ENTER) {
-                takeMedicineButton.fire();
-                e.consume();
-            }
-        });
-        generateFindingButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
-            if (e.getCode() == KeyCode.ENTER) {
-                generateFindingButton.fire();
-                e.consume();
-            }
-        });
-        quitButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
-            if (e.getCode() == KeyCode.ENTER) {
-                quitButton.fire();
-                e.consume();
-            }
-        });
+        try {
+            takeMedicineButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+                if (e.getCode() == KeyCode.ENTER) {
+                    takeMedicineButton.fire();
+                    e.consume();
+                }
+            });
+            generateFindingButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+                if (e.getCode() == KeyCode.ENTER) {
+                    generateFindingButton.fire();
+                    e.consume();
+                }
+            });
+            quitButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+                if (e.getCode() == KeyCode.ENTER) {
+                    quitButton.fire();
+                    e.consume();
+                }
+            });
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername() + " --> DogExaminationController - initButtonEvent", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     public void quit() {
-        stage.close();
+        try {
+            stage.close();
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername() + " --> DogExaminationController - quit", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     public void generateFinding() {
@@ -76,40 +91,44 @@ public class DogExaminationController {
             new GeneratingFindingForm(dog, employee).display();
             displayMedicalResults();
         } catch (Exception ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername() + " --> DogExaminationController - generateFinding", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
     public void takeMedicine() {
-        if (checkMedicalResult()) {
-            try {
+        try {
+            if (checkMedicalResult()) {
                 new TakingMedicineForm(employee, medicalResultsTableView.getSelectionModel().getSelectedItem()).display();
-            } catch (Exception ex) {
-                AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), ex.fillInStackTrace().toString()));
             }
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername() + " --> DogExaminationController - takeMedicine", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
     private void displayMedicalResults() {
-        medicalResultsTableView.getItems().clear();
-        medicalResultsTableView.refresh();
-        listOfMedicalResults = AzilUtilities.getDAOFactory().getMedicalResultDAO().medicalResults(dog);
-        for(MedicalResultDTO medicalResult : listOfMedicalResults) {
-            medicalResultsTableView.getItems().add(medicalResult);
+        try {
+            medicalResultsTableView.getItems().clear();
+            medicalResultsTableView.refresh();
+            listOfMedicalResults = AzilUtilities.getDAOFactory().getMedicalResultDAO().medicalResults(dog);
+            for(MedicalResultDTO medicalResult : listOfMedicalResults) {
+                medicalResultsTableView.getItems().add(medicalResult);
+            }
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername() + " --> DogExaminationController - displayMedicalResults", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
     private boolean checkMedicalResult() {
-        if (medicalResultsTableView.getSelectionModel().getSelectedItem() != null) {
-            return true;
-        }
-        else {
-            try {
+        try {
+            if (medicalResultsTableView.getSelectionModel().getSelectedItem() != null) {
+                return true;
+            }
+            else {
                 new AlertBoxForm("Nije izabran nalaz!").display();
+                return false;
             }
-            catch (Exception ex) {
-                AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), ex.fillInStackTrace().toString()));
-            }
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername() + " --> DogExaminationController - checkMedicalResult", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             return false;
         }
     }

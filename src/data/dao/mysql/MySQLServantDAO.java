@@ -7,6 +7,7 @@ import data.dto.ServantDTO;
 import util.AzilUtilities;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class MySQLServantDAO implements ServantDAO {
@@ -24,7 +25,12 @@ public class MySQLServantDAO implements ServantDAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
         String query = "SELECT z.JMBG, z.Ime, z.Prezime, z.Username, z.Password, z.StrucnaSprema, z.MjestoPrebivalista, z.BrojTelefona " +
-                "FROM zaposleni z INNER JOIN sluzbenik s ON z.JMBG = s.Zaposleni_JMBG";
+                       "FROM zaposleni z " + "" +
+                       "INNER JOIN sluzbenik s ON z.JMBG = s.SluzbenikJMBG " +
+                       "INNER JOIN zaposleni_ugovor zu ON z.JMBG = zu.ZaposlenikJMBG " +
+                       "INNER JOIN ugovororadu uor ON zu.IdUgovora = uor.IdUgovora " +
+                       "WHERE Aktivan = 1";
+        ;
 
         try {
             conn = ConnectionPool.getInstance().checkOut();
@@ -43,7 +49,48 @@ public class MySQLServantDAO implements ServantDAO {
                         rs.getString("JMBG")
                 ));
         } catch (SQLException ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLServantDAO", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLServantDAO - servants", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        } finally {
+            ConnectionPool.getInstance().checkIn(conn);
+            DBUtilities.getInstance().close(ps, rs);
+        }
+
+        return retVal;
+    }
+
+    @Override
+    public List<ServantDTO> servantsDeactivated(){
+        List<ServantDTO> retVal = new ArrayList<>();
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String query = "SELECT z.JMBG, z.Ime, z.Prezime, z.Username, z.Password, z.StrucnaSprema, z.MjestoPrebivalista, z.BrojTelefona " +
+                "FROM zaposleni z " + "" +
+                "INNER JOIN sluzbenik s ON z.JMBG = s.SluzbenikJMBG " +
+                "INNER JOIN zaposleni_ugovor zu ON z.JMBG = zu.ZaposlenikJMBG " +
+                "INNER JOIN ugovororadu uor ON zu.IdUgovora = uor.IdUgovora " +
+                "WHERE Aktivan = 0";
+        ;
+
+        try {
+            conn = ConnectionPool.getInstance().checkOut();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+
+            while (rs.next())
+                retVal.add(new ServantDTO(
+                        rs.getString("Username"),
+                        rs.getString("Password"),
+                        rs.getString("Ime"),
+                        rs.getString("Prezime"),
+                        rs.getString("StrucnaSprema"),
+                        rs.getString("MjestoPrebivalista"),
+                        rs.getString("BrojTelefona"),
+                        rs.getString("JMBG")
+                ));
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLServantDAO - servants", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -60,8 +107,8 @@ public class MySQLServantDAO implements ServantDAO {
         ResultSet rs = null;
 
         String query = "SELECT z.JMBG, z.Ime, z.Prezime, z.Username, z.Password, z.StrucnaSprema, z.MjestoPrebivalista, " +
-                "z.BrojTelefona  FROM zaposleni z INNER JOIN sluzbenik s ON z.JMBG = s.Zaposleni_JMBG " +
-                "WHERE z.Username = ?";
+                       "z.BrojTelefona  FROM zaposleni z INNER JOIN sluzbenik s ON z.JMBG = s.SluzbenikJMBG " +
+                       "WHERE z.Username = ?";
 
         try {
             conn = ConnectionPool.getInstance().checkOut();
@@ -81,7 +128,7 @@ public class MySQLServantDAO implements ServantDAO {
                         rs.getString("JMBG")
                 );
         } catch (SQLException ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLServantDAO", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLServantDAO - getByUsername", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -107,8 +154,8 @@ public class MySQLServantDAO implements ServantDAO {
         Connection conn = null;
         PreparedStatement ps = null;
 
-        String query = "DELETE FROM sluzbenik "
-                + "WHERE Zaposleni_JMBG=? ";
+        String query = "DELETE FROM sluzbenik " +
+                       "WHERE SluzbenikJMBG=? ";
         try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
@@ -119,7 +166,7 @@ public class MySQLServantDAO implements ServantDAO {
                 return retVal;
             }
         } catch (SQLException ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLServantDAO", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLServantDAO - delete", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             return false;
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
@@ -138,7 +185,7 @@ public class MySQLServantDAO implements ServantDAO {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String query = "SELECT * FROM sluzbenik WHERE Zaposleni_JMBG=?";
+        String query = "SELECT * FROM sluzbenik WHERE SluzbenikJMBG=?";
 
         try {
             conn = ConnectionPool.getInstance().checkOut();
@@ -149,7 +196,7 @@ public class MySQLServantDAO implements ServantDAO {
             retVal = rs.next();
         } catch (SQLException ex) {
             retVal = false;
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLServantDAO", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLServantDAO - exists", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -167,7 +214,7 @@ public class MySQLServantDAO implements ServantDAO {
         ResultSet rs = null;
         String query = "SELECT * FROM zaposleni z " +
                        "JOIN sluzbenik s " +
-                       "ON z.JMBG = s.Zaposleni_JMBG " +
+                       "ON z.JMBG = s.SluzbenikJMBG " +
                        "WHERE z.username = ? AND z.password = ?";
         try {
             conn = ConnectionPool.getInstance().checkOut();
@@ -179,7 +226,7 @@ public class MySQLServantDAO implements ServantDAO {
             retVal = rs.next();
         } catch (SQLException ex) {
             retVal = false;
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLServantDAO", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLServantDAO - exists", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -195,9 +242,12 @@ public class MySQLServantDAO implements ServantDAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        String query = "SELECT z.JMBG, z.Ime, z.Prezime, z.Username, z.Password, z.StrucnaSprema, z.MjestoPrebivalista, " +
-                "z.BrojTelefona  FROM zaposleni z INNER JOIN sluzbenik a ON z.JMBG = a.Zaposleni_JMBG " +
-                "WHERE z.Username = ? AND Password = ?";
+        String query = "SELECT z.JMBG, z.Ime, z.Prezime, z.Username, z.Password, z.StrucnaSprema, z.MjestoPrebivalista, z.BrojTelefona " +
+                       "FROM zaposleni z " + "" +
+                       "INNER JOIN sluzbenik s ON z.JMBG = s.SluzbenikJMBG " +
+                       "INNER JOIN zaposleni_ugovor zu ON z.JMBG = zu.ZaposlenikJMBG " +
+                       "INNER JOIN ugovororadu uor ON zu.IdUgovora= uor.IdUgovora " +
+                       "WHERE z.Username = ? AND Password = ? AND Aktivan = 1";
 
         try {
             conn = ConnectionPool.getInstance().checkOut();
@@ -218,7 +268,7 @@ public class MySQLServantDAO implements ServantDAO {
                         rs.getString("JMBG")
                 );
         } catch (SQLException ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLServantDAO", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLServantDAO - login", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);

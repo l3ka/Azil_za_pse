@@ -9,6 +9,8 @@ public interface CageDAO {
 
     CageDTO getById(int Id);
 
+    List<CageDTO> getByName(String name);
+
     boolean insert(CageDTO cage);
 
     boolean update(CageDTO cage);

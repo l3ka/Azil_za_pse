@@ -6,6 +6,7 @@ import data.dto.EmploymentContractDTO;
 import data.dto.LoggerDTO;
 import util.AzilUtilities;
 import java.sql.*;
+import java.util.Calendar;
 import java.util.List;
 
 public class MySQLEmployeeDAO implements EmployeeDAO {
@@ -36,7 +37,7 @@ public class MySQLEmployeeDAO implements EmployeeDAO {
                 retVal = !cs.execute();
             } catch (Exception ex) {
                 retVal = false;
-                AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLEmployeeDAO", ex.fillInStackTrace().toString()));
+                AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLEmployeeDAO - insert", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             } finally {
                 ConnectionPool.getInstance().checkIn(conn);
                 DBUtilities.getInstance().close(cs);
@@ -75,7 +76,7 @@ public class MySQLEmployeeDAO implements EmployeeDAO {
 
             ps.executeUpdate();
         } catch (SQLException ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLEmployeeDAO", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLEmployeeDAO - update", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
@@ -90,15 +91,15 @@ public class MySQLEmployeeDAO implements EmployeeDAO {
         Connection conn = null;
         PreparedStatement ps = null;
         String query = "UPDATE zaposleni SET " +
-                "JMBG=?," +
-                "Ime=?, " +
-                "Prezime=?, " +
-                "Username=?, " +
-                "Password=?, " +
-                "StrucnaSprema=?, " +
-                "MjestoPrebivalista=?, " +
-                "BrojTelefona=? "
-                + "WHERE JMBG=? ";
+                        "JMBG=?," +
+                        "Ime=?, " +
+                        "Prezime=?, " +
+                        "Username=?, " +
+                        "Password=?, " +
+                        "StrucnaSprema=?, " +
+                        "MjestoPrebivalista=?, " +
+                        "BrojTelefona=? " +
+                       "WHERE JMBG=? ";
 
         try {
             conn = ConnectionPool.getInstance().checkOut();
@@ -116,7 +117,7 @@ public class MySQLEmployeeDAO implements EmployeeDAO {
 
             ps.executeUpdate();
         } catch (SQLException ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLEmployeeDAO", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLEmployeeDAO - updateWithJMB", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
@@ -125,19 +126,23 @@ public class MySQLEmployeeDAO implements EmployeeDAO {
         return retVal;
     }
 
-    public boolean delete(EmployeeDTO employee){
+    @Override
+    public boolean delete(EmployeeDTO employee) {
         boolean retVal = true;
 
+        /*
         List<EmploymentContractDTO> contracts = AzilUtilities.getDAOFactory().getContractDAO().contractsForEmployee(employee);
         for(EmploymentContractDTO contract : contracts){
             AzilUtilities.getDAOFactory().getContractDAO().delete(contract);
         }
+         */
 
         Connection conn = null;
         PreparedStatement ps = null;
 
-        String query = "DELETE FROM zaposleni "
-                + "WHERE JMBG=? ";
+        String query = "UPDATE ugovororadu " +
+                       "SET Aktivan = 0 " +
+                       "WHERE IdUgovora = (SELECT IdUgovora FROM zaposleni_ugovor WHERE ZaposlenikJMBG = ?)";
         try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
@@ -146,7 +151,41 @@ public class MySQLEmployeeDAO implements EmployeeDAO {
             retVal = ps.executeUpdate() == 1;
         } catch (SQLException ex) {
             retVal = false;
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLEmployeeDAO", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLEmployeeDAO - delete", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        } finally {
+            ConnectionPool.getInstance().checkIn(conn);
+            DBUtilities.getInstance().close(ps);
+        }
+
+        return retVal;
+    }
+
+    @Override
+    public boolean activate(EmployeeDTO employee) {
+        boolean retVal = true;
+
+        /*
+        List<EmploymentContractDTO> contracts = AzilUtilities.getDAOFactory().getContractDAO().contractsForEmployee(employee);
+        for(EmploymentContractDTO contract : contracts){
+            AzilUtilities.getDAOFactory().getContractDAO().delete(contract);
+        }
+         */
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        String query = "UPDATE ugovororadu " +
+                       "SET Aktivan = 1 " +
+                       "WHERE IdUgovora = (SELECT IdUgovora FROM zaposleni_ugovor WHERE ZaposlenikJMBG = ?)";
+        try {
+            conn = ConnectionPool.getInstance().checkOut();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, employee.getJMB());
+
+            retVal = ps.executeUpdate() == 1;
+        } catch (SQLException ex) {
+            retVal = false;
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLEmployeeDAO - activate", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
@@ -162,7 +201,7 @@ public class MySQLEmployeeDAO implements EmployeeDAO {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String query = "SELECT * FROM zaposleni WHERE JMBG=?";
+        String query = "SELECT * FROM zaposleni WHERE JMBG = ?";
 
         try {
             conn = ConnectionPool.getInstance().checkOut();
@@ -173,7 +212,7 @@ public class MySQLEmployeeDAO implements EmployeeDAO {
            retVal = rs.next();
         } catch (SQLException ex) {
             retVal = false;
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLEmployeeDAO", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLEmployeeDAO - exists", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);
@@ -201,7 +240,7 @@ public class MySQLEmployeeDAO implements EmployeeDAO {
             retVal = rs.next();
         } catch (SQLException ex) {
             retVal = false;
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLEmployeeDAO", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLEmployeeDAO - exists", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps, rs);

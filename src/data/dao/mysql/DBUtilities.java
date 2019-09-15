@@ -3,10 +3,8 @@ package data.dao.mysql;
 import data.dto.LoggerDTO;
 import util.AzilUtilities;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.Calendar;
 
 public class DBUtilities {
 
@@ -25,7 +23,7 @@ public class DBUtilities {
 			try {
 				conn.close();
 			} catch (SQLException ex) {
-				AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DBUtilities", ex.fillInStackTrace().toString()));
+				AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DBUtilities - close", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
 			}
 		}
 	}
@@ -35,8 +33,7 @@ public class DBUtilities {
 			try {
 				s.close();
 			} catch (SQLException ex) {
-				AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DBUtilities", ex.fillInStackTrace().toString()));
-			}
+				AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DBUtilities - close", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));			}
 		}
 	}
 
@@ -45,8 +42,7 @@ public class DBUtilities {
 			try {
 				rs.close();
 			} catch (SQLException ex) {
-				AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DBUtilities", ex.fillInStackTrace().toString()));
-			}
+				AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DBUtilities - close", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));			}
 		}
 	}
 

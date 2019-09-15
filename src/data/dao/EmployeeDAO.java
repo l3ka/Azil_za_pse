@@ -13,6 +13,8 @@ public interface EmployeeDAO {
 
     boolean delete(EmployeeDTO employee);
 
+    boolean activate(EmployeeDTO employee);
+
     boolean exists(EmployeeDTO employee);
 
     boolean exists(String username, String JMB);

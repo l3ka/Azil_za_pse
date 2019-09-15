@@ -20,4 +20,5 @@ public class GeneratingStatisticForm {
         controller.initialize(stage);
         stage.showAndWait();
     }
+
 }

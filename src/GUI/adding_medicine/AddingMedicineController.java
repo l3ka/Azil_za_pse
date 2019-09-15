@@ -11,6 +11,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import util.AzilUtilities;
 
+import java.sql.Date;
+import java.util.Calendar;
+
 public class AddingMedicineController {
 
     @FXML
@@ -27,30 +30,42 @@ public class AddingMedicineController {
     private Stage stage;
 
     public void initialize(Stage stage) {
-        this.stage = stage;
-        initButtonEvent();
+        try {
+            this.stage = stage;
+            initButtonEvent();
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddingMedicineController - initialize", new Date(Calendar.getInstance().getTime().getTime()),  ex.fillInStackTrace().toString()));
+        }
     }
 
     private void initButtonEvent() {
-        saveButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
-            if (e.getCode() == KeyCode.ENTER) {
-                saveButton.fire();
-                e.consume();
-            }
-        });
-        quitButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
-            if (e.getCode() == KeyCode.ENTER) {
-                quitButton.fire();
-                e.consume();
-            }
-        });
+        try {
+            saveButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+                if (e.getCode() == KeyCode.ENTER) {
+                    saveButton.fire();
+                    e.consume();
+                }
+            });
+            quitButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+                if (e.getCode() == KeyCode.ENTER) {
+                    quitButton.fire();
+                    e.consume();
+                }
+            });
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddingMedicineController - initButtonEvent", new Date(Calendar.getInstance().getTime().getTime()),  ex.fillInStackTrace().toString()));
+        }
     }
 
     public void addDrug() {
-        if(checkName() && checkAmount() && checkDescription()) {
-            AzilUtilities.getDAOFactory().getMedicineDAO().insert(new MedicineDTO(0, nameTextField.getText().trim(), descriptionTextField.getText().trim(), Integer.valueOf(amountTextField.getText().trim())));
-            displayAlertBox("Lijek je uspješno dodat!");
-            quit();
+        try {
+            if(checkName() && checkAmount()) {
+                AzilUtilities.getDAOFactory().getMedicineDAO().insert(new MedicineDTO(0, nameTextField.getText().trim(), descriptionTextField.getText().trim(), Integer.valueOf(amountTextField.getText().trim())));
+                displayAlertBox("Lijek je uspješno dodat!");
+                quit();
+            }
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddingMedicineController - addDrug", new Date(Calendar.getInstance().getTime().getTime()),  ex.fillInStackTrace().toString()));
         }
     }
 
@@ -59,27 +74,29 @@ public class AddingMedicineController {
     }
 
     private boolean checkName() {
-        if("".equals(nameTextField.getText().trim())) {
-            displayAlertBox("Unos za polje naziv nije odgovarajući!");
+        try {
+            if("".equals(nameTextField.getText().trim())) {
+                displayAlertBox("Unos za polje naziv nije odgovarajući!");
+                return false;
+            }
+            return true;
+        } catch(NumberFormatException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddingMedicineController - checkName", new Date(Calendar.getInstance().getTime().getTime()),  ex.fillInStackTrace().toString()));
             return false;
         }
-        return true;
     }
 
     private boolean checkAmount() {
-        if("".equals(amountTextField.getText().trim()) || !checkNumber(amountTextField.getText().trim())) {
-            displayAlertBox("Unos za polje količina nije odgovarajući!");
+        try {
+            if("".equals(amountTextField.getText().trim()) || !checkNumber(amountTextField.getText().trim())) {
+                displayAlertBox("Unos za polje količina nije odgovarajući!");
+                return false;
+            }
+            return true;
+        } catch(NumberFormatException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddingMedicineController - checkAmount", new Date(Calendar.getInstance().getTime().getTime()),  ex.fillInStackTrace().toString()));
             return false;
         }
-        return true;
-    }
-
-    private boolean checkDescription() {
-        if("".equals(descriptionTextField.getText().trim())) {
-            displayAlertBox("Unos za polje opis nije odgovarajući!");
-            return false;
-        }
-        return true;
     }
 
     private boolean checkNumber(String string) {
@@ -87,7 +104,7 @@ public class AddingMedicineController {
             Integer.parseInt(string);
             return true;
         } catch(NumberFormatException ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddingMedicineController", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddingMedicineController - checkNumber", new Date(Calendar.getInstance().getTime().getTime()),  ex.fillInStackTrace().toString()));
             return false;
         }
     }
@@ -96,7 +113,7 @@ public class AddingMedicineController {
         try {
             new AlertBoxForm(content).display();
         } catch(Exception ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddingMedicineController", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddingMedicineController - displayAlertBox", new Date(Calendar.getInstance().getTime().getTime()),  ex.fillInStackTrace().toString()));
         }
     }
 
