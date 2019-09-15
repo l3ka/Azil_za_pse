@@ -47,12 +47,12 @@
                <children>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../icons/dog.png" />
+                        <Image url="@../../icons/dog.png" />
                      </image>
                   </ImageView>
                   <Label text="Izaberite psa" textFill="WHITE">
                      <font>
-                        <Font size="16.0" />
+                        <Font size="18.0" />
                      </font>
                   </Label>
                </children>
@@ -90,12 +90,12 @@
                <children>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../icons/fosters.png" />
+                        <Image url="@../../icons/fosters.png" />
                      </image>
                   </ImageView>
                   <Label text="Izaberite udomitelja" textFill="WHITE">
                      <font>
-                        <Font size="16.0" />
+                        <Font size="18.0" />
                      </font>
                   </Label>
                </children>
