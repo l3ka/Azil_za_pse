@@ -22,13 +22,13 @@ public class EditEmploymentController {
     public void initialize(Stage stage, EmployeeContractDTO employeeContract) {
         this.stage = stage;
         this.employeeContract = employeeContract;
-        id.setText(employeeContract.getEmployee().getJMB());
-        name.setText(employeeContract.getEmployee().getName());
-        surname.setText(employeeContract.getEmployee().getSurname());
-        address.setText(employeeContract.getEmployee().getResidenceAddress());
-        phone.setText(employeeContract.getEmployee().getTelephoneNumber());
-        salary.setText(Double.toString(employeeContract.getEmploymentContract().getSalary()));
-        position.setText(employeeContract.getEmploymentContract().getPosition());
+        id.setText(employeeContract.getJmbEmployee());
+        name.setText(AzilUtilities.getDAOFactory().getEmployeeDAO().getEmployeeByJMB(employeeContract.getJmbEmployee()).getName());
+        surname.setText(AzilUtilities.getDAOFactory().getEmployeeDAO().getEmployeeByJMB(employeeContract.getJmbEmployee()).getSurname());
+        address.setText(AzilUtilities.getDAOFactory().getEmployeeDAO().getEmployeeByJMB(employeeContract.getJmbEmployee()).getResidenceAddress());
+        phone.setText(AzilUtilities.getDAOFactory().getEmployeeDAO().getEmployeeByJMB(employeeContract.getJmbEmployee()).getTelephoneNumber());
+        salary.setText(Double.toString(AzilUtilities.getDAOFactory().getEmploymentContractDAO().getById(employeeContract.getIdEmploymentContract()).getSalary()));
+        position.setText(AzilUtilities.getDAOFactory().getEmploymentContractDAO().getById(employeeContract.getIdEmploymentContract()).getPosition());
         contractFrom.setValue(employeeContract.getFrom().toLocalDate());
         contractTo.setValue(LocalDate.now());
     }
