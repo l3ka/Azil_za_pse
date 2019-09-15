@@ -33,16 +33,11 @@ public class DogsPreviewController {
     private TableView<DogDTO> dogsTableView;
     @FXML
     private TextField searchDogsTextField;
-    @FXML
-    private ImageView adoptedImageView;
 
     private Stage stage;
     private List<DogDTO> listOfDogs;
     private CageDTO cage;
     private DogInCageDTO dogInCage;
-    private Image adopted = new Image("file:" + "src" + File.separator + "GUI" + File.separator + "icons" + File.separator + "checked-icon.png");
-    private Image notAdopted = new Image("file:" + "src" + File.separator + "GUI" + File.separator + "icons" + File.separator + "X-icon.png");
-
 
     public void initialize(Stage stage) {
         try {
@@ -56,7 +51,6 @@ public class DogsPreviewController {
             dogsTableView.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
                 try {
                     if (newValue == null) return;
-                    adoptedImageView.setImage(newValue.isAdopted() ? adopted : notAdopted);
                     if (newValue.getImage() != null) {
                         dogImageView.setImage(new Image("file:" + newValue.getImage()));
                     } else {
@@ -164,7 +158,9 @@ public class DogsPreviewController {
             dogsTableView.refresh();
             listOfDogs = AzilUtilities.getDAOFactory().getDogDAO().dogs();
             for(DogDTO dog : listOfDogs) {
-                dogsTableView.getItems().add(dog);
+                if(!dog.isAdopted()) {
+                    dogsTableView.getItems().add(dog);
+                }
             }
         } catch(Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DogsPreviewController - displayDogs", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));

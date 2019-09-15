@@ -27,8 +27,8 @@
             <TableColumn prefWidth="122.0" text="Broj telefona" />
          </columns>
       </TableView>
-      <Button fx:id="generatePdf" mnemonicParsing="false" onAction="#GeneratePDFButtonPressed" text="to pdf" />
-      <Button fx:id="fosterParentsStatisticOk" mnemonicParsing="false" onAction="#OKButtonPressed" text="OK">
+      <Button fx:id="generatePdf" mnemonicParsing="false" onAction="#generatePDFButtonPressed" prefHeight="31.0" prefWidth="125.0" text="PDF dokument" />
+      <Button fx:id="fosterParentsStatisticOk" mnemonicParsing="false" onAction="#OKButtonPressed" prefHeight="31.0" prefWidth="45.0" text="OK">
          <VBox.margin>
             <Insets top="40.0" />
          </VBox.margin>

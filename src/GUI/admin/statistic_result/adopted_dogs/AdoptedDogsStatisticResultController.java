@@ -67,9 +67,10 @@ public class AdoptedDogsStatisticResultController {
         stage.close();
     }
 
-    public void GeneratePDFButtonPressed() {
+    public void generatePDFButtonPressed() {
         try {
             AzilUtilities.getDAOFactory().getPdfExporterDAO().exportAdoptedDogs(dogsTableView, titleLabel.getText().trim().split(" ")[2]);
+            stage.close();
         } catch (Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AdoptedDogsStatisticResultController - GeneratePDFButtonPressed", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
