@@ -57,15 +57,6 @@ public class LoginController {
     }
 
     public void logIn() {
-        AzilUtilities.getDAOFactory().getPdfExporterDAO().exportEmployees("SVI");
-        AzilUtilities.getDAOFactory().getPdfExporterDAO().exportEmployees("AKTIVNI");
-        AzilUtilities.getDAOFactory().getPdfExporterDAO().exportEmployees("NEAKTIVNI");
-        AzilUtilities.getDAOFactory().getPdfExporterDAO().exportMedicine();
-        AzilUtilities.getDAOFactory().getPdfExporterDAO().exportMedicalReports();
-        AzilUtilities.getDAOFactory().getPdfExporterDAO().exportCages();
-        AzilUtilities.getDAOFactory().getPdfExporterDAO().exportFosterDogJoin();
-        AzilUtilities.getDAOFactory().getPdfExporterDAO().exportDogInCage();
-
         if (checkCredentials()) {
             try {
                 new AlertBoxForm("Korisničko ime ili lozinka nisu ispravno uneseni!").display();
