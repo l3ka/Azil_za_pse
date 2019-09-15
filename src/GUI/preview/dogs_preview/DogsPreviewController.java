@@ -115,15 +115,14 @@ public class DogsPreviewController {
 
     public void search() {
         try {
-            String inputText = searchDogsTextField.getText().toUpperCase();
-
-            List<DogDTO> filteredList = listOfDogs.stream().filter((dog -> dog.getBreed().toUpperCase().contains(inputText))).collect(Collectors.toList());
+            List<DogDTO> filteredList = listOfDogs.stream()
+                                                  .filter((dog -> dog.getBreed().toUpperCase().contains(searchDogsTextField.getText().toUpperCase())))
+                                                  .collect(Collectors.toList());
             dogsTableView.getItems().clear();
             for (DogDTO dog : filteredList) {
                 dogsTableView.getItems().add(dog);
             }
             dogsTableView.refresh();
-
         } catch(Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DogsPreviewController - search", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
@@ -131,14 +130,15 @@ public class DogsPreviewController {
 
     public void showAll() {
         try {
-            if (searchDogsTextField.getText() == null) return;
+            if (searchDogsTextField.getText() == null) {
+                return;
+            }
             dogsTableView.getItems().clear();
             for (DogDTO dog : listOfDogs) {
                 dogsTableView.getItems().add(dog);
             }
             dogsTableView.refresh();
             searchDogsTextField.clear();
-        
         } catch(Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DogsPreviewController - showAll", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }

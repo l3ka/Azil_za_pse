@@ -70,7 +70,11 @@ public class AddingMedicineController {
     }
 
     public void quit() {
-        stage.close();
+        try {
+            stage.close();
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddingMedicineController - quit", new Date(Calendar.getInstance().getTime().getTime()),  ex.fillInStackTrace().toString()));
+        }
     }
 
     private boolean checkName() {

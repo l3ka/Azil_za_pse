@@ -79,12 +79,20 @@ public class DeactivatedAccountsController {
     }
 
     public void displayAllAccounts() {
-        displayEmployees();
-        nameTextField.clear();
+        try {
+            displayEmployees();
+            nameTextField.clear();
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DeactivatedAccountsController - displayAllAccounts", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     public void quit() {
-        stage.close();
+        try {
+            stage.close();
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DeactivatedAccountsController - quit", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     private void displayEmployees() {
@@ -117,7 +125,6 @@ public class DeactivatedAccountsController {
         }
     }
 
-
     private void displayAlertBox(String content) {
         try {
             new AlertBoxForm(content).display();
@@ -125,6 +132,5 @@ public class DeactivatedAccountsController {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DeactivatedAccountsController - displayAlertBox", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
-
 
 }

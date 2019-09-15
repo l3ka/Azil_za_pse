@@ -1,6 +1,5 @@
 package GUI.admin.main;
 
-import GUI.adopting_dog.adopt_dog.AdoptingDogForm;
 import GUI.admin.generating_statistic.GeneratingStatisticForm;
 import GUI.adopting_dog.adopting_main.AdoptingMainForm;
 import GUI.alert_box.AlertBoxForm;

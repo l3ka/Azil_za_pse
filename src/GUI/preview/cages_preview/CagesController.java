@@ -86,8 +86,9 @@ public class CagesController {
 
     public void search() {
         try {
-            String inputValue = nameTextField.getText().toUpperCase();
-            List<CageDTO> filteredList = listOfCages.stream().filter(cageDTO -> cageDTO.getName().toUpperCase().contains(inputValue)).collect(Collectors.toList());
+            List<CageDTO> filteredList = listOfCages.stream()
+                                                    .filter(cageDTO -> cageDTO.getName().toUpperCase().contains(nameTextField.getText().toUpperCase()))
+                                                    .collect(Collectors.toList());
             cagesTableView.getItems().clear();
             for (CageDTO cage : filteredList) {
                 cagesTableView.getItems().add(cage);

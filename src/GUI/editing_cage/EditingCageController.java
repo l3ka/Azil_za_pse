@@ -36,13 +36,11 @@ public class EditingCageController {
     public void save() {
         try {
             if(checkName() && checkCapacity()) {
-                cage.setName(cageNameTextField.getText());
-                cage.setCapacity(Integer.valueOf(cageCapacityTextField.getText()));
-
+                cage.setName(cageNameTextField.getText().trim());
+                cage.setCapacity(Integer.valueOf(cageCapacityTextField.getText().trim()));
                 if(AzilUtilities.getDAOFactory().getCageDAO().update(cage)) {
                     displayAlertBox("Kavez je uspješno izmijenjen!");
-                    stage.close();
-                }
+                    quit();                }
             }
         } catch(Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditingCageController - save", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
@@ -50,20 +48,16 @@ public class EditingCageController {
     }
 
     public void quit() {
-        stage.close();
-    }
-
-    private void displayAlertBox(String content) {
         try {
-            new AlertBoxForm(content).display();
+            stage.close();
         } catch(Exception ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditingCageController - displayAlertBox", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditingCageController - quit", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
     private boolean checkName() {
         try {
-            if("".equals(cageNameTextField.getText())) {
+            if("".equals(cageNameTextField.getText().trim())) {
                 displayAlertBox("Nije uneseno ime kaveza!");
                 return false;
             }
@@ -76,11 +70,11 @@ public class EditingCageController {
 
     private boolean checkCapacity() {
         try {
-            if("".equals(cageCapacityTextField.getText())) {
+            if("".equals(cageCapacityTextField.getText().trim())) {
                 displayAlertBox("Nije unesen kapacitet kaveza!");
                 return false;
             }
-            if(!checkNumber(cageCapacityTextField.getText())) {
+            if(!checkNumber(cageCapacityTextField.getText().trim())) {
                 displayAlertBox("Unos za polje kapacitet nije odgovarajući!");
             }
             return true;
@@ -97,6 +91,14 @@ public class EditingCageController {
         } catch (NumberFormatException ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditingCageController - checkNumber", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             return false;
+        }
+    }
+
+    private void displayAlertBox(String content) {
+        try {
+            new AlertBoxForm(content).display();
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditingCageController - displayAlertBox", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 

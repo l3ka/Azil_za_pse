@@ -62,6 +62,11 @@ public class AddFosterParentController {
     }
 
     public void quit() {
+        try {
+            stage.close();
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddFosterParentController - quit", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
         stage.close();
     }
 

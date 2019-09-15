@@ -10,18 +10,18 @@ import java.io.IOException;
 
 public class DogsPreviewForm {
 
-        public void display() throws IOException {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("DogsPreview.fxml"));
-            Stage stage = new Stage();
-            stage.getIcons().add(new Image("file:" + "src" + File.separator + "GUI" + File.separator + "icons" + File.separator + "dog-icon.png"));
-            Scene scene = new Scene(loader.load());
-            stage.setTitle("Azil za pse - pregled pasa");
-            stage.setScene(scene);
-            stage.setMinWidth(1200);
-            stage.setMinHeight(720);
-            DogsPreviewController controller = loader.getController();
-            controller.initialize(stage);
-            stage.show();
+    public void display() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("DogsPreview.fxml"));
+        Stage stage = new Stage();
+        stage.getIcons().add(new Image("file:" + "src" + File.separator + "GUI" + File.separator + "icons" + File.separator + "dog-icon.png"));
+        Scene scene = new Scene(loader.load());
+        stage.setTitle("Azil za pse - pregled pasa");
+        stage.setScene(scene);
+        stage.setMinWidth(1200);
+        stage.setMinHeight(720);
+        DogsPreviewController controller = loader.getController();
+        controller.initialize(stage);
+        stage.show();
     }
 
 }

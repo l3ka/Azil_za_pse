@@ -65,7 +65,11 @@ public class FosterParentsStatisticResultController {
     }
 
     public void OKButtonPressed() {
-        stage.close();
+        try {
+            stage.close();
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("FosterParentsStatisticResultController - OKButtonPressed", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     public void generatePDFButtonPressed() {

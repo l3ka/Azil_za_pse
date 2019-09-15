@@ -84,15 +84,16 @@ public class FosterParentsController {
     }
 
     public void displayAllFosterParents() {
-      try {
-        if (nameTextField.getText() == null) return;
-        fosterParentsTableView.getItems().clear();
-        for (FosterParentDTO fosterParent : listOfFosterParents) {
-            fosterParentsTableView.getItems().add(fosterParent);
-        }
-        fosterParentsTableView.refresh();
-        nameTextField.clear();
-        
+        try {
+            if (nameTextField.getText() == null) {
+                return;
+            }
+            fosterParentsTableView.getItems().clear();
+            for (FosterParentDTO fosterParent : listOfFosterParents) {
+                fosterParentsTableView.getItems().add(fosterParent);
+            }
+            fosterParentsTableView.refresh();
+            nameTextField.clear();
         } catch(Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("FosterParentsController - displayAllFosterParents", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
@@ -101,9 +102,9 @@ public class FosterParentsController {
     public void search() {
         try {
             String inputText = nameTextField.getText().toUpperCase();
-            List<FosterParentDTO> filteredList = listOfFosterParents.stream().
-                    filter(fosterParentDTO -> fosterParentDTO.getName().toUpperCase().contains(inputText)).
-                    collect(Collectors.toList());
+            List<FosterParentDTO> filteredList = listOfFosterParents.stream()
+                                                                     .filter(fosterParentDTO -> fosterParentDTO.getName().toUpperCase().contains(inputText))
+                                                                     .collect(Collectors.toList());
             fosterParentsTableView.getItems().clear();
             for (FosterParentDTO fosterParent : filteredList) {
                 fosterParentsTableView.getItems().add(fosterParent);
@@ -147,7 +148,6 @@ public class FosterParentsController {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("FosterParentsController - displayFosterParents", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
-
 
     private void displayAlertBox(String content) {
         try {

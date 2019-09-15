@@ -41,33 +41,37 @@ public class AdoptingMainController {
     private List<AdoptingDogDTO> listOfAdoptings;
 
     public void initialize(Stage stage) {
-        this.stage = stage;
-        dogsTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("name"));
-        dogsTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("breed"));
-        dogsTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("gender"));
-        dogsTableView.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("height"));
-        dogsTableView.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("weight"));
-        dogsTableView.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
-        allAdoptings();
-        displayDogs();
-        dogsTableView.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
-            try {
-                if (newValue == null) return;
-                if (newValue.getImage() != null) {
-                    dogImageView.setImage(new Image("file:" + newValue.getImage()));
-                } else dogImageView.setImage(null);
-                String fosterParentJMB = listOfAdoptings.stream().
-                        filter(adoptingDogDTO -> adoptingDogDTO.getIdDog() == newValue.getDogId() && adoptingDogDTO.getDateTo() == null).
-                        findAny().get().getJmbFosterParent();
-                FosterParentDTO fosterParent = AzilUtilities.getDAOFactory().getFosterParentDAO().getByJMB(fosterParentJMB);
-                nameLabel.setText(fosterParent.getName());
-                surnameLabel.setText(fosterParent.getSurname());
-                placeOfResidenceLabel.setText(fosterParent.getResidenceAddress());
-                phoneLabel.setText(fosterParent.getTelephoneNumber());
-            } catch (Exception ex) {
-                AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DogsPreviewController - initialize", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
-            }
-        }));
+        try {
+            this.stage = stage;
+            dogsTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("name"));
+            dogsTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("breed"));
+            dogsTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("gender"));
+            dogsTableView.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("height"));
+            dogsTableView.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("weight"));
+            dogsTableView.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
+            allAdoptings();
+            displayDogs();
+            dogsTableView.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
+                try {
+                    if (newValue == null) return;
+                    if (newValue.getImage() != null) {
+                        dogImageView.setImage(new Image("file:" + newValue.getImage()));
+                    } else dogImageView.setImage(null);
+                    String fosterParentJMB = listOfAdoptings.stream().
+                            filter(adoptingDogDTO -> adoptingDogDTO.getIdDog() == newValue.getDogId() && adoptingDogDTO.getDateTo() == null).
+                            findAny().get().getJmbFosterParent();
+                    FosterParentDTO fosterParent = AzilUtilities.getDAOFactory().getFosterParentDAO().getByJMB(fosterParentJMB);
+                    nameLabel.setText(fosterParent.getName());
+                    surnameLabel.setText(fosterParent.getSurname());
+                    placeOfResidenceLabel.setText(fosterParent.getResidenceAddress());
+                    phoneLabel.setText(fosterParent.getTelephoneNumber());
+                } catch (Exception ex) {
+                    AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DogsPreviewController - initialize", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+                }
+            }));
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AdoptingMainController - initialize", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
 
@@ -76,14 +80,17 @@ public class AdoptingMainController {
             new AdoptingDogForm().display();
             displayDogs();
             allAdoptings();
-
         } catch(Exception ex) {
-
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AdoptingMainController - adoptDog", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
     public void quit() {
-        stage.close();
+        try {
+            stage.close();
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AdoptingMainController - quit", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
 
@@ -104,6 +111,11 @@ public class AdoptingMainController {
     }
 
     private void allAdoptings() {
-        listOfAdoptings = AzilUtilities.getDAOFactory().getAdoptingDogDAO().getAllAdoptings();
+        try {
+            listOfAdoptings = AzilUtilities.getDAOFactory().getAdoptingDogDAO().getAllAdoptings();
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AdoptingMainController - allAdoptings", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
+
 }

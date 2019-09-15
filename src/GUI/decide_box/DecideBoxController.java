@@ -36,11 +36,15 @@ public class DecideBoxController {
     }
 
     public void noClicked() {
-        this.stage.close();
+        try {
+            this.stage.close();
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DecideBoxController - noClicked", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     public boolean getDecision() {
-        return this.decision;
+            return this.decision;
     }
 
 }

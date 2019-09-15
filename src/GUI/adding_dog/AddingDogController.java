@@ -118,7 +118,11 @@ public class AddingDogController {
     }
 
     public void quit() {
-        stage.close();
+        try {
+            stage.close();
+        } catch(NumberFormatException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddingDogController - quit", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     private boolean checkName() {

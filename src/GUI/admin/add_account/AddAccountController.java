@@ -121,7 +121,11 @@ public class AddAccountController {
     }
 
     public void quit() {
-        stage.close();
+        try {
+            stage.close();
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddAccountController - quit", new Date(Calendar.getInstance().getTime().getTime()),  ex.fillInStackTrace().toString()));
+        }
     }
 
     private boolean checkUsername() {
@@ -259,7 +263,12 @@ public class AddAccountController {
     }
 
     private boolean checkIsNumber(String number) {
-        return number.matches("^[0-9]*$");
+        try {
+            return number.matches("^[0-9]*$");
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddAccountController - checkIsNumber", new Date(Calendar.getInstance().getTime().getTime()),  ex.fillInStackTrace().toString()));
+            return false;
+        }
     }
 
     private void displayAlertBox(String content) {

@@ -107,8 +107,9 @@ public class AccountsController {
 
     public void search() {
         try {
-            String inputValue = searchNameTextField.getText().toUpperCase();
-            List<EmployeeDTO> filteredList = listOfEmployees.stream().filter(employeeDTO -> employeeDTO.getName().toUpperCase().contains(inputValue)).collect(Collectors.toList());
+            List<EmployeeDTO> filteredList = listOfEmployees.stream()
+                                                            .filter(employeeDTO -> employeeDTO.getName().toUpperCase().contains(searchNameTextField.getText().toUpperCase()))
+                                                            .collect(Collectors.toList());
             accountsTableView.getItems().clear();
             for (EmployeeDTO employee : filteredList) {
                 accountsTableView.getItems().add(employee);
@@ -128,7 +129,7 @@ public class AccountsController {
             accountsTableView.refresh();
             searchNameTextField.clear();
         } catch (Exception ex) {
-          
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AccountsController - displayAllAccounts", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 

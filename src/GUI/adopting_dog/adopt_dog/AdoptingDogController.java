@@ -107,52 +107,71 @@ public class AdoptingDogController {
     }
 
     public void searchDogs() {
-        String inputText = searchDogsTextField.getText().toUpperCase();
-
-        List<DogDTO> filteredList = listOfDogs.stream().filter((dog -> dog.getBreed().toUpperCase().contains(inputText))).collect(Collectors.toList());
-        dogsTableView.getItems().clear();
-        for (DogDTO dog : filteredList) {
-            dogsTableView.getItems().add(dog);
+        try {
+            List<DogDTO> filteredList = listOfDogs.stream()
+                                                  .filter((dog -> dog.getBreed().toUpperCase().contains(searchDogsTextField.getText().toUpperCase())))
+                                                  .collect(Collectors.toList());
+            dogsTableView.getItems().clear();
+            for (DogDTO dog : filteredList) {
+                dogsTableView.getItems().add(dog);
+            }
+            dogsTableView.refresh();
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AdoptingDogController - searchDogs", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
-        dogsTableView.refresh();
+
     }
 
     public void searchFosterParents() {
-        String inputText = searchFosterParentsTextField.getText().toUpperCase();
-
-        List<FosterParentDTO> filteredList = listOfFosterParents.stream().
-                filter(fosterParentDTO -> fosterParentDTO.getName().toUpperCase().contains(inputText)).
-                collect(Collectors.toList());
-        fosterParentsTableView.getItems().clear();
-        for (FosterParentDTO fosterParent : filteredList) {
-            fosterParentsTableView.getItems().add(fosterParent);
+        try {
+            List<FosterParentDTO> filteredList = listOfFosterParents.stream()
+                                                                    .filter(fosterParentDTO -> fosterParentDTO.getName().toUpperCase().contains(searchFosterParentsTextField.getText().toUpperCase()))
+                                                                    .collect(Collectors.toList());
+            fosterParentsTableView.getItems().clear();
+            for (FosterParentDTO fosterParent : filteredList) {
+                fosterParentsTableView.getItems().add(fosterParent);
+            }
+            fosterParentsTableView.refresh();
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AdoptingDogController - searchFosterParents", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
-        fosterParentsTableView.refresh();
-
     }
 
     public void showAllDogs() {
-        if (searchDogsTextField.getText() == null) return;
-        dogsTableView.getItems().clear();
-        for (DogDTO dog : listOfDogs) {
-            dogsTableView.getItems().add(dog);
+        try {
+            if (searchDogsTextField.getText() == null) return;
+            dogsTableView.getItems().clear();
+            for (DogDTO dog : listOfDogs) {
+                dogsTableView.getItems().add(dog);
+            }
+            dogsTableView.refresh();
+            searchDogsTextField.clear();
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AdoptingDogController - showAllDogs", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
-        dogsTableView.refresh();
-        searchDogsTextField.clear();
     }
 
     public void showAllFosterParents() {
-        if (searchFosterParentsTextField.getText() == null) return;
-        fosterParentsTableView.getItems().clear();
-        for (FosterParentDTO fosterParent : listOfFosterParents) {
-            fosterParentsTableView.getItems().add(fosterParent);
+        try {
+            if (searchFosterParentsTextField.getText() == null) return;
+            fosterParentsTableView.getItems().clear();
+            for (FosterParentDTO fosterParent : listOfFosterParents) {
+                fosterParentsTableView.getItems().add(fosterParent);
+            }
+            fosterParentsTableView.refresh();
+            searchFosterParentsTextField.clear();
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AdoptingDogController - showAllFosterParents", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
-        fosterParentsTableView.refresh();
-        searchFosterParentsTextField.clear();
+
     }
 
     public void quit() {
-        stage.close();
+        try {
+            stage.close();
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AdoptingDogController - quit", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     private boolean checkDog() {

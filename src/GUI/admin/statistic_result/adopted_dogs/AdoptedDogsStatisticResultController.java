@@ -64,7 +64,11 @@ public class AdoptedDogsStatisticResultController {
     }
 
     public void OKButtonPressed() {
-        stage.close();
+        try {
+            stage.close();
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AdoptedDogsStatisticResultController - OKButtonPressed", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     public void generatePDFButtonPressed() {
