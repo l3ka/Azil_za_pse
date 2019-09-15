@@ -42,4 +42,6 @@ public abstract class DAOFactory {
 
     public abstract AdoptingDogDAO getAdoptingDogDAO();
 
+    public abstract EmploymentContractDAO getEmploymentContractDAO();
+
 }
