@@ -1,6 +1,7 @@
 package data.dao.mysql;
 
 import data.dao.*;
+import data.dto.EmploymentContractDTO;
 
 public class MySQLDAOFactory extends DAOFactory {
 
@@ -56,5 +57,8 @@ public class MySQLDAOFactory extends DAOFactory {
 
     @Override
     public AdoptingDogDAO getAdoptingDogDAO() { return new MySQLAdoptingDogDao(); }
+
+    @Override
+    public EmploymentContractDAO getEmploymentContractDAO() { return new MySQLEmploymentContractDAO(); }
 
 }
