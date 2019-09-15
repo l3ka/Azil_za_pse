@@ -17,8 +17,7 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-
-public class MySQLPdfExporter implements PdfExporterDAO  {
+public class MySQLPdfExporterDAO implements PdfExporterDAO  {
 
     @Override
     public void exportEmployees(String condition) {
