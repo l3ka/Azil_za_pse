@@ -1,15 +1,53 @@
 package data.dao.mysql;
 
 import data.dao.EmployeeDAO;
-import data.dto.EmployeeDTO;
-import data.dto.EmploymentContractDTO;
-import data.dto.LoggerDTO;
+import data.dto.*;
 import util.AzilUtilities;
 import java.sql.*;
 import java.util.Calendar;
-import java.util.List;
 
 public class MySQLEmployeeDAO implements EmployeeDAO {
+
+    @Override
+    public EmployeeDTO getEmployeeByJMB(String jmb) {
+        EmployeeDTO retVal = null;
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String query = "SELECT z.JMBG, z.Ime, z.Prezime, z.UserName, z.Password, z.StrucnaSprema, z.MjestoPrebivalista, z.BrojTelefona, " +
+                       "zu.Od, zu.ZaposlenikJMBG, zu.IdUgovora IdUgovorazZU, zu.Do, " +
+                       "uor.IdUgovora IdUgovoraUOR, uor.Pozicija, uor.Aktivan, uor.Plata " +
+                       "FROM zaposleni_ugovor zu " +
+                       "JOIN ugovororadu uor ON zu.IdUgovora = uor.IdUgovora " +
+                       "JOIN zaposleni z ON zu.ZaposlenikJMBG = z.JMBG " +
+                       "WHERE z.JMBG = ?";
+
+        try {
+            conn = ConnectionPool.getInstance().checkOut();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, jmb);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                if (rs.getString("Pozicija").equals("Administrtor")) {
+                    retVal = new AdministratorDTO(rs.getString("Username"), rs.getString("Password"), rs.getString("Ime"), rs.getString("Prezime"), rs.getString("StrucnaSprema"), rs.getString("MjestoPrebivalista"), rs.getString("BrojTelefona"), rs.getString("JMBG"));
+                }
+                else if (rs.getString("Pozicija").equals("Veterinar")) {
+                    retVal = new VeterinarianDTO(rs.getString("Username"), rs.getString("Password"), rs.getString("Ime"), rs.getString("Prezime"), rs.getString("StrucnaSprema"), rs.getString("MjestoPrebivalista"), rs.getString("BrojTelefona"), rs.getString("JMBG"));
+                }
+                else if (rs.getString("Pozicija").equals("Sluzbenik")) {
+                    retVal = new ServantDTO(rs.getString("Username"), rs.getString("Password"), rs.getString("Ime"), rs.getString("Prezime"), rs.getString("StrucnaSprema"), rs.getString("MjestoPrebivalista"), rs.getString("BrojTelefona"), rs.getString("JMBG"));
+                }
+            }
+        } catch (SQLException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLEmployeeDAO - getEmployeeByJMB", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        } finally {
+            ConnectionPool.getInstance().checkIn(conn);
+            DBUtilities.getInstance().close(ps);
+        }
+        return retVal;
+    }
 
     public boolean insert(EmployeeDTO employee, EmploymentContractDTO contract){
         boolean retVal = true;
