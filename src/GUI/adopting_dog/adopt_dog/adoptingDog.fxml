@@ -32,8 +32,8 @@
    <bottom>
       <VBox alignment="CENTER" prefHeight="120.0" prefWidth="1200.0" spacing="15.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="adoptDogButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#adoptDog" prefHeight="25.0" prefWidth="75.0" text="Udomi psa" />
-            <Button fx:id="quitButton" layoutX="403.0" layoutY="95.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#quit" prefHeight="25.0" prefWidth="75.0" text="Odustani" />
+            <Button fx:id="adoptDogButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#adoptDog" prefHeight="31.0" prefWidth="80.0" text="Udomi psa" />
+            <Button fx:id="quitButton" layoutX="403.0" layoutY="95.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#quit" prefHeight="31.0" prefWidth="80.0" text="Odustani" />
          </children>
          <BorderPane.margin>
             <Insets top="10.0" />
@@ -61,7 +61,7 @@
                <children>
                   <Label text="Unesite rasu psa za pretragu:" textFill="WHITE" />
                   <TextField fx:id="searchDogsTextField" onKeyTyped="#searchDogs" />
-                  <Button mnemonicParsing="false" onAction="#showAllDogs" text="Prikaži sve" />
+                  <Button mnemonicParsing="false" onAction="#showAllDogs" prefHeight="31.0" prefWidth="85.0" text="Prikaži sve" />
                </children>
             </HBox>
             <TableView fx:id="dogsTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="500.0">
@@ -104,7 +104,7 @@
                <children>
                   <Label text="Unesite ime udomitelja za pretragu:" textFill="WHITE" />
                   <TextField fx:id="searchFosterParentsTextField" onKeyTyped="#searchFosterParents" />
-                  <Button mnemonicParsing="false" onAction="#showAllFosterParents" text="Prikaži sve" />
+                  <Button mnemonicParsing="false" onAction="#showAllFosterParents" prefHeight="31.0" prefWidth="80.0" text="Prikaži sve" />
                </children>
             </HBox>
             <TableView fx:id="fosterParentsTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="500.0">
