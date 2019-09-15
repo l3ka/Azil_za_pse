@@ -51,7 +51,7 @@ public class CageDTO {
 
     @Override
     public String toString() {
-        return "Kavez " + cageId;
+        return name;
     }
 
 }

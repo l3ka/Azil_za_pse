@@ -1,4 +1,4 @@
-package GUI.adopting_dog;
+package GUI.adopting_dog.adopt_dog;
 
 import GUI.alert_box.AlertBoxForm;
 import data.dto.AdoptingDTO;

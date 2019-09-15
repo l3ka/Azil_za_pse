@@ -138,13 +138,15 @@ public class MySQLCageDAO implements CageDAO {
         PreparedStatement ps = null;
 
         String query = "UPDATE kavez SET " +
+                       "Naziv=?, " +
                        "Kapacitet=? " +
                        "WHERE IdKaveza=? ";
         try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
-            ps.setInt(1, cage.getCapacity());
-            ps.setInt(2, cage.getId());
+            ps.setString(1, cage.getName());
+            ps.setInt(2, cage.getCapacity());
+            ps.setInt(3, cage.getId());
 
             ps.executeUpdate();
         } catch (SQLException ex) {
