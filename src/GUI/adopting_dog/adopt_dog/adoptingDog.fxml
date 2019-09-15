@@ -8,7 +8,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #b71c1c;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.adopting_dog.AdoptingDogController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #b71c1c;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.adopting_dog.adopt_dog.AdoptingDogController">
    <padding>
       <Insets bottom="25.0" left="50.0" right="50.0" top="25.0" />
    </padding>
@@ -17,7 +17,7 @@
          <children>
             <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../icons/dog-icon.png" />
+                  <Image url="@../../icons/dog-icon.png" />
                </image>
             </ImageView>
             <Label text="Azil za pse" textFill="WHITE">

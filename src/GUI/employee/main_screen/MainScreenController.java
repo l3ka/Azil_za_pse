@@ -1,6 +1,6 @@
 package GUI.employee.main_screen;
 
-import GUI.adopting_dog.AdoptingDogForm;
+import GUI.adopting_dog.adopt_dog.AdoptingDogForm;
 import GUI.login.LoginForm;
 import GUI.preview.cages_preview.CagesForm;
 import GUI.preview.dogs_preview.DogsPreviewForm;

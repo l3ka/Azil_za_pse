@@ -1,8 +1,10 @@
 package GUI.admin.main;
 
-import GUI.adopting_dog.AdoptingDogForm;
+import GUI.adopting_dog.adopt_dog.AdoptingDogForm;
 import GUI.admin.generating_statistic.GeneratingStatisticForm;
+import GUI.adopting_dog.adopting_main.AdoptingMainForm;
 import GUI.alert_box.AlertBoxForm;
+import GUI.employment.EmploymentForm;
 import GUI.login.LoginForm;
 import GUI.preview.accounts_preview.AccountsForm;
 import GUI.preview.cages_preview.CagesForm;
@@ -85,7 +87,7 @@ public class AdminMainController {
 
     public void adopting() {
         try {
-            new AdoptingDogForm().display();
+            new AdoptingMainForm().display();
         } catch(Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
@@ -101,7 +103,7 @@ public class AdminMainController {
 
     public void employment() {
         try {
-            // TODO:
+            new EmploymentForm().display();
         } catch(Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }

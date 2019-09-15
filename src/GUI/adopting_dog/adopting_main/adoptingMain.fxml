@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1350.0" style="-fx-background-color: #c71c1c;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.adopting_dog.adopting_main.AdoptingMainController">
+    <top>
+        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+            <children>
+                <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../icons/dog-icon.png" />
+                    </image>
+                </ImageView>
+                <Label text="Azil za pse" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="22.0" />
+                    </font>
+                </Label>
+                <Line endX="200.0" startX="-200.0" stroke="WHITE" />
+            </children>
+        </VBox>
+    </top>
+    <center>
+        <TableView fx:id="adoptingDogsTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="972.0" BorderPane.alignment="CENTER">
+            <columns>
+                <TableColumn prefWidth="150.0" text="Udomitelj" />
+                <TableColumn prefWidth="130.0" text="Adresa" />
+                <TableColumn prefWidth="130.0" text="Broj telefona" />
+                <TableColumn prefWidth="120.0" text="Pas" />
+                <TableColumn prefWidth="120.0" text="Rasa" />
+            <TableColumn prefWidth="160.0" text="Datum udomljavanja" />
+            <TableColumn prefWidth="160.0" text="Udomljen do" />
+            </columns>
+        </TableView>
+    </center>
+    <bottom>
+      <VBox alignment="CENTER" spacing="10.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#adoptDog" prefHeight="31.0" prefWidth="95.0" text="Udomi psa" />
+              <Button mnemonicParsing="false" onAction="#quit" prefHeight="31.0" prefWidth="95.0" text="Odustani" BorderPane.alignment="CENTER" />
+         </children>
+         <BorderPane.margin>
+            <Insets top="20.0" />
+         </BorderPane.margin>
+      </VBox>
+    </bottom>
+    <padding>
+        <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+    </padding>
+    <left>
+        <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="419.0" prefWidth="300.0" spacing="15.0" BorderPane.alignment="CENTER">
+            <children>
+                <HBox alignment="CENTER" spacing="10.0">
+                    <children>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../icons/edit-icon.png" />
+                            </image>
+                        </ImageView>
+                        <Button mnemonicParsing="false" onAction="#updateAdopting" prefHeight="31.0" prefWidth="75.0" text="Izmijeni" />
+                    </children>
+                </HBox>
+                <Label text="Unesite ime za pretragu" textFill="WHITE">
+                    <VBox.margin>
+                        <Insets right="90.0" top="40.0" />
+                    </VBox.margin>
+                </Label>
+                <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="300.0" spacing="20.0">
+                    <children>
+                        <TextField fx:id="nameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="170.0" />
+                      <Button mnemonicParsing="false" onAction="#displayAllAdoptings" prefHeight="31.0" prefWidth="90.0" text="Prikaži sve" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </left>
+</BorderPane>
