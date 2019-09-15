@@ -40,7 +40,7 @@
                               <Image url="@../../icons/add-icon.png" />
                            </image>
                         </ImageView>
-                        <Button fx:id="addButton" mnemonicParsing="false" onAction="#addMedicine" prefWidth="75.0" text="Dodaj" />
+                        <Button fx:id="addButton" mnemonicParsing="false" onAction="#addMedicine" prefHeight="31.0" prefWidth="80.0" text="Dodaj" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" spacing="10.0">
@@ -50,7 +50,7 @@
                               <Image url="@../../icons/edit-icon.png" />
                            </image>
                         </ImageView>
-                        <Button fx:id="editButton" mnemonicParsing="false" onAction="#editMedicine" prefWidth="75.0" text="Izmijeni" />
+                        <Button fx:id="editButton" mnemonicParsing="false" onAction="#editMedicine" prefHeight="31.0" prefWidth="80.0" text="Izmijeni" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" spacing="10.0">
@@ -60,7 +60,7 @@
                               <Image url="@../../icons/delete-icon.png" />
                            </image>
                         </ImageView>
-                        <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteMedicine" prefWidth="75.0" text="Obriši" />
+                        <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteMedicine" prefHeight="31.0" prefWidth="80.0" text="Obriši" />
                      </children>
                   </HBox>
                   <Label text="Unesite naziv lijeka za pretragu" textFill="WHITE">
@@ -87,7 +87,7 @@
       <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
    </padding>
    <bottom>
-      <Button mnemonicParsing="false" onAction="#close" text="Odustani" BorderPane.alignment="CENTER">
+      <Button mnemonicParsing="false" onAction="#close" prefHeight="31.0" prefWidth="85.0" text="Odustani" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets top="30.0" />
          </BorderPane.margin>

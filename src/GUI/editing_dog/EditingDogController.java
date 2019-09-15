@@ -96,9 +96,17 @@ public class EditingDogController {
                     cagesComboBox.getSelectionModel().getSelectedItem().setCapacity(cagesComboBox.getSelectionModel().getSelectedItem().getCapacity() - 1);
                     AzilUtilities.getDAOFactory().getDogInCageDAO().insert(new DogInCageDTO(dog, cagesComboBox.getSelectionModel().getSelectedItem(), new Timestamp(Calendar.getInstance().getTime().getTime()), null));
                 }
-                if (AzilUtilities.getDAOFactory().getDogDAO().update(new DogDTO(0, genderComboBox.getSelectionModel().getSelectedItem(), nameTextField.getText(),
-                        raceTextField.getText(), Integer.parseInt(heightTextField.getText()), Double.parseDouble(weightTextField.getText()), Date.valueOf(dateOfBirthDatePicker.getValue()), image, false))) {
+                dog.setName(nameTextField.getText());
+                dog.setGender(genderComboBox.getSelectionModel().getSelectedItem());
+                dog.setBreed(raceTextField.getText());
+                dog.setHeight(Integer.valueOf(heightTextField.getText()));
+                dog.setWeight(Double.valueOf(weightTextField.getText()));
+                dog.setDateOfBirth(Date.valueOf(dateOfBirthDatePicker.getValue()));
+                dog.setImage(image);
+
+                if (AzilUtilities.getDAOFactory().getDogDAO().update(dog)) {
                     displayAlertBox("Informacije o psu su uspješno izmijenjene!");
+                    stage.close();
                 }
             }
         } catch(Exception ex) {

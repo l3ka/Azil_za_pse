@@ -41,7 +41,7 @@
       </TableView>
    </center>
    <bottom>
-      <Button mnemonicParsing="false" onAction="#close" text="Odustani" BorderPane.alignment="CENTER" />
+      <Button mnemonicParsing="false" onAction="#close" prefHeight="31.0" prefWidth="85.0" text="Odustani" BorderPane.alignment="CENTER" />
    </bottom>
    <padding>
       <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
@@ -81,7 +81,7 @@
                         <Image url="@../../icons/add-icon.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="addButton" mnemonicParsing="false" onAction="#addDog" prefWidth="75.0" text="Dodaj" />
+                  <Button fx:id="addButton" mnemonicParsing="false" onAction="#addDog" prefHeight="31.0" prefWidth="80.0" text="Dodaj" />
                </children>
             </HBox>
             <HBox alignment="CENTER" spacing="10.0">
@@ -91,7 +91,7 @@
                         <Image url="@../../icons/edit-icon.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="editButton" mnemonicParsing="false" onAction="#editDog" prefWidth="75.0" text="Izmijeni" />
+                  <Button fx:id="editButton" mnemonicParsing="false" onAction="#editDog" prefHeight="31.0" prefWidth="80.0" text="Izmijeni" />
                </children>
             </HBox>
             <HBox alignment="CENTER" spacing="10.0">
@@ -101,7 +101,7 @@
                         <Image url="@../../icons/delete-icon.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteDog" prefWidth="75.0" text="Obriši" />
+                  <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteDog" prefHeight="31.0" prefWidth="80.0" text="Obriši" />
                </children>
             </HBox>
             <Label text="Unesite rasu za pretragu" textFill="WHITE">
