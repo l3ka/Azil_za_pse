@@ -10,9 +10,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" style="-fx-background-color: #c71c1c;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.deactivated_accounts.DeactivatedAccountsController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" style="-fx-background-color: #b71c1c;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.deactivated_accounts.DeactivatedAccountsController">
     <top>
-        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+        <VBox alignment="CENTER" maxHeight="-Infinity" prefHeight="150.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
             <children>
                 <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -29,7 +29,7 @@
         </VBox>
     </top>
     <center>
-        <TableView fx:id="accountsTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="755.0" BorderPane.alignment="CENTER">
+        <TableView fx:id="accountsTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="755.0" BorderPane.alignment="CENTER">
             <columns>
                 <TableColumn prefWidth="130.0" text="JMB" />
                 <TableColumn prefWidth="130.0" text="Ime" />
@@ -41,7 +41,7 @@
         </TableView>
     </center>
     <bottom>
-        <Button mnemonicParsing="false" onAction="#quit" text="Odustani" BorderPane.alignment="CENTER" />
+        <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#quit" prefHeight="31.0" prefWidth="75.0" text="Odustani" BorderPane.alignment="CENTER" />
     </bottom>
     <padding>
         <Insets bottom="25.0" left="15.0" right="15.0" top="25.0" />
@@ -66,22 +66,17 @@
                 </Label>
                 <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="300.0" spacing="20.0">
                     <children>
-                        <TextField fx:id="nameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="170.0" />
-                        <Button mnemonicParsing="false" onAction="#search" prefHeight="31.0" prefWidth="90.0" text="Pretraži" />
+                        <TextField fx:id="nameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#search" prefHeight="31.0" prefWidth="170.0" />
+                      <Button mnemonicParsing="false" onAction="#displayAllAccounts" prefHeight="31.0" prefWidth="90.0" text="Prikaži sve" />
                     </children>
                 </HBox>
-                <Button mnemonicParsing="false" onAction="#displayAllAccounts" prefHeight="31.0" prefWidth="90.0" text="Prikaži sve">
-                    <VBox.margin>
-                        <Insets left="185.0" />
-                    </VBox.margin>
-                </Button>
             </children>
         </VBox>
     </left>
     <right>
         <VBox alignment="CENTER" prefHeight="419.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <children>
-                <Label fx:id="numberOfEmployees" text="Broj zaposlenih: " textFill="WHITE">
+                <Label fx:id="numberOfEmployees" prefHeight="101.0" prefWidth="132.0" text="Broj deaktiviranih naloga: " textFill="WHITE" wrapText="true">
                     <font>
                         <Font size="16.0" />
                     </font>
