@@ -101,7 +101,10 @@ public class DogsPreviewController {
                 if (choice) {
                     cage = AzilUtilities.getDAOFactory().getDogInCageDAO().getCage(dogsTableView.getSelectionModel().getSelectedItem());
                     dogInCage = AzilUtilities.getDAOFactory().getDogInCageDAO().getDogInCage(cage.getId(), dogsTableView.getSelectionModel().getSelectedItem().getDogId());
-                    AzilUtilities.getDAOFactory().getDogInCageDAO().delete(Timestamp.valueOf(new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(dogInCage.getDateForm())), dogInCage.getCage().getId(), dogInCage.getDog().getDogId());
+                    if(AzilUtilities.getDAOFactory().getDogInCageDAO().delete(Timestamp.valueOf(new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(dogInCage.getDateForm())), dogInCage.getCage().getId(), dogInCage.getDog().getDogId())) {
+                        cage.setCapacity(cage.getCapacity() + 1);
+                    }
+                    AzilUtilities.getDAOFactory().getCageDAO().update(cage);
                     if (AzilUtilities.getDAOFactory().getDogDAO().delete(dogsTableView.getSelectionModel().getSelectedItem())) {
                        displayAlertBox("Pas je uspješno obrisan!");
                        displayDogs();
