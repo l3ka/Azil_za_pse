@@ -15,6 +15,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DeactivatedAccountsController {
 
@@ -64,9 +65,14 @@ public class DeactivatedAccountsController {
 
     public void search() {
         try {
-            if(checkName()) {
-
+            String inputText = nameTextField.getText().toUpperCase();
+            List<EmployeeDTO> filteredList = listOfEmployees.stream().filter(employeeDTO -> employeeDTO.getName().toUpperCase().
+                    contains(inputText)).collect(Collectors.toList());
+            accountsTableView.getItems().clear();
+            for (EmployeeDTO employee : filteredList) {
+                accountsTableView.getItems().add(employee);
             }
+            accountsTableView.refresh();
         } catch(Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DeactivatedAccountsController - search", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
@@ -74,6 +80,7 @@ public class DeactivatedAccountsController {
 
     public void displayAllAccounts() {
         displayEmployees();
+        nameTextField.clear();
     }
 
     public void quit() {
@@ -88,7 +95,7 @@ public class DeactivatedAccountsController {
             listOfEmployees.addAll(AzilUtilities.getDAOFactory().getAdministratorDAO().adminstartorsDeactivated());
             listOfEmployees.addAll(AzilUtilities.getDAOFactory().getVeterinarinaDAO().veterinariansDeactivated());
             listOfEmployees.addAll(AzilUtilities.getDAOFactory().getServantDAO().servantsDeactivated());
-            numberOfEmployees.setText("Broj zaposlenih: " + listOfEmployees.size());
+            numberOfEmployees.setText("Broj deaktiviranih naloga: " + listOfEmployees.size());
             for(EmployeeDTO employee : listOfEmployees) {
                 accountsTableView.getItems().add(employee);
             }
@@ -110,18 +117,6 @@ public class DeactivatedAccountsController {
         }
     }
 
-    private boolean checkName() {
-        try {
-            if("".equals(nameTextField.getText())) {
-                displayAlertBox("Nije uneseno ime za pretragu!");
-                return false;
-            }
-            return true;
-        } catch(Exception ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DeactivatedAccountsController - checkName", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
-            return false;
-        }
-    }
 
     private void displayAlertBox(String content) {
         try {
