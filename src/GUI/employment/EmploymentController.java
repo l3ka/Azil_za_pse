@@ -37,7 +37,7 @@ public class EmploymentController {
     public void initialize(Stage stage) {
         this.stage = stage;
 
-        employmentTableView.getColumns().get(7).setCellValueFactory(new PropertyValueFactory<>("from"));
+        /*employmentTableView.getColumns().get(7).setCellValueFactory(new PropertyValueFactory<>("from"));
         employmentTableView.getColumns().get(8).setCellValueFactory(new PropertyValueFactory<>("to"));
         columnJMB.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getEmployee().getJMB()));
         columnName.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getEmployee().getName()));
@@ -47,7 +47,7 @@ public class EmploymentController {
         columnSalary.setCellValueFactory(data -> new SimpleStringProperty(Double.toString(data.getValue().getEmploymentContract().getSalary())));
         columnPosition.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getEmploymentContract().getPosition()));
 
-        displayEmployments();
+        displayEmployments();*/
     }
 
 
