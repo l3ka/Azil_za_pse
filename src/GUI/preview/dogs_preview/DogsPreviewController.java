@@ -17,6 +17,8 @@ import javafx.stage.Stage;
 import util.AzilUtilities;
 
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -78,7 +80,7 @@ public class DogsPreviewController {
                 if (choice) {
                     cage = AzilUtilities.getDAOFactory().getDogInCageDAO().getCage(dogsTableView.getSelectionModel().getSelectedItem());
                     dogInCage = AzilUtilities.getDAOFactory().getDogInCageDAO().getDogInCage(cage.getId(), dogsTableView.getSelectionModel().getSelectedItem().getDogId());
-                    AzilUtilities.getDAOFactory().getDogInCageDAO().update(dogInCage, new Date(Calendar.getInstance().getTime().getTime()), dogInCage.getCage().getId(), dogInCage.getDog().getDogId());
+                    AzilUtilities.getDAOFactory().getDogInCageDAO().delete(Timestamp.valueOf(new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(dogInCage.getDateForm())), dogInCage.getCage().getId(), dogInCage.getDog().getDogId());
                     if (AzilUtilities.getDAOFactory().getDogDAO().delete(dogsTableView.getSelectionModel().getSelectedItem())) {
                        displayAlertBox("Pas je uspješno obrisan!");
                        displayDogs();

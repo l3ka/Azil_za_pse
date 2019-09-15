@@ -107,7 +107,7 @@ public class MySQLDogInCage implements DogInCageDAO {
         return retVal;
     }
 
-    public boolean delete(Date dateFrom, int cageId, int dogId){
+    public boolean delete(Timestamp dateFrom, int cageId, int dogId){
         boolean retVal = true;
 
         Connection conn = null;
@@ -119,7 +119,7 @@ public class MySQLDogInCage implements DogInCageDAO {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
 
-            ps.setDate(1, dateFrom);
+            ps.setTimestamp(1, dateFrom);
             ps.setInt(2, cageId);
             ps.setInt(3, dogId);
 
