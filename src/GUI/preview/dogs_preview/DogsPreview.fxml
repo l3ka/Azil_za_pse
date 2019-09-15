@@ -49,25 +49,7 @@
    <right>
       <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fx:id="dogImageView" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../resources/images/Labrador.jpg" />
-               </image>
-            </ImageView>
-            <HBox alignment="CENTER" spacing="10.0">
-               <children>
-                  <Label text="Udomljen: " textFill="WHITE">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Label>
-                  <ImageView fx:id="adoptedImageView" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../icons/checked-icon.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </HBox>
+            <ImageView fx:id="dogImageView" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </VBox>
    </right>
