@@ -30,41 +30,53 @@ public class GeneratingStatisticController {
     private Stage stage;
 
     public void initialize(Stage stage) {
-        this.stage = stage;
-        statisticComboBox.getItems().addAll("Udomitelji", "Udmoljeni psi");
-        initButtonEvent();
+        try {
+            this.stage = stage;
+            statisticComboBox.getItems().addAll("Udomitelji", "Udmoljeni psi");
+            initButtonEvent();
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("GeneratingStatisticController - initialize", new Date(Calendar.getInstance().getTime().getTime()),  ex.fillInStackTrace().toString()));
+        }
     }
 
     private void initButtonEvent() {
-        generateStatisticButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
-            if (e.getCode() == KeyCode.ENTER) {
-                generateStatisticButton.fire();
-                e.consume();
-            }
-        });
-        quitButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
-            if (e.getCode() == KeyCode.ENTER) {
-                quitButton.fire();
-                e.consume();
-            }
-        });
+        try {
+            generateStatisticButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+                if (e.getCode() == KeyCode.ENTER) {
+                    generateStatisticButton.fire();
+                    e.consume();
+                }
+            });
+            quitButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+                if (e.getCode() == KeyCode.ENTER) {
+                    quitButton.fire();
+                    e.consume();
+                }
+            });
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("GeneratingStatisticController - initButtonEvent", new Date(Calendar.getInstance().getTime().getTime()),  ex.fillInStackTrace().toString()));
+        }
     }
 
     public void generateStatistic() {
-        if(checkParameter() && checkStartDate()) {
-            if("Udomitelji".equals(statisticComboBox.getSelectionModel().getSelectedItem())) {
-                try {
-                    new FosterParentsStatisticResultForm(startDatePicker.getValue()).display();
-                } catch (Exception ex) {
-                    AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("GeneratingStatisticController - generateStatistic", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
-                }
-            } else {
-                try {
-                    new AdoptedDogsStatisticResultForm(startDatePicker.getValue()).display();
-                } catch(Exception ex) {
-                    AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("GeneratingStatisticController - generateStatistic", new Date(Calendar.getInstance().getTime().getTime()),  ex.fillInStackTrace().toString()));
+        try {
+            if(checkParameter() && checkStartDate()) {
+                if("Udomitelji".equals(statisticComboBox.getSelectionModel().getSelectedItem())) {
+                    try {
+                        new FosterParentsStatisticResultForm(startDatePicker.getValue()).display();
+                    } catch (Exception ex) {
+                        AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("GeneratingStatisticController - generateStatistic", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+                    }
+                } else {
+                    try {
+                        new AdoptedDogsStatisticResultForm(startDatePicker.getValue()).display();
+                    } catch(Exception ex) {
+                        AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("GeneratingStatisticController - generateStatistic", new Date(Calendar.getInstance().getTime().getTime()),  ex.fillInStackTrace().toString()));
+                    }
                 }
             }
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("GeneratingStatisticController - generateStatistic", new Date(Calendar.getInstance().getTime().getTime()),  ex.fillInStackTrace().toString()));
         }
     }
 
@@ -73,19 +85,29 @@ public class GeneratingStatisticController {
     }
 
     private boolean checkStartDate() {
-        if(startDatePicker.getValue() == null) {
-            displayAlertBox("Nije izabran početni datum!");
+        try {
+            if(startDatePicker.getValue() == null) {
+                displayAlertBox("Nije izabran početni datum!");
+                return false;
+            }
+            return true;
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("GeneratingStatisticController - checkStartDate", new Date(Calendar.getInstance().getTime().getTime()),  ex.fillInStackTrace().toString()));
             return false;
         }
-        return true;
     }
 
     private boolean checkParameter() {
-        if(statisticComboBox.getSelectionModel().getSelectedItem() == null) {
-            displayAlertBox("Nije izabran parametar!");
+        try {
+            if(statisticComboBox.getSelectionModel().getSelectedItem() == null) {
+                displayAlertBox("Nije izabran parametar!");
+                return false;
+            }
+            return true;
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("GeneratingStatisticController - checkParameter", new Date(Calendar.getInstance().getTime().getTime()),  ex.fillInStackTrace().toString()));
             return false;
         }
-        return true;
     }
 
     private void displayAlertBox(String content) {

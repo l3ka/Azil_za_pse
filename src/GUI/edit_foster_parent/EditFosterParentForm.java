@@ -1,6 +1,5 @@
 package GUI.edit_foster_parent;
 
-import GUI.preview.foster_parents_preview.FosterParentsController;
 import data.dto.FosterParentDTO;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -30,4 +29,5 @@ public class EditFosterParentForm {
         controller.initialize(stage, fosterParent);
         stage.showAndWait();
     }
+
 }

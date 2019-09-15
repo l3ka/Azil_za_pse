@@ -34,68 +34,89 @@ public class TakingMedicineController {
     private MedicalResultDTO medicalResult;
 
     public void initialize(Stage stage, EmployeeDTO employee, MedicalResultDTO medicalResult) {
-        this.stage = stage;
-        this.employee = employee;
-        this.medicalResult = medicalResult;
-        drugsTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("name"));
-        drugsTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("quantity"));
-        drugsTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("description"));
+        try {
+            this.stage = stage;
+            this.employee = employee;
+            this.medicalResult = medicalResult;
+            drugsTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("name"));
+            drugsTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("quantity"));
+            drugsTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("description"));
 
-        displayMedicines();
-        initButtonEvent();
+            displayMedicines();
+            initButtonEvent();
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername() + " --> TakingMedicineController - initialize" , new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     private void initButtonEvent() {
-        takeMedicineButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
-            if (e.getCode() == KeyCode.ENTER) {
-                takeMedicineButton.fire();
-                e.consume();
-            }
-        });
-        quitButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
-            if (e.getCode() == KeyCode.ENTER) {
-                quitButton.fire();
-                e.consume();
-            }
-        });
+        try {
+            takeMedicineButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+                if (e.getCode() == KeyCode.ENTER) {
+                    takeMedicineButton.fire();
+                    e.consume();
+                }
+            });
+            quitButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+                if (e.getCode() == KeyCode.ENTER) {
+                    quitButton.fire();
+                    e.consume();
+                }
+            });
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername() + " --> TakingMedicineController - initButtonEvent" , new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     public void takeMedicine() {
-        if(checkSelectedDrug()) {
-            try {
+        try {
+            if(checkSelectedDrug()) {
                 new MedicineQuantityForm(drugsTableView.getSelectionModel().getSelectedItem(), employee, medicalResult).display();
                 drugsTableView.getItems().clear();
                 displayMedicines();
-            } catch(Exception ex) {
-                AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             }
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername() + " --> TakingMedicineController - takeMedicine" , new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
     public void quit() {
-        stage.close();
+        try {
+            stage.close();
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername() + " --> TakingMedicineController - quit", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     private boolean checkSelectedDrug() {
-        if(drugsTableView.getSelectionModel().getSelectedCells().isEmpty()) {
-            displayAlertBox("Nije izabran lijek!");
+        try {
+            if(drugsTableView.getSelectionModel().getSelectedCells().isEmpty()) {
+                displayAlertBox("Nije izabran lijek!");
+                return false;
+            }
+            return true;
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername() + " --> TakingMedicineController - checkSelectedDrug" , new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             return false;
         }
-        return true;
+    }
+
+    private void displayMedicines() {
+        try {
+            listOfMedicines = AzilUtilities.getDAOFactory().getMedicineDAO().medicines();
+            for(MedicineDTO medicine : listOfMedicines) {
+                drugsTableView.getItems().add(medicine);
+            }
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername() + " --> TakingMedicineController - displayMedicines", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     private void displayAlertBox(String content) {
         try {
             new AlertBoxForm(content).display();
         } catch (Exception ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername(), new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
-        }
-    }
-
-    private void displayMedicines() {
-        listOfMedicines = AzilUtilities.getDAOFactory().getMedicineDAO().medicines();
-        for(MedicineDTO medicine : listOfMedicines) {
-            drugsTableView.getItems().add(medicine);
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername() + " --> TakingMedicineController - displayAlertBox", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 

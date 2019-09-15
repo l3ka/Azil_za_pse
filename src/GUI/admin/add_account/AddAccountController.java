@@ -48,63 +48,75 @@ public class AddAccountController {
     private Stage stage;
 
     public void initialize(Stage stage) {
-        this.stage = stage;
-        positionComboBox.getItems().add("Administrator");
-        positionComboBox.getItems().add("Veterinar");
-        positionComboBox.getItems().add("Sluzbenik");
-        initButtonEvent();
+        try {
+            this.stage = stage;
+            positionComboBox.getItems().add("Administrator");
+            positionComboBox.getItems().add("Veterinar");
+            positionComboBox.getItems().add("Sluzbenik");
+            initButtonEvent();
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddAccountController - initialize", new Date(Calendar.getInstance().getTime().getTime()),  ex.fillInStackTrace().toString()));
+        }
     }
 
     private void initButtonEvent() {
-        saveButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
-            if (e.getCode() == KeyCode.ENTER) {
-                saveButton.fire();
-                e.consume();
-            }
-        });
-        quitButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
-            if (e.getCode() == KeyCode.ENTER) {
-                quitButton.fire();
-                e.consume();
-            }
-        });
+        try {
+            saveButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+                if (e.getCode() == KeyCode.ENTER) {
+                    saveButton.fire();
+                    e.consume();
+                }
+            });
+            quitButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+                if (e.getCode() == KeyCode.ENTER) {
+                    quitButton.fire();
+                    e.consume();
+                }
+            });
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddAccountController - initButtonEvent", new Date(Calendar.getInstance().getTime().getTime()),  ex.fillInStackTrace().toString()));
+        }
     }
 
     public void save() {
-        if(checkUsername() && checkPassword() && checkName() && checkQualifications() && checkIdentificationNumber() && checkIdentificationNumber() && checkPlaceOfResidence() && checkPhoneNumber() && checkPosition() && checkSalary() && checkValidUntil()) {
+        try {
+            if(checkUsername() && checkPassword() && checkName() && checkQualifications() && checkIdentificationNumber() && checkIdentificationNumber() && checkPlaceOfResidence() && checkPhoneNumber() && checkPosition() && checkSalary() && checkValidUntil()) {
 
-            EmploymentContractDTO employmentContract = new EmploymentContractDTO(0, 1,positionComboBox.getSelectionModel().getSelectedItem(),
-                            java.sql.Date.valueOf(contractFromDatePicker.getValue()), null, Double.valueOf(salaryTextField.getText().trim()));
-            if (contractToDatePicker.getValue() != null) {
-                employmentContract.setValidationDate(java.sql.Date.valueOf(contractToDatePicker.getValue()));
+                EmploymentContractDTO employmentContract = new EmploymentContractDTO(0, 1,positionComboBox.getSelectionModel().getSelectedItem(),
+                        java.sql.Date.valueOf(contractFromDatePicker.getValue()), null, Double.valueOf(salaryTextField.getText().trim()));
+                if (contractToDatePicker.getValue() != null) {
+                    employmentContract.setValidationDate(java.sql.Date.valueOf(contractToDatePicker.getValue()));
+                }
+                boolean result = false;
+                switch(positionComboBox.getSelectionModel().getSelectedItem()) {
+                    case "Administrator":
+                        result = AzilUtilities.getDAOFactory().getAdministratorDAO().insert(new AdministratorDTO(usernameTextField.getText().trim(), passwordField.getText().trim(),
+                                nameTextField.getText().trim(), surnameTextField.getText().trim(), qualificationsTextField.getText().trim(), placeOfResidenceTextField.getText().trim(),
+                                phoneNumberTextField.getText(), identificationNumberTextField.getText()), employmentContract);
+                        break;
+                    case "Veterinar":
+                        result = AzilUtilities.getDAOFactory().getVeterinarinaDAO().insert(new VeterinarianDTO(usernameTextField.getText().trim(), passwordField.getText().trim(),
+                                nameTextField.getText().trim(), surnameTextField.getText().trim(), qualificationsTextField.getText().trim(), placeOfResidenceTextField.getText().trim(),
+                                phoneNumberTextField.getText().trim(), identificationNumberTextField.getText().trim()), employmentContract);
+                        break;
+                    case "Sluzbenik":
+                        result = AzilUtilities.getDAOFactory().getServantDAO().insert(new ServantDTO(usernameTextField.getText().trim(), passwordField.getText().trim(),
+                                nameTextField.getText().trim(), surnameTextField.getText().trim(), qualificationsTextField.getText().trim(), placeOfResidenceTextField.getText().trim(),
+                                phoneNumberTextField.getText().trim(), identificationNumberTextField.getText().trim()), employmentContract);
+                        break;
+                    default:
+                        break;
+                }
+                if (result) {
+                    displayAlertBox("Nalog je uspješno dodat u sistem!");
+                    quit();
+                }
+                else {
+                    displayAlertBox("Desila se greška prilikom dodavanja naloga u sistem!");
+                }
             }
-            boolean result = false;
-            switch(positionComboBox.getSelectionModel().getSelectedItem()) {
-                case "Administrator":
-                    result = AzilUtilities.getDAOFactory().getAdministratorDAO().insert(new AdministratorDTO(usernameTextField.getText().trim(), passwordField.getText().trim(),
-                             nameTextField.getText().trim(), surnameTextField.getText().trim(), qualificationsTextField.getText().trim(), placeOfResidenceTextField.getText().trim(),
-                             phoneNumberTextField.getText(), identificationNumberTextField.getText()), employmentContract);
-                    break;
-                case "Veterinar":
-                    result = AzilUtilities.getDAOFactory().getVeterinarinaDAO().insert(new VeterinarianDTO(usernameTextField.getText().trim(), passwordField.getText().trim(),
-                             nameTextField.getText().trim(), surnameTextField.getText().trim(), qualificationsTextField.getText().trim(), placeOfResidenceTextField.getText().trim(),
-                             phoneNumberTextField.getText().trim(), identificationNumberTextField.getText().trim()), employmentContract);
-                    break;
-                case "Sluzbenik":
-                    result = AzilUtilities.getDAOFactory().getServantDAO().insert(new ServantDTO(usernameTextField.getText().trim(), passwordField.getText().trim(),
-                             nameTextField.getText().trim(), surnameTextField.getText().trim(), qualificationsTextField.getText().trim(), placeOfResidenceTextField.getText().trim(),
-                             phoneNumberTextField.getText().trim(), identificationNumberTextField.getText().trim()), employmentContract);
-                    break;
-                default:
-                    break;
-            }
-            if (result) {
-                displayAlertBox("Nalog je uspješno dodat u sistem!");
-                quit();
-            }
-            else {
-                displayAlertBox("Desila se greška prilikom dodavanja naloga u sistem!");
-            }
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddAccountController - save", new Date(Calendar.getInstance().getTime().getTime()),  ex.fillInStackTrace().toString()));
         }
     }
 
@@ -113,87 +125,137 @@ public class AddAccountController {
     }
 
     private boolean checkUsername() {
-        if("".equals(usernameTextField.getText().trim())) {
-            displayAlertBox("Unos za korisničko ime nije odgovarajući!");
+        try {
+            if("".equals(usernameTextField.getText().trim())) {
+                displayAlertBox("Unos za korisničko ime nije odgovarajući!");
+                return false;
+            }
+            else if(AzilUtilities.getDAOFactory().getEmployeeDAO().exists(usernameTextField.getText().trim(), identificationNumberTextField.getText().trim())) {
+                displayAlertBox("Korisničko ime ili JMBG postoji u bazi!");
+                return false;
+            }
+            return true;
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddAccountController - checkUsername", new Date(Calendar.getInstance().getTime().getTime()),  ex.fillInStackTrace().toString()));
             return false;
         }
-        else if(AzilUtilities.getDAOFactory().getEmployeeDAO().exists(usernameTextField.getText().trim(), identificationNumberTextField.getText().trim())) {
-            displayAlertBox("Korisničko ime ili JMBG postoji u bazi!");
-            return false;
-        }
-        return true;
     }
 
     private boolean checkPassword() {
-        if("".equals(passwordField.getText().trim()) || "".equals(repeatPasswordField.getText().trim()) || !repeatPasswordField.getText().trim().equals(passwordField.getText().trim())) {
-            displayAlertBox("Unos za lozinku nije odgovarajući!");
+        try {
+            if("".equals(passwordField.getText().trim()) || "".equals(repeatPasswordField.getText().trim()) || !repeatPasswordField.getText().trim().equals(passwordField.getText().trim())) {
+                displayAlertBox("Unos za lozinku nije odgovarajući!");
+                return false;
+            }
+            return true;
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddAccountController - checkPassword", new Date(Calendar.getInstance().getTime().getTime()),  ex.fillInStackTrace().toString()));
             return false;
         }
-        return true;
     }
 
     private boolean checkName() {
-        if ("".equals(nameTextField.getText().trim()) || "".equals(surnameTextField.getText().trim())) {
-            displayAlertBox("Unos za polja ime i prezime nije odgovarajući!");
+        try {
+            if ("".equals(nameTextField.getText().trim()) || "".equals(surnameTextField.getText().trim())) {
+                displayAlertBox("Unos za polja ime i prezime nije odgovarajući!");
+                return false;
+            }
+            return true;
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddAccountController - checkName", new Date(Calendar.getInstance().getTime().getTime()),  ex.fillInStackTrace().toString()));
             return false;
         }
-        return true;
     }
 
     private boolean checkQualifications() {
-        if ("".equals(qualificationsTextField.getText().trim())) {
-            displayAlertBox("Unos za polje stručna sprema nije odgovarajući!");
+        try {
+            if ("".equals(qualificationsTextField.getText().trim())) {
+                displayAlertBox("Unos za polje stručna sprema nije odgovarajući!");
+                return false;
+            }
+            return true;
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddAccountController - checkQualifications", new Date(Calendar.getInstance().getTime().getTime()),  ex.fillInStackTrace().toString()));
             return false;
         }
-        return true;
     }
 
     private boolean checkIdentificationNumber() {
-        if ("".equals(identificationNumberTextField.getText().trim()) || !checkIsNumber(identificationNumberTextField.getText().trim())) {
-            displayAlertBox("Unos za polje JMB nije odgovarajući!");
+        try {
+            if ("".equals(identificationNumberTextField.getText().trim()) || !checkIsNumber(identificationNumberTextField.getText().trim())) {
+                displayAlertBox("Unos za polje JMB nije odgovarajući!");
+                return false;
+            }
+            return true;
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddAccountController - checkIdentificationNumber", new Date(Calendar.getInstance().getTime().getTime()),  ex.fillInStackTrace().toString()));
             return false;
         }
-        return true;
     }
 
     private boolean checkPlaceOfResidence() {
-        if ("".equals(placeOfResidenceTextField.getText().trim())) {
-            displayAlertBox("Unos za polje mjesto stanovanja nije odgovarajući!");
+        try {
+            if ("".equals(placeOfResidenceTextField.getText().trim())) {
+                displayAlertBox("Unos za polje mjesto stanovanja nije odgovarajući!");
+                return false;
+            }
+            return true;
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddAccountController - checkPlaceOfResidence", new Date(Calendar.getInstance().getTime().getTime()),  ex.fillInStackTrace().toString()));
             return false;
         }
-        return true;
     }
 
     private boolean checkPhoneNumber() {
-        if ("".equals(phoneNumberTextField.getText().trim())) {
-            displayAlertBox("Unos za polje broj telefona nije odgovarajući!");
+        try {
+            if ("".equals(phoneNumberTextField.getText().trim())) {
+                displayAlertBox("Unos za polje broj telefona nije odgovarajući!");
+                return false;
+            }
+            return true;
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddAccountController - checkPhoneNumber", new Date(Calendar.getInstance().getTime().getTime()),  ex.fillInStackTrace().toString()));
             return false;
         }
-        return true;
     }
 
     private boolean checkPosition() {
-        if (positionComboBox.getSelectionModel().getSelectedItem() == null) {
-            displayAlertBox("Nije izabrana pozicija!");
+        try {
+            if (positionComboBox.getSelectionModel().getSelectedItem() == null) {
+                displayAlertBox("Nije izabrana pozicija!");
+                return false;
+            }
+            return true;
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddAccountController - checkPosition", new Date(Calendar.getInstance().getTime().getTime()),  ex.fillInStackTrace().toString()));
             return false;
         }
-        return true;
     }
 
     private boolean checkSalary() {
-        if ("".equals(salaryTextField.getText().trim())) {
-            displayAlertBox("Unos za polje plata nije odgovarajući!");
+        try {
+            if ("".equals(salaryTextField.getText().trim())) {
+                displayAlertBox("Unos za polje plata nije odgovarajući!");
+                return false;
+            }
+            return true;
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddAccountController - checkSalary", new Date(Calendar.getInstance().getTime().getTime()),  ex.fillInStackTrace().toString()));
             return false;
         }
-        return true;
     }
 
     private boolean checkValidUntil() {
-        if ("".equals(contractFromDatePicker.toString().trim())) {
-            displayAlertBox("Unos za polje ugovor važi do nije odgovarajući!");
+        try {
+            if ("".equals(contractFromDatePicker.toString().trim())) {
+                displayAlertBox("Unos za polje ugovor važi do nije odgovarajući!");
+                return false;
+            }
+            return true;
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddAccountController - checkValidUntil", new Date(Calendar.getInstance().getTime().getTime()),  ex.fillInStackTrace().toString()));
             return false;
         }
-        return true;
     }
 
     private boolean checkIsNumber(String number) {

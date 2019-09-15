@@ -1,16 +1,16 @@
 package GUI.login;
 
+import data.dto.LoggerDTO;
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
+import util.AzilUtilities;
 
 import java.io.File;
+import java.sql.Date;
+import java.util.Calendar;
 
 public class LoginForm extends Application {
 
@@ -29,6 +29,11 @@ public class LoginForm extends Application {
     }
 
     public static void main(String[] args) {
-        launch(args);
+        try {
+            launch(args);
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("LoginForm - main", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
+
 }

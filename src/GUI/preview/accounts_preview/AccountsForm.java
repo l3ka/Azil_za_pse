@@ -24,4 +24,5 @@ public class AccountsForm {
         controller.initialize(stage);
         stage.showAndWait();
     }
+
 }

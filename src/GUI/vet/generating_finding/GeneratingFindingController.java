@@ -30,50 +30,71 @@ public class GeneratingFindingController {
     private EmployeeDTO veterinarian = GeneratingFindingForm.employee;
 
     public void initialize(Stage stage) {
-        this.stage = stage;
-        initButtonEvent();
+        try {
+            this.stage = stage;
+            initButtonEvent();
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(veterinarian.getUsername() + " --> GeneratingFindingController - initialize", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     private void initButtonEvent() {
-        saveButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
-            if (e.getCode() == KeyCode.ENTER) {
-                saveButton.fire();
-                e.consume();
-            }
-        });
-        quitButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
-            if (e.getCode() == KeyCode.ENTER) {
-                quitButton.fire();
-                e.consume();
-            }
-        });
+        try {
+            saveButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+                if (e.getCode() == KeyCode.ENTER) {
+                    saveButton.fire();
+                    e.consume();
+                }
+            });
+            quitButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+                if (e.getCode() == KeyCode.ENTER) {
+                    quitButton.fire();
+                    e.consume();
+                }
+            });
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(veterinarian.getUsername() + " --> GeneratingFindingController - initButtonEvent", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     public void save() {
-        if(checkDescription()) {
-            AzilUtilities.getDAOFactory().getMedicalResultDAO().insert(new MedicalResultDTO(0, descriptionTextArea.getText().trim(), new Date(Calendar.getInstance().getTime().getTime()), dogForExamination.getDogId(), veterinarian.getJMB()));
-            displayAlertBox("Nalaz je uspješno generisan!");
-            quit();
+        try {
+            if(checkDescription()) {
+                AzilUtilities.getDAOFactory().getMedicalResultDAO().insert(new MedicalResultDTO(0, descriptionTextArea.getText().trim(), new Date(Calendar.getInstance().getTime().getTime()), dogForExamination.getDogId(), veterinarian.getJMB()));
+                displayAlertBox("Nalaz je uspješno generisan!");
+                quit();
+            }
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(veterinarian.getUsername() + " --> GeneratingFindingController - save", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
     public void quit() {
-        stage.close();
+        try {
+            stage.close();
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(veterinarian.getUsername() + " --> GeneratingFindingController - quit", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     private boolean checkDescription() {
-        if("".equals(descriptionTextArea.getText().trim())) {
-            displayAlertBox("Nije unesen opis!");
+        try {
+            if("".equals(descriptionTextArea.getText().trim())) {
+                displayAlertBox("Nije unesen opis!");
+                return false;
+            }
+            return true;
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(veterinarian.getUsername() + " --> GeneratingFindingController - checkDescription", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             return false;
         }
-        return true;
     }
 
     private void displayAlertBox(String content) {
         try {
             new AlertBoxForm(content).display();
         } catch (Exception ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(veterinarian.getUsername(), new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(veterinarian.getUsername() + " --> GeneratingFindingController - displayAlertBox", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 

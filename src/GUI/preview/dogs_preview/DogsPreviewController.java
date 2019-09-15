@@ -4,7 +4,10 @@ import GUI.adding_dog.AddingDogForm;
 import GUI.alert_box.AlertBoxForm;
 import GUI.decide_box.DecideBox;
 import GUI.editing_dog.EditingDogForm;
+import data.dto.CageDTO;
 import data.dto.DogDTO;
+import data.dto.DogInCageDTO;
+import data.dto.LoggerDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -13,13 +16,12 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import util.AzilUtilities;
 
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class DogsPreviewController {
-
-    private Stage stage;
-    private List<DogDTO> listOfDogs;
 
     @FXML
     private ImageView dogImageView;
@@ -28,33 +30,44 @@ public class DogsPreviewController {
     @FXML
     private TextField searchDogsTextField;
 
-    public void initialize(Stage stage) {
-        this.stage = stage;
-        dogsTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("name"));
-        dogsTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("breed"));
-        dogsTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("gender"));
-        dogsTableView.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("height"));
-        dogsTableView.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("weight"));
-        dogsTableView.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
+    private Stage stage;
+    private List<DogDTO> listOfDogs;
+    private CageDTO cage;
+    private DogInCageDTO dogInCage;
 
-        displayDogs();
+    public void initialize(Stage stage) {
+        try {
+            this.stage = stage;
+            dogsTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("name"));
+            dogsTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("breed"));
+            dogsTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("gender"));
+            dogsTableView.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("height"));
+            dogsTableView.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("weight"));
+            dogsTableView.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
+
+            displayDogs();
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DogsPreviewController - initialize", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     public void addDog() {
         try {
             new AddingDogForm().display();
+            displayDogs();
         } catch (Exception ex) {
-
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DogsPreviewController - addDog", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
     public void editDog() {
-        if(checkSelectedDog()) {
-            try {
+        try {
+            if(checkSelectedDog()) {
                 new EditingDogForm(dogsTableView.getSelectionModel().getSelectedItem()).display();
-            } catch (Exception ex) {
-
+                displayDogs();
             }
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DogsPreviewController - editDog", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
@@ -63,17 +76,20 @@ public class DogsPreviewController {
             if (checkSelectedDog()) {
                 boolean choice = new DecideBox("Da li ste sigurni da želite da obrišete psa?").display();
                 if (choice) {
+                    cage = AzilUtilities.getDAOFactory().getDogInCageDAO().getCage(dogsTableView.getSelectionModel().getSelectedItem());
+                    dogInCage = AzilUtilities.getDAOFactory().getDogInCageDAO().getDogInCage(cage.getId(), dogsTableView.getSelectionModel().getSelectedItem().getDogId());
+                    AzilUtilities.getDAOFactory().getDogInCageDAO().update(dogInCage, new Date(Calendar.getInstance().getTime().getTime()), dogInCage.getCage().getId(), dogInCage.getDog().getDogId());
                     if (AzilUtilities.getDAOFactory().getDogDAO().delete(dogsTableView.getSelectionModel().getSelectedItem())) {
                        displayAlertBox("Pas je uspješno obrisan!");
+                       displayDogs();
                     }
                     else {
-                        displayAlertBox("Desila se greška prilikom brisanja");
+                        displayAlertBox("Desila se greška prilikom brisanja!");
                     }
-                    displayDogs();
                 }
             }
         } catch (Exception ex) {
-
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DogsPreviewController - deleteDog", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
@@ -87,8 +103,9 @@ public class DogsPreviewController {
                 dogsTableView.getItems().add(dog);
             }
             dogsTableView.refresh();
-        } catch (Exception ex) {
 
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DogsPreviewController - search", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
@@ -101,37 +118,51 @@ public class DogsPreviewController {
             }
             dogsTableView.refresh();
             searchDogsTextField.clear();
-        } catch (Exception ex) {
-
+        
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DogsPreviewController - showAll", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
     public void close() {
-        this.stage.close();
+        try {
+            this.stage.close();
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DogsPreviewController - close", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     public void displayDogs() {
-        dogsTableView.getItems().clear();
-        dogsTableView.refresh();
-        listOfDogs = AzilUtilities.getDAOFactory().getDogDAO().dogs();
-        for(DogDTO dog : listOfDogs) {
-            dogsTableView.getItems().add(dog);
+        try {
+            dogsTableView.getItems().clear();
+            dogsTableView.refresh();
+            listOfDogs = AzilUtilities.getDAOFactory().getDogDAO().dogs();
+            for(DogDTO dog : listOfDogs) {
+                dogsTableView.getItems().add(dog);
+            }
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DogsPreviewController - displayDogs", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
     private boolean checkSelectedDog() {
-        if(dogsTableView.getSelectionModel().getSelectedItem() == null) {
-            displayAlertBox("Nije izabran pas!");
+        try {
+            if(dogsTableView.getSelectionModel().getSelectedItem() == null) {
+                displayAlertBox("Nije izabran pas!");
+                return false;
+            }
+            return true;
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DogsPreviewController - checkSelectedDog", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             return false;
         }
-        return true;
     }
 
     private void displayAlertBox(String content) {
         try {
             new AlertBoxForm(content).display();
         } catch(Exception ex) {
-
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DogsPreviewController - displayAlertBox", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 

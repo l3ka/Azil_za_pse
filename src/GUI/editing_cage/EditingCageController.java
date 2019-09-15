@@ -2,10 +2,14 @@ package GUI.editing_cage;
 
 import GUI.alert_box.AlertBoxForm;
 import data.dto.CageDTO;
+import data.dto.LoggerDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import util.AzilUtilities;
+
+import java.sql.Date;
+import java.util.Calendar;
 
 public class EditingCageController {
 
@@ -18,19 +22,30 @@ public class EditingCageController {
     private CageDTO cage;
 
     public void initialize(Stage stage, CageDTO cage) {
-        this.stage = stage;
-        this.cage = cage;
+        try {
+            this.stage = stage;
+            this.cage = cage;
 
-        cageNameTextField.setText(cage.getName());
-        cageCapacityTextField.setText("" + cage.getCapacity());
+            cageNameTextField.setText(cage.getName());
+            cageCapacityTextField.setText("" + cage.getCapacity());
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditingCageController - initialize", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     public void save() {
-        if(checkName() && checkCapacity()) {
-            if(AzilUtilities.getDAOFactory().getCageDAO().update(cage)) {
-                displayAlertBox("Kavez je uspješno izmijenjen!");
-                stage.close();
+        try {
+            if(checkName() && checkCapacity()) {
+                cage.setName(cageNameTextField.getText());
+                cage.setCapacity(Integer.valueOf(cageCapacityTextField.getText()));
+
+                if(AzilUtilities.getDAOFactory().getCageDAO().update(cage)) {
+                    displayAlertBox("Kavez je uspješno izmijenjen!");
+                    stage.close();
+                }
             }
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditingCageController - save", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
@@ -42,27 +57,37 @@ public class EditingCageController {
         try {
             new AlertBoxForm(content).display();
         } catch(Exception ex) {
-
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditingCageController - displayAlertBox", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
     private boolean checkName() {
-        if("".equals(cageNameTextField.getText())) {
-            displayAlertBox("Nije uneseno ime kaveza!");
+        try {
+            if("".equals(cageNameTextField.getText())) {
+                displayAlertBox("Nije uneseno ime kaveza!");
+                return false;
+            }
+            return true;
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditingCageController - checkName", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             return false;
         }
-        return true;
     }
 
     private boolean checkCapacity() {
-        if("".equals(cageCapacityTextField.getText())) {
-            displayAlertBox("Nije unesen kapacitet kaveza!");
+        try {
+            if("".equals(cageCapacityTextField.getText())) {
+                displayAlertBox("Nije unesen kapacitet kaveza!");
+                return false;
+            }
+            if(!checkNumber(cageCapacityTextField.getText())) {
+                displayAlertBox("Unos za polje kapacitet nije odgovarajući!");
+            }
+            return true;
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditingCageController - checkCapacity", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             return false;
         }
-        if(!checkNumber(cageCapacityTextField.getText())) {
-            displayAlertBox("Unos za polje kapacitet nije odgovarajući!");
-        }
-        return true;
     }
 
     private boolean checkNumber(String content) {
@@ -70,7 +95,9 @@ public class EditingCageController {
             Integer.parseInt(content);
             return true;
         } catch (NumberFormatException ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditingCageController - checkNumber", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             return false;
         }
     }
+
 }

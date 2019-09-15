@@ -22,4 +22,5 @@ public class DeactivatedAccountsForm {
         controller.initialize(stage);
         stage.showAndWait();
     }
+
 }
