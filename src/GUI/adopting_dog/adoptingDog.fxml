@@ -13,9 +13,9 @@
       <Insets bottom="25.0" left="50.0" right="50.0" top="25.0" />
    </padding>
    <top>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="120.0" prefWidth="401.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../icons/dog-icon.png" />
                </image>
@@ -32,8 +32,8 @@
    <bottom>
       <VBox alignment="CENTER" prefHeight="120.0" prefWidth="1200.0" spacing="15.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="adoptDogButton" mnemonicParsing="false" onAction="#adoptDog" text="Udomi psa" />
-            <Button fx:id="quitButton" layoutX="403.0" layoutY="95.0" mnemonicParsing="false" onAction="#quit" text="Odustani" />
+            <Button fx:id="adoptDogButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#adoptDog" prefHeight="25.0" prefWidth="75.0" text="Udomi psa" />
+            <Button fx:id="quitButton" layoutX="403.0" layoutY="95.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#quit" prefHeight="25.0" prefWidth="75.0" text="Odustani" />
          </children>
          <BorderPane.margin>
             <Insets top="10.0" />
@@ -41,10 +41,30 @@
       </VBox>
    </bottom>
    <left>
-      <VBox alignment="CENTER_LEFT" prefHeight="400.0" prefWidth="500.0" spacing="10.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER_LEFT" prefHeight="400.0" prefWidth="500.0" spacing="15.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Izaberite psa" textFill="WHITE" />
-            <TableView fx:id="dogsTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="280.0" prefWidth="500.0">
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/dog.png" />
+                     </image>
+                  </ImageView>
+                  <Label text="Izaberite psa" textFill="WHITE">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" prefHeight="60.0" prefWidth="200.0" spacing="20.0">
+               <children>
+                  <Label text="Unesite rasu psa za pretragu:" textFill="WHITE" />
+                  <TextField fx:id="searchDogsTextField" onKeyTyped="#searchDogs" />
+                  <Button mnemonicParsing="false" onAction="#showAllDogs" text="Prikaži sve" />
+               </children>
+            </HBox>
+            <TableView fx:id="dogsTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="500.0">
                <columns>
                   <TableColumn prefWidth="88.0" text="Ime" />
                   <TableColumn prefWidth="78.0" text="Rasa" />
@@ -56,15 +76,38 @@
             </TableView>
          </children>
          <padding>
-            <Insets right="20.0" />
+            <Insets right="20.0" top="50.0" />
          </padding>
+         <BorderPane.margin>
+            <Insets top="10.0" />
+         </BorderPane.margin>
       </VBox>
    </left>
    <right>
       <VBox alignment="CENTER_LEFT" prefHeight="400.0" prefWidth="500.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Izaberite udomitelja" textFill="WHITE" />
-            <TableView fx:id="fosterParentsTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="280.0" prefWidth="500.0">
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/fosters.png" />
+                     </image>
+                  </ImageView>
+                  <Label text="Izaberite udomitelja" textFill="WHITE">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" prefHeight="60.0" prefWidth="200.0" spacing="20.0">
+               <children>
+                  <Label text="Unesite ime udomitelja za pretragu:" textFill="WHITE" />
+                  <TextField fx:id="searchFosterParentsTextField" onKeyTyped="#searchFosterParents" />
+                  <Button mnemonicParsing="false" onAction="#showAllFosterParents" text="Prikaži sve" />
+               </children>
+            </HBox>
+            <TableView fx:id="fosterParentsTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="500.0">
               <columns>
                 <TableColumn prefWidth="100.0" text="Ime" />
                 <TableColumn prefWidth="102.0" text="Prezime" />
@@ -74,8 +117,11 @@
             </TableView>
          </children>
          <padding>
-            <Insets left="20.0" />
+            <Insets left="20.0" top="50.0" />
          </padding>
+         <BorderPane.margin>
+            <Insets top="10.0" />
+         </BorderPane.margin>
       </VBox>
    </right>
 </BorderPane>

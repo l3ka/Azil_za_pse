@@ -16,6 +16,7 @@ import util.AzilUtilities;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FosterParentsController {
 
@@ -83,8 +84,15 @@ public class FosterParentsController {
     }
 
     public void displayAllFosterParents() {
-        try {
-            displayFosterParents();
+      try {
+        if (nameTextField.getText() == null) return;
+        fosterParentsTableView.getItems().clear();
+        for (FosterParentDTO fosterParent : listOfFosterParents) {
+            fosterParentsTableView.getItems().add(fosterParent);
+        }
+        fosterParentsTableView.refresh();
+        nameTextField.clear();
+        
         } catch(Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("FosterParentsController - displayAllFosterParents", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
@@ -92,9 +100,15 @@ public class FosterParentsController {
 
     public void search() {
         try {
-            if(checkName()) {
-
+            String inputText = nameTextField.getText().toUpperCase();
+            List<FosterParentDTO> filteredList = listOfFosterParents.stream().
+                    filter(fosterParentDTO -> fosterParentDTO.getName().toUpperCase().contains(inputText)).
+                    collect(Collectors.toList());
+            fosterParentsTableView.getItems().clear();
+            for (FosterParentDTO fosterParent : filteredList) {
+                fosterParentsTableView.getItems().add(fosterParent);
             }
+            fosterParentsTableView.refresh();
         } catch(Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("FosterParentsController - search", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
@@ -134,18 +148,6 @@ public class FosterParentsController {
         }
     }
 
-    private boolean checkName() {
-        try {
-            if("".equals(nameTextField.getText())) {
-                displayAlertBox("Niste unijeli ime za pretragu!");
-                return false;
-            }
-            return true;
-        } catch(Exception ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("FosterParentsController - checkName", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
-            return false;
-        }
-    }
 
     private void displayAlertBox(String content) {
         try {

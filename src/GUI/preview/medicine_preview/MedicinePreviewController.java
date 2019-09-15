@@ -100,16 +100,14 @@ public class MedicinePreviewController {
         }
     }
 
-    public void search() {
-        try {
-
-        } catch (Exception ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MedicinePreviewController - search", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
-        }
-    }
-
     public void showAll() {
         try {
+            medicineTableView.getItems().clear();
+            for (MedicineDTO medicine : listOfMedicine) {
+                medicineTableView.getItems().add(medicine);
+            }
+            medicineTableView.refresh();
+            searchTextField.clear();
 
         } catch (Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MedicinePreviewController - showAll", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
@@ -145,10 +143,10 @@ public class MedicinePreviewController {
         }
     }
 
-    public void searchParameters() {
+    public void search() {
         try {
-            String value = searchTextField.getText();
-            List<MedicineDTO> filteredList = listOfMedicine.stream().filter((medicineDTO -> medicineDTO.getName().contains(value))).collect(Collectors.toList());
+            String value = searchTextField.getText().toUpperCase();
+            List<MedicineDTO> filteredList = listOfMedicine.stream().filter((medicineDTO -> medicineDTO.getName().toUpperCase().contains(value))).collect(Collectors.toList());
             medicineTableView.getItems().clear();
             medicineTableView.refresh();
             for (MedicineDTO medicine : filteredList) {
