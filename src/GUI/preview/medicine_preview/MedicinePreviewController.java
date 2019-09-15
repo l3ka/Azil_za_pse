@@ -88,16 +88,14 @@ public class MedicinePreviewController {
         }
     }
 
-    public void search() {
-        try {
-
-        } catch (Exception ex) {
-
-        }
-    }
-
     public void showAll() {
         try {
+            medicineTableView.getItems().clear();
+            for (MedicineDTO medicine : listOfMedicine) {
+                medicineTableView.getItems().add(medicine);
+            }
+            medicineTableView.refresh();
+            searchTextField.clear();
 
         } catch (Exception ex) {
 
@@ -124,14 +122,18 @@ public class MedicinePreviewController {
         this.stage.close();
     }
 
-    public void searchParameters() {
-        String value = searchTextField.getText();
-        List<MedicineDTO> filteredList = listOfMedicine.stream().filter((medicineDTO -> medicineDTO.getName().contains(value))).collect(Collectors.toList());
-        medicineTableView.getItems().clear();
-        medicineTableView.refresh();
-        for (MedicineDTO medicine : filteredList) {
-            medicineTableView.getItems().add(medicine);
+    public void search() {
+        try {
+            String value = searchTextField.getText().toUpperCase();
+            List<MedicineDTO> filteredList = listOfMedicine.stream().filter((medicineDTO -> medicineDTO.getName().toUpperCase().contains(value))).collect(Collectors.toList());
+            medicineTableView.getItems().clear();
+            medicineTableView.refresh();
+            for (MedicineDTO medicine : filteredList) {
+                medicineTableView.getItems().add(medicine);
+            }
+            medicineTableView.refresh();
+        } catch (Exception ex) {
+            
         }
-        medicineTableView.refresh();
     }
 }

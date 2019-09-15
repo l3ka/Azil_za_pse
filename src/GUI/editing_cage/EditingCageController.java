@@ -29,6 +29,7 @@ public class EditingCageController {
         if(checkName() && checkCapacity()) {
             if(AzilUtilities.getDAOFactory().getCageDAO().update(cage)) {
                 displayAlertBox("Kavez je uspješno izmijenjen!");
+                stage.close();
             }
         }
     }

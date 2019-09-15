@@ -119,15 +119,10 @@
             </HBox>
                 <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="300.0" spacing="20.0">
                     <children>
-                        <TextField fx:id="nameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="170.0" />
-                        <Button mnemonicParsing="false" onAction="#search" prefHeight="31.0" prefWidth="90.0" text="Pretraži" />
+                        <TextField fx:id="searchNameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#search" prefHeight="31.0" prefWidth="170.0" />
+                      <Button mnemonicParsing="false" onAction="#displayAllAccounts" prefHeight="31.0" prefWidth="90.0" text="Prikaži sve" />
                     </children>
                 </HBox>
-                <Button mnemonicParsing="false" onAction="#displayAllAccounts" prefHeight="31.0" prefWidth="90.0" text="Prikaži sve">
-                    <VBox.margin>
-                        <Insets left="185.0" />
-                    </VBox.margin>
-                </Button>
             </children>
         </VBox>
     </left>

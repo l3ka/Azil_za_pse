@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import util.AzilUtilities;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CagesController {
 
@@ -41,6 +42,7 @@ public class CagesController {
     public void addCage() {
         try {
             new AddingCageForm().display();
+            displayCages();
         } catch(Exception ex) {
 
         }
@@ -50,6 +52,7 @@ public class CagesController {
         if(checkSelectedCage()) {
             try {
                 new EditingCageForm(cagesTableView.getSelectionModel().getSelectedItem()).display();
+                displayCages();
             } catch(Exception ex) {
 
             }
@@ -76,13 +79,30 @@ public class CagesController {
     }
 
     public void search() {
-        if(checkName()) {
+        try {
+            String inputValue = nameTextField.getText().toUpperCase();
+            List<CageDTO> filteredList = listOfCages.stream().filter(cageDTO -> cageDTO.getName().toUpperCase().contains(inputValue)).collect(Collectors.toList());
+            cagesTableView.getItems().clear();
+            for (CageDTO cage : filteredList) {
+                cagesTableView.getItems().add(cage);
+            }
+            cagesTableView.refresh();
+        }  catch (Exception ex) {
 
         }
     }
 
     public void displayAllCages() {
-        displayCages();
+        try {
+            nameTextField.clear();
+            cagesTableView.getItems().clear();
+            for (CageDTO cage : listOfCages) {
+                cagesTableView.getItems().add(cage);
+            }
+            cagesTableView.refresh();
+        } catch (Exception ex) {
+
+        }
     }
 
     public void quit() {
@@ -110,13 +130,6 @@ public class CagesController {
         numberOfFreeSpotsLabel.setText("Broj slobodnih mjesta: " + numberOfFreeSpots);
     }
 
-    private boolean checkName() {
-        if("".equals(nameTextField.getText())) {
-            displayAlertBox("Nije unesen naziv za pretragu!");
-            return false;
-        }
-        return true;
-    }
 
     private boolean checkSelectedCage() {
         if(cagesTableView.getSelectionModel().getSelectedItem() == null) {

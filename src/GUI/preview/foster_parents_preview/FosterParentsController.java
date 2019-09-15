@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import util.AzilUtilities;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FosterParentsController {
     @FXML
@@ -76,11 +77,27 @@ public class FosterParentsController {
     }
 
     public void displayAllFosterParents() {
-        displayFosterParents();
+        if (nameTextField.getText() == null) return;
+        fosterParentsTableView.getItems().clear();
+        for (FosterParentDTO fosterParent : listOfFosterParents) {
+            fosterParentsTableView.getItems().add(fosterParent);
+        }
+        fosterParentsTableView.refresh();
+        nameTextField.clear();
     }
 
     public void search() {
-        if(checkName()) {
+        try {
+            String inputText = nameTextField.getText().toUpperCase();
+            List<FosterParentDTO> filteredList = listOfFosterParents.stream().
+                    filter(fosterParentDTO -> fosterParentDTO.getName().toUpperCase().contains(inputText)).
+                    collect(Collectors.toList());
+            fosterParentsTableView.getItems().clear();
+            for (FosterParentDTO fosterParent : filteredList) {
+                fosterParentsTableView.getItems().add(fosterParent);
+            }
+            fosterParentsTableView.refresh();
+        } catch (Exception ex) {
 
         }
     }
@@ -106,13 +123,6 @@ public class FosterParentsController {
         }
     }
 
-    private boolean checkName() {
-        if("".equals(nameTextField.getText())) {
-            displayAlertBox("Niste unijeli ime za pretragu!");
-            return false;
-        }
-        return true;
-    }
 
     private void displayAlertBox(String content) {
         try {

@@ -19,13 +19,14 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AccountsController {
 
     @FXML
     private TableView<EmployeeDTO> accountsTableView;
     @FXML
-    private TextField nameTextField;
+    private TextField searchNameTextField;
     @FXML
     private Label numberOfEmployees;
 
@@ -56,6 +57,7 @@ public class AccountsController {
 
     public void addAccount() {
         try {
+            searchNameTextField.clear();
             new AddAccount().display();
             displayEmployees();
         } catch(Exception ex) {
@@ -66,6 +68,7 @@ public class AccountsController {
     public void updateAccount() {
         if (checkSelectedAccount()) {
             try {
+                searchNameTextField.clear();
                 new ChangeAccount(accountsTableView.getSelectionModel().getSelectedItem()).display();
                 displayEmployees();
             } catch (Exception ex) {
@@ -77,6 +80,7 @@ public class AccountsController {
     public void deactivateAccount() {
         try {
             if(checkSelectedAccount()) {
+                searchNameTextField.clear();
                 boolean choice = new DecideBox("Da li ste sigurni da želite da deaktivirate korisnički nalog?").display();
                 if (choice)
                 {
@@ -95,6 +99,7 @@ public class AccountsController {
 
     public void displayDeactivatedAccounts() {
         try {
+            searchNameTextField.clear();
             new DeactivatedAccountsForm().display();
             displayEmployees();
         } catch (Exception ex) {
@@ -103,13 +108,31 @@ public class AccountsController {
     }
 
     public void search() {
-        if(checkName()) {
+        try {
+            String inputValue = searchNameTextField.getText().toUpperCase();
+            List<EmployeeDTO> filteredList = listOfEmployees.stream().filter(employeeDTO -> employeeDTO.getName().toUpperCase().contains(inputValue)).collect(Collectors.toList());
+            accountsTableView.getItems().clear();
+            for (EmployeeDTO employee : filteredList) {
+                accountsTableView.getItems().add(employee);
+            }
+            accountsTableView.refresh();
+        }
+        catch (Exception ex) {
 
         }
     }
 
     public void displayAllAccounts() {
-        displayEmployees();
+        try {
+            accountsTableView.getItems().clear();
+            for (EmployeeDTO employee : listOfEmployees) {
+                accountsTableView.getItems().add(employee);
+            }
+            accountsTableView.refresh();
+            searchNameTextField.clear();
+        } catch (Exception ex) {
+
+        }
     }
 
     public void quit() {
@@ -152,11 +175,4 @@ public class AccountsController {
         }
     }
 
-    private boolean checkName() {
-        if("".equals(nameTextField.getText())) {
-            displayAlertBox("Nije uneseno ime za pretragu!");
-            return false;
-        }
-        return true;
-    }
 }

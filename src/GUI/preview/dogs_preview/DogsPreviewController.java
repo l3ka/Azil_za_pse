@@ -7,12 +7,14 @@ import GUI.editing_dog.EditingDogForm;
 import data.dto.DogDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import util.AzilUtilities;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DogsPreviewController {
 
@@ -23,6 +25,8 @@ public class DogsPreviewController {
     private ImageView dogImageView;
     @FXML
     private TableView<DogDTO> dogsTableView;
+    @FXML
+    private TextField searchDogsTextField;
 
     public void initialize(Stage stage) {
         this.stage = stage;
@@ -74,11 +78,32 @@ public class DogsPreviewController {
     }
 
     public void search() {
+        try {
+            String inputText = searchDogsTextField.getText().toUpperCase();
 
+            List<DogDTO> filteredList = listOfDogs.stream().filter((dog -> dog.getBreed().toUpperCase().contains(inputText))).collect(Collectors.toList());
+            dogsTableView.getItems().clear();
+            for (DogDTO dog : filteredList) {
+                dogsTableView.getItems().add(dog);
+            }
+            dogsTableView.refresh();
+        } catch (Exception ex) {
+
+        }
     }
 
     public void showAll() {
-        displayDogs();
+        try {
+            if (searchDogsTextField.getText() == null) return;
+            dogsTableView.getItems().clear();
+            for (DogDTO dog : listOfDogs) {
+                dogsTableView.getItems().add(dog);
+            }
+            dogsTableView.refresh();
+            searchDogsTextField.clear();
+        } catch (Exception ex) {
+
+        }
     }
 
     public void close() {
