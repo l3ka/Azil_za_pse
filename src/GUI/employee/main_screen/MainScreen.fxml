@@ -110,7 +110,7 @@
                      </image>
                   </ImageView>
                   <Button mnemonicParsing="false" onAction="#adopting" prefHeight="31.0" prefWidth="115.0" text="Udomljavanje" />
-                  <ImageView fitHeight="182.0" fitWidth="246.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="182.0" fitWidth="246.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.8;">
                      <image>
                         <Image url="@../../icons/adopting.jpg" />
                      </image>
