@@ -20,6 +20,7 @@ import util.AzilUtilities;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class VetMainController {
 
@@ -32,12 +33,11 @@ public class VetMainController {
     @FXML
     private Label loggedUserLabel;
     @FXML
-    private TextField searchParametarTextField;
+    private TextField searchTextField;
 
     private List<DogDTO> listOfDogs;
     private Stage stage;
     private EmployeeDTO employee;
-    private List<DogDTO> listOfSearchedDogs;
 
     public EmployeeDTO getEmployee() {
         return employee;
@@ -97,14 +97,29 @@ public class VetMainController {
 
     public void searchDog() {
         try {
-            if(checkSearchParameter()) {
-                dogsTableView.getItems().clear();
-                dogsTableView.refresh();
-                listOfSearchedDogs = AzilUtilities.getDAOFactory().getDogDAO().dogsByBreed(searchParametarTextField.getText().trim());
-                for(DogDTO dog : listOfSearchedDogs) {
-                    dogsTableView.getItems().add(dog);
-                }
+            String inputText = searchTextField.getText().toUpperCase();
+
+            List<DogDTO> filteredList = listOfDogs.stream().filter((dog -> dog.getBreed().toUpperCase().contains(inputText))).collect(Collectors.toList());
+            dogsTableView.getItems().clear();
+            for (DogDTO dog : filteredList) {
+                dogsTableView.getItems().add(dog);
             }
+            dogsTableView.refresh();
+
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername() + " --> VetMainController - searchDog" , new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
+    }
+
+    public void displayAllDogs() {
+        try {
+            if (searchTextField.getText() == null) return;
+            dogsTableView.getItems().clear();
+            for (DogDTO dog : listOfDogs) {
+                dogsTableView.getItems().add(dog);
+            }
+            dogsTableView.refresh();
+            searchTextField.clear();
         } catch (Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername() + " --> VetMainController - searchDog" , new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
@@ -145,18 +160,6 @@ public class VetMainController {
         }
     }
 
-    private boolean checkSearchParameter() {
-        try {
-            if("".equals(searchParametarTextField.getText().trim())) {
-                displayAlertBox("Niste unijeli naziv na pretragu!");
-                return false;
-            }
-            return true;
-        } catch (Exception ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername() + " --> VetMainController - checkSearchParameter" , new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
-            return false;
-        }
-    }
 
     private void quit() {
         try {

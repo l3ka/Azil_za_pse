@@ -69,7 +69,7 @@
                   <Button fx:id="examineDogButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#examineDog" prefHeight="31.0" prefWidth="112.0" text="Pregledaj psa" />
                </children>
             </HBox>
-            <VBox alignment="CENTER" spacing="5.0">
+            <VBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefWidth="250.0" spacing="5.0">
                <children>
                   <HBox alignment="CENTER">
                      <children>
@@ -85,13 +85,12 @@
                         </Label>
                      </children>
                   </HBox>
-                  <TextField fx:id="searchParametarTextField" />
-                  <Button mnemonicParsing="false" onAction="#searchDog" prefHeight="31.0" prefWidth="90.0" text="Pretraži">
-                     <VBox.margin>
-                        <Insets top="15.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#displayDogs" prefHeight="31.0" prefWidth="90.0" text="Prikaži sve" />
+                  <HBox spacing="10.0">
+                     <children>
+                        <TextField fx:id="searchTextField" onKeyTyped="#searchDog" />
+                        <Button mnemonicParsing="false" onAction="#displayAllDogs" prefHeight="31.0" prefWidth="90.0" text="Prikaži sve" />
+                     </children>
+                  </HBox>
                </children>
             </VBox>
          </children>
