@@ -34,9 +34,9 @@ public class MySQLAdoptingDogDao implements AdoptingDogDAO {
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                DogDTO dog = new DogDTO(rs.getInt("IdPsa"), rs.getString("Pol"), rs.getString("ImePsa"), rs.getString("Rasa"), rs.getInt("Visina"), rs.getDouble("Tezina"), rs.getDate("DatumRodjenja"), rs.getString("Fotografija"), rs.getBoolean("Udomljen"));
-                FosterParentDTO fosterParent = new FosterParentDTO(rs.getString("JMBG"), rs.getString("ImeUdomitelja"), rs.getString("Prezime"), rs.getString("Adresa"), rs.getString("BrojTelefona"));
-                retVal.add(new AdoptingDogDTO(rs.getDate("DatumOd"), dog, fosterParent, rs.getDate("DatumDo")));
+                // DogDTO dog = new DogDTO(rs.getInt("IdPsa"), rs.getString("Pol"), rs.getString("ImePsa"), rs.getString("Rasa"), rs.getInt("Visina"), rs.getDouble("Tezina"), rs.getDate("DatumRodjenja"), rs.getString("Fotografija"), rs.getBoolean("Udomljen"));
+                // FosterParentDTO fosterParent = new FosterParentDTO(rs.getString("JMBG"), rs.getString("ImeUdomitelja"), rs.getString("Prezime"), rs.getString("Adresa"), rs.getString("BrojTelefona"));
+                retVal.add(new AdoptingDogDTO(rs.getDate("DatumOd"), rs.getInt("IdPsa"), rs.getString("UdomiteljJMBG"), rs.getDate("DatumDo")));
             }
         } catch (SQLException ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLAdoptingDogDao - getAllAdoptings", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));

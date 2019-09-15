@@ -5,16 +5,16 @@ import java.sql.Date;
 public class EmployeeContractDTO {
 
     private Date from;
-    private EmployeeDTO employee;
-    private EmploymentContractDTO employmentContract;
+    private String jmbEmployee;
+    private int idEmploymentContract;
     private Date to;
 
     public EmployeeContractDTO() {}
 
-    public EmployeeContractDTO(Date from, EmployeeDTO employee, EmploymentContractDTO employmentContract, Date to) {
+    public EmployeeContractDTO(Date from, String jmbEmployee, int idEmploymentContract, Date to) {
         this.from = from;
-        this.employee = employee;
-        this.employmentContract = employmentContract;
+        this.jmbEmployee = jmbEmployee;
+        this.idEmploymentContract = idEmploymentContract;
         this.to = to;
     }
 
@@ -26,20 +26,20 @@ public class EmployeeContractDTO {
         this.from = from;
     }
 
-    public EmployeeDTO getEmployee() {
-        return employee;
+    public String getJmbEmployee() {
+        return jmbEmployee;
     }
 
-    public void setEmployee(EmployeeDTO employee) {
-        this.employee = employee;
+    public void setJmbEmployee(String jmbEmployee) {
+        this.jmbEmployee = jmbEmployee;
     }
 
-    public EmploymentContractDTO getEmploymentContract() {
-        return employmentContract;
+    public int getIdEmploymentContract() {
+        return idEmploymentContract;
     }
 
-    public void setEmploymentContract(EmploymentContractDTO employmentContract) {
-        this.employmentContract = employmentContract;
+    public void setIdEmploymentContract(int idEmploymentContract) {
+        this.idEmploymentContract = idEmploymentContract;
     }
 
     public Date getTo() {

@@ -6,16 +6,16 @@ import java.util.Objects;
 public class AdoptingDogDTO {
 
     private Date dateFrom;
-    private DogDTO dog;
-    private FosterParentDTO fosterParent;
+    private int idDog;
+    private String jmbFosterParent;
     private Date dateTo;
 
     public AdoptingDogDTO() {}
 
-    public AdoptingDogDTO(Date dateFrom, DogDTO dog, FosterParentDTO fosterParent, Date dateTo) {
+    public AdoptingDogDTO(Date dateFrom, int idDog, String jmbFosterParent, Date dateTo) {
         this.dateFrom = dateFrom;
-        this.dog = dog;
-        this.fosterParent = fosterParent;
+        this.idDog = idDog;
+        this.jmbFosterParent = jmbFosterParent;
         this.dateTo = dateTo;
     }
 
@@ -27,20 +27,20 @@ public class AdoptingDogDTO {
         this.dateFrom = dateFrom;
     }
 
-    public DogDTO getDog() {
-        return dog;
+    public int getIdDog() {
+        return idDog;
     }
 
-    public void setDog(DogDTO dog) {
-        this.dog = dog;
+    public void setIdDog(int idDog) {
+        this.idDog = idDog;
     }
 
-    public FosterParentDTO getFosterParent() {
-        return fosterParent;
+    public String getJmbFosterParent() {
+        return jmbFosterParent;
     }
 
-    public void setFosterParent(FosterParentDTO fosterParent) {
-        this.fosterParent = fosterParent;
+    public void setJmbFosterParent(String jmbFosterParent) {
+        this.jmbFosterParent = jmbFosterParent;
     }
 
     public Date getDateTo() {
@@ -56,14 +56,14 @@ public class AdoptingDogDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AdoptingDogDTO that = (AdoptingDogDTO) o;
-        return Objects.equals(dog, that.dog) &&
-                Objects.equals(fosterParent, that.fosterParent) &&
+        return Objects.equals(idDog, that.idDog) &&
+                Objects.equals(jmbFosterParent, that.jmbFosterParent) &&
                 Objects.equals(dateFrom, that.dateFrom);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(dog, fosterParent, dateFrom);
+        return Objects.hash(dateFrom, idDog, jmbFosterParent, dateFrom);
     }
 
 }
