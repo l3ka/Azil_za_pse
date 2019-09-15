@@ -48,12 +48,12 @@ public class AdoptingMainController {
         dogsTableView.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("height"));
         dogsTableView.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("weight"));
         dogsTableView.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
-        listOfAdoptings = AzilUtilities.getDAOFactory().getAdoptingDogDAO().getAllAdoptings();
+        allAdoptings();
         displayDogs();
         dogsTableView.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
             try {
                 if (newValue == null) return;
-                if (newValue.getImage() != null ) {
+                if (newValue.getImage() != null) {
                     dogImageView.setImage(new Image("file:" + newValue.getImage()));
                 } else dogImageView.setImage(null);
                 String fosterParentJMB = listOfAdoptings.stream().
@@ -74,33 +74,20 @@ public class AdoptingMainController {
     public void adoptDog() {
         try {
             new AdoptingDogForm().display();
+            displayDogs();
+            allAdoptings();
+
         } catch(Exception ex) {
 
         }
-    }
-
-    public void displayAllAdoptings() {
-        displayAdoptings();
     }
 
     public void quit() {
         stage.close();
     }
 
-    private void displayAdoptings() {
 
-    }
-
-
-    private void displayAlertBox(String content) {
-        try {
-            new AlertBoxForm(content).display();
-        } catch(Exception ex) {
-
-        }
-    }
-
-    public void displayDogs() {
+    private void displayDogs() {
         try {
             dogsTableView.getItems().clear();
             dogsTableView.refresh();
@@ -114,5 +101,9 @@ public class AdoptingMainController {
         } catch(Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AdoptingMainController - displayDogs", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
+    }
+
+    private void allAdoptings() {
+        listOfAdoptings = AzilUtilities.getDAOFactory().getAdoptingDogDAO().getAllAdoptings();
     }
 }
