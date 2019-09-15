@@ -21,9 +21,17 @@ public class GeneratingStatisticController {
     @FXML
     private ComboBox<String> statisticComboBox;
     @FXML
+    private ComboBox<String> statisticEmployeeComboBox;
+    @FXML
+    private ComboBox<String> statisticOtherComboBox;
+    @FXML
     private DatePicker startDatePicker;
     @FXML
     private Button generateStatisticButton;
+    @FXML
+    private Button generateEmployeeStatisticButton;
+    @FXML
+    private Button generateOtherStatisticButton;
     @FXML
     private Button quitButton;
 
@@ -33,6 +41,9 @@ public class GeneratingStatisticController {
         try {
             this.stage = stage;
             statisticComboBox.getItems().addAll("Udomitelji", "Udmoljeni psi");
+            statisticEmployeeComboBox.getItems().addAll("SVI zaposlenici", "AKTIVNI zaposlenici", "NEAKTIVNI zaposlenici");
+            statisticOtherComboBox.getItems().addAll("Lijekovi", "Nalazi", "Kavezi", "Udomitelji i psi", "Psi u kavezima");
+            startDatePicker.getEditor().setEditable(false);
             initButtonEvent();
         } catch (Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("GeneratingStatisticController - initialize", new Date(Calendar.getInstance().getTime().getTime()),  ex.fillInStackTrace().toString()));
@@ -44,6 +55,18 @@ public class GeneratingStatisticController {
             generateStatisticButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
                 if (e.getCode() == KeyCode.ENTER) {
                     generateStatisticButton.fire();
+                    e.consume();
+                }
+            });
+            generateEmployeeStatisticButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+                if (e.getCode() == KeyCode.ENTER) {
+                    generateEmployeeStatisticButton.fire();
+                    e.consume();
+                }
+            });
+            generateOtherStatisticButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+                if (e.getCode() == KeyCode.ENTER) {
+                    generateOtherStatisticButton.fire();
                     e.consume();
                 }
             });
@@ -62,17 +85,9 @@ public class GeneratingStatisticController {
         try {
             if(checkParameter() && checkStartDate()) {
                 if("Udomitelji".equals(statisticComboBox.getSelectionModel().getSelectedItem())) {
-                    try {
-                        new FosterParentsStatisticResultForm(startDatePicker.getValue()).display();
-                    } catch (Exception ex) {
-                        AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("GeneratingStatisticController - generateStatistic", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
-                    }
+                    new FosterParentsStatisticResultForm(startDatePicker.getValue()).display();
                 } else {
-                    try {
-                        new AdoptedDogsStatisticResultForm(startDatePicker.getValue()).display();
-                    } catch(Exception ex) {
-                        AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("GeneratingStatisticController - generateStatistic", new Date(Calendar.getInstance().getTime().getTime()),  ex.fillInStackTrace().toString()));
-                    }
+                    new AdoptedDogsStatisticResultForm(startDatePicker.getValue()).display();
                 }
             }
         } catch (Exception ex) {
@@ -115,6 +130,56 @@ public class GeneratingStatisticController {
             new AlertBoxForm(content).display();
         } catch (Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("GeneratingStatisticController - displayAlertBox", new Date(Calendar.getInstance().getTime().getTime()),  ex.fillInStackTrace().toString()));
+        }
+    }
+
+    public void generateEmployeeStatistic() {
+        String comboValue = statisticEmployeeComboBox.getSelectionModel().getSelectedItem();
+        if (comboValue != null) {
+            if (comboValue.equals("SVI zaposlenici")) {
+                AzilUtilities.getDAOFactory().getPdfExporterDAO().exportEmployees("SVI");
+                displayAlertBox("Statistika je uspjesno generisana i eksportovana u pdf fajl.");
+            }
+            else if (comboValue.equals("AKTIVNI zaposlenici")) {
+                AzilUtilities.getDAOFactory().getPdfExporterDAO().exportEmployees("AKTIVNI");
+                displayAlertBox("Statistika je uspjesno generisana i eksportovana u pdf fajl.");
+            }
+            else if (comboValue.equals("NEAKTIVNI zaposlenici")) {
+                AzilUtilities.getDAOFactory().getPdfExporterDAO().exportEmployees("NEAKTIVNI");
+                displayAlertBox("Statistika je uspjesno generisana i eksportovana u pdf fajl.");
+            }
+        }
+        else {
+            displayAlertBox("Nije izabran parametar!");
+        }
+    }
+
+    public void generateOtherStatistic() {
+        String comboValue = statisticOtherComboBox.getSelectionModel().getSelectedItem();
+        if (comboValue != null) {
+            if (comboValue.equals("Lijekovi")) {
+                AzilUtilities.getDAOFactory().getPdfExporterDAO().exportMedicine();
+                displayAlertBox("Statistika je uspjesno generisana i eksportovana u pdf fajl.");
+            }
+            else if (comboValue.equals("Nalazi")) {
+                AzilUtilities.getDAOFactory().getPdfExporterDAO().exportMedicalReports();
+                displayAlertBox("Statistika je uspjesno generisana i eksportovana u pdf fajl.");
+            }
+            else if (comboValue.equals("Kavezi")) {
+                AzilUtilities.getDAOFactory().getPdfExporterDAO().exportCages();
+                displayAlertBox("Statistika je uspjesno generisana i eksportovana u pdf fajl.");
+            }
+            else if (comboValue.equals("Udomitelji i psi")) {
+                AzilUtilities.getDAOFactory().getPdfExporterDAO().exportFosterDogJoin();
+                displayAlertBox("Statistika je uspjesno generisana i eksportovana u pdf fajl.");
+            }
+            else if (comboValue.equals("Psi u kavezima")) {
+                AzilUtilities.getDAOFactory().getPdfExporterDAO().exportDogInCage();
+                displayAlertBox("Statistika je uspjesno generisana i eksportovana u pdf fajl.");
+            }
+        }
+        else {
+            displayAlertBox("Nije izabran parametar!");
         }
     }
 

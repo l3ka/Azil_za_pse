@@ -10,7 +10,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="850.0" style="-fx-background-color: #b71c1c;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.admin.generating_statistic.GeneratingStatisticController">
    <top>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="75.0" prefWidth="850.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -30,16 +30,20 @@
       <Insets bottom="50.0" top="50.0" />
    </padding>
    <bottom>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="15.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="92.0" prefWidth="850.0" spacing="15.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="generateStatisticButton" mnemonicParsing="false" onAction="#generateStatistic" prefHeight="31.0" prefWidth="85.0" text="Generiši" />
             <Button fx:id="quitButton" layoutX="403.0" layoutY="95.0" mnemonicParsing="false" onAction="#quit" prefHeight="31.0" prefWidth="85.0" text="Odustani" />
          </children>
       </VBox>
    </bottom>
    <center>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="355.0" prefWidth="423.0" BorderPane.alignment="CENTER">
          <children>
+            <Label prefHeight="42.0" prefWidth="315.0" text="Statistika za udomitelje i udomljene pse" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
             <HBox alignment="CENTER" prefHeight="70.0" prefWidth="850.0" spacing="25.0">
                <children>
                   <Label text="Vrsta statistike" textFill="WHITE">
@@ -58,10 +62,57 @@
                   <DatePicker fx:id="startDatePicker" prefHeight="31.0" prefWidth="218.0" />
                </children>
             </HBox>
+            <Button fx:id="generateStatisticButton" alignment="CENTER" mnemonicParsing="false" onAction="#generateStatistic" prefHeight="31.0" prefWidth="85.0" text="Generiši" />
+            <VBox prefHeight="146.0" prefWidth="499.0" />
          </children>
          <BorderPane.margin>
             <Insets top="20.0" />
          </BorderPane.margin>
       </VBox>
    </center>
+   <left>
+      <VBox alignment="CENTER" prefHeight="375.0" prefWidth="351.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label prefHeight="36.0" prefWidth="221.0" text="Statistike o zaposlenicima" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="55.0" prefWidth="351.0" spacing="25.0">
+               <children>
+                  <Label text="Vrsta statistike" textFill="WHITE">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="statisticEmployeeComboBox" prefWidth="150.0" promptText="Izaberi parametar" />
+               </children>
+            </HBox>
+            <Button fx:id="generateEmployeeStatisticButton" mnemonicParsing="false" onAction="#generateEmployeeStatistic" text="Generiši" />
+            <VBox alignment="CENTER" prefHeight="149.0" prefWidth="351.0">
+               <children>
+                  <Label alignment="CENTER" text="Ostale statistike" textFill="WHITE">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="CENTER" prefHeight="50.0" prefWidth="351.0" spacing="25.0">
+                     <children>
+                        <Label text="Vrsta statistike" textFill="WHITE">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="statisticOtherComboBox" prefWidth="150.0" promptText="Izaberi parametar" />
+                     </children>
+                  </HBox>
+                  <Button fx:id="generateOtherStatisticButton" mnemonicParsing="false" onAction="#generateOtherStatistic" text="Generiši" />
+               </children>
+            </VBox>
+         </children>
+         <BorderPane.margin>
+            <Insets top="20.0" />
+         </BorderPane.margin>
+      </VBox>
+   </left>
 </BorderPane>

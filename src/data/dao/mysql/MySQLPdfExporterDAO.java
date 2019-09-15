@@ -794,7 +794,7 @@ public class MySQLPdfExporterDAO implements PdfExporterDAO  {
                     pdfTableCell.setVerticalAlignment(Element.ALIGN_CENTER);
                     pdfPTable.addCell(pdfTableCell);
 
-                    pdfTableCell = new PdfPCell(new Phrase("Ime uomitelja"));
+                    pdfTableCell = new PdfPCell(new Phrase("Ime udomitelja"));
                     pdfTableCell.setMinimumHeight(25);
                     pdfTableCell.setHorizontalAlignment(Element.ALIGN_CENTER);
                     pdfTableCell.setVerticalAlignment(Element.ALIGN_CENTER);
