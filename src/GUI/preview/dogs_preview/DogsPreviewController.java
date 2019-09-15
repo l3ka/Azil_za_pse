@@ -12,10 +12,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import util.AzilUtilities;
 
+import java.io.File;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -31,11 +33,16 @@ public class DogsPreviewController {
     private TableView<DogDTO> dogsTableView;
     @FXML
     private TextField searchDogsTextField;
+    @FXML
+    private ImageView adoptedImageView;
 
     private Stage stage;
     private List<DogDTO> listOfDogs;
     private CageDTO cage;
     private DogInCageDTO dogInCage;
+    private Image adopted = new Image("file:" + "src" + File.separator + "GUI" + File.separator + "icons" + File.separator + "checked-icon.png");
+    private Image notAdopted = new Image("file:" + "src" + File.separator + "GUI" + File.separator + "icons" + File.separator + "X-icon.png");
+
 
     public void initialize(Stage stage) {
         try {
@@ -46,6 +53,20 @@ public class DogsPreviewController {
             dogsTableView.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("height"));
             dogsTableView.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("weight"));
             dogsTableView.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
+            dogsTableView.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
+                try {
+                    if (newValue == null) return;
+                    adoptedImageView.setImage(newValue.isAdopted() ? adopted : notAdopted);
+                    if (newValue.getImage() != null) {
+                        dogImageView.setImage(new Image("file:" + newValue.getImage()));
+                    } else {
+                        dogImageView.setImage(null);
+                    }
+                } catch (Exception ex) {
+                    AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("DogsPreviewController - initialize", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+                }
+            }));
+
 
             displayDogs();
         } catch(Exception ex) {
