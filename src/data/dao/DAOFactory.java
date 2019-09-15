@@ -38,4 +38,8 @@ public abstract class DAOFactory {
 
     public abstract PdfExporterDAO getPdfExporterDAO();
 
+    public abstract EmployeeContractDAO getEmployeeContractDAO();
+
+    public abstract AdoptingDogDAO getAdoptingDogDAO();
+
 }

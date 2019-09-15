@@ -31,13 +31,13 @@
     <center>
         <TableView fx:id="employmentTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="1012.0" BorderPane.alignment="CENTER">
             <columns>
-                <TableColumn prefWidth="130.0" text="JMB" />
-                <TableColumn prefWidth="120.0" text="Ime" />
-                <TableColumn prefWidth="120.0" text="Prezime" />
-                <TableColumn prefWidth="120.0" text="Adresa" />
-                <TableColumn prefWidth="120.0" text="Telefon" />
-            <TableColumn prefWidth="100.0" text="Plata" />
-            <TableColumn prefWidth="100.0" text="Pozicija" />
+                <TableColumn fx:id="columnJMB" prefWidth="130.0" text="JMB" />
+                <TableColumn fx:id="columnName" prefWidth="120.0" text="Ime" />
+                <TableColumn fx:id="columnSurname" prefWidth="120.0" text="Prezime" />
+                <TableColumn fx:id="columnAddress" prefWidth="120.0" text="Adresa" />
+                <TableColumn fx:id="columnPhone" prefWidth="120.0" text="Telefon" />
+            <TableColumn fx:id="columnSalary" prefWidth="100.0" text="Plata" />
+            <TableColumn fx:id="columnPosition" prefWidth="100.0" text="Pozicija" />
             <TableColumn prefWidth="100.0" text="Ugovor od" />
             <TableColumn prefWidth="100.0" text="Ugovor do" />
             </columns>

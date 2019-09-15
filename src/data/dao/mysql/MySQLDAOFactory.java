@@ -51,4 +51,10 @@ public class MySQLDAOFactory extends DAOFactory {
     @Override
     public PdfExporterDAO getPdfExporterDAO() { return new MySQLPdfExporter(); }
 
+    @Override
+    public EmployeeContractDAO getEmployeeContractDAO() { return new MySQLEmployeeContractDAO(); }
+
+    @Override
+    public AdoptingDogDAO getAdoptingDogDAO() { return new MySQLAdoptingDogDao(); }
+
 }
