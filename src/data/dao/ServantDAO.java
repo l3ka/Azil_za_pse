@@ -10,6 +10,8 @@ public interface ServantDAO {
 
     List<ServantDTO> servants();
 
+    List<ServantDTO> servantsDeactivated();
+
     ServantDTO getByUsername(String username);
 
     boolean update(ServantDTO servant);

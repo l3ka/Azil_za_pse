@@ -25,7 +25,7 @@ public class DogExaminationForm {
         stage.setTitle("Azil za pse - pregled psa");
         Scene scene = new Scene(loader.load());
         stage.setScene(scene);
-        stage.setMinWidth(1100);
+        stage.setMinWidth(1000);
         stage.setMinHeight(720);
         DogExaminationController controller = loader.getController();
         controller.initialize(stage,dog, employee);

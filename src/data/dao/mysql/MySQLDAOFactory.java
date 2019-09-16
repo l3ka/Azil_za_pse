@@ -48,4 +48,16 @@ public class MySQLDAOFactory extends DAOFactory {
     @Override
     public LoggerDAO getLoggerDAO() { return new MySQLLoggerDAO(); }
 
+    @Override
+    public PdfExporterDAO getPdfExporterDAO() { return new MySQLPdfExporterDAO(); }
+
+    @Override
+    public EmployeeContractDAO getEmployeeContractDAO() { return new MySQLEmployeeContractDAO(); }
+
+    @Override
+    public AdoptingDogDAO getAdoptingDogDAO() { return new MySQLAdoptingDogDao(); }
+
+    @Override
+    public EmploymentContractDAO getEmploymentContractDAO() { return new MySQLEmploymentContractDAO(); }
+
 }

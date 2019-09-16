@@ -20,6 +20,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import util.AzilUtilities;
 
+import java.sql.Date;
+import java.util.Calendar;
+
 public class LoginController {
 
     @FXML
@@ -32,29 +35,34 @@ public class LoginController {
     private Stage stage;
 
     public void initialize(Stage stage) {
-        this.stage = stage;
-        initButtonEvent();
+        try {
+            this.stage = stage;
+            initButtonEvent();
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("LoginController - initialize", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     private void initButtonEvent() {
-        loginButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
-            if (e.getCode() == KeyCode.ENTER) {
-                loginButton.fire();
-                e.consume();
-            }
-        });
+        try {
+            loginButton.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+                if (e.getCode() == KeyCode.ENTER) {
+                    loginButton.fire();
+                    e.consume();
+                }
+            });
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("LoginController - initButtonEvent", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     public void logIn() {
-        if (checkCredentials()) {
-            try {
+        try {
+            if (checkCredentials()) {
                 new AlertBoxForm("Korisničko ime ili lozinka nisu ispravno uneseni!").display();
-            } catch (Exception ex) {
-                AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("LoginController", ex.fillInStackTrace().toString()));
+                clearInputFields();
             }
-        }
-        else {
-            try {
+            else {
                 EmployeeDTO employee = null;
                 String username = usernameTextField.getText().trim();
                 String password = passwordField.getText().trim();
@@ -62,31 +70,52 @@ public class LoginController {
                     employee = AzilUtilities.getDAOFactory().getAdministratorDAO().login(username, password);
                     if (employee != null) {
                         new AdminMainForm(employee).display();
+                    } else {
+                        new AlertBoxForm("Izabrani korisnik vise nije aktivan!").display();
+                        clearInputFields();
+                        return;
                     }
                 } else if (AzilUtilities.getDAOFactory().getVeterinarinaDAO().exists(username, password)) {
                     employee = AzilUtilities.getDAOFactory().getVeterinarinaDAO().login(username, password);
                     if (employee != null) {
                         new VetMainForm(employee).display();
+                    } else {
+                        new AlertBoxForm("Izabrani korisnik vise nije aktivan!").display();
+                        clearInputFields();
+                        return;
                     }
                 } else if (AzilUtilities.getDAOFactory().getServantDAO().exists(username, password)) {
                     employee = AzilUtilities.getDAOFactory().getServantDAO().login(username, password);
                     if (employee != null) {
                         new MainScreen(employee).display();
+                    } else {
+                        new AlertBoxForm("Izabrani korisnik vise nije aktivan!").display();
+                        clearInputFields();
+                        return;
                     }
-                }
-                else {
+                } else {
                     new AlertBoxForm("Neispravno korisničko ime ili lozinka!").display();
+                    clearInputFields();
                     return;
                 }
                 quit();
-            } catch (Exception ex) {
-                AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("LoginController", ex.fillInStackTrace().toString()));
             }
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("LoginController - logIn", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
+    public void close() {
+        stage.close();
+    }
+
     public boolean checkCredentials() {
-        return usernameTextField.toString().trim().isEmpty() || passwordField.toString().trim().isEmpty() || passwordField.toString().trim().startsWith("'");
+        try {
+            return usernameTextField.toString().trim().isEmpty() || passwordField.toString().trim().isEmpty() || passwordField.toString().trim().startsWith("'");
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("LoginController - quit", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+            return false;
+        }
     }
 
     public void changeStage(ActionEvent event, String path) {
@@ -97,12 +126,25 @@ public class LoginController {
             appStage.setScene(scene);
             appStage.show();
         } catch (Exception ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("LoginController", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("LoginController - changeStage", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
     private void quit() {
-        stage.close();
+        try {
+            stage.close();
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("LoginController - quit", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
+    }
+
+    private void clearInputFields() {
+        try {
+            usernameTextField.clear();
+            passwordField.clear();
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("LoginController - clearInputFields", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
 }

@@ -10,6 +10,8 @@ public interface VeterinarianDAO {
 
     List<VeterinarianDTO> veterinarians();
 
+    List<VeterinarianDTO> veterinariansDeactivated();
+
     VeterinarianDTO getByUsername(String username);
 
     boolean update(VeterinarianDTO veterinarian);

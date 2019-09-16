@@ -4,12 +4,10 @@ import data.dto.LoggerDTO;
 import util.AzilUtilities;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.PropertyResourceBundle;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class ConnectionPool {
 
@@ -66,7 +64,7 @@ public class ConnectionPool {
             maxConnections = Integer.parseInt(bundle
                     .getString("maxConnections"));
         } catch (Exception ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("ConnectionPool", ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("ConnectionPool - readConfiguration", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
@@ -86,7 +84,7 @@ public class ConnectionPool {
                     conn = freeConnections.remove(0);
                     usedConnections.add(conn);
                 } catch (InterruptedException ex) {
-                    AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("ConnectionPool", ex.fillInStackTrace().toString()));
+                    AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("ConnectionPool - checkOut", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
                 }
             }
         }
@@ -104,7 +102,7 @@ public class ConnectionPool {
                 try {
                     c.close();
                 } catch (SQLException ex) {
-                    AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("ConnectionPool", ex.fillInStackTrace().toString()));
+                    AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("ConnectionPool - checkIn", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
                 }
             }
             notify();
