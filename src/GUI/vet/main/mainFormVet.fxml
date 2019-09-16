@@ -87,7 +87,7 @@
                   </HBox>
                   <HBox spacing="10.0">
                      <children>
-                        <TextField fx:id="searchTextField" onKeyTyped="#searchDog" />
+                        <TextField fx:id="searchTextField" onKeyTyped="#searchDog" prefHeight="31.0" prefWidth="170.0" />
                         <Button mnemonicParsing="false" onAction="#displayAllDogs" prefHeight="31.0" prefWidth="90.0" text="Prikaži sve" />
                      </children>
                   </HBox>

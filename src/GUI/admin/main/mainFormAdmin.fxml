@@ -127,7 +127,7 @@
                         <Insets top="30.0" />
                      </VBox.margin>
                   </ImageView>
-                  <Button mnemonicParsing="false" onAction="#statistic" prefHeight="31.0" prefWidth="115.0" text="Statistika" />
+                  <Button mnemonicParsing="false" onAction="#statistic" prefHeight="31.0" prefWidth="115.0" text="Izvještaji" />
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../icons/interview-icon.png" />

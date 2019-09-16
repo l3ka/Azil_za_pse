@@ -41,7 +41,7 @@ public class GeneratingStatisticController {
         try {
             this.stage = stage;
             statisticComboBox.getItems().addAll("Udomitelji", "Udmoljeni psi");
-            statisticEmployeeComboBox.getItems().addAll("SVI zaposlenici", "AKTIVNI zaposlenici", "NEAKTIVNI zaposlenici");
+            statisticEmployeeComboBox.getItems().addAll("SVI zaposleni", "AKTIVNI zaposleni", "NEAKTIVNI zaposleni");
             statisticOtherComboBox.getItems().addAll("Lijekovi", "Nalazi", "Kavezi", "Udomitelji i psi", "Psi u kavezima");
             startDatePicker.getEditor().setEditable(false);
             initButtonEvent();
@@ -141,17 +141,17 @@ public class GeneratingStatisticController {
         try {
             String comboValue = statisticEmployeeComboBox.getSelectionModel().getSelectedItem();
             if (comboValue != null) {
-                if (comboValue.equals("SVI zaposlenici")) {
+                if (comboValue.equals("SVI zaposleni")) {
                     AzilUtilities.getDAOFactory().getPdfExporterDAO().exportEmployees("SVI");
-                    displayAlertBox("Statistika je uspjesno generisana i eksportovana u pdf fajl.");
+                    displayAlertBox("Izvještaj je uspješno generisan i eksportovan u pdf dokument!");
                 }
-                else if (comboValue.equals("AKTIVNI zaposlenici")) {
+                else if (comboValue.equals("AKTIVNI zaposleni")) {
                     AzilUtilities.getDAOFactory().getPdfExporterDAO().exportEmployees("AKTIVNI");
-                    displayAlertBox("Statistika je uspjesno generisana i eksportovana u pdf fajl.");
+                    displayAlertBox("Izvještaj je uspješno generisan i eksportovan u pdf dokument!");
                 }
-                else if (comboValue.equals("NEAKTIVNI zaposlenici")) {
+                else if (comboValue.equals("NEAKTIVNI zaposleni")) {
                     AzilUtilities.getDAOFactory().getPdfExporterDAO().exportEmployees("NEAKTIVNI");
-                    displayAlertBox("Statistika je uspjesno generisana i eksportovana u pdf fajl.");
+                    displayAlertBox("Izvještaj je uspješno generisan i eksportovan u pdf dokument!");
                 }
             }
             else {
@@ -168,23 +168,23 @@ public class GeneratingStatisticController {
             if (comboValue != null) {
                 if (comboValue.equals("Lijekovi")) {
                     AzilUtilities.getDAOFactory().getPdfExporterDAO().exportMedicine();
-                    displayAlertBox("Statistika je uspjesno generisana i eksportovana u pdf fajl.");
+                    displayAlertBox("Izvještaj je uspješno generisan i eksportovan u pdf dokument!");
                 }
                 else if (comboValue.equals("Nalazi")) {
                     AzilUtilities.getDAOFactory().getPdfExporterDAO().exportMedicalReports();
-                    displayAlertBox("Statistika je uspjesno generisana i eksportovana u pdf fajl.");
+                    displayAlertBox("Izvještaj je uspješno generisan i eksportovan u pdf dokument!");
                 }
                 else if (comboValue.equals("Kavezi")) {
                     AzilUtilities.getDAOFactory().getPdfExporterDAO().exportCages();
-                    displayAlertBox("Statistika je uspjesno generisana i eksportovana u pdf fajl.");
+                    displayAlertBox("Izvještaj je uspješno generisan i eksportovan u pdf dokument!");
                 }
                 else if (comboValue.equals("Udomitelji i psi")) {
                     AzilUtilities.getDAOFactory().getPdfExporterDAO().exportFosterDogJoin();
-                    displayAlertBox("Statistika je uspjesno generisana i eksportovana u pdf fajl.");
+                    displayAlertBox("Izvještaj je uspješno generisan i eksportovan u pdf dokument!");
                 }
                 else if (comboValue.equals("Psi u kavezima")) {
                     AzilUtilities.getDAOFactory().getPdfExporterDAO().exportDogInCage();
-                    displayAlertBox("Statistika je uspjesno generisana i eksportovana u pdf fajl.");
+                    displayAlertBox("Izvještaj je uspješno generisan i eksportovan u pdf dokument!");
                 }
             }
             else {
