@@ -1,4 +1,4 @@
-package GUI.adopting_dog;
+package GUI.adopting_dog.adopt_dog;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

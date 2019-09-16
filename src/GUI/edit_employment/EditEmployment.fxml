@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="600.0" style="-fx-background-color: #b71c1c;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.edit_employment.EditEmploymentController">
+   <children>
+      <VBox alignment="CENTER" prefHeight="150.0" prefWidth="100.0" spacing="10.0">
+         <children>
+            <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/dog-icon.png" />
+               </image>
+            </ImageView>
+            <Label text="Azil za pse" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+            <Line endX="200.0" startX="-200.0" stroke="WHITE" />
+         </children>
+      </VBox>
+      <VBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0">
+         <children>
+            <HBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" prefWidth="200.0" spacing="64.0">
+               <children>
+                  <Label text="JMB" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="id" disable="true" editable="false" prefWidth="150.0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" prefWidth="200.0" spacing="65.0">
+               <children>
+                  <Label text="Ime" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="name" disable="true" editable="false" prefWidth="150.0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" prefWidth="200.0" spacing="40.0">
+               <children>
+                  <Label text="Prezime" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="surname" disable="true" editable="false" prefWidth="150.0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" prefWidth="200.0" spacing="45.0">
+               <children>
+                  <Label text="Adresa" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="address" disable="true" editable="false" prefWidth="150.0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" prefWidth="200.0" spacing="42.0">
+               <children>
+                  <Label text="Telefon" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="phone" disable="true" editable="false" prefWidth="150.0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" prefWidth="200.0" spacing="58.0">
+               <children>
+                  <Label text="Plata" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="salary" disable="true" editable="false" prefWidth="150.0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" prefWidth="200.0" spacing="40.0">
+               <children>
+                  <Label text="Pozicija" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="position" disable="true" editable="false" prefWidth="150.0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" prefWidth="200.0" spacing="20.0">
+               <children>
+                  <Label text="Ugovor od" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <DatePicker fx:id="contractFrom" disable="true" editable="false" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" prefWidth="200.0" spacing="20.0">
+               <children>
+                  <Label text="Ugovor do" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <DatePicker fx:id="contractTo" />
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets top="10.0" />
+         </padding>
+      </VBox>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="80.0" spacing="10.0">
+         <children>
+            <Button fx:id="editButton" mnemonicParsing="false" onAction="#edit" prefHeight="25.0" prefWidth="75.0" text="Izmijeni" />
+            <Button fx:id="closeButton" mnemonicParsing="false" onAction="#quit" prefHeight="25.0" prefWidth="75.0" text="Odustani" />
+         </children>
+      </VBox>
+   </children>
+   <padding>
+      <Insets top="20.0" />
+   </padding>
+</VBox>

@@ -17,8 +17,7 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-
-public class MySQLPdfExporter implements PdfExporterDAO  {
+public class MySQLPdfExporterDAO implements PdfExporterDAO  {
 
     @Override
     public void exportEmployees(String condition) {
@@ -65,7 +64,6 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
             PdfWriter.getInstance(pdfReport, new FileOutputStream("reports" + File.separator + "Izvjestaj_zaposleni_" + condition + "_" + new SimpleDateFormat("dd-MM-yyyy_HH-mm").format(new java.util.Date()) + ".pdf"));
             pdfReport.open();
 
-
             Paragraph paragraphAzil = new Paragraph("AzilZaPse - Banja Luka d.o.o");
             paragraphAzil.setAlignment(Element.ALIGN_RIGHT);
             pdfReport.add(paragraphAzil);
@@ -79,11 +77,9 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
             image.setAlignment(Element.ALIGN_CENTER);
             pdfReport.add(image);
 
-
             pdfReport.add(new Paragraph("\n\n"));
             pdfReport.add(new Paragraph(Title));
             pdfReport.add(new Paragraph("\n"));
-
 
             PdfPTable pdfPTable = new PdfPTable(5);
             pdfPTable.setTotalWidth(500);
@@ -156,15 +152,12 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
                 pdfTableCell.setMinimumHeight(20);
                 pdfPTable.addCell(pdfTableCell);
             }
-
             pdfReport.add(pdfPTable);
 
             pdfReport.close();
-
             rs.close();
             statement.close();
             conn.close();
-
         } catch (Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLPdfExporter - exportEmployees", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
@@ -185,7 +178,6 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
             PdfWriter.getInstance(pdfReport, new FileOutputStream("reports" + File.separator + "Izvjestaj_lijekovi_" + new SimpleDateFormat("dd-MM-yyyy_HH-mm").format(new java.util.Date()) + ".pdf"));
             pdfReport.open();
 
-
             Paragraph paragraphAzil = new Paragraph("AzilZaPse - Banja Luka d.o.o");
             paragraphAzil.setAlignment(Element.ALIGN_RIGHT);
             pdfReport.add(paragraphAzil);
@@ -199,16 +191,11 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
             image.setAlignment(Element.ALIGN_CENTER);
             pdfReport.add(image);
 
-
             pdfReport.add(new Paragraph("\n\n"));
             pdfReport.add(new Paragraph("Lista svih lijekova u azilu:"));
             pdfReport.add(new Paragraph("\n"));
 
-
             PdfPTable pdfPTable = new PdfPTable(3);
-            // pdfPTable.setTotalWidth(500);
-            // pdfPTable.setWidths(new int[]{70, 130, 100, 100, 100});
-
             PdfPCell pdfTableCell;
 
             boolean first = true;
@@ -252,15 +239,12 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
                 pdfTableCell.setMinimumHeight(20);
                 pdfPTable.addCell(pdfTableCell);
             }
-
             pdfReport.add(pdfPTable);
 
             pdfReport.close();
-
             rs.close();
             statement.close();
             conn.close();
-
         } catch (Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLPdfExporter - exportMedicine", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
@@ -271,7 +255,6 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-
         String Query = "SELECT z.Ime ImeVeterinara, n.DatumPregleda DatumPregleda, p.Ime Pas, n.Dijagnoza Dijagnoza FROM nalaz n " +
                        "JOIN veterinar v ON n.VeterinarJMBG = v.VeterinarJMBG " +
                        "JOIN zaposleni z ON v.VeterinarJMBG = z.JMBG " +
@@ -284,7 +267,6 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
             Document pdfReport = new Document();
             PdfWriter.getInstance(pdfReport, new FileOutputStream("reports" + File.separator + "Izvjestaj_nalazi_" + new SimpleDateFormat("dd-MM-yyyy_HH-mm").format(new java.util.Date()) + ".pdf"));
             pdfReport.open();
-
 
             Paragraph paragraphAzil = new Paragraph("AzilZaPse - Banja Luka d.o.o");
             paragraphAzil.setAlignment(Element.ALIGN_RIGHT);
@@ -299,16 +281,11 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
             image.setAlignment(Element.ALIGN_CENTER);
             pdfReport.add(image);
 
-
             pdfReport.add(new Paragraph("\n\n"));
             pdfReport.add(new Paragraph("Lista svih nalaza u azilu:"));
             pdfReport.add(new Paragraph("\n"));
 
-
             PdfPTable pdfPTable = new PdfPTable(5);
-            // pdfPTable.setTotalWidth(500);
-            // pdfPTable.setWidths(new int[]{70, 130, 100, 100, 100});
-
             PdfPCell pdfTableCell;
 
             boolean first = true;
@@ -376,15 +353,12 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
                 pdfTableCell.setMinimumHeight(20);
                 pdfPTable.addCell(pdfTableCell);
             }
-
             pdfReport.add(pdfPTable);
 
             pdfReport.close();
-
             rs.close();
             statement.close();
             conn.close();
-
         } catch (Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLPdfExporter - exportMedicalReports", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
@@ -412,7 +386,6 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
             PdfWriter.getInstance(pdfReport, new FileOutputStream("reports" + File.separator + "Izvjestaj_kavezi_" + new SimpleDateFormat("dd-MM-yyyy_HH-mm").format(new java.util.Date()) + ".pdf"));
             pdfReport.open();
 
-
             Paragraph paragraphAzil = new Paragraph("AzilZaPse - Banja Luka d.o.o");
             paragraphAzil.setAlignment(Element.ALIGN_RIGHT);
             pdfReport.add(paragraphAzil);
@@ -426,16 +399,11 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
             image.setAlignment(Element.ALIGN_CENTER);
             pdfReport.add(image);
 
-
             pdfReport.add(new Paragraph("\n\n"));
             pdfReport.add(new Paragraph("Lista svih kaveza u azilu:"));
             pdfReport.add(new Paragraph("\n"));
 
-
             PdfPTable pdfPTable = new PdfPTable(4);
-            // pdfPTable.setTotalWidth(500);
-            // pdfPTable.setWidths(new int[]{70, 130, 100, 100, 100});
-
             PdfPCell pdfTableCell;
 
             boolean first = true;
@@ -491,15 +459,12 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
                 pdfTableCell.setMinimumHeight(20);
                 pdfPTable.addCell(pdfTableCell);
             }
-
             pdfReport.add(pdfPTable);
 
             pdfReport.close();
-
             rs.close();
             statement.close();
             conn.close();
-
         } catch (Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLPdfExporter - exportCages", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
@@ -511,7 +476,6 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
             Document pdfReport = new Document();
             PdfWriter.getInstance(pdfReport, new FileOutputStream("reports" + File.separator + "Izvjestaj_udomitelji_" + new SimpleDateFormat("dd-MM-yyyy_HH-mm").format(new java.util.Date()) + ".pdf"));
             pdfReport.open();
-
 
             Paragraph paragraphAzil = new Paragraph("AzilZaPse - Banja Luka d.o.o");
             paragraphAzil.setAlignment(Element.ALIGN_RIGHT);
@@ -526,18 +490,15 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
             image.setAlignment(Element.ALIGN_CENTER);
             pdfReport.add(image);
 
-
             pdfReport.add(new Paragraph("\n\n"));
             pdfReport.add(new Paragraph("Lista svih udomitelja u azilu od datuma " + datumOd + ":"));
             pdfReport.add(new Paragraph("\n"));
-
 
             PdfPTable pdfPTable = new PdfPTable(5);
             pdfPTable.setTotalWidth(675);
             pdfPTable.setWidths(new int[]{75, 150, 150, 150, 150});
 
             PdfPCell pdfTableCell;
-
 
             pdfTableCell = new PdfPCell(new Phrase("Redni br."));
             pdfTableCell.setMinimumHeight(25);
@@ -600,9 +561,7 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
                 pdfTableCell.setMinimumHeight(20);
                 pdfPTable.addCell(pdfTableCell);
             }
-
             pdfReport.add(pdfPTable);
-
             pdfReport.close();
         } catch (Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLPdfExporter - exportFosters", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
@@ -615,7 +574,6 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
             Document pdfReport = new Document();
             PdfWriter.getInstance(pdfReport, new FileOutputStream("reports" + File.separator + "Izvjestaj_udomljeniPsi_" + new SimpleDateFormat("dd-MM-yyyy_HH-mm").format(new java.util.Date()) + ".pdf"));
             pdfReport.open();
-
 
             Paragraph paragraphAzil = new Paragraph("AzilZaPse - Banja Luka d.o.o");
             paragraphAzil.setAlignment(Element.ALIGN_RIGHT);
@@ -630,19 +588,12 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
             image.setAlignment(Element.ALIGN_CENTER);
             pdfReport.add(image);
 
-
             pdfReport.add(new Paragraph("\n\n"));
             pdfReport.add(new Paragraph("Lista svih udomljenih pasa u azilu, od datuma " + datumOd + ":"));
             pdfReport.add(new Paragraph("\n"));
 
-
             PdfPTable pdfPTable = new PdfPTable(7);
-            //pdfPTable.setWidthPercentage(new float[] {10, });
-            //pdfPTable.setTotalWidth(675);
-            //pdfPTable.setWidths(new int[]{75, 150, 150, 150, 150});
-
             PdfPCell pdfTableCell;
-
 
             pdfTableCell = new PdfPCell(new Phrase("Redni br."));
             pdfTableCell.setMinimumHeight(25);
@@ -729,7 +680,6 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
                 pdfTableCell.setMinimumHeight(20);
                 pdfPTable.addCell(pdfTableCell);
             }
-
             pdfReport.add(pdfPTable);
 
             pdfReport.close();
@@ -743,7 +693,7 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String Query = "SELECT u.Ime ImeUdomitelja, u.Adresa Adresa, u.BrojTelefona Telefon, p.Ime ImePsa, p.Rasa Rasa, up.DatumOd DatumUdomljavanja " +
+        String Query = "SELECT CONCAT(u.Ime, ' ', u.Prezime) ImeUdomitelja, u.Adresa Adresa, u.BrojTelefona Telefon, p.Ime ImePsa, p.Rasa Rasa, up.DatumOd DatumUdomljavanja " +
                        "FROM udomitelj u " +
                        "JOIN udomljavanjepsa up " +
                        "ON u.JMBG = up.UdomiteljJMBG " +
@@ -758,7 +708,6 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
             PdfWriter.getInstance(pdfReport, new FileOutputStream("reports" + File.separator + "Izvjestaj_UdomljavanjePsa_" + new SimpleDateFormat("dd-MM-yyyy_HH-mm").format(new java.util.Date()) + ".pdf"));
             pdfReport.open();
 
-
             Paragraph paragraphAzil = new Paragraph("AzilZaPse - Banja Luka d.o.o");
             paragraphAzil.setAlignment(Element.ALIGN_RIGHT);
             pdfReport.add(paragraphAzil);
@@ -772,16 +721,11 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
             image.setAlignment(Element.ALIGN_CENTER);
             pdfReport.add(image);
 
-
             pdfReport.add(new Paragraph("\n\n"));
-            pdfReport.add(new Paragraph("Lista svih udomitelja i pasa koje su udomili u azilu:"));
+            pdfReport.add(new Paragraph("Lista svih udomitelja i pasa koje su udomili iz azila:"));
             pdfReport.add(new Paragraph("\n"));
 
-
             PdfPTable pdfPTable = new PdfPTable(7);
-            // pdfPTable.setTotalWidth(500);
-            // pdfPTable.setWidths(new int[]{70, 130, 100, 100, 100});
-
             PdfPCell pdfTableCell;
 
             boolean first = true;
@@ -795,7 +739,7 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
                     pdfTableCell.setVerticalAlignment(Element.ALIGN_CENTER);
                     pdfPTable.addCell(pdfTableCell);
 
-                    pdfTableCell = new PdfPCell(new Phrase("Naziv uomitelja"));
+                    pdfTableCell = new PdfPCell(new Phrase("Ime udomitelja"));
                     pdfTableCell.setMinimumHeight(25);
                     pdfTableCell.setHorizontalAlignment(Element.ALIGN_CENTER);
                     pdfTableCell.setVerticalAlignment(Element.ALIGN_CENTER);
@@ -873,15 +817,12 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
                 pdfTableCell.setMinimumHeight(20);
                 pdfPTable.addCell(pdfTableCell);
             }
-
             pdfReport.add(pdfPTable);
 
             pdfReport.close();
-
             rs.close();
             statement.close();
             conn.close();
-
         } catch (Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLPdfExporter - exportFosterDogJoin", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
@@ -908,7 +849,6 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
             PdfWriter.getInstance(pdfReport, new FileOutputStream("reports" + File.separator + "Izvjestaj_PsiUKavezima_" + new SimpleDateFormat("dd-MM-yyyy_HH-mm").format(new java.util.Date()) + ".pdf"));
             pdfReport.open();
 
-
             Paragraph paragraphAzil = new Paragraph("AzilZaPse - Banja Luka d.o.o");
             paragraphAzil.setAlignment(Element.ALIGN_RIGHT);
             pdfReport.add(paragraphAzil);
@@ -921,7 +861,6 @@ public class MySQLPdfExporter implements PdfExporterDAO  {
             image.setBackgroundColor(BaseColor.RED);
             image.setAlignment(Element.ALIGN_CENTER);
             pdfReport.add(image);
-
 
             pdfReport.add(new Paragraph("\n\n"));
             Paragraph title = new Paragraph("Spisak svih kaveza i pasa koji se nalaze u njima:", FontFactory.getFont(FontFactory.TIMES_ROMAN,18, Font.BOLD, BaseColor.BLACK));

@@ -4,18 +4,22 @@ import GUI.add_foster_parent.AddFosterParent;
 import GUI.alert_box.AlertBoxForm;
 import GUI.decide_box.DecideBox;
 import GUI.edit_foster_parent.EditFosterParentForm;
+import data.dto.AdoptingDogDTO;
 import data.dto.FosterParentDTO;
 import data.dto.LoggerDTO;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import util.AzilUtilities;
 
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FosterParentsController {
 
@@ -23,9 +27,14 @@ public class FosterParentsController {
     private TableView<FosterParentDTO> fosterParentsTableView;
     @FXML
     private TextField nameTextField;
+    @FXML
+    private Button deleteButton;
+    @FXML
+    private HBox alert;
 
     private Stage stage;
     private List<FosterParentDTO> listOfFosterParents;
+    private List<AdoptingDogDTO> listOfAdoptings;
 
 
     public void initialize(Stage stage) {
@@ -37,9 +46,25 @@ public class FosterParentsController {
             fosterParentsTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("surname"));
             fosterParentsTableView.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("residenceAddress"));
             fosterParentsTableView.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("telephoneNumber"));
-
             displayFosterParents();
-        } catch(Exception ex) {
+            allAdoptings();
+            fosterParentsTableView.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
+                try {
+                    if (newValue == null) return;
+                    for (AdoptingDogDTO adoptingDog : listOfAdoptings) {
+                        if (adoptingDog.getJmbFosterParent().equals(newValue.getJMB())) {
+                            deleteButton.setDisable(true);
+                            alert.setVisible(true);
+                            return;
+                        }
+                    }
+                    deleteButton.setDisable(false);
+                    alert.setVisible(false);
+                } catch (Exception ex) {
+                    AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("FosterParentsController - initialize", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+                }
+            }));
+        } catch (Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("FosterParentsController - initialize", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
@@ -48,6 +73,7 @@ public class FosterParentsController {
         try {
             new AddFosterParent().display();
             displayFosterParents();
+            allAdoptings();
         } catch(Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("FosterParentsController - addFosterParent", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
@@ -84,7 +110,17 @@ public class FosterParentsController {
 
     public void displayAllFosterParents() {
         try {
-            displayFosterParents();
+            if (nameTextField.getText() == null) {
+                return;
+            }
+            fosterParentsTableView.getItems().clear();
+            for (FosterParentDTO fosterParent : listOfFosterParents) {
+                fosterParentsTableView.getItems().add(fosterParent);
+            }
+            fosterParentsTableView.refresh();
+            nameTextField.clear();
+            deleteButton.setDisable(false);
+            alert.setVisible(false);
         } catch(Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("FosterParentsController - displayAllFosterParents", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
@@ -92,9 +128,17 @@ public class FosterParentsController {
 
     public void search() {
         try {
-            if(checkName()) {
-
+            deleteButton.setDisable(false);
+            alert.setVisible(false);
+            String inputText = nameTextField.getText().toUpperCase();
+            List<FosterParentDTO> filteredList = listOfFosterParents.stream()
+                                                                     .filter(fosterParentDTO -> fosterParentDTO.getName().toUpperCase().contains(inputText))
+                                                                     .collect(Collectors.toList());
+            fosterParentsTableView.getItems().clear();
+            for (FosterParentDTO fosterParent : filteredList) {
+                fosterParentsTableView.getItems().add(fosterParent);
             }
+            fosterParentsTableView.refresh();
         } catch(Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("FosterParentsController - search", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
@@ -129,21 +173,10 @@ public class FosterParentsController {
             for(FosterParentDTO fosterParent : listOfFosterParents) {
                 fosterParentsTableView.getItems().add(fosterParent);
             }
+            deleteButton.setDisable(false);
+            alert.setVisible(false);
         } catch(Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("FosterParentsController - displayFosterParents", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
-        }
-    }
-
-    private boolean checkName() {
-        try {
-            if("".equals(nameTextField.getText())) {
-                displayAlertBox("Niste unijeli ime za pretragu!");
-                return false;
-            }
-            return true;
-        } catch(Exception ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("FosterParentsController - checkName", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
-            return false;
         }
     }
 
@@ -152,6 +185,14 @@ public class FosterParentsController {
             new AlertBoxForm(content).display();
         } catch(Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("FosterParentsController - displayAlertBox", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
+    }
+
+    private void allAdoptings() {
+        try {
+            listOfAdoptings = AzilUtilities.getDAOFactory().getAdoptingDogDAO().getAllAdoptings();
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("FosterParentsController - allAdoptings", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 

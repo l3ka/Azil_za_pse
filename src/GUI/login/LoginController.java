@@ -57,25 +57,12 @@ public class LoginController {
     }
 
     public void logIn() {
-        AzilUtilities.getDAOFactory().getPdfExporterDAO().exportEmployees("SVI");
-        AzilUtilities.getDAOFactory().getPdfExporterDAO().exportEmployees("AKTIVNI");
-        AzilUtilities.getDAOFactory().getPdfExporterDAO().exportEmployees("NEAKTIVNI");
-        AzilUtilities.getDAOFactory().getPdfExporterDAO().exportMedicine();
-        AzilUtilities.getDAOFactory().getPdfExporterDAO().exportMedicalReports();
-        AzilUtilities.getDAOFactory().getPdfExporterDAO().exportCages();
-        AzilUtilities.getDAOFactory().getPdfExporterDAO().exportFosterDogJoin();
-        AzilUtilities.getDAOFactory().getPdfExporterDAO().exportDogInCage();
-
-        if (checkCredentials()) {
-            try {
+        try {
+            if (checkCredentials()) {
                 new AlertBoxForm("Korisničko ime ili lozinka nisu ispravno uneseni!").display();
                 clearInputFields();
-            } catch (Exception ex) {
-                AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("LoginController - logIn", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             }
-        }
-        else {
-            try {
+            else {
                 EmployeeDTO employee = null;
                 String username = usernameTextField.getText().trim();
                 String password = passwordField.getText().trim();
@@ -83,8 +70,7 @@ public class LoginController {
                     employee = AzilUtilities.getDAOFactory().getAdministratorDAO().login(username, password);
                     if (employee != null) {
                         new AdminMainForm(employee).display();
-                    }
-                    else {
+                    } else {
                         new AlertBoxForm("Izabrani korisnik vise nije aktivan!").display();
                         clearInputFields();
                         return;
@@ -93,8 +79,7 @@ public class LoginController {
                     employee = AzilUtilities.getDAOFactory().getVeterinarinaDAO().login(username, password);
                     if (employee != null) {
                         new VetMainForm(employee).display();
-                    }
-                    else {
+                    } else {
                         new AlertBoxForm("Izabrani korisnik vise nije aktivan!").display();
                         clearInputFields();
                         return;
@@ -103,27 +88,34 @@ public class LoginController {
                     employee = AzilUtilities.getDAOFactory().getServantDAO().login(username, password);
                     if (employee != null) {
                         new MainScreen(employee).display();
-                    }
-                    else {
+                    } else {
                         new AlertBoxForm("Izabrani korisnik vise nije aktivan!").display();
                         clearInputFields();
                         return;
                     }
-                }
-                else {
+                } else {
                     new AlertBoxForm("Neispravno korisničko ime ili lozinka!").display();
                     clearInputFields();
                     return;
                 }
                 quit();
-            } catch (Exception ex) {
-                AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("LoginController - logIn", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             }
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("LoginController - logIn", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
+    public void close() {
+        stage.close();
+    }
+
     public boolean checkCredentials() {
-        return usernameTextField.toString().trim().isEmpty() || passwordField.toString().trim().isEmpty() || passwordField.toString().trim().startsWith("'");
+        try {
+            return usernameTextField.toString().trim().isEmpty() || passwordField.toString().trim().isEmpty() || passwordField.toString().trim().startsWith("'");
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("LoginController - quit", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+            return false;
+        }
     }
 
     public void changeStage(ActionEvent event, String path) {
@@ -139,7 +131,11 @@ public class LoginController {
     }
 
     private void quit() {
-        stage.close();
+        try {
+            stage.close();
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("LoginController - quit", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     private void clearInputFields() {

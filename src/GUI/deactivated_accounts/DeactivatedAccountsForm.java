@@ -16,7 +16,7 @@ public class DeactivatedAccountsForm {
         stage.setTitle("Azil za pse - deaktivirani nalozi");
         Scene scene = new Scene(loader.load());
         stage.setScene(scene);
-        stage.setMinHeight(700);
+        stage.setMinHeight(720);
         stage.setMinWidth(1300);
         DeactivatedAccountsController controller = loader.getController();
         controller.initialize(stage);

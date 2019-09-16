@@ -5,6 +5,8 @@ import data.dto.EmploymentContractDTO;
 
 public interface EmployeeDAO {
 
+    EmployeeDTO getEmployeeByJMB(String jmb);
+
     boolean insert(EmployeeDTO employee, EmploymentContractDTO contract);
 
     boolean update(EmployeeDTO employee);

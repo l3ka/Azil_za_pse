@@ -1,6 +1,6 @@
 package GUI.employee.main_screen;
 
-import GUI.adopting_dog.AdoptingDogForm;
+import GUI.adopting_dog.adopting_main.AdoptingMainForm;
 import GUI.login.LoginForm;
 import GUI.preview.cages_preview.CagesForm;
 import GUI.preview.dogs_preview.DogsPreviewForm;
@@ -80,7 +80,7 @@ public class MainScreenController {
 
     public void adopting() {
         try {
-            new AdoptingDogForm().display();
+            new AdoptingMainForm().display();
         } catch (Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO(employee.getUsername() + " --> MainScreenController - adopting", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }

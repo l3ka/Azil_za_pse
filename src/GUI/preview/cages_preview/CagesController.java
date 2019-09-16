@@ -17,6 +17,7 @@ import util.AzilUtilities;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CagesController {
 
@@ -85,9 +86,14 @@ public class CagesController {
 
     public void search() {
         try {
-            if(checkName()) {
-
+            List<CageDTO> filteredList = listOfCages.stream()
+                                                    .filter(cageDTO -> cageDTO.getName().toUpperCase().contains(nameTextField.getText().toUpperCase()))
+                                                    .collect(Collectors.toList());
+            cagesTableView.getItems().clear();
+            for (CageDTO cage : filteredList) {
+                cagesTableView.getItems().add(cage);
             }
+            cagesTableView.refresh();
         } catch(Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("CagesController - search", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
@@ -95,7 +101,12 @@ public class CagesController {
 
     public void displayAllCages() {
         try {
-            displayCages();
+            nameTextField.clear();
+            cagesTableView.getItems().clear();
+            for (CageDTO cage : listOfCages) {
+                cagesTableView.getItems().add(cage);
+            }
+            cagesTableView.refresh();
         } catch(Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("CagesController - displayAllCages", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
@@ -134,18 +145,6 @@ public class CagesController {
         }
     }
 
-    private boolean checkName() {
-        try {
-            if("".equals(nameTextField.getText())) {
-                displayAlertBox("Nije unesen naziv za pretragu!");
-                return false;
-            }
-            return true;
-        } catch(Exception ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("CagesController - checkName", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
-            return false;
-        }
-    }
 
     private boolean checkSelectedCage() {
         try {

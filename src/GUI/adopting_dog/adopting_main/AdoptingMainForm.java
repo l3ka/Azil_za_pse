@@ -1,4 +1,4 @@
-package GUI.admin.select_account;
+package GUI.adopting_dog.adopting_main;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -7,20 +7,19 @@ import javafx.stage.Stage;
 
 import java.io.File;
 
-public class SelectAccount {
+public class AdoptingMainForm {
 
     public void display() throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("SelectAccount.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("adoptingMain.fxml"));
         Stage stage = new Stage();
         stage.getIcons().add(new Image("file:" + "src" + File.separator + "GUI" + File.separator + "icons" + File.separator + "dog-icon.png"));
-        stage.setTitle("Azil za pse - izbor naloga");
+        stage.setTitle("Azil za pse - udomljavanja");
         Scene scene = new Scene(loader.load());
-        SelectAccountController controller = loader.getController();
-        controller.initialize(stage);
         stage.setScene(scene);
+        stage.setMinWidth(1350);
         stage.setMinHeight(720);
-        stage.setMinWidth(700);
+        AdoptingMainController controller = loader.getController();
+        controller.initialize(stage);
         stage.showAndWait();
     }
-
 }

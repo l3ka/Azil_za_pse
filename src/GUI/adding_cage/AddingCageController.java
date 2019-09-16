@@ -69,7 +69,11 @@ public class AddingCageController {
     }
 
     public void quit() {
-        stage.close();
+        try {
+            stage.close();
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AddingCageController - quit", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     private boolean checkCapacity() {

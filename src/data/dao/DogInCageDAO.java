@@ -4,6 +4,7 @@ import data.dto.CageDTO;
 import data.dto.DogDTO;
 import data.dto.DogInCageDTO;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 public interface DogInCageDAO {
@@ -14,7 +15,7 @@ public interface DogInCageDAO {
 
     boolean update(DogInCageDTO dogInCage, Date dateFrom, int cageId, int dogId);
 
-    boolean delete(Date dateFrom, int cageId, int dogId);
+    boolean delete(Timestamp dateFrom, int cageId, int dogId);
 
     CageDTO getCage(DogDTO dog);
 

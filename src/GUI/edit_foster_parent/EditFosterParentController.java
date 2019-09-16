@@ -55,10 +55,9 @@ public class EditFosterParentController {
                 fosterParent.setJMB(identificationNumberTextField.getText());
                 fosterParent.setResidenceAddress(placeOfResidenceTextField.getText());
                 fosterParent.setTelephoneNumber(phoneNumberTextField.getText());
-
                 if(AzilUtilities.getDAOFactory().getFosterParentDAO().update(fosterParent)) {
                     displayAlertBox("Uspješno izmijenjeni podaci o udomitelju!");
-                    stage.close();
+                    quit();
                 }
             }
         } catch (Exception ex) {
@@ -67,7 +66,11 @@ public class EditFosterParentController {
     }
 
     public void quit() {
-        stage.close();
+        try {
+            stage.close();
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditFosterParentController - quit", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
     private boolean checkName() {

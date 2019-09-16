@@ -64,12 +64,17 @@ public class AdoptedDogsStatisticResultController {
     }
 
     public void OKButtonPressed() {
-        stage.close();
+        try {
+            stage.close();
+        } catch (Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AdoptedDogsStatisticResultController - OKButtonPressed", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
     }
 
-    public void GeneratePDFButtonPressed() {
+    public void generatePDFButtonPressed() {
         try {
-            AzilUtilities.getDAOFactory().getPdfExporterDAO().exportAdoptedDogs(dogsTableView, titleLabel.getText().trim().split(" ")[2]);
+            AzilUtilities.getDAOFactory().getPdfExporterDAO().exportAdoptedDogs(dogsTableView, titleLabel.getText().trim().split(" ")[3]);
+            stage.close();
         } catch (Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AdoptedDogsStatisticResultController - GeneratePDFButtonPressed", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
