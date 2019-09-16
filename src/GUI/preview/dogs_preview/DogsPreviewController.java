@@ -135,7 +135,9 @@ public class DogsPreviewController {
             }
             dogsTableView.getItems().clear();
             for (DogDTO dog : listOfDogs) {
-                dogsTableView.getItems().add(dog);
+                if(!dog.isAdopted()) {
+                    dogsTableView.getItems().add(dog);
+                }
             }
             dogsTableView.refresh();
             searchDogsTextField.clear();

@@ -56,7 +56,10 @@
                               <Image url="@../../icons/search-icon.png" />
                            </image>
                         </ImageView>
-                        <Label text="Pregled" textFill="WHITE" />
+                        <Label text="Pregled" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font></Label>
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" spacing="10.0">
