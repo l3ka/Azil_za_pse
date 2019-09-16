@@ -74,15 +74,19 @@ public class EmploymentController {
     }
 
     private void displayEmployees() {
-        employeesTableView.getItems().clear();
-        employeesTableView.refresh();
+        try {
+            employeesTableView.getItems().clear();
+            employeesTableView.refresh();
 
-        listOfEmployees.addAll(AzilUtilities.getDAOFactory().getAdministratorDAO().adminstartors());
-        listOfEmployees.addAll(AzilUtilities.getDAOFactory().getServantDAO().servants());
-        listOfEmployees.addAll(AzilUtilities.getDAOFactory().getVeterinarinaDAO().veterinarians());
+            listOfEmployees.addAll(AzilUtilities.getDAOFactory().getAdministratorDAO().adminstartors());
+            listOfEmployees.addAll(AzilUtilities.getDAOFactory().getServantDAO().servants());
+            listOfEmployees.addAll(AzilUtilities.getDAOFactory().getVeterinarinaDAO().veterinarians());
 
-        for(EmployeeDTO employee : listOfEmployees) {
-            employeesTableView.getItems().add(employee);
+            for(EmployeeDTO employee : listOfEmployees) {
+                employeesTableView.getItems().add(employee);
+            }
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EmploymentController - displayEmployees", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 

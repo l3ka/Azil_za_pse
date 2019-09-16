@@ -2,8 +2,6 @@ package data.dao.mysql;
 
 import data.dao.AdoptingDogDAO;
 import data.dto.AdoptingDogDTO;
-import data.dto.DogDTO;
-import data.dto.FosterParentDTO;
 import data.dto.LoggerDTO;
 import util.AzilUtilities;
 
@@ -38,7 +36,7 @@ public class MySQLAdoptingDogDao implements AdoptingDogDAO {
 
             retVal = ps.executeUpdate() == 1;
         } catch (SQLException ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLAdoptingDogDao - getAllAdoptings", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLAdoptingDogDao - update", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
             DBUtilities.getInstance().close(ps);
@@ -60,7 +58,6 @@ public class MySQLAdoptingDogDao implements AdoptingDogDAO {
                        "FROM udomljavanjepsa up " +
                        "JOIN pas p ON up.IdPsa = p.IdPsa " +
                        "JOIN udomitelj u ON up.UdomiteljJMBG = u.JMBG";
-
         try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);

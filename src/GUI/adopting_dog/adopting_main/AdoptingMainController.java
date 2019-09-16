@@ -1,9 +1,7 @@
 package GUI.adopting_dog.adopting_main;
 
 import GUI.adopting_dog.adopt_dog.AdoptingDogForm;
-import GUI.alert_box.AlertBoxForm;
 import GUI.decide_box.DecideBox;
-import data.dao.AdoptingDAO;
 import data.dto.AdoptingDogDTO;
 import data.dto.DogDTO;
 import data.dto.FosterParentDTO;
@@ -20,7 +18,6 @@ import util.AzilUtilities;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class AdoptingMainController {
 
@@ -102,7 +99,7 @@ public class AdoptingMainController {
             }
             displayDogs();
         } catch(Exception ex) {
-            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AdoptingMainController - updateDogs", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AdoptingMainController - update", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 

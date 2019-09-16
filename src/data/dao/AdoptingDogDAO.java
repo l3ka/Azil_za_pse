@@ -7,4 +7,6 @@ public interface AdoptingDogDAO {
 
     List<AdoptingDogDTO> getAllAdoptings();
 
+    boolean update(AdoptingDogDTO adoptingDog);
+
 }
