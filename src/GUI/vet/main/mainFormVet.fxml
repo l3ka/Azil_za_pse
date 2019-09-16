@@ -33,7 +33,7 @@
       <VBox alignment="CENTER" spacing="10.0">
          <children>
             <Label fx:id="loggedUserLabel" text="Prijavljeni korisnik: " textFill="WHITE" />
-            <Button fx:id="logOutButton" mnemonicParsing="false" onAction="#logOut" text="Odjavi se" BorderPane.alignment="CENTER">
+            <Button fx:id="logOutButton" mnemonicParsing="false" onAction="#logOut" prefHeight="31.0" prefWidth="85.0" text="Odjavi se" BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets top="20.0" />
                </BorderPane.margin>

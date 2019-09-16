@@ -105,6 +105,10 @@ public class LoginController {
         }
     }
 
+    public void close() {
+        stage.close();
+    }
+
     public boolean checkCredentials() {
         try {
             return usernameTextField.toString().trim().isEmpty() || passwordField.toString().trim().isEmpty() || passwordField.toString().trim().startsWith("'");
