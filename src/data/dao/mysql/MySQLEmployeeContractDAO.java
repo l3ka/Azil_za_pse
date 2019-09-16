@@ -44,7 +44,7 @@ public class MySQLEmployeeContractDAO implements EmployeeContractDAO {
                 }
                 EmploymentContractDTO employmentContract = new EmploymentContractDTO(rs.getInt("IdUgovoraUOR"), rs.getInt("Aktivan"), rs.getString("Pozicija"), rs.getDate("Od"), rs.getDate("Do"), rs.getDouble("Plata"));
                  */
-                retVal.add(new EmployeeContractDTO(rs.getDate("Od"), rs.getString("ZaposlenikJMBG"), rs.getInt("IdUgovora"), rs.getDate("Do")));
+                retVal.add(new EmployeeContractDTO(rs.getDate("Od"), rs.getString("ZaposlenikJMBG"), rs.getInt("IdUgovorazZU"), rs.getDate("Do")));
             }
         } catch (SQLException ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLAdoptingDogDao - getAllEmployeeContract", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
