@@ -2,6 +2,7 @@ package GUI.adopting_dog.adopting_main;
 
 import GUI.adopting_dog.adopt_dog.AdoptingDogForm;
 import GUI.alert_box.AlertBoxForm;
+import GUI.decide_box.DecideBox;
 import data.dao.AdoptingDAO;
 import data.dto.AdoptingDogDTO;
 import data.dto.DogDTO;
@@ -78,10 +79,30 @@ public class AdoptingMainController {
     public void adoptDog() {
         try {
             new AdoptingDogForm().display();
-            displayDogs();
             allAdoptings();
+            displayDogs();
         } catch(Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AdoptingMainController - adoptDog", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
+        }
+    }
+
+    public void update() {
+        try {
+            boolean choice = new DecideBox("Da li ste sigurni da želite da vratite psa?").display();
+            if(choice) {
+                for (AdoptingDogDTO adoptingDog : listOfAdoptings) {
+                    if (adoptingDog.getIdDog() == dogsTableView.getSelectionModel().getSelectedItem().getDogId()) {
+                        adoptingDog.setDateTo(new Date(Calendar.getInstance().getTime().getTime()));
+                        if (AzilUtilities.getDAOFactory().getAdoptingDogDAO().update(adoptingDog)) {
+                            dogsTableView.getSelectionModel().getSelectedItem().setAdopted(false);
+                            AzilUtilities.getDAOFactory().getDogDAO().update(dogsTableView.getSelectionModel().getSelectedItem());
+                        }
+                    }
+                }
+            }
+            displayDogs();
+        } catch(Exception ex) {
+            AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AdoptingMainController - updateDogs", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
 
