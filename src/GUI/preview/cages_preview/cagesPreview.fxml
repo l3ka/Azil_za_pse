@@ -29,10 +29,11 @@
         </VBox>
     </top>
     <center>
-        <TableView fx:id="cagesTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="420.0" BorderPane.alignment="CENTER">
+        <TableView fx:id="cagesTableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="449.0" BorderPane.alignment="CENTER">
             <columns>
-                <TableColumn prefWidth="210.0" text="Naziv" />
-                <TableColumn prefWidth="210.0" text="Kapacitet" />
+                <TableColumn prefWidth="150.0" text="Naziv" />
+                <TableColumn prefWidth="150.0" text="Trenutni kapacitet" />
+            <TableColumn prefWidth="150.0" text="Ukupni kapacitet" />
             </columns>
         </TableView>
     </center>

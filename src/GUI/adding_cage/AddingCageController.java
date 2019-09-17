@@ -58,7 +58,7 @@ public class AddingCageController {
     public void save() {
         try {
             if(checkCapacity() && checkName()) {
-                if(AzilUtilities.getDAOFactory().getCageDAO().insert(new CageDTO(0, nameTextField.getText(), Integer.valueOf(cageCapacityTextField.getText().trim())))) {
+                if(AzilUtilities.getDAOFactory().getCageDAO().insert(new CageDTO(0, nameTextField.getText(), Integer.valueOf(cageCapacityTextField.getText().trim()), Integer.valueOf(cageCapacityTextField.getText().trim())))) {
                     displayAlertBox("Kavez je uspješno dodat!");
                 }
                 quit();

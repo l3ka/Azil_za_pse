@@ -27,7 +27,7 @@ public class EditingCageController {
             this.cage = cage;
 
             cageNameTextField.setText(cage.getName());
-            cageCapacityTextField.setText("" + cage.getCapacity());
+            cageCapacityTextField.setText("" + cage.getFullCapacity());
         } catch(Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditingCageController - initialize", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
@@ -35,12 +35,14 @@ public class EditingCageController {
 
     public void save() {
         try {
-            if(checkName() && checkCapacity()) {
+            if(checkName() && checkCapacity() && checkEditingCapacity()) {
                 cage.setName(cageNameTextField.getText().trim());
-                cage.setCapacity(Integer.valueOf(cageCapacityTextField.getText().trim()));
+                cage.setFullCapacity(Integer.valueOf(cageCapacityTextField.getText().trim()));
+                cage.setCapacity(Integer.valueOf(cage.getFullCapacity() - cage.getCapacity()));
                 if(AzilUtilities.getDAOFactory().getCageDAO().update(cage)) {
                     displayAlertBox("Kavez je uspješno izmijenjen!");
-                    quit();                }
+                    quit();
+                }
             }
         } catch(Exception ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditingCageController - save", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
@@ -92,6 +94,14 @@ public class EditingCageController {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("EditingCageController - checkNumber", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
             return false;
         }
+    }
+
+    private boolean checkEditingCapacity() {
+        if(Integer.valueOf(cageCapacityTextField.getText()).intValue() < (cage.getFullCapacity() - cage.getCapacity())) {
+            displayAlertBox("Ne može se izmijeniti kapacitet kaveza!");
+            return false;
+        }
+        return true;
     }
 
     private void displayAlertBox(String content) {

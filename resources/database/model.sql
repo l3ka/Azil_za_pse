@@ -254,6 +254,7 @@ CREATE TABLE IF NOT EXISTS `azil`.`Kavez` (
   `IdKaveza` INT NOT NULL AUTO_INCREMENT,
   `Naziv` VARCHAR(255) NOT NULL,
   `Kapacitet` INT NOT NULL,
+  `Ukupno` INT NOT NULL,
   PRIMARY KEY (`IdKaveza`),
   UNIQUE INDEX `NazivKaveza_UNIQUE` (`Naziv` ASC))
 ENGINE = InnoDB;
