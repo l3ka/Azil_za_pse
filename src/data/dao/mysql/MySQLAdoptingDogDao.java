@@ -57,7 +57,8 @@ public class MySQLAdoptingDogDao implements AdoptingDogDAO {
                        "up.DatumOd, up.IdPsa, up.UdomiteljJMBG, up.DatumDo " +
                        "FROM udomljavanjepsa up " +
                        "JOIN pas p ON up.IdPsa = p.IdPsa " +
-                       "JOIN udomitelj u ON up.UdomiteljJMBG = u.JMBG";
+                       "JOIN udomitelj u ON up.UdomiteljJMBG = u.JMBG " +
+                       "WHERE p.Obrisan = 0";
         try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);

@@ -27,3 +27,35 @@ begin
     COMMIT;
 end$$
 delimiter ;
+
+/*
+drop trigger if exists update_cages_decrease;
+delimiter $$
+create trigger update_cages_decrease after insert on kavez_pas
+for each row 
+begin
+	update kavez
+    set kapacitet = kapacitet - 1
+    where IdKaveza = new.IdKaveza;
+end$$
+delimiter ;
+
+
+drop trigger if exists update_cages_increase;
+delimiter $$
+create trigger update_cages_increase after update on kavez_pas
+for each row 
+begin
+	if new.Do is not null
+    then
+		update kavez
+		set kapacitet = kapacitet + 1
+		where IdKaveza = new.IdKaveza;
+    end if;
+end$$
+delimiter ;
+*/
+
+
+
+

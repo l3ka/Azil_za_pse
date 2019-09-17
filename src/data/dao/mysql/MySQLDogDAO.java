@@ -20,7 +20,7 @@ public class MySQLDogDAO implements DogDAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        String query = "SELECT * FROM pas WHERE IdPsa=(SELECT max(IdPsa) FROM pas)";
+        String query = "SELECT * FROM pas WHERE IdPsa=(SELECT max(IdPsa) FROM pas) AND Obrisan = 0";
 
         try {
             conn = ConnectionPool.getInstance().checkOut();
@@ -56,7 +56,7 @@ public class MySQLDogDAO implements DogDAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        String query = "SELECT * FROM pas";
+        String query = "SELECT * FROM pas WHERE Obrisan = 0";
         try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
@@ -91,7 +91,7 @@ public class MySQLDogDAO implements DogDAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        String query = "SELECT * FROM pas WHERE IdPsa=?";
+        String query = "SELECT * FROM pas WHERE IdPsa=? AND Obrisan = 0";
         try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
@@ -130,7 +130,7 @@ public class MySQLDogDAO implements DogDAO {
 
         String query = "SELECT * FROM pas p " +
                        "LEFT OUTER JOIN udomljavanjepsa up ON up.IdPsa=p.IdPsa " +
-                       "WHERE p.Udomljen=1 AND up.DatumOd>=DATE(?) ";
+                       "WHERE p.Udomljen=1 AND up.DatumOd>=DATE(?) AND Obrisan = 0";
         try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
@@ -166,7 +166,7 @@ public class MySQLDogDAO implements DogDAO {
         ResultSet rs = null;
 
         String query = "SELECT * FROM pas " +
-                       "WHERE Rasa=? ";
+                       "WHERE Rasa=? AND Obrisan = 0";
 
         try {
             conn = ConnectionPool.getInstance().checkOut();
@@ -203,8 +203,8 @@ public class MySQLDogDAO implements DogDAO {
         Connection conn = null;
         PreparedStatement ps = null;
 
-        String query = "INSERT INTO pas (Ime, Pol, Rasa, DatumRodjenja, Visina, Tezina, Fotografija, Udomljen) " +
-                       "VALUES (?, ?, ?, ?, ?, ?, ?, ?) ";
+        String query = "INSERT INTO pas (Ime, Pol, Rasa, DatumRodjenja, Visina, Tezina, Fotografija, Udomljen, Obrisan) " +
+                       "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ";
         try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
@@ -216,6 +216,7 @@ public class MySQLDogDAO implements DogDAO {
             ps.setDouble(6, dogDTO.getWeight());
             ps.setString(7, dogDTO.getImage());
             ps.setBoolean(8, dogDTO.isAdopted());
+            ps.setInt(9, 0);
 
             retVal = ps.executeUpdate() == 1;
         } catch (Exception ex) {
@@ -276,7 +277,8 @@ public class MySQLDogDAO implements DogDAO {
         Connection conn = null;
         PreparedStatement ps = null;
 
-        String query = "DELETE FROM pas " +
+        String query = "UPDATE pas " +
+                       "SET Obrisan = 1 " +
                        "WHERE IdPsa=? ";
         try {
             conn = ConnectionPool.getInstance().checkOut();
