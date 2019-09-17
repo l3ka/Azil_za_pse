@@ -50,6 +50,20 @@
       <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
             <ImageView fx:id="dogImageView" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
+            <HBox fx:id="cageBox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" visible="false">
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../icons/dog-cage-icon.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="cageLabel" text="Kavez: " textFill="WHITE">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
          </children>
       </VBox>
    </right>
