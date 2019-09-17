@@ -2,10 +2,7 @@ package GUI.adopting_dog.adopting_main;
 
 import GUI.adopting_dog.adopt_dog.AdoptingDogForm;
 import GUI.decide_box.DecideBox;
-import data.dto.AdoptingDogDTO;
-import data.dto.DogDTO;
-import data.dto.FosterParentDTO;
-import data.dto.LoggerDTO;
+import data.dto.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
@@ -16,6 +13,7 @@ import javafx.stage.Stage;
 import util.AzilUtilities;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.List;
 
@@ -37,6 +35,7 @@ public class AdoptingMainController {
 
     private List<DogDTO> listOfDogs;
     private List<AdoptingDogDTO> listOfAdoptings;
+    private List<CageDTO> listOfCages;
 
     public void initialize(Stage stage) {
         try {
@@ -92,6 +91,14 @@ public class AdoptingMainController {
                         adoptingDog.setDateTo(new Date(Calendar.getInstance().getTime().getTime()));
                         if (AzilUtilities.getDAOFactory().getAdoptingDogDAO().update(adoptingDog)) {
                             dogsTableView.getSelectionModel().getSelectedItem().setAdopted(false);
+                            listOfCages = AzilUtilities.getDAOFactory().getCageDAO().cages();
+                            for(CageDTO cage : listOfCages) {
+                                if(cage.getCapacity() > 0) {
+                                    AzilUtilities.getDAOFactory().getDogInCageDAO().insert(new DogInCageDTO(dogsTableView.getSelectionModel().getSelectedItem(), cage, new Timestamp(Calendar.getInstance().getTime().getTime()),null));
+                                    cage.setCapacity(cage.getCapacity() - 1);
+                                    AzilUtilities.getDAOFactory().getCageDAO().update(cage);
+                                }
+                            }
                             AzilUtilities.getDAOFactory().getDogDAO().update(dogsTableView.getSelectionModel().getSelectedItem());
                         }
                     }

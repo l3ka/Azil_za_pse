@@ -9,14 +9,16 @@ public class CageDTO {
     private Integer cageId;
     private String name;
     private int capacity;
+    private int fullCapacity;
     private HashSet<DogInCageDTO> dogsInCage;
 
     public CageDTO() {}
 
-    public CageDTO(Integer cageId, String name, int capacity) {
+    public CageDTO(Integer cageId, String name, int capacity, int fullCapacity) {
         this.cageId = cageId;
         this.name = name;
         this.capacity = capacity;
+        this.fullCapacity = fullCapacity;
         this.dogsInCage = new HashSet<>();
     }
 
@@ -46,6 +48,14 @@ public class CageDTO {
 
     public void setCapacity(int capacity) {
         this.capacity = capacity;
+    }
+
+    public int getFullCapacity() {
+        return fullCapacity;
+    }
+
+    public void setFullCapacity(int fullCapacity) {
+        this.fullCapacity = fullCapacity;
     }
 
 

@@ -28,9 +28,10 @@ public class MySQLCageDAO implements CageDAO {
 
             while (rs.next())
                 retVal.add(new CageDTO(
-                        rs.getInt("Idkaveza"),
+                        rs.getInt("IdKaveza"),
                         rs.getString("Naziv"),
-                        rs.getInt("Kapacitet")
+                        rs.getInt("Kapacitet"),
+                        rs.getInt("Ukupno")
                 ));
         } catch (SQLException ex) {
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLCageDAO - cages", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
@@ -58,9 +59,10 @@ public class MySQLCageDAO implements CageDAO {
 
             if (rs.next()) {
                 retVal = new CageDTO(
-                        rs.getInt("Idkaveza"),
+                        rs.getInt("IdKaveza"),
                         rs.getString("Naziv"),
-                        rs.getInt("Kapacitet")
+                        rs.getInt("Kapacitet"),
+                        rs.getInt("Ukupno")
                 );
             }
         } catch (SQLException ex) {
@@ -89,9 +91,10 @@ public class MySQLCageDAO implements CageDAO {
 
             if (rs.next()) {
                 retVal.add(new CageDTO(
-                        rs.getInt("Idkaveza"),
+                        rs.getInt("IdKaveza"),
                         rs.getString("Naziv"),
-                        rs.getInt("Kapacitet")
+                        rs.getInt("Kapacitet"),
+                        rs.getInt("Ukupno")
                 ));
             }
         } catch (SQLException ex) {
@@ -111,13 +114,14 @@ public class MySQLCageDAO implements CageDAO {
         PreparedStatement ps = null;
 
         String query = "INSERT INTO kavez " +
-                       "VALUES (?, ?, ?) ";
+                       "VALUES (?, ?, ?, ?) ";
         try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
             ps.setInt(1, cage.getId());
             ps.setString(2, cage.getName());
             ps.setInt(3, cage.getCapacity());
+            ps.setInt(4, cage.getFullCapacity());
 
             retVal = ps.executeUpdate() == 1;
         } catch (Exception ex) {
@@ -139,14 +143,16 @@ public class MySQLCageDAO implements CageDAO {
 
         String query = "UPDATE kavez SET " +
                        "Naziv=?, " +
-                       "Kapacitet=? " +
+                       "Kapacitet=?, " +
+                       "Ukupno=? " +
                        "WHERE IdKaveza=? ";
         try {
             conn = ConnectionPool.getInstance().checkOut();
             ps = conn.prepareStatement(query);
             ps.setString(1, cage.getName());
             ps.setInt(2, cage.getCapacity());
-            ps.setInt(3, cage.getId());
+            ps.setInt(3, cage.getFullCapacity());
+            ps.setInt(4, cage.getId());
 
             ps.executeUpdate();
         } catch (SQLException ex) {

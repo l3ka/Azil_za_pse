@@ -39,6 +39,7 @@ public class CagesController {
 
             cagesTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("name"));
             cagesTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("capacity"));
+            cagesTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("fullCapacity"));
 
             displayCages();
         } catch(Exception ex) {

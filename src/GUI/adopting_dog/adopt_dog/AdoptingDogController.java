@@ -1,10 +1,7 @@
 package GUI.adopting_dog.adopt_dog;
 
 import GUI.alert_box.AlertBoxForm;
-import data.dto.AdoptingDTO;
-import data.dto.DogDTO;
-import data.dto.FosterParentDTO;
-import data.dto.LoggerDTO;
+import data.dto.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
@@ -41,6 +38,7 @@ public class AdoptingDogController {
     private FosterParentDTO selectedFosterParent;
     private AdoptingDTO adoptingDTO;
     private Stage stage;
+    private CageDTO cage;
 
     @FXML
     public void initialize(Stage stage) {
@@ -93,6 +91,10 @@ public class AdoptingDogController {
                 selectedFosterParent = fosterParentsTableView.getSelectionModel().getSelectedItem();
 
                 selectedDog.setAdopted(true);
+                cage = AzilUtilities.getDAOFactory().getDogInCageDAO().getCage(selectedDog);
+                cage.setCapacity(cage.getCapacity() + 1);
+                AzilUtilities.getDAOFactory().getCageDAO().update(cage);
+
                 AzilUtilities.getDAOFactory().getDogDAO().update(selectedDog);
                 adoptingDTO = new AdoptingDTO(selectedDog, new Date(Calendar.getInstance().getTime().getTime()), null);
                 selectedFosterParent.addDog(adoptingDTO);
@@ -102,6 +104,7 @@ public class AdoptingDogController {
                 quit();
             }
         } catch (Exception ex) {
+            ex.printStackTrace();
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("AdoptingDogController - adoptDog", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         }
     }
