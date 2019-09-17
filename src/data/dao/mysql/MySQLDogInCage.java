@@ -140,7 +140,7 @@ public class MySQLDogInCage implements DogInCageDAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        String query = "SELECT kp.IdKaveza IdKaveza, k.Naziv Naziv, k.Kapacitet Kapacitet FROM kavez_pas kp " +
+        String query = "SELECT kp.IdKaveza IdKaveza, k.Naziv Naziv, k.Kapacitet Kapacitet, k.Ukupno Ukupno FROM kavez_pas kp " +
                        "JOIN kavez k " +
                        "ON kp.IdKaveza = k.IdKaveza " +
                        "WHERE Do IS NULL AND IdPsa = ?";
@@ -155,7 +155,8 @@ public class MySQLDogInCage implements DogInCageDAO {
                 retVal = new CageDTO(
                         rs.getInt("IdKaveza"),
                         rs.getString("Naziv"),
-                        rs.getInt("Kapacitet")
+                        rs.getInt("Kapacitet"),
+                        rs.getInt("Ukupno")
                 );
             }
         } catch (SQLException ex) {

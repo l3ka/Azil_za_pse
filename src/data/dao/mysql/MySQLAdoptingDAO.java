@@ -41,6 +41,7 @@ public class MySQLAdoptingDAO implements AdoptingDAO {
         return retVal;
     }
 
+    @Override
     public List<AdoptingDTO> getAdoptingForFosterParent(FosterParentDTO fosterParent){
         List<AdoptingDTO> retVal = new ArrayList<>();
 
