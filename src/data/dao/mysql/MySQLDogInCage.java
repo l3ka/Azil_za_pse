@@ -18,25 +18,23 @@ public class MySQLDogInCage implements DogInCageDAO {
         boolean retVal = true;
 
         Connection conn = null;
-        PreparedStatement ps = null;
+        CallableStatement cs = null;
+        String query = "call add_dog_in_cage(?, ?, ?, ?)";
 
-        String query = "INSERT INTO kavez_pas  "
-                + "VALUES (?, ?, ?, ?) ";
         try {
             conn = ConnectionPool.getInstance().checkOut();
-            ps = conn.prepareStatement(query);
-            ps.setTimestamp(1, dogInCage.getDateForm());
-            ps.setInt(2, dogInCage.getCage().getId());
-            ps.setInt(3, dogInCage.getDog().getDogId());
-            ps.setTimestamp(4, dogInCage.getDateTo());
-
-            retVal = ps.executeUpdate() == 1;
+            cs = conn.prepareCall(query);
+            cs.setTimestamp(1, dogInCage.getDateForm());
+            cs.setInt(2, dogInCage.getCage().getId());
+            cs.setInt(3, dogInCage.getDog().getDogId());
+            cs.setTimestamp(4, dogInCage.getDateTo());
+            retVal = !cs.execute();
         } catch (Exception ex) {
             retVal = false;
             AzilUtilities.getDAOFactory().getLoggerDAO().insert(new LoggerDTO("MySQLDogInCage - insert", new Date(Calendar.getInstance().getTime().getTime()), ex.fillInStackTrace().toString()));
         } finally {
             ConnectionPool.getInstance().checkIn(conn);
-            DBUtilities.getInstance().close(ps);
+            DBUtilities.getInstance().close(cs);
         }
 
         return retVal;
@@ -49,7 +47,7 @@ public class MySQLDogInCage implements DogInCageDAO {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String query = "SELECT * FROM kavez_pas WHERE IdKaveza=?";
+        String query = "SELECT * FROM kavez_pas WHERE IdKaveza=? AND Do IS NULL";
 
         try {
             conn = ConnectionPool.getInstance().checkOut();
