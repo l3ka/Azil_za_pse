@@ -37,8 +37,9 @@ public class EditingCageController {
         try {
             if(checkName() && checkCapacity() && checkEditingCapacity()) {
                 cage.setName(cageNameTextField.getText().trim());
+                int difference = cage.getFullCapacity() - cage.getCapacity();
                 cage.setFullCapacity(Integer.valueOf(cageCapacityTextField.getText().trim()));
-                cage.setCapacity(Integer.valueOf(cage.getFullCapacity() - cage.getCapacity()));
+                cage.setCapacity(Integer.valueOf(cage.getFullCapacity() - difference));
                 if(AzilUtilities.getDAOFactory().getCageDAO().update(cage)) {
                     displayAlertBox("Kavez je uspješno izmijenjen!");
                     quit();

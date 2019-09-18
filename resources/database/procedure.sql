@@ -28,6 +28,44 @@ begin
 end$$
 delimiter ;
 
+
+drop procedure if exists add_dog_in_cage;
+delimiter $$
+create procedure add_dog_in_cage(in pOd date, in pIdKaveza int, in pIdPsa int, in pDo date)
+begin 
+    declare vID int;
+    DECLARE exit handler for sqlexception
+	BEGIN
+		ROLLBACK;
+	END;
+	START TRANSACTION;
+		UPDATE kavez_pas SET Do = current_date() WHERE IdPsa = pIdPsa AND Do IS NULL;
+        INSERT INTO kavez_pas VALUES (pOd, pIdKaveza, pIdPsa, null);
+        UPDATE kavez SET Kapacitet = Kapacitet + 1 WHERE IdKaveza = (select IdKaveza from kavez_pas WHERE IdPsa = pIdPsa AND Do IS NOT NULL LIMIT 1);
+        UPDATE kavez SET Kapacitet = Kapacitet - 1 WHERE IdKaveza = pIdKaveza;
+    COMMIT;
+end$$
+delimiter ;
+
+
+
+
+/*
+drop trigger if exists update_dog_in_cage;
+delimiter $$
+create trigger update_dog_in_cage before insert on kavez_pas
+for each row 
+begin
+	if new.Do is null
+    then
+		update kavez_pas
+		set Do = current_date()
+		where IdPsa = new.IdPsa and Do is null and IdKaveza != new.IdKaveza;
+    end if;
+end$$
+delimiter ;
+*/
+
 /*
 drop trigger if exists update_cages_decrease;
 delimiter $$
