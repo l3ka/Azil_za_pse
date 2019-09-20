@@ -21,7 +21,7 @@ public class AddAccount {
         stage.setMinWidth(700);
         AddAccountController controller = loader.getController();
         controller.initialize(stage);
-        stage.show();
+        stage.showAndWait();
     }
 
 }
