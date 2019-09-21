@@ -1,4 +1,6 @@
 * Projektni zadatak iz predmeta Projektovanje softvera, na trecoj godini Elektrotehnickog fakulteta Univerziteta u Banja Luci 
+* Tema projektnog zadatka:
+	* Azil za pse
 * Projekat radili
 	* Milica Matić
 	* Stefan Erceg
